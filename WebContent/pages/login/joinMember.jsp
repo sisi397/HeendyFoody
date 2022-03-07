@@ -11,6 +11,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+ <link rel="stylesheet" type="text/css" href="../../static/css/common/common.min.css">
+ <link rel="stylesheet" type="text/css" href="../../static/css/common/css-library.min.css">  
+ <link rel="stylesheet" type="text/css" href="../../static/css/common/main.min.css"> 
+ <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <title>흰디푸디 투홈</title>
 </head>
 
@@ -54,6 +58,8 @@
 			</table>
 		</form>
 	</div>
+	
+	<jsp:include page="../../footer.jsp" flush="false"/>
 
 </body>
 </html>
