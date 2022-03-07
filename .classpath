@@ -4,16 +4,10 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/tldms/OneDrive/바탕 화면/[3기] 현대 IT&amp;E/ojdbc8-full/ojdbc8-full/ojdbc8.jar"/>
-	<classpathentry kind="lib" path="C:/Users/tldms/OneDrive/바탕 화면/[3기] 현대 IT&amp;E/ojdbc8-full/ojdbc8-full/ons.jar"/>
-	<classpathentry kind="lib" path="C:/Users/tldms/OneDrive/바탕 화면/[3기] 현대 IT&amp;E/ojdbc8-full/ojdbc8-full/oraclepki.jar"/>
-	<classpathentry kind="lib" path="C:/Users/tldms/OneDrive/바탕 화면/[3기] 현대 IT&amp;E/ojdbc8-full/ojdbc8-full/orai18n.jar"/>
-	<classpathentry kind="lib" path="C:/Users/tldms/OneDrive/바탕 화면/[3기] 현대 IT&amp;E/ojdbc8-full/ojdbc8-full/osdt_cert.jar"/>
-	<classpathentry kind="lib" path="C:/Users/tldms/OneDrive/바탕 화면/[3기] 현대 IT&amp;E/ojdbc8-full/ojdbc8-full/osdt_core.jar"/>
-	<classpathentry kind="lib" path="C:/Users/tldms/OneDrive/바탕 화면/[3기] 현대 IT&amp;E/ojdbc8-full/ojdbc8-full/simplefan.jar"/>
-	<classpathentry kind="lib" path="C:/Users/tldms/OneDrive/바탕 화면/[3기] 현대 IT&amp;E/ojdbc8-full/ojdbc8-full/ucp.jar"/>
-	<classpathentry kind="lib" path="C:/Users/tldms/OneDrive/바탕 화면/[3기] 현대 IT&amp;E/ojdbc8-full/ojdbc8-full/xdb.jar"/>
-	<classpathentry kind="lib" path="C:/Users/tldms/OneDrive/바탕 화면/[3기] 현대 IT&amp;E/ojdbc8-full/ojdbc8-full/xmlparserv2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/tldms/OneDrive/바탕 화면/[3기] 현대 IT&amp;E/ojdbc8-full/ojdbc8-full/xmlparserv2_sans_jaxp_services.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.web"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

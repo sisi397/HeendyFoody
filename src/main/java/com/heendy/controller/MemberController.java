@@ -1,6 +1,8 @@
 package com.heendy.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.heendy.dao.MemberDAO;
+import com.heendy.dto.MemberVO;
 
 /**
  * Servlet implementation class MemberController
@@ -28,8 +31,9 @@ public class MemberController extends HttpServlet {
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
-	public void init(ServletConfig config) throws ServletException {
-		memberDAO = new MemberDAO();
+	public void init() throws ServletException {
+		memberDAO = MemberDAO.getInstance();
+		System.out.println("멤버 컨트롤러 실행");
 	}
 
 	/**
@@ -62,8 +66,17 @@ public class MemberController extends HttpServlet {
 		String action = request.getPathInfo();	//URL에서 요청명 가져오기
 		System.out.println("action : " + action);
 		
-		
-		
+		if(action == null || action.equals("/addMember.do")) {
+			System.out.println("회원을 추가합니다.");
+			String name = request.getParameter("name");
+			String pwd = request.getParameter("pwd");
+			String email = request.getParameter("email");
+			String address = request.getParameter("address");
+			int role_id = Integer.parseInt(request.getParameter("role"));
+			MemberVO memberVO = new MemberVO(name, pwd, email, address, role_id);
+			memberDAO.addMember(memberVO);
+			return;
+		}
 		//아이디 조회
 		
 		//

@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,70 +13,43 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.heendy.dto.MemberDTO;
+import com.heendy.dto.MemberVO;
+import com.heendy.utils.DBManager;
 
 public class MemberDAO {
-	private DataSource dataFactory;
-	private Connection conn;
-	private PreparedStatement pstmt;
-
-	public MemberDAO() {
-		try {
-			Context ctx = new InitialContext();
-			Context envContext = (Context) ctx.lookup("java:/comp/env");
-			dataFactory = (DataSource) envContext.lookup("jdbc/oracle");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	  private MemberDAO() { }//싱글턴 패턴
+	private static MemberDAO instance = new MemberDAO();
+	public static MemberDAO getInstance() {
+	  return instance;
 	}
 
 	//회원 목록 조회
-	public List<MemberDTO> listMembers() {
-		List<MemberDTO> membersList = new ArrayList();
-		try {
-			conn = dataFactory.getConnection();
-			String query = "select * from  t_member order by joinDate desc";
-			System.out.println(query);
-			pstmt = conn.prepareStatement(query);
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()) {
-				String id = rs.getString("id");
-				String pwd = rs.getString("pwd");
-				String name = rs.getString("name");
-				String email = rs.getString("email");
-				Date joinDate = rs.getDate("joinDate");
-				MemberDTO memberVO = new MemberDTO(id, pwd, name, email, joinDate);
-				membersList.add(memberVO);
-			}
-			rs.close();
-			pstmt.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public List<MemberVO> listMembers() {
+		List<MemberVO> membersList = new ArrayList();
+		
 		return membersList;
 	}
 
 	//회원 추가하기
-	public void addMember(MemberDTO m) {
-		try {
-			conn = dataFactory.getConnection();
-			String id = m.getId();
-			String pwd = m.getPwd();
-			String name = m.getName();
-			String email = m.getEmail();
-			String query = "INSERT INTO t_member(id, pwd, name, email)" + " VALUES(?, ? ,? ,?)";
-			System.out.println(query);
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, id);
-			pstmt.setString(2, pwd);
-			pstmt.setString(3, name);
-			pstmt.setString(4, email);
-			pstmt.executeUpdate();
-			pstmt.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public void addMember(MemberVO memberVO) {
+		int result = 0;
+		String sql = "insert into member(member_name, member_password, member_email, address, role_id) "
+	    		+ "values(?, ?, ?, ?, ?) ";
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;	    
+	    try {
+	    	conn = DBManager.getConnection();
+	    	pstmt = conn.prepareStatement(sql);
+		    pstmt.setString(1, memberVO.getMemberName());
+		    pstmt.setString(2, memberVO.getMemberPassword());
+		    pstmt.setString(3, memberVO.getMemberEmail());
+		    pstmt.setString(4, memberVO.getAddress());
+		    pstmt.setInt(5, memberVO.getRoleId());
+		    pstmt.executeUpdate();
+	    }catch(Exception e) {
+	    	e.printStackTrace();
+	    }finally {
+	    	DBManager.close(conn, pstmt);
+	    }
 	}
 }
