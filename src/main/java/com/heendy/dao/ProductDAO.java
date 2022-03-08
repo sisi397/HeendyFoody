@@ -33,9 +33,16 @@ public class ProductDAO {
 	    	while (rs.next()) {
 	        ProductDTO product = new ProductDTO();
 	        product.setProductId(rs.getInt("product_id"));
-	        product.setProductName(rs.getString("product_name"));
+	        product.setCompanyId(rs.getInt("company_id"));
 	        product.setProductPrice(rs.getInt("product_price"));
+	        product.setProductName(rs.getString("product_name"));
 	        product.setImageUrl(rs.getString("image_url"));
+	        product.setProductCount(rs.getInt("product_count"));
+	        product.setProductRegDate(rs.getString("product_reg_date"));
+	        product.setDiscountRate(rs.getInt("discount_rate"));
+	        product.setDeleted(rs.getInt("deleted"));
+	        product.setCategoryId(rs.getInt("category_id"));
+	        product.setDiscountPrice(rs.getInt("discount_price"));
 	        productList.add(product);
 	        System.out.println(product.getProductId());
 	    	}
@@ -63,9 +70,16 @@ public class ProductDAO {
 	    	System.out.println(sql);
 	      while (rs.next()) {
 	        product.setProductId(rs.getInt("product_id"));
-	        product.setProductName(rs.getString("product_name"));
+	        product.setCompanyId(rs.getInt("company_id"));
 	        product.setProductPrice(rs.getInt("product_price"));
+	        product.setProductName(rs.getString("product_name"));
 	        product.setImageUrl(rs.getString("image_url"));
+	        product.setProductCount(rs.getInt("product_count"));
+	        product.setProductRegDate(rs.getString("product_reg_date"));
+	        product.setDiscountRate(rs.getInt("discount_rate"));
+	        product.setDeleted(rs.getInt("deleted"));
+	        product.setCategoryId(rs.getInt("category_id"));
+	        product.setDiscountPrice(rs.getInt("discount_price"));
 	        System.out.println(product.getProductId());
 	      }
 	    } catch (Exception e) {

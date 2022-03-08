@@ -11,6 +11,7 @@ public class ProductDTO {
 	private int discountRate;
 	private int deleted;
 	private int categoryId;
+	private int discountPrice;
 	
 	public int getProductId() {
 		return productId;
@@ -72,6 +73,10 @@ public class ProductDTO {
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
-	
-	
+	public int getDiscountPrice() {
+		return discountPrice;
+	}
+	public void setDiscountPrice(int discountPrice) {
+		this.discountPrice = discountPrice;
+	}
 }

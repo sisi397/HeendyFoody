@@ -2,6 +2,7 @@ package com.heendy.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import com.heendy.utils.DBManager;
 
@@ -54,5 +55,30 @@ public class WishDAO {
 	    	DBManager.close(conn, pstmt);
 	    }
 	    return result;
+	}
+	
+	// 좋아요 여부
+	public int wishIs(int memberId, int productId) {
+		int result = 0;	
+	    String sql = "select count(*) from member_like_product where member_id = ? and product_id = ?";
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;    
+	    try {
+	    	conn = DBManager.getConnection();
+	    	pstmt = conn.prepareStatement(sql);
+	    	pstmt.setInt(1, memberId);
+	    	pstmt.setInt(2, productId);
+	    	rs = pstmt.executeQuery();
+	    	System.out.println(sql);
+	      while (rs.next()) {
+	    	  result = rs.getInt(1);
+	      }
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    } finally {
+	    	DBManager.close(conn, pstmt, rs);
+	    }
+		return result;
 	}
 }

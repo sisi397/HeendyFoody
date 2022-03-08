@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.heendy.action.Action;
 import com.heendy.dao.ProductDAO;
+import com.heendy.dao.WishDAO;
 import com.heendy.dto.ProductDTO;
 
 public class ProductDetailAction implements Action {
@@ -24,6 +25,11 @@ public class ProductDetailAction implements Action {
 		ProductDTO product = productDAO.detailProduct(pid);
 
 		request.setAttribute("product", product);
+		
+		// 좋아요 여부 가져오기
+		WishDAO wishDAO = WishDAO.getInstance();
+		int wish = wishDAO.wishIs(6, product.getProductId()); // memberid 추가
+		request.setAttribute("wishIs", wish);
 		
 		String url = "/pages/product/productDetail.jsp";
 	    RequestDispatcher dispatcher = request.getRequestDispatcher(url);

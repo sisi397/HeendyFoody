@@ -18,9 +18,9 @@ public class WishActionFactory implements ActionFactory {
 		Action action = null;
 	    System.out.println("WishActionFactory  :" + command);
 
-	    if (command.equals("/wish/insert")) {
+	    if (command.equals("/insert")) {
 	      action = new WishInsertAction();
-	    } else if(command.equals("/wish/delete")) {
+	    } else if(command.equals("/delete")) {
 	    	action = new WishDeleteAction();
 	    }
 	    

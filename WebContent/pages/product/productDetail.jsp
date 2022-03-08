@@ -86,10 +86,15 @@
                         <a href="#">후르츠사계절</a>
                     </div>
                     <div class="price" id="price_section">
-                    	<span class="txt-price">
-                    		<strong><em>${product.productPrice }</em>원</strong>
-                    		<span class="txt-unit">100g당 4,462원</span>
+                    	<span class="txt-sale">
+                    		<em>${product.discountRate }</em>%
                     	</span>
+                    	<span class="txt-price">
+                    		<strong><em>${product.discountPrice }</em>원</strong>
+                    		<div class="popinline"></div>
+                    		<del>${product.productPrice }</del>
+                    	</span>
+                    	
                     	<div class="probtn">
                     		<button type="button" id="wish" class="btn-wish" onclick="wishUpdate()">
                     		좋아요
@@ -128,9 +133,8 @@
                                     <div class="optionls">
                                         <div>
                                             <strong class="txt-ti">${product.productName }
-                                                    &nbsp;&nbsp;&nbsp;(재고수량&nbsp;0개)
+                                                    &nbsp;&nbsp;&nbsp;(재고수량&nbsp;${product.productCount }개)
                                             </strong>
-                                            <span class="txt-date">배송시작일 : <em></em></span>
                                             <div class="ea-area">
                                                 <input type="number" title="수량 입력" value="1" readonly>
                                                 <button type="button" class="btn-down" onclick="fnOptionEaDown(this);">수량 낮추기</button>
@@ -190,218 +194,11 @@
                     </section>
                     <!-- //상품상세 -->
                     
-                    <!-- 구매정보// -->
-                    <section id="p_proBuyinfo" class="tab-contents probuyinfo">
-                        <h3 class="hide"><strong>구매정보</strong></h3>
-                        
-
-                        <div class="buyinfo" id="buyinfo">
-                            <div class="cont">
-                                <div class="infotxt">
-                                    <strong>배송안내</strong>
-                                    <ul>
-                                        <li>새벽배송/당일배송</li>
-                                        <li>택배배송</li>
-                                        <li>해외배송</li>
-                                    </ul>
-                                </div>
-                                <div class="infotxt">
-                                    <strong>교환/환불 안내</strong>
-                                    <ul>
-                                        <li>교환/환불 정책 표기</li>
-                                        <li>정책 표기</li>
-                                        <li>정책 표기</li>
-                                    </ul>
-                                </div>
-                                <div class="infotxt">
-                                    <strong>배송단계별 주문취소 안내</strong>
-                                    <ul>
-                                        <li>교환/환불 정책 표기</li>
-                                        <li>정책 표기</li>
-                                        <li>정책 표기</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="infotxt notice">
-                            <ul>
-                                <li>전자상거래 등에서의 소비자 보호에 관한 법률에 의한 반품규정이 판매자가 지정한 반품조건보다 우선합니다.</li>
-                                <li>단, 판매자 또는 협력사가 지정한 반품조건이 소비자에게 더 유리한 경우 가장 유리한 반품조건으로 적용됩니다.</li>
-                                <li>구매자가 미성년자인 경우에는 상품 구입시 법정 대리인이 동의하지 아니하면 미성년자 본인 또는 법정 대리인이 구매취소 할 수 있습니다.</li>
-                                <li class="pointtxt"><a href="/front/dp/dpf/customerCenterMain.do">소비자 피해보상 처리 및 상품 등에 대한 불만처리 방법(CS)</a></li>
-                            </ul>
-                        </div>                    
-                    </section>
-                    <!-- //구매정보 -->
+                    <%@ include file="./buyInfo.jsp" %>
                     
-                    <!-- 취소/교환/반품//-->
-                    <section id="p_cancel" class="tab-contents probuyinfo">
-                        <div class="buyinfo">
-                            <h4>주문취소 안내</h4>
-                            <div class="cont">
-                                <div class="infotxt">
-                                    <ul>
-                                        <li>결제완료 이후 주문의 상태가 “상품준비중”으로 변경될 경우, 취소가 제한됩니다.</li>
-                                        <li>비회원은 로그인 > 비회원주문조회에서 주문을 취소하실 수 있습니다.</li>
-                                        <li>일부 예약배송, 정기배송, 정기구독 등의 예약상품은 배송 3~4일전까지만 취소하실 수 있습니다.</li>
-                                        <li>주문상품의 부분취소는 불가능합니다.</li>
-                                        <li>카드환불은 카드사 정책에 따르며, 취소 시 사용하신 H.Point, H.Bonus, 쿠폰 등은 모두 복원됩니다.
-                                            단, 취소시 사용기한이 지난 혜택은 복원되지 않습니다.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="buyinfo">
-                            <h4>교환/반품안내</h4>
-                            <div class="cont">
-                                <div class="infotxt">
-                                    <p>※상품설명에 배송/교환/반품/취소 관련 안내가 기재된 경우 다음 안내사항보다 우선적용됩니다.</p>
-                                    <ul>
-                                        <li>상품에 문제가 있는 경우<br>
-                                            : 냉장/냉동상품은 제품수령 후 최대 2일(48시간) 내,<br>
-                                            상품을     촬영한 사진과 함께 1:1문의 게시판에 등록하시면,<br>
-                                            담당자 확인 후 교환/반품이 진행됩니다.<br>
-                                            : 상온상품(유통기한 30일 이상)및 기타상품은 제품수령 후<br>
-                                            3개월 이내에 사진과 함께 1:1문의 게시판에 등록하시면,<br>
-                                            담당자 확인 후 교환/반품이 진행됩니다.<br>
-                                            이때 발생하는 모든 배송비는 현대식품관 투홈이 부담합니다.</li>
-                                        <li>단순변심/주문착오의 경우<br>
-                                            : 냉장/냉동상품은 교환/반품이 불가능합니다.<br>
-                                            : 상온상품(유통기한 30일 이상)및 기타상품은 제품수령 후<br>
-                                            최대 7일 이내에 사진과 함께 1:1문의 게시판에 등록하시면, 담당자 확인 후 교환/반품이 진행됩니다. 이때 발생하는 모든 배송비(교환:왕복, 반품:편도)는 고객님께서 부담하셔야 합니다.</li>
-                                        <li>
-                                            교환/반품이 불가한 경우<br>
-                                            : 교환/반품 가능기간을 초과하였을 경우<br>
-                                            : 상품 및 구성품을 사용하였거나 부주의로 인하여 상품이 훼손(파손/고장/오염 등)된 경우<br>
-                                            : 상품 사용 시 상품설명에 기재된 주의사항을 지키지 않는 경우<br>
-                                            : 상품택을 파손하였거나 분실했을 경우<br>
-                                            : 배송 후 설치완료된 상품인 경우<br>
-                                            : 기타 ‘전자상거래 등에서의 소비자보호에 관한 법률’이<br>
-                                            정하는 청약철회 제한사유에 해당되는 경우
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- //취소/교환/반품-->
+                    <%@ include file="./exchangeInfo.jsp" %>
                     
-                    <!-- 리뷰// -->
-                    <section id="p_proReview" class="tab-contents proreview">
-                        <h3 class="hide"><strong>리뷰</strong></h3>
-                        
-                        <div class="list-top">
-                            <button type="button" class="btn black btn-review" onclick="fn.addClass('#p_proReviewWrite');fn.removeClass('#p_proReview');">리뷰 작성</button>
-                            
-                            <span class="grade-star big">
-                                <span><span style="width:90%;"></span></span>
-                                <strong><em>4.5</em> <i class="bar">/</i> 5</strong>
-                            </span>
-                        </div>
-
-                        <div class="list-sort">
-                            <label><input type="checkbox" name="pic" id="onlyPic" data-pic-yn="N" onclick="fnReviewAjaxPcList('A', 1);"><span>포토 리뷰</span></label>
-                            <div class="form-sort" id="reviewImgYn">
-                                <label><input type="radio" name="sort" value = '1' onclick="fnReviewAjaxPcList('A', 1);"><span>베스트순</span></label>
-                                <label><input type="radio" name="sort" value = '2' checked onclick="fnReviewAjaxPcList('A', 1);"><span>최신순</span></label>
-                            </div>
-                        </div>
-                        <div class="review-list">
-                        </div>
-                    </section>
-                    <!-- //리뷰 -->
-
-                    <section id="p_proReviewWrite" class="tab-contents prowrite review">
-                        <h3>리뷰작성</h3>
-                        <div class="product-list vertical">
-                            <span class="thumb">
-                                <img src="" alt="" id="popReviewWriteImg">
-                            </span>
-                            <!-- data-no: 글번호, data-cd:패키지일 경우 상품코드,  data-ord-no: 주문번호-->
-                            <div class="contr" data-no="" data-cd="" data-ord-no="">
-                                <strong class="txt-ti"></strong>
-                                <span class="txt-option"></span>
-                            </div>
-                        </div>
-
-                        <form id="fileForm" method="post" enctype="multipart/form-data">
-                            <fieldset>
-                                <legend class="hide">리뷰작성</legend>
-                                <input type="hidden" name="itemEvalAtclNo" value="">
-                                <input type="hidden" name="ordNo" value="">
-                                <input type="hidden" name="slitmCd" value="">
-                                <input type="hidden" name="optItemCd" value="">
-                                <input type="hidden" name="pckgItemYn" value="">    
-                                <input type="hidden" name="itemEvalScrg" id="itemEvalScrg" value="">
-                                <input type="hidden" name="itemEvalCntn" id="itemEvalCntn" value="">
-                                <input type="hidden" name="imgCnt" id="imgCnt" value="">    
-                                <input type="hidden" name="imgYn1" id="imgYn1" value="">            
-                                <input type="hidden" name="imgYn2" id="imgYn2" value="">            
-                                <input type="hidden" name="imgYn3" id="imgYn3" value="">    
-                                <input type="hidden" name="pathType1" id="pathType1" value="">  
-                                <input type="hidden" name="pathType2" id="pathType2" value="">
-                                <input type="hidden" name="atflNo" id="atflNo" value="">
-                                
-                                <div class="write-area">
-                                    <div class="reviewstar">
-                                        <div class="grade-star big active">
-                                            <span class="active" id="start1">1점</span>
-                                            <span class="active" id="start2">2점</span>
-                                            <span class="active" id="start3">3점</span>
-                                            <span class="active" id="start4">4점</span>
-                                            <span class="active" id="start5">5점</span>
-                                            <input type="hidden" name="starV" value="5">
-                                            <div class="txt" id='totstart'><em class="tot">5</em>/<em>5</em></div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-default horizon form-file" id="expsY2">
-                                        <strong>사진 첨부</strong>
-                                        <div class="upload-file">
-                                            <label><input type="file" class="upload-hidden" title="사진 첨부" name="uploadImg" id="uploadImg1" accept="image/*"></label>
-                                        </div>
-                                        <div class="upload-file">
-                                            <label><input type="file" class="upload-hidden" title="사진 첨부" name="uploadImg" id="uploadImg2" accept="image/*"></label>
-                                        </div>
-                                        <div class="upload-file">
-                                            <label><input type="file" class="upload-hidden" title="사진 첨부" name="uploadImg" id="uploadImg3" accept="image/*"></label>
-                                        </div>
-                                    </div>
-                                    
-                                    <label class="form-counter" id="expsY1">
-                                        <textarea title="리뷰 입력" placeholder="최소 글자수는 10자 이상입니다. 고객님의 취향과 경험을 좀 더 자세히 공유해주세요." name="reviewTextarea" id="reviewTextarea" onKeyup="javascript:fnReviewTextareaLimit(this, 500, 'B');"></textarea>
-                                        <span class="counter"><em>0</em> /500 자</span>
-                                    </label>
-                                    <p class="txt-star" id="expsN1">
-                                                                개인별 주관적인 의견으로 인해 상품의 기능 및 효과에 대한
-                                                                오해의 소지가 있을 수 있어 평점만 선택 가능합니다.
-                                    </p>                                
-                                </div>
-
-                                <div class="btns">
-                                    <button type="button" class="btn gray middle btn-cancel" onclick="fn.addClass('#p_proReview');fn.removeClass('#p_proReviewWrite');">취소</button>
-                                    <button type="button" class="btn fill black middle btn-confirm" onclick="fnReviewSave();">확인</button>
-                                </div>
-                            </fieldset>
-                        </form>
-
-                        <div class="infotxt">
-                            <strong>리뷰 작성 안내</strong>
-                            <ul>
-                                <li id="expsY3">권한<br>현대식품관에서 구입한 상품만 가능하며, 배송 완료일 기준 90일까지 작성하실 수 있습니다.</li>
-                                <li id="expsY4">혜택<br>리뷰 작성 혜택은 H.Point로 지급되며 H.Point 통합회원이 아닌 경우 지급받으실 수 없습니다.</li>
-                                <li id="expsY5">텍스트 리뷰 50P / 포토 리뷰 150P</li>
-                                <li id="expsY6">리뷰<br>아래 내용에 해당하는 사유라고  판단되는 경우 작성자 동의 없이 미전시할 수 있으며, 지급된 포인트는 회수됩니다.</li>
-                                <li id="expsY7">부적합한 내용의 작성(허위 사실, 욕설, 비난, 일반식품의 효능, 효과, 해석 불가능한 리뷰, 타 상품에 대한 리뷰 등) 타인의  권리 혹은 개인정보 침해 우려가 있는 경우 (캡처. 제3자 사진 도용 등) 리뷰 작성 후 반품</li>
-                                
-                                <li id="expsN2">리뷰 작성 후 반품 시 지급된 리뷰 포인트는 회수됩니다.</li>
-                                <li id="expsN3">포인트는 H.Point로 지급되며 H.Point가 없으신 경우 지급받을 수 없습니다.</li>
-                            </ul>
-                        </div>
-                    </section>
-                    <!-- //리뷰작성 -->
+                    <%@ include file="./review.jsp" %>  
                 </div>
                 
                 <div class="rightarea" id="bottom_rightarea">
@@ -410,9 +207,8 @@
 	                    <div class="optionls">
 	                        <div>
 	                            <strong class="txt-ti">[새벽시장] 두리향 딸기 (1kg/1단)
-	                                    <br>(남은 수량 0개)
+	                                    <br>(남은 수량 ${product.productCount }개)
 	                            </strong>
-	                            <span class="txt-date">배송시작일 : <em></em></span>
 	                            <div class="ea-area">
 	                                <input type="number" title="수량 입력" value="1" readonly>
 	                                <button type="button" class="btn-down" onclick="fnOptionEaDown(this);">수량 낮추기</button>
@@ -447,13 +243,25 @@
     <!-- //contents -->
 </div>
 <script>
+// 시작할 때 좋아요 여부 확인 
+var wish = ${wishIs };
+$(document).ready(function(){
+	if(wish === 1){
+		document.getElementById('wish').className = "btn-wish active";
+	}else{
+		document.getElementById('wish').className = "btn-wish";
+	}
+	
+});
+
 function wishUpdate(){
+	var path = "${contextPath}"
 	if(document.getElementById('wish').className === "btn-wish"){ // 좋아요가 안눌려있을 경우
 		document.getElementById('wish').className = "btn-wish active";
-	
+		
 		//좋아요 insert
 		$.ajax({
-			url:${contextPath } + '/wish/insert',
+			url:path + '/wish/insert',
 			type: 'post',
 			dataType:'json',
 			data: {
@@ -471,7 +279,7 @@ function wishUpdate(){
 		
 		//좋아요 delete
 		$.ajax({
-			url:${contextPath } + '/wish/delete',
+			url:path + '/wish/delete',
 			type: 'post',
 			dataType:'json',
 			data: {

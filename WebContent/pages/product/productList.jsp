@@ -171,13 +171,13 @@
 	        </ul>
 	        <div class="pagination">
 	        	<c:if test="${beginPage > pagePerList}">
-					<a class="prev" href="<c:url value="/productList?pno=${beginPage-1}"/>">이전</a>
+					<a class="prev" href="<c:url value="/product/list?pno=${beginPage-1}"/>">이전</a>
 				</c:if>
 				<c:forEach var="pno" begin="${beginPage}" end="${endPage}">
-					<span class="num"><a href="<c:url value="/productList?pno=${pno}" />">${pno}</a></span>
+					<span class="num"><a href="<c:url value="/product/list?pno=${pno}" />">${pno}</a></span>
 				</c:forEach>
 				<c:if test="${endPage < totalPageCount}">
-					<a class="next" href="<c:url value="/productList?pno=${endPage + 1}"/>">다음</a>
+					<a class="next" href="<c:url value="/product/list?pno=${endPage + 1}"/>">다음</a>
 				</c:if>
 	        </div>
 	        <!-- //list -->

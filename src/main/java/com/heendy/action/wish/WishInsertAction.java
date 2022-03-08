@@ -19,7 +19,8 @@ public class WishInsertAction implements Action{
 		int mid = Integer.parseInt(request.getParameter("memberId"));
 		int pid = Integer.parseInt(request.getParameter("productId"));
 		int cid = Integer.parseInt(request.getParameter("companyId"));
-		System.out.println(mid);
+		System.out.println(mid + " " + pid + " " + cid);
+		
 		// 좋아요 추가
 		WishDAO wishDAO = WishDAO.getInstance();
 		int wishInsert = wishDAO.insertWish(mid, pid, cid);
