@@ -2,7 +2,7 @@ package com.heendy.controller;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
+import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,8 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.heendy.action.Action;
+import com.heendy.action.ActionFactory;
+import com.heendy.action.member.MemberActionFactory;
 import com.heendy.dao.MemberDAO;
-import com.heendy.dto.MemberVO;
+import com.heendy.dto.MemberDTO;
 
 /**
  * Servlet implementation class MemberController
@@ -63,22 +66,12 @@ public class MemberController extends HttpServlet {
 		String nextPage = null;		// redirect해줄 다음 페이지
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
-		String action = request.getPathInfo();	//URL에서 요청명 가져오기
-		System.out.println("action : " + action);
+		String command = request.getPathInfo();	//URL에서 요청명 가져오기
+		System.out.println("action : " + command);
 		
-		if(action == null || action.equals("/addMember.do")) {
-			System.out.println("회원을 추가합니다.");
-			String name = request.getParameter("name");
-			String pwd = request.getParameter("pwd");
-			String email = request.getParameter("email");
-			String address = request.getParameter("address");
-			int role_id = Integer.parseInt(request.getParameter("role"));
-			MemberVO memberVO = new MemberVO(name, pwd, email, address, role_id);
-			memberDAO.addMember(memberVO);
-			return;
-		}
-		//아이디 조회
+		ActionFactory af = MemberActionFactory.getInstance();
+		Action action = af.getAction(command);
+		action.execute(request, response);
 		
-		//
 	}
 }

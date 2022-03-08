@@ -2,7 +2,7 @@ package com.heendy.dto;
 
 import java.sql.Date;
 
-public class MemberVO {
+public class MemberDTO {
 	private int memberId;
 	private String memberName;
 	private String memberPassword;
@@ -12,12 +12,12 @@ public class MemberVO {
 	private Date memberRegDate;
 	private int roleId;
 
-	public MemberVO() {
+	public MemberDTO() {
 		System.out.println("memberDTO생성");
 	}
 	
 	
-	public MemberVO(String memberName, String memberPassword, String memberEmail, String address, int roleId) {
+	public MemberDTO(String memberName, String memberPassword, String memberEmail, String address, int roleId) {
 		super();
 		this.memberName = memberName;
 		this.memberPassword = memberPassword;

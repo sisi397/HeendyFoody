@@ -13,25 +13,25 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.heendy.dto.MemberVO;
+import com.heendy.dto.MemberDTO;
 import com.heendy.utils.DBManager;
 
 public class MemberDAO {
-	  private MemberDAO() { }//싱글턴 패턴
+	private MemberDAO() { }//싱글턴 패턴
 	private static MemberDAO instance = new MemberDAO();
 	public static MemberDAO getInstance() {
 	  return instance;
 	}
 
 	//회원 목록 조회
-	public List<MemberVO> listMembers() {
-		List<MemberVO> membersList = new ArrayList();
+	public List<MemberDTO> listMembers() {
+		List<MemberDTO> membersList = new ArrayList();
 		
 		return membersList;
 	}
 
 	//회원 추가하기
-	public void addMember(MemberVO memberVO) {
+	public void addMember(MemberDTO memberVO) {
 		int result = 0;
 		String sql = "insert into member(member_name, member_password, member_email, address, role_id) "
 	    		+ "values(?, ?, ?, ?, ?) ";
@@ -51,5 +51,30 @@ public class MemberDAO {
 	    }finally {
 	    	DBManager.close(conn, pstmt);
 	    }
+	}
+	//로그인 기능
+	public boolean isExisted(MemberDTO memberVO) {
+		boolean result = false;
+		String name = memberVO.getMemberName();
+		String pwd = memberVO.getMemberPassword();
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;	    
+	    try {
+	    	conn = DBManager.getConnection();
+			String sql = "select decode(count(*), 1, 'true', 'false') as result from member";
+			sql += " where member_name=? and member_password=?";
+	    	pstmt = conn.prepareStatement(sql);
+		    pstmt.setString(1, name);
+		    pstmt.setString(2, pwd);
+		    ResultSet rs = pstmt.executeQuery();
+		    rs.next();
+		    result = Boolean.parseBoolean(rs.getString("result"));
+		    System.out.println("result = " + result);
+	    }catch(Exception e) {
+	    	e.printStackTrace();
+	    }finally {
+	    	DBManager.close(conn, pstmt);
+	    }
+		return result;
 	}
 }
