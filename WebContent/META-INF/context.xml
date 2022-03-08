@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+ <WatchedResource>WEB-INF/web.xml</WatchedResource>
+ <Resource name="jdbc/myoracle" auth="Container"
+           type="javax.sql.DataSource"
+           driverClassName="oracle.jdbc.OracleDriver"
+           url="jdbc:oracle:thin:@edudb_high?TNS_ADMIN=C:/dev/OracleWallet/Wallet_edudb"
+           username="user01" password="Heendy12Cccc" maxTotal="20"
+           maxIdle="10" maxWaitMillis="-1"/>
+</Context>
