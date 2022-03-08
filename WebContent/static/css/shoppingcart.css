@@ -209,7 +209,7 @@ input[type="checkbox"] + span::before {
   display: inline-block;
   width: 22px;
   height: 22px;
-  background-image: url(form.png);
+  background-image: url(../images/assets/form.png);
 
 }
 
@@ -328,7 +328,7 @@ input[type="checkbox"] + span::before {
   transform: translate(-50%,-50%);
   width: 14px;
   height: 14px;
-  background: url("btn.png") no-repeat -100px 0;
+  background: url("../images/assets/btn.png") no-repeat -100px 0;
 }
 
 .product-list .thumb {
@@ -450,7 +450,7 @@ input[type=number] {
   display: inline-block;
   width: 12px;
   height: 12px;
-  background: url("btn.png") no-repeat 0 0;
+  background: url("../images/assets/btn.png") no-repeat 0 0;
 }
 
 .ea-area .btn-down {
@@ -512,7 +512,7 @@ input[type=number] {
   margin-left: -10px;
   width: 20px;
   height: 18px;
-  background: url("btn.png") no-repeat -200px -100px;
+  background: url("../images/assets/btn.png") no-repeat -200px -100px;
 }
 
 @keyframes wishMotion {
@@ -645,7 +645,7 @@ input[type=number] {
   margin: 0 auto 15px;
   width: 80px;
   height: 80px;
-  background: url(icon.png) no-repeat -400px 0;
+  background: url(../images/assets/icon.png) no-repeat -400px 0;
 }
 
 

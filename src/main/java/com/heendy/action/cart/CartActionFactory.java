@@ -15,9 +15,15 @@ public class CartActionFactory implements ActionFactory{
 	
 	@Override
 	public Action getAction(String command) {
-		// TODO Auto-generated method stub
+		Action action = null;
+		System.out.println(command);
+		if(command.equals("/create.do")) {
+			action = new CreateCartAction();
+		} else if (command.equals("/shoppingCartList.do")) {
+			action = new CartViewAction();
+		}
 	
-		return null;
+		return action;
 	}
 	
 	 
