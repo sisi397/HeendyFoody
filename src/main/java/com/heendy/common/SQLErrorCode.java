@@ -9,7 +9,9 @@ public enum SQLErrorCode {
 
 	ALREADY_CART_EXIST(20000),
 	
-	LACK_OF_STOCK(20001);
+	LACK_OF_STOCK(20001),
+	
+	OUT_BOUND_RANGE(20002);
 	
 	private final int code;
 	

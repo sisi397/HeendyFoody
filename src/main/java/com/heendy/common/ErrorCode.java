@@ -11,7 +11,7 @@ public enum ErrorCode {
 	
 	LACK_OF_STOCK("CART-002","상품 재고보다 많은 수량을 장바구니에 담을 수 없습니다.", 400),
 	
-	
+	OUT_BOUND_RANGE("CART-003","최소 1개 이상 장바구니에 담아야 합니다.", 400),
 	
 	/*
 	 * 

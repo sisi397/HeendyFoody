@@ -1,13 +1,13 @@
 package com.heendy.dto.cart;
 
-public class AddCartDTO {
+public class CartCountUpdateDTO {
 	
 	private int cartId;
 	
 	private int count;
 	
 
-	public AddCartDTO(int cartId, int count) {
+	public CartCountUpdateDTO(int cartId, int count) {
 		this.cartId = cartId;
 		this.count = count;
 	}

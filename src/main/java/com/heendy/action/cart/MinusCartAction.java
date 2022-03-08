@@ -15,13 +15,12 @@ import com.heendy.common.SQLErrorCode;
 import com.heendy.dao.CartDAO;
 import com.heendy.dto.cart.CartCountUpdateDTO;
 
-public class AddCartAction implements Action {
+public class MinusCartAction implements Action {
 
 	private final CartDAO cartDAO = CartDAO.getInstance();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
 		
@@ -32,18 +31,18 @@ public class AddCartAction implements Action {
 			int cartId = Integer.parseInt(request.getParameter("cart_id"));
 			int count =Integer.parseInt(request.getParameter("count"));
 			
-			CartCountUpdateDTO addCartDto = new CartCountUpdateDTO(cartId, count);
+			CartCountUpdateDTO minusCartDto = new CartCountUpdateDTO(cartId, count);
 			
-			cartDAO.addCartCount(addCartDto);
+			cartDAO.minusCartCount(minusCartDto);
 			
 			response.setStatus(201);
-			response.getWriter().write("{\"updated\" : true, \"result\" :장바구니의 수량이 추가되었습니다.}");
+			response.getWriter().write("{\"updated\" : true, \"result\" :장바구니의 수량이 감소되었습니다.}");
 			
 		}catch(SQLException e) {
 			int errorCode = e.getErrorCode();
 			ErrorResponse errorResponse;
-			if(errorCode == SQLErrorCode.LACK_OF_STOCK.getCode()) {
-				errorResponse = ErrorResponse.of(ErrorCode.LACK_OF_STOCK);
+			if(errorCode == SQLErrorCode.OUT_BOUND_RANGE.getCode()) {
+				errorResponse = ErrorResponse.of(ErrorCode.OUT_BOUND_RANGE);
 			} else {
 				errorResponse = ErrorResponse.of(ErrorCode.UNCAUGHT_SERVER_ERROR);
 			}

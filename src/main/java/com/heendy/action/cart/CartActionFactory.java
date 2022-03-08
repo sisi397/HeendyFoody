@@ -25,6 +25,8 @@ public class CartActionFactory implements ActionFactory{
 			action = new CartViewAction();
 		} else if (command.equals("/addCount.do")) {
 			action = new AddCartAction();
+		} else if (command.equals("/minusCount.do")) {
+			action = new MinusCartAction();
 		}
 	
 		return action;
