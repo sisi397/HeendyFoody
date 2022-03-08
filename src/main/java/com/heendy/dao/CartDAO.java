@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Optional;
 
+import com.heendy.dto.cart.AddCartDTO;
 import com.heendy.dto.cart.CreateCartDTO;
 import com.heendy.utils.DBManager;
 
@@ -46,10 +47,17 @@ public class CartDAO {
 	}
 	
 	
-	public void addCart(int cartId) {
+	public void addCart(AddCartDTO data) throws SQLException {
 		Connection conn = DBManager.getConnection();
 		
+		CallableStatement cstmt = conn.prepareCall("{call sp_add_cart(?,?)}");
 		
+		cstmt.setInt(1, data.getCartId());
+		cstmt.setInt(2, data.getCount());
+		
+		cstmt.execute();
+		
+		conn.close();
 	}
 	
 }

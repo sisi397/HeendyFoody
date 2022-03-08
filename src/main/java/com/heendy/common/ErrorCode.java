@@ -9,6 +9,8 @@ public enum ErrorCode {
 	
 	ALREADY_CART_EXIST("CART-001","이미 장바구니에 담겨있습니다.", 400),
 	
+	LACK_OF_STOCK("CART-002","상품 재고보다 많은 수량을 장바구니에 담을 수 없습니다.", 400),
+	
 	
 	
 	/*

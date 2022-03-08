@@ -35,7 +35,7 @@ public class CreateCartAction implements Action {
 			this.cartDAO.createCart(data);
 			
 			response.setStatus(201);
-			response.getWriter().write("{created : true, result :장바구니에 상품이 추가되었습니다.}");
+			response.getWriter().write("{\"created\" : true, \"result\" :장바구니에 상품이 추가되었습니다.}");
 			
 		} catch(SQLException e) {
 			int errorCode = e.getErrorCode();
@@ -46,6 +46,17 @@ public class CreateCartAction implements Action {
 				errorResponse = ErrorResponse.of(ErrorCode.UNCAUGHT_SERVER_ERROR);
 			}
 			System.out.println(errorResponse.getMessage());
+			
+			String url =  request.getScheme() + "://" +   // "http" + "://
+		             request.getServerName() +       // "myhost"
+		             ":" + request.getServerPort() + // ":" + "8080"
+		             request.getContextPath() +
+		             "/cart/addCount.do";
+	
+			
+			System.out.println(url);
+			
+			errorResponse.setLocation(url);
 			String json = new Gson().toJson(errorResponse);
 			response.setStatus(errorResponse.getStatus());
 			response.getWriter().write(json);		
