@@ -3,6 +3,10 @@ package com.heendy.action.cart;
 import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
 
+/**
+ * @author 이승준
+ * cart 관련 Action 객체 생성을 위한 팩토리 클래스
+ * */
 public class CartActionFactory implements ActionFactory{
 
 	private final static ActionFactory factory = new CartActionFactory();

@@ -1,5 +1,10 @@
 package com.heendy.dto.cart;
 
+/**
+ *  @author 이승준
+ *  
+ *  장바구니 수량 증가 및 감소를 위한 DTO 클래스
+ * */
 public class CartCountUpdateDTO {
 	
 	private int cartId;

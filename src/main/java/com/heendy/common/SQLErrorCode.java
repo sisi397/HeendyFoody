@@ -3,7 +3,7 @@ package com.heendy.common;
 /*
  * @author : 이승준
  * 
- * 사용자 정의 에외 정
+ * 사용자 정의 예외 정의
  * */
 public enum SQLErrorCode {
 

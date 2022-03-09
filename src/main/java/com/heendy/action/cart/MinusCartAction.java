@@ -15,6 +15,10 @@ import com.heendy.common.SQLErrorCode;
 import com.heendy.dao.CartDAO;
 import com.heendy.dto.cart.CartCountUpdateDTO;
 
+/**
+ * @author 이승준
+ * 장바구니 수량 감소 Action 클래스
+ * */
 public class MinusCartAction implements Action {
 
 	private final CartDAO cartDAO = CartDAO.getInstance();

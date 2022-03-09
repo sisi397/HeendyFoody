@@ -1,9 +1,8 @@
 package com.heendy.dto.cart;
 
 
-/*
+/**
  * @author : 이승준
- * @version: 1
  * 장바구니 생성을 위한 DTO 클래스
  * */
 public class CreateCartDTO {

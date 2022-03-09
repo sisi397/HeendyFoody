@@ -2,6 +2,7 @@ package com.heendy.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -90,6 +91,26 @@ public class CartDAO {
 		
 		cstmt.close();
 		conn.close();
+	}
+	
+	/**
+	 * 
+	 * @param cartId
+	 * @throws SQLException
+	 * 
+	 * 장바구니 삭제 기능
+	 * 1. 현재 멤버 아이디랑 장바구니 생성한 id비교 => 틀리면 예외 발생
+	 * 2. 맞으면 삭제
+	 */
+	public void deleteCartById(int cartId) throws SQLException {
+		Connection conn = DBManager.getConnection();
+		
+		String sql = "DELETE FROM CART WHERE cart_id = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setInt(1, cartId);
+		
+		pstmt.executeUpdate();
 	}
 	
 }
