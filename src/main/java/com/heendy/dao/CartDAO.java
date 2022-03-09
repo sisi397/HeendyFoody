@@ -101,18 +101,19 @@ public class CartDAO {
 	 * @throws SQLException
 	 * 
 	 * 장바구니 삭제 기능
-	 * 1. 현재 멤버 아이디랑 장바구니 생성한 id비교 => 틀리면 예외 발생
-	 * 2. 맞으면 삭제
 	 */
-	public void deleteCartById(int cartId) throws SQLException {
+	public void deleteCartByCartIdAndMemberId(int cartId, int memberId) throws SQLException {
 		Connection conn = DBManager.getConnection();
+
+		CallableStatement cstmt = conn.prepareCall("{call sp_delete_cart(?,?)}");
 		
-		String sql = "DELETE FROM CART WHERE cart_id = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
+		cstmt.setInt(1, cartId);
+		cstmt.setInt(2, memberId);
 		
-		pstmt.setInt(1, cartId);
+		cstmt.execute();
 		
-		pstmt.executeUpdate();
+		cstmt.close();
+		conn.close();
 	}
 	
 }
