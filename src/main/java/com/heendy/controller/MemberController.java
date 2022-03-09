@@ -62,8 +62,7 @@ public class MemberController extends HttpServlet {
 	}
 	
 	private void doHandle(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		//커맨드 패턴 (액션세팅)
-		String nextPage = null;		// redirect해줄 다음 페이지
+		//메서드팩토리 패턴 (액션세팅)
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		String command = request.getPathInfo();	//URL에서 요청명 가져오기
@@ -71,7 +70,10 @@ public class MemberController extends HttpServlet {
 		
 		ActionFactory af = MemberActionFactory.getInstance();
 		Action action = af.getAction(command);
-		action.execute(request, response);
 		
+		if(command != null) {
+		System.out.println(action + "을 실행합니다.");
+		action.execute(request, response);
+		}
 	}
 }

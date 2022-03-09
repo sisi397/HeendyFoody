@@ -15,7 +15,7 @@ public class AddMemberAction implements Action{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("회원을 추가합니다.");
+		System.out.println("회원을 추가하는 중입니다.");
 		String name = request.getParameter("name");
 		String pwd = request.getParameter("pwd");
 		String email = request.getParameter("email");
@@ -24,7 +24,6 @@ public class AddMemberAction implements Action{
 		MemberDTO memberVO = new MemberDTO(name, pwd, email, address, role_id);
 		memberDAO.addMember(memberVO);
 		response.sendRedirect("/HeendyFoody/pages/login/memberLogin.jsp");
-//		nextPage = "/pages/login/memberLogin.jsp";
 	}
 
 }

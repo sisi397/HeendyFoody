@@ -23,18 +23,10 @@ public class MemberDAO {
 	  return instance;
 	}
 
-	//회원 목록 조회
-	public List<MemberDTO> listMembers() {
-		List<MemberDTO> membersList = new ArrayList();
-		
-		return membersList;
-	}
-
 	//회원 추가하기
 	public void addMember(MemberDTO memberVO) {
-		int result = 0;
 		String sql = "insert into member(member_name, member_password, member_email, address, role_id) "
-	    		+ "values(?, ?, ?, ?, ?) ";
+	    		+ "values(?, admin.pack_encryption_decryption.func_encrypt(?), ?, ?, ?) ";
 	    Connection conn = null;
 	    PreparedStatement pstmt = null;	    
 	    try {
@@ -77,4 +69,50 @@ public class MemberDAO {
 	    }
 		return result;
 	}
+	//사용자 이메일로 패스워드 찾기
+	public String findMemberPassword(MemberDTO memberVO) {
+		String result = "";
+		String email = memberVO.getMemberEmail();
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    try {
+	    	conn = DBManager.getConnection();
+	    	String sql = "select admin.pack_encryption_decryption.func_decrypt(member_password) as pwd from member";
+	    			sql += " where member_email=?";
+	    	pstmt = conn.prepareStatement(sql);
+	    	pstmt.setString(1, email);
+		    ResultSet rs = pstmt.executeQuery();
+		    rs.next();
+		    result = rs.getString("pwd");
+		    System.out.println("찾은 패스워드 = " + result);
+	    }catch(Exception e) {
+	    	e.printStackTrace();
+	    }finally {
+	    	DBManager.close(conn, pstmt);
+	    }
+		return result;
+	}
+	
+	//아이디 중복여부체크
+	public int duplicateId(String name) {
+		int result = 0;
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    try {
+	    	conn = DBManager.getConnection();
+	    	String sql = "select count(id) as cnt from member where member_name =?";
+	    	pstmt = conn.prepareStatement(sql);
+	    	pstmt.setString(1, name);
+		    ResultSet rs = pstmt.executeQuery();
+		    if(rs.next() == true) {
+		    	result = rs.getInt("cnt");
+		    }
+	    }catch(Exception e) {
+	    	e.printStackTrace();
+	    }finally {
+			DBManager.close(conn, pstmt);
+		}
+		return result;
+	}
+	
 }

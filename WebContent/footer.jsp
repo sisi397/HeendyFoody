@@ -54,11 +54,11 @@
             	<strong>(주)흰디푸디</strong><br>
 				<span> 대표 : 현대IT&E 개발자 양성교육 1차 PJT 4조</span><br>
 				<span> 주소 : 서울 송파구 중대로 135 </span><br>
-				이메일 : heendy@hyundai.com (제휴 문의, 02-1212-0761) <br>
-				<p class='essential-info'><em>현대식품관 투홈의 개별 판매자가 등록한 상품(브랜드직송) 상품에 대한 광고, 상품주문, 배송, 환불의 의무와 책임은 각 판매자가 부담하고,<br>
-				현대식품관 투홈은 통신판매 중개자로서의 의무와 책임을 다합니다.</em><br>
+				이메일 : heendyfoody@hyundai.com (제휴 문의, 02-1212-0761) <br>
+				<p class='essential-info'><em>흰디푸디 투홈의 개별 판매자가 등록한 상품(브랜드직송) 상품에 대한 광고, 상품주문, 배송, 환불의 의무와 책임은 각 판매자가 부담하고,<br>
+				흰디푸디 투홈은 통신판매 중개자로서의 의무와 책임을 다합니다.</em><br>
 				고객님의 안전거래를 위해 현금결제 시 KG이니시스 구매안전 서비스를 이용하실 수 있습니다.<br>
-				<small class='copyright'>Copyright &copy; Hyundai Department Store. All rights reserved.</small>
+				<small class='copyright'>Copyright &copy; Hyundai Foody Store. All rights reserved.</small>
         </div>
     </div>
 

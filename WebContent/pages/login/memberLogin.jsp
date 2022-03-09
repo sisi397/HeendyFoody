@@ -13,17 +13,20 @@ request.setCharacterEncoding("UTF-8");
 <head>
 <meta charset="UTF-8">
 <title>흰디푸디 투홈</title>
-<link rel="stylesheet" type="text/css"
-	href="../../static/css/common/common.min.css">
 <!-- 공통 CSS -->
 <link rel="stylesheet" type="text/css"
-	href="../../static/css/common/member.min.css"> <!-- 멤버 Login CSS -->
+	href="../../static/css/common/common.min.css">
+	
+<!-- 멤버 Login CSS -->
+<link rel="stylesheet" type="text/css"
+	href="../../static/css/common/member.min.css"> 
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script type="text/javascript" src="../../static/js/function.min.js"></script>
+<script type="text/javascript" src="../../static/js/loginForm.js"></script>
+
 </head>
 
-<body>
 	<jsp:include page="../../header.jsp" flush="false" />
 	<div id="wrap" class="member login">
 		<div id="contents">
@@ -53,10 +56,10 @@ request.setCharacterEncoding("UTF-8");
 							id="idSaveYn" name="idSaveYn" class="big" checked><span>아이디저장</span></label>
 							
 						<ul class="btn-group login-surport">
-							<li><a href="">회원가입</a></li>
+							<li><a href="${contextPath}/pages/login/memberJoin.jsp">회원가입</a></li>
 							<li><a href="">아이디/비밀번호 찾기</a></li>
 						</ul>
-						<button type="submit" class="btn fill big black">로그인</button>
+						<button type="submit" id="btnLogin" class="btn fill big black">로그인</button>
 					</fieldset>
 				</form>
 			</div>
@@ -64,5 +67,4 @@ request.setCharacterEncoding("UTF-8");
 	</div>
 
 	<jsp:include page="../../footer.jsp" flush="false" />
-</body>
 </html>
