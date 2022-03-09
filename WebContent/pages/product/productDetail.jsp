@@ -86,13 +86,17 @@
                         <a href="#">후르츠사계절</a>
                     </div>
                     <div class="price" id="price_section">
+                    	<c:if test="${product.discountRate != 0 }">
                     	<span class="txt-sale">
                     		<em>${product.discountRate }</em>%
                     	</span>
+                    	</c:if>
                     	<span class="txt-price">
                     		<strong><em>${product.discountPrice }</em>원</strong>
                     		<div class="popinline"></div>
+                    		<c:if test="${product.discountRate != 0 }">
                     		<del>${product.productPrice }</del>
+                    		</c:if>
                     	</span>
                     	
                     	<div class="probtn">

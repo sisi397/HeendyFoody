@@ -89,4 +89,26 @@ public class ProductDAO {
 	    }
 	    return product;
 	}    
+
+	public int totalCountProduct() {
+		int result = 0;
+	    String sql = "select count(*) from product";
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;    
+	    System.out.println("DAO : totalCountProduct");
+	    try {
+	    	conn = DBManager.getConnection();
+	    	pstmt = conn.prepareStatement(sql);
+	    	rs = pstmt.executeQuery();
+	      while (rs.next()) {
+	    	  result = rs.getInt(1);
+	      }
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    } finally {
+	    	DBManager.close(conn, pstmt, rs);
+	    }
+	    return result;
+	}
 }
