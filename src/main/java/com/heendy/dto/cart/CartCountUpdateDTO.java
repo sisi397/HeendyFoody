@@ -9,11 +9,14 @@ public class CartCountUpdateDTO {
 	
 	private int cartId;
 	
+	private int memberId;
+	
 	private int count;
 	
 
-	public CartCountUpdateDTO(int cartId, int count) {
+	public CartCountUpdateDTO(int cartId, int memberId, int count) {
 		this.cartId = cartId;
+		this.memberId = memberId;
 		this.count = count;
 	}
 
@@ -23,6 +26,15 @@ public class CartCountUpdateDTO {
 
 	public void setCartId(int cartId) {
 		this.cartId = cartId;
+	}
+
+	
+	public int getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
 	}
 
 	public int getCount() {
