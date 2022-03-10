@@ -13,11 +13,6 @@ request.setCharacterEncoding("UTF-8");
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css"
-	href="../../static/css/common/common.min.css">
-<!-- 공통 CSS -->
-<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-<script type="text/javascript" src="../../static/js/function.min.js"></script>
 
 <title>흰디푸디 투홈</title>
 </head>
@@ -27,10 +22,10 @@ request.setCharacterEncoding("UTF-8");
 		<h2>흰디푸디 회원가입</h2>
 
 		<div class="container">
-			<p class="txt" style="margin: 10px 0px 20px;">가입정보를 입력해 주세요.</p>
+			<p class="txt" style="margin: 10px 0px 20px;">가입정보를 입력해 주세요. (* 필수 입력사항)</p>
 			<form name="joinMemberForm"
 				action="${contextPath}/member/addMember.do" method="post">
-				<table align="center">
+				<table>
 					<tr>
 						<td width="400" style="padding: 30px">
 							<input type="radio" name="role" value="2" checked="checked" style="position: inherit;">일반 회원 
@@ -41,7 +36,10 @@ request.setCharacterEncoding("UTF-8");
 						<td width="200"><p>사용자 아이디 *</td>
 					</tr>
 					<tr>
-						<td width="400"><input type="text" name="name"></td>
+						<td width="400"><input type="text" name="name" style="width:310px">
+						<input type="hidden" name="hidden_name">
+						<button type="button" class="btn fill black" onclick="id_check()">중복확인</button>
+						</td>
 					</tr>
 					<tr>
 						<td width="200"><p>비밀번호 *</td>

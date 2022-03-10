@@ -126,19 +126,21 @@ public class MemberDAO {
 		return result;
 	}
 
-	//아이디 중복여부체크
+	//아이디 중복여부체크 (1이면 사용가능, 0이면 불가능)
 	public int duplicateId(String name) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = DBManager.getConnection();
-			String sql = "select count(id) as cnt from member where member_name =?";
+			String sql = "select * from member where member_name=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.next() == true) {
-				result = rs.getInt("cnt");
+			if(rs.next()) {
+				result = 0;
+			}else {
+				result = 1;
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

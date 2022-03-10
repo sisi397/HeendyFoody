@@ -31,8 +31,9 @@ request.setCharacterEncoding("UTF-8");
 
 <!-- main 페이지 JS -->
 <script type="text/javascript" src="${contextPath}/static/js/main.min.js"></script>
-<!-- 아직 안씀 -->
-<script type="text/javascript" src="${contextPath}/static/js/loginForm.js"></script>
+
+<!-- 회원가입시 input 제약조건 JS -->
+<script type="text/javascript" src="${contextPath}/static/js/memberJoin.js"></script>
 </head>
 <body>
 
@@ -43,7 +44,7 @@ request.setCharacterEncoding("UTF-8");
 			<!-- toparea// -->
 			<div class="toparea">
 				<h1>
-					<a href="${contextPath}/index.jsp"><img
+					<a href="${contextPath}/member/index.do"><img
 						src="${contextPath}/static/images/common/header_logo.png"
 						alt="현대식품관"></a>
 				</h1>
@@ -51,12 +52,12 @@ request.setCharacterEncoding("UTF-8");
 				<div class="util">
 					<c:choose>
 						<c:when test="${empty sessionScope.loginUser}">
-							<!-- 로그인 전 -->
-							<a href="${contextPath}/pages/login/memberLogin.jsp">로그인</a>
-							<a href="${contextPath}/pages/login/memberJoin.jsp">회원가입</a>
+							<!-- 로그인 전 보여지는 부분-->
+							<a href="${contextPath}/member/memberLogin.do">로그인</a>
+							<a href="${contextPath}/member/memberJoin.do">회원가입</a>
 						</c:when>
 						<c:otherwise>
-							<!-- 로그인 후 -->
+							<!-- 로그인 후 보여지는 부분-->
 							<a style="font-weight: bold">${sessionScope.loginUser.getMemberName()}님! 반갑습니다.</a>
 							<a href="${contextPath}/member/logout.do">로그아웃</a>
 						</c:otherwise>
