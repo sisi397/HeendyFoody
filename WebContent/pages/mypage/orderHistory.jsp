@@ -54,7 +54,7 @@
 		                </label>
 		                <div class="contr">
 		                  <div class="info1">
-	                        <a href="${contextPath}/product/detail?pid=${productDTO.productId}">
+	                        <a href="${contextPath}/product/detail?pid=${orderDTO.productId}">
 	                          <strong class="txt-ti ellipsis product-name">${orderDTO.productName}</strong>
 	                        </a>
 	                        <p class="company-name">${orderDTO.companyName}</p>                      

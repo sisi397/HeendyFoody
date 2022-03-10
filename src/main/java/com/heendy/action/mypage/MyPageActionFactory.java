@@ -22,6 +22,8 @@ public class MyPageActionFactory implements ActionFactory {
 	         action = new MyPageAction();
 	      } else if (command.equals("/order_list")) {
 	          action = new OrderListAction();
+	      } else if (command.equals("/wish")) {
+	    	  action = new WishAction();
 	      }
 	    
 		return action;

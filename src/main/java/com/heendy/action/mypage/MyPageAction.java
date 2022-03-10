@@ -1,6 +1,7 @@
 package com.heendy.action.mypage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.heendy.action.Action;
 //import com.heendy.dto.MemberDTO;
 //import com.heendy.dao.WishDAO;
+import com.heendy.dao.WishDAO;
+import com.heendy.dto.WishDTO;
 
 public class MyPageAction implements Action {
 
@@ -27,6 +30,20 @@ public class MyPageAction implements Action {
 //			WishDAO wishDAO = WishDAO.getInstance();
 //	    	
 //	    }
+		
+		WishDAO wishDAO = WishDAO.getInstance();
+		int totalCount = wishDAO.totalWishCount(6);
+		
+		int beginRow = 1;
+		int endRow = 5;
+		if(endRow > totalCount) {
+			endRow = totalCount;
+		}
+		
+		ArrayList<WishDTO> wishList = wishDAO.listWish(beginRow, endRow, 6);
+		
+	    request.setAttribute("totalCount", totalCount);
+	    request.setAttribute("wishList", wishList);
 		
 		request.getRequestDispatcher(url).forward(request, response);
 	}

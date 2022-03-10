@@ -60,27 +60,27 @@
 		  
 		   <section class="like-section">
 		     <header class="header">
-		       <h4><span>좋아요 </span><strong>8</strong></h4>
-		       <a href="${contextPath}/mypage/wish" class="btn-line">더보기</a>
+		       <h4><span>좋아요 </span><strong>${totalCount}</strong></h4>
+		       <a href="${contextPath}/mypage/wish?pno=1" class="btn-line">더보기</a>
 		     </header>
 		  
 		     <ul class="product-list small">
-		       <c-forEach items="${wishList}" var="wishDTO">
+		       <c:forEach items="${wishList}" var="wishDTO">
 		         <li> <!-- 정상 -->
-			       <a href="#">
+			       <a href="${contextPath}/product/detail?pid=${wishDTO.productId}">
 			         <span class="thumb">
-			           <img src="#" alt="[고메공방] 미친치즈돈까스">
+			           <img src="${wishDTO.imageUrl}" alt="${wishDTO.productName}">
 			         </span>
-	                 <strong class="txt-ti ellipsis">[고메공방] 미친치즈돈까스</strong>
+	                 <strong class="txt-ti ellipsis">${wishDTO.productName}</strong>
 	               </a>
 		           <span class="info">
 		             <span class="txt-price">
-			           <strong><em>14,900</em>원</strong>
-			           <!-- 정상가가 혜택가보다 큰 경우 -->       
+			           <strong><em>${wishDTO.discountPrice}</em>원</strong>
+			           <del>${wishDTO.productPrice}</del>       
 		             </span>
 		           </span>
 		         </li>    
-		       </c-forEach>  
+		       </c:forEach>  
 		     </ul>
 		   </section>
 		   
