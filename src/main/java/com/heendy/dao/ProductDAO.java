@@ -1,0 +1,114 @@
+package com.heendy.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import com.heendy.dto.ProductDTO;
+
+import com.heendy.utils.*;
+
+public class ProductDAO {
+	private ProductDAO() {  } //싱글턴 패턴 처리
+    private static ProductDAO instance = new ProductDAO();
+    public static ProductDAO getInstance() {
+      return instance;
+    }  
+	  
+	public ArrayList<ProductDTO> listProduct(int beginRow, int endRow, String sort) {	
+		System.out.println(beginRow + " " + endRow);
+	    ArrayList<ProductDTO> productList = new ArrayList<ProductDTO>();
+	    String sql = "select  rnum, product_id, company_id, product_price, product_name, image_url, product_count, product_reg_date, discount_rate, deleted, category_id, discount_price";
+	    sql += " from (select row_number() over(order by "+sort+") as rnum, product_id, company_id, product_price, product_name, image_url, product_count, product_reg_date, discount_rate, deleted, category_id, discount_price from product) where rnum between "+ beginRow + " and " + endRow;
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;    
+	    System.out.println("DAO : listProduct");
+	    try {
+	    	conn = DBManager.getConnection();
+	    	pstmt = conn.prepareStatement(sql);
+	    	rs = pstmt.executeQuery();
+	    	System.out.println(sql);
+	    	while (rs.next()) {
+	        ProductDTO product = new ProductDTO();
+	        product.setProductId(rs.getInt("product_id"));
+	        product.setCompanyId(rs.getInt("company_id"));
+	        product.setProductPrice(rs.getInt("product_price"));
+	        product.setProductName(rs.getString("product_name"));
+	        product.setImageUrl(rs.getString("image_url"));
+	        product.setProductCount(rs.getInt("product_count"));
+	        product.setProductRegDate(rs.getString("product_reg_date"));
+	        product.setDiscountRate(rs.getInt("discount_rate"));
+	        product.setDeleted(rs.getInt("deleted"));
+	        product.setCategoryId(rs.getInt("category_id"));
+	        product.setDiscountPrice(rs.getInt("discount_price"));
+	        productList.add(product);
+	        System.out.println(product.getProductId());
+	    	}
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    } finally {
+	    	DBManager.close(conn, pstmt, rs);
+	    }
+	    return productList;
+	  }
+
+	public ProductDTO detailProduct(String pid) {
+		int productId = Integer.parseInt(pid);
+		ProductDTO product = new ProductDTO();
+	    String sql = "select * from product where product_id = ?";
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;    
+	    System.out.println("DAO : detailProduct");
+	    try {
+	    	conn = DBManager.getConnection();
+	    	pstmt = conn.prepareStatement(sql);
+	    	pstmt.setInt(1, productId);
+	    	rs = pstmt.executeQuery();
+	    	System.out.println(sql);
+	      while (rs.next()) {
+	        product.setProductId(rs.getInt("product_id"));
+	        product.setCompanyId(rs.getInt("company_id"));
+	        product.setProductPrice(rs.getInt("product_price"));
+	        product.setProductName(rs.getString("product_name"));
+	        product.setImageUrl(rs.getString("image_url"));
+	        product.setProductCount(rs.getInt("product_count"));
+	        product.setProductRegDate(rs.getString("product_reg_date"));
+	        product.setDiscountRate(rs.getInt("discount_rate"));
+	        product.setDeleted(rs.getInt("deleted"));
+	        product.setCategoryId(rs.getInt("category_id"));
+	        product.setDiscountPrice(rs.getInt("discount_price"));
+	        System.out.println(product.getProductId());
+	      }
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    } finally {
+	    	DBManager.close(conn, pstmt, rs);
+	    }
+	    return product;
+	}    
+
+	public int totalCountProduct() {
+		int result = 0;
+	    String sql = "select count(*) from product";
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;    
+	    System.out.println("DAO : totalCountProduct");
+	    try {
+	    	conn = DBManager.getConnection();
+	    	pstmt = conn.prepareStatement(sql);
+	    	rs = pstmt.executeQuery();
+	      while (rs.next()) {
+	    	  result = rs.getInt(1);
+	      }
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    } finally {
+	    	DBManager.close(conn, pstmt, rs);
+	    }
+	    return result;
+	}
+}
