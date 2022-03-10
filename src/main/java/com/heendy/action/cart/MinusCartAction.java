@@ -3,6 +3,7 @@ package com.heendy.action.cart;
 import java.io.IOException;
 import java.sql.SQLException;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +30,8 @@ public class MinusCartAction implements Action {
 
 		/* 테스트용 */
 		int memberId = 6;
+		
+		
 
 		try {
 			int cartId = Integer.parseInt(request.getParameter("cart_id"));

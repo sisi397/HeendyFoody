@@ -7,7 +7,7 @@ package com.heendy.common;
  * */
 public enum SQLErrorCode {
 
-	/*장바구니 관련 예외 코드*/
+	/*장바구니, 주문 관련 예외 코드*/
 	ALREADY_CART_EXIST(20000),
 	
 	LACK_OF_STOCK(20001),

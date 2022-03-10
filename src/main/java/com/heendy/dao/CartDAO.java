@@ -11,8 +11,8 @@ import com.heendy.dto.cart.CreateCartDTO;
 import com.heendy.utils.DBManager;
 
 /**
- * @author : 이승준
- * @version: 1
+ * @author 이승준
+ * @version 1
  * 장바구니 DAO 클래스
  * */
 public class CartDAO {
