@@ -12,17 +12,24 @@ import com.heendy.dao.ProductDAO;
 import com.heendy.dao.WishDAO;
 import com.heendy.dto.ProductDTO;
 
+/**
+ * @author 김시은
+ * 
+ * 좋아요 추가 Action 클래스
+ * 
+ * */
+
 public class WishInsertAction implements Action{
 
+	private final WishDAO wishDAO = WishDAO.getInstance();
+	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int mid = Integer.parseInt(request.getParameter("memberId"));
 		int pid = Integer.parseInt(request.getParameter("productId"));
 		int cid = Integer.parseInt(request.getParameter("companyId"));
-		System.out.println(mid + " " + pid + " " + cid);
 		
 		// 좋아요 추가
-		WishDAO wishDAO = WishDAO.getInstance();
 		int wishInsert = wishDAO.insertWish(mid, pid, cid);
 		
 		if(wishInsert == 1) {
@@ -31,9 +38,6 @@ public class WishInsertAction implements Action{
 			System.out.println("실패");
 		}
 		
-//		String url = "pages/product/productDetail.jsp";
-//	    RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-//	    dispatcher.forward(request, response);
 	}
 
 }

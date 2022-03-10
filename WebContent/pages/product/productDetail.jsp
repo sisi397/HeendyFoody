@@ -31,14 +31,9 @@
     <link rel="stylesheet" type="text/css" href="../static/css/main.min.css">
     <link rel="stylesheet" type="text/css" href="../static/css/css-library.min.css">
     <link rel="stylesheet" type="text/css" href="../static/css/s-style_v2.min.css">
-
-    <link rel="shortcut icon" type="image/x-icon" href="/UIUX/w/pjtCom/images/common/favicon.ico">
+    
     <script type="text/javascript" src="../static/js/jquery-library.min.js"></script>
     <script type="text/javascript" src="../static/js/function.min.js"></script>
-
-    <script type="text/javascript" src="../static/js/common.js?ver=1646546415251"></script>
-    <script type="text/javascript" src="../static/js/product.search.pc.js?ver=1646546415251"></script>
-    <script type="text/javascript" src="/UIUX/w/pjtCom/js/v1/main.min.js?ver=0615"></script>
 </head>
 
 <body>
@@ -79,11 +74,15 @@
                         <strong>${product.productName }</strong>
                         <small></small>
                     </h2>
+                    
+                    <c:if test="${product.discountRate > 0 }">
                     <div class="tag">
-                        <span>예약배송</span>
+                        <span>세일상품</span>
                     </div>
+                    </c:if>
+                    
                     <div class="brandwrap" id="brand_section">
-                        <a href="#">후르츠사계절</a>
+                        <a href="#">${product.companyName }</a>
                     </div>
                     <div class="price" id="price_section">
                     	<c:if test="${product.discountRate != 0 }">
@@ -102,7 +101,6 @@
                     	<div class="probtn">
                     		<button type="button" id="wish" class="btn-wish" onclick="wishUpdate()">
                     		좋아요
-                    		::after
                     		</button>
                     	</div>
                     </div>
@@ -125,7 +123,8 @@
                             <dt id="tagListSection1">추천태그</dt>
                             <dd id="tagListSection2">
                             	<div class="hashtag">
-                            		<a href="">#카테고리명</a>
+                            		<a href="${contextPath }/product/list?cate=${product.pcategoryId }&pcate=${product.pcategoryId }&menu=category">#${product.parentCategoryName }</a>
+                            		<a href="${contextPath }/product/list?cate=${product.categoryId }&pcate=${product.pcategoryId }&menu=category">#${product.categoryName }</a>
                             	</div>
                             </dd>
                             
@@ -145,7 +144,7 @@
                                                 <button type="button" class="btn-up" onclick="fnOptionEaUp(this);">수량 올리기</button>
                                             </div>
                                             <span class="txt-price"><em>
-                                            ${product.productPrice }
+                                            ${product.discountPrice }
                                             </em>원</span>
                                         </div>
                                     </div>  
@@ -155,17 +154,19 @@
                     </div>
                     
                     <div class="buybutton" id="top_buybutton">
-                    	<p class="txt-total">총 금액 <strong><em>${product.productPrice }</em>원</strong></p>
-                        <!-- 
+                    	<p class="txt-total">총 금액 <strong><em>${product.discountPrice }</em>원</strong></p>
+                        <c:if test="${product.productCount eq 0 }">
                         <div class="btns">
                         	<button type="button" class="btn darkgray bigger btn-buy" onclick="fnPopupScaleOpenA(this, '#p_popCartAdd');">장바구니 넣어두기</button>
                             <button type="button" class="btn fill gray bigger btn-buy" onclick="fnPDPopWeightingNight('#p_popWeightingNight');">재입고 알림 신청</button>                                                            
                         </div> 
-                        --> 
+                        </c:if>
+                        <c:if test="${product.productCount ne 0 }">
                         <div class="btns">
-                        	<button type="button" class="btn orange bigger btn-buy">장바구니</button>
-                        	<button type="button" class="btn fill orange bigger btn-buy">바로구매</button>
+                        	<button type="button" class="btn orange bigger btn-buy" onclick="cartProduct()">장바구니</button>
+                        	<button type="button" class="btn fill orange bigger btn-buy" onclick="buyProduct()">바로구매</button>
                         </div>               
+                        </c:if>
                     </div>
                 </div>
                 <!-- //proinfo -->
@@ -179,7 +180,6 @@
                         <a href="#p_proBuyinfo"><span>구매정보</span></a>
                         <a href="#p_cancel"><span>취소/교환/반품</span></a>
                         <a href="#p_proReview"><span>리뷰 <em id="reviewCnt">
-                                11
                         </em></span></a>
                     </div>
                     <!-- //tabs -->            
@@ -228,17 +228,18 @@
 
                     <div class="buybutton">
                         <p class="txt-total">총 금액 <strong><em>39,900</em>원</strong></p>
-                        <!-- 수량 없을 때 
+                        <c:if test="${product.productCount eq 0 }">
                         <div class="btns">
 	                        <button type="button" class="btn darkgray bigger btn-buy" onclick="fnPopupScaleOpenA(this, '#p_popCartAdd');">장바구니 넣어두기</button>
 	                        <button type="button" class="btn fill gray bigger btn-buy" onclick="fnPDPopWeightingNight('#p_popWeightingNight');">재입고 알림 신청</button>                                           
                         </div>
-                        -->
-                        
+                        </c:if>
+                        <c:if test="${product.productCount ne 0 }">
                         <div class="btns">
                         	<button type="button" class="btn orange bigger btn-buy">장바구니</button>
                         	<button type="button" class="btn fill orange bigger btn-buy">바로구매</button>
                         </div>
+                        </c:if>
                     </div>
                 </div>
             </div>
@@ -248,29 +249,47 @@
 </div>
 <script>
 // 시작할 때 좋아요 여부 확인 
-var wish = ${wishIs };
 $(document).ready(function(){
-	if(wish === 1){
-		document.getElementById('wish').className = "btn-wish active";
-	}else{
-		document.getElementById('wish').className = "btn-wish";
-	}
+	// 상품 정보 가져오기
+	/*
+	$.ajax({
+		url:'${contextPath}/product/select.do?pid=${param.pid }',
+		type: 'get',
+		dataType:'json',
+		success : function(data){
+			console.log(data);
+			'${product }' = data;
+		}
+	});
+	*/
 	
+	//좋아요 여부 가져오기
+	$.ajax({
+		url:'${contextPath}/wish/check.do?pid=${param.pid }',
+		type: 'get',
+		dataType:'json',
+		success : function(data){
+			if(data.wish === 1){
+				document.getElementById('wish').className = "btn-wish active";
+			}else{
+				document.getElementById('wish').className = "btn-wish";
+			}
+		}
+	});
 });
 
 function wishUpdate(){
-	var path = "${contextPath}"
 	if(document.getElementById('wish').className === "btn-wish"){ // 좋아요가 안눌려있을 경우
 		document.getElementById('wish').className = "btn-wish active";
 		
 		//좋아요 insert
 		$.ajax({
-			url:path + '/wish/insert',
+			url:'${contextPath}/wish/insert.do',
 			type: 'post',
 			dataType:'json',
 			data: {
 				productId: ${product.productId },
-				memberId: 6, // 세션에서 memberId 가져오기
+				memberId: 7, // 세션에서 memberId 가져오기
 				companyId: ${product.companyId },
 			},
 			success : function(data){
@@ -283,18 +302,39 @@ function wishUpdate(){
 		
 		//좋아요 delete
 		$.ajax({
-			url:path + '/wish/delete',
+			url:'${contextPath}/wish/delete.do',
 			type: 'post',
 			dataType:'json',
 			data: {
 				productId: ${product.productId },
-				memberId: 6, // 세션에서 memberId 가져오기
+				memberId: 7, // 세션에서 memberId 가져오기
 			},
 			success : function(data){
 				console.log("fin");
 			}
 		});
 	}
+}
+
+function buyProduct(){
+	$.ajax({
+		url:'${contextPath}/order/orderProduct.do',
+		type: 'post',
+		dataType:'x-www-form-urlencoded',
+		data: {
+			product_id: ${product.productId },
+			company_id: ${product.companyId },
+			product_count : ${product.productCount}
+		},
+		success : function(data){
+			console.log(data);
+			console.log("fin");
+		}
+	});
+}
+
+function cartProduct(){
+	
 }
 </script>
 
