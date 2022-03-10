@@ -1,9 +1,11 @@
 package com.heendy.dao;
 
+import java.sql.Array;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import com.heendy.dto.order.CreateCartOrderDTO;
 import com.heendy.dto.order.CreateOrderDTO;
 import com.heendy.utils.DBManager;
 
@@ -34,6 +36,25 @@ public class OrderDAO {
 		cstmt.setInt(4, data.getCount());
 		
 		cstmt.execute();
+		
+		cstmt.close();
+		conn.close();
+	}
+	
+	public void createCartOrder(CreateCartOrderDTO data) throws SQLException {
+		Connection conn = DBManager.getConnection();
+		
+		
+		CallableStatement cstmt = conn.prepareCall("{ call sp_create_order_from_cart(?,?) }");
+		
+		
+		Array cartIds = ((oracle.jdbc.OracleConnection)conn).createOracleArray("USER01.CARTIDSARRAY", data.getCartIds());
+		
+		cstmt.setInt(1, data.getMemberId());
+		cstmt.setArray(2, cartIds);
+		
+		cstmt.execute();
+		
 		
 		cstmt.close();
 		conn.close();
