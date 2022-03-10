@@ -32,10 +32,10 @@ request.setCharacterEncoding("UTF-8");
 				action="${contextPath}/member/addMember.do" method="post">
 				<table align="center">
 					<tr>
-						<td width="400" style="padding: 30px"><input type="radio"
-							name="role" value="1" checked="checked" style="position: inherit;">일반 회원 <input
-							type="radio" name="role" value="2"
-							style="position: inherit; margin-left: 100px">흰디 어드민</td>
+						<td width="400" style="padding: 30px">
+							<input type="radio" name="role" value="2" checked="checked" style="position: inherit;">일반 회원 
+							<input type="radio" name="role" value="1" style="position: inherit; margin-left: 100px">흰디 어드민
+						</td>
 					</tr>
 					<tr>
 						<td width="200"><p>사용자 아이디 *</td>
@@ -49,7 +49,12 @@ request.setCharacterEncoding("UTF-8");
 					<tr>
 						<td width="400"><input type="password" name="pwd"></td>
 					</tr>
-
+										<tr>
+						<td width="200"><p>비밀번호 확인 *</td>
+					</tr>
+					<tr>
+						<td width="400"><input type="password" name="chkpwd"></td>
+					</tr>
 					<tr>
 						<td width="200"><p>이메일</td>
 					</tr>
@@ -68,7 +73,7 @@ request.setCharacterEncoding("UTF-8");
 					<tr>
 						<td width="400">
 							<div style="margin: 0 auto;padding-top: 30px;">
-								<button type="submit" class="btn fill big black">가입하기</button>
+								<button type="button" class="btn fill big black" style="margin-right:200px" onclick="login_save()">가입하기</button>
 								<button type="reset" class="btn fill big black">다시입력</button>
 							</div>
 						<td>

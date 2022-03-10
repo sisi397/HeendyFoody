@@ -66,12 +66,11 @@ public class MemberController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		String command = request.getPathInfo();	//URL에서 요청명 가져오기
-		System.out.println("action : " + command);
 		
 		ActionFactory af = MemberActionFactory.getInstance();
 		Action action = af.getAction(command);
 		
-		if(command != null) {
+		if(command != null && action != null) {
 		System.out.println(action + "을 실행합니다.");
 		action.execute(request, response);
 		}

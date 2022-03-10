@@ -2,6 +2,7 @@ package com.heendy.action.member;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,10 @@ public class AddMemberAction implements Action{
 		MemberDTO memberVO = new MemberDTO(name, pwd, email, address, role_id);
 		memberDAO.addMember(memberVO);
 		response.sendRedirect("/HeendyFoody/pages/login/memberLogin.jsp");
+		
+//	  	String url = "/index.jsp";	
+//	    RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+//	    dispatcher.forward(request, response);
 	}
 
 }

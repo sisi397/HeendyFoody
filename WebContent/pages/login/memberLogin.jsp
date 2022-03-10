@@ -21,13 +21,9 @@ request.setCharacterEncoding("UTF-8");
 <link rel="stylesheet" type="text/css"
 	href="../../static/css/common/member.min.css"> 
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.js"></script>
-<script type="text/javascript" src="../../static/js/function.min.js"></script>
-<script type="text/javascript" src="../../static/js/loginForm.js"></script>
-
 </head>
-
 	<jsp:include page="../../header.jsp" flush="false" />
+	
 	<div id="wrap" class="member login">
 		<div id="contents">
 			<div class="innercon">
@@ -57,7 +53,8 @@ request.setCharacterEncoding("UTF-8");
 							
 						<ul class="btn-group login-surport">
 							<li><a href="${contextPath}/pages/login/memberJoin.jsp">회원가입</a></li>
-							<li><a href="">아이디/비밀번호 찾기</a></li>
+							<li><a href="${contextPath}/pages/login/findId.jsp" onclick="window.open(this.href, '_blank', 'width=450, height=150'); return false;">아이디 찾기</a></li>
+							<li><a href="${contextPath}/pages/login/findPw.jsp" onclick="window.open(this.href, '_blank', 'width=450, height=200'); return false;">비밀번호 찾기</a></li>
 						</ul>
 						<button type="submit" id="btnLogin" class="btn fill big black">로그인</button>
 					</fieldset>

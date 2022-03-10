@@ -20,99 +20,164 @@ public class MemberDAO {
 	private MemberDAO() { }//싱글턴 패턴
 	private static MemberDAO instance = new MemberDAO();
 	public static MemberDAO getInstance() {
-	  return instance;
+		return instance;
 	}
 
 	//회원 추가하기
 	public void addMember(MemberDTO memberVO) {
 		String sql = "insert into member(member_name, member_password, member_email, address, role_id) "
-	    		+ "values(?, admin.pack_encryption_decryption.func_encrypt(?), ?, ?, ?) ";
-	    Connection conn = null;
-	    PreparedStatement pstmt = null;	    
-	    try {
-	    	conn = DBManager.getConnection();
-	    	pstmt = conn.prepareStatement(sql);
-		    pstmt.setString(1, memberVO.getMemberName());
-		    pstmt.setString(2, memberVO.getMemberPassword());
-		    pstmt.setString(3, memberVO.getMemberEmail());
-		    pstmt.setString(4, memberVO.getAddress());
-		    pstmt.setInt(5, memberVO.getRoleId());
-		    pstmt.executeUpdate();
-	    }catch(Exception e) {
-	    	e.printStackTrace();
-	    }finally {
-	    	DBManager.close(conn, pstmt);
-	    }
+				+ "values(?, admin.pack_encryption_decryption.func_encrypt(?), ?, ?, ?) ";
+		Connection conn = null;
+		PreparedStatement pstmt = null;	    
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberVO.getMemberName());
+			pstmt.setString(2, memberVO.getMemberPassword());
+			pstmt.setString(3, memberVO.getMemberEmail());
+			pstmt.setString(4, memberVO.getAddress());
+			pstmt.setInt(5, memberVO.getRoleId());
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt);
+		}
 	}
-	//로그인 기능
+	//아이디 비밀번호가 맞는지 체크 (로그인 기능)
 	public boolean isExisted(MemberDTO memberVO) {
 		boolean result = false;
 		String name = memberVO.getMemberName();
 		String pwd = memberVO.getMemberPassword();
-	    Connection conn = null;
-	    PreparedStatement pstmt = null;	    
-	    try {
-	    	conn = DBManager.getConnection();
+		Connection conn = null;
+		PreparedStatement pstmt = null;	    
+		try {
+			conn = DBManager.getConnection();
 			String sql = "select decode(count(*), 1, 'true', 'false') as result from member";
-			sql += " where member_name=? and member_password=?";
-	    	pstmt = conn.prepareStatement(sql);
-		    pstmt.setString(1, name);
-		    pstmt.setString(2, pwd);
-		    ResultSet rs = pstmt.executeQuery();
-		    rs.next();
-		    result = Boolean.parseBoolean(rs.getString("result"));
-		    System.out.println("result = " + result);
-	    }catch(Exception e) {
-	    	e.printStackTrace();
-	    }finally {
-	    	DBManager.close(conn, pstmt);
-	    }
-		return result;
-	}
-	//사용자 이메일로 패스워드 찾기
-	public String findMemberPassword(MemberDTO memberVO) {
-		String result = "";
-		String email = memberVO.getMemberEmail();
-	    Connection conn = null;
-	    PreparedStatement pstmt = null;
-	    try {
-	    	conn = DBManager.getConnection();
-	    	String sql = "select admin.pack_encryption_decryption.func_decrypt(member_password) as pwd from member";
-	    			sql += " where member_email=?";
-	    	pstmt = conn.prepareStatement(sql);
-	    	pstmt.setString(1, email);
-		    ResultSet rs = pstmt.executeQuery();
-		    rs.next();
-		    result = rs.getString("pwd");
-		    System.out.println("찾은 패스워드 = " + result);
-	    }catch(Exception e) {
-	    	e.printStackTrace();
-	    }finally {
-	    	DBManager.close(conn, pstmt);
-	    }
-		return result;
-	}
-	
-	//아이디 중복여부체크
-	public int duplicateId(String name) {
-		int result = 0;
-	    Connection conn = null;
-	    PreparedStatement pstmt = null;
-	    try {
-	    	conn = DBManager.getConnection();
-	    	String sql = "select count(id) as cnt from member where member_name =?";
-	    	pstmt = conn.prepareStatement(sql);
-	    	pstmt.setString(1, name);
-		    ResultSet rs = pstmt.executeQuery();
-		    if(rs.next() == true) {
-		    	result = rs.getInt("cnt");
-		    }
-	    }catch(Exception e) {
-	    	e.printStackTrace();
-	    }finally {
+			sql += " where member_name=? and member_password=admin.pack_encryption_decryption.func_encrypt(?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, pwd);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+			result = Boolean.parseBoolean(rs.getString("result"));
+			System.out.println("result = " + result);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
 			DBManager.close(conn, pstmt);
 		}
 		return result;
 	}
 	
+	//사용자 이메일과 이름으로 패스워드 찾기(비밀번호 찾기 기능)
+	public String findMemberPassword(String name, String email) {
+		String result = "";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBManager.getConnection();
+			String sql = "select admin.pack_encryption_decryption.func_decrypt(member_password) as pwd from member";
+			sql += " where member_name=? and member_email=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, email);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getString("pwd");
+				System.out.println("찾은 패스워드 = " + result);
+			}else {
+				//찾은 비밀번호가 없는경우
+				result = "입력된 정보가 다르거나 가입된 정보가 없습니다.";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt);
+		}
+		return result;
+	}
+	//사용자 이메일로 사용자 이름 찾기(아이디==이름 찾기 기능)
+	public String findMemberId(String email) {
+		String result = "";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBManager.getConnection();
+			String sql = "select member_name from member";
+			sql += " where member_email=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getString("member_name");
+				System.out.println("찾은 아이디 = " + result);
+			}else {
+				result = "가입한 아이디가 없습니다.";
+			}
+
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt);
+		}
+		return result;
+	}
+
+	//아이디 중복여부체크
+	public int duplicateId(String name) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBManager.getConnection();
+			String sql = "select count(id) as cnt from member where member_name =?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next() == true) {
+				result = rs.getInt("cnt");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt);
+		}
+		return result;
+	}
+
+	//회원 불러오기
+	public MemberDTO getMember(String name) {  
+
+		MemberDTO memberVO= null;
+		String sql = "select * from member where member_name=?";	     
+		Connection connn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			connn = DBManager.getConnection();
+			pstmt = connn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				memberVO = new MemberDTO();
+				memberVO.setMemberId(rs.getInt("member_id"));
+				memberVO.setMemberName(rs.getString("member_name"));
+				memberVO.setMemberPassword(rs.getString("member_password"));
+				memberVO.setMemberEmail(rs.getString("member_email"));
+				memberVO.setAddress(rs.getString("address"));
+				memberVO.setPoint(rs.getInt("point"));
+				memberVO.setMemberRegDate(rs.getDate("member_reg_date"));
+				memberVO.setRoleId(rs.getInt("role_id"));
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(connn, pstmt, rs);
+		}
+		return memberVO;
+	}
+
 }

@@ -13,11 +13,26 @@ request.setCharacterEncoding("UTF-8");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>흰디푸디 투홈</title>
 
 <!-- 공통 CSS -->
 <link rel="stylesheet" type="text/css"
 	href="${contextPath}/static/css/common/common.min.css">
+<link rel="stylesheet" type="text/css"
+	href="${contextPath}/static/css/common/css-library.min.css">
+<link rel="stylesheet" type="text/css"
+	href="${contextPath}/static/css/common/main.min.css">
+<link rel="stylesheet" type="text/css"
+	href="${contextPath}/static/css/common/member.min.css">
+
+<!-- 공통 JS / jquery 라이브러리 -->
+<script type="text/javascript" src="${contextPath}/static/js/function.min.js"></script>
+<script type="text/javascript" src="${contextPath}/static/js/jquery-library.min.js"></script>
+
+<!-- main 페이지 JS -->
+<script type="text/javascript" src="${contextPath}/static/js/main.min.js"></script>
+<!-- 아직 안씀 -->
+<script type="text/javascript" src="${contextPath}/static/js/loginForm.js"></script>
 </head>
 <body>
 
@@ -42,9 +57,7 @@ request.setCharacterEncoding("UTF-8");
 						</c:when>
 						<c:otherwise>
 							<!-- 로그인 후 -->
-							<li style="color: orange">
-							로그인 여부 : ${sessionScope.isLogin}
-								${sessionScope.loginUser.getMemberName()}(${sessionScope.loginUser.getMemberId()})</li>
+							<a style="font-weight: bold">${sessionScope.loginUser.getMemberName()}님! 반갑습니다.</a>
 							<a href="${contextPath}/member/logout.do">로그아웃</a>
 						</c:otherwise>
 					</c:choose>
