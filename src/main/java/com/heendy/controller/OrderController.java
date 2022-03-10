@@ -10,30 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
-import com.heendy.action.cart.CartActionFactory;
+import com.heendy.action.order.OrderActionFactory;
 
+@WebServlet("/order/*")
+public class OrderController extends HttpServlet {
 
-
-@WebServlet("/cart/*")
-public class CartController extends HttpServlet {
+	private final ActionFactory actionFactory = OrderActionFactory.getInstance();
 	
-	private final ActionFactory actionFactory = CartActionFactory.getInstance();
-
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		this.doHandle(req, res);
 	}
-	
-	
-	
-	
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		this.doHandle(req, res);
-	}
-
-
-
 
 	private void doHandle(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String command = req.getPathInfo();
@@ -42,7 +29,4 @@ public class CartController extends HttpServlet {
 		action.execute(req, res);
 		
 	}
-	
-	
-
 }

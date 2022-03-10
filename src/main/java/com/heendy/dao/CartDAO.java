@@ -6,12 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Optional;
 
+import com.heendy.dto.cart.CartCountUpdateDTO;
 import com.heendy.dto.cart.CreateCartDTO;
 import com.heendy.utils.DBManager;
 
-/*
- * @author : 이승준
- * @version: 1
+/**
+ * @author 이승준
+ * @version 1
  * 장바구니 DAO 클래스
  * */
 public class CartDAO {
@@ -24,9 +25,13 @@ public class CartDAO {
 		return INSTANCE;
 	}
 	
-	/*
-	 *  장바구니에 상품 추가 기능
-	 * */
+	/**
+	 * 
+	 * @param data
+	 * @throws SQLException
+	 * 
+	 * 장바구니 추가 기
+	 */
 	public void createCart(CreateCartDTO data) throws SQLException{
 	
 		Connection conn = DBManager.getConnection();
@@ -41,15 +46,74 @@ public class CartDAO {
 		
 		cstmt.execute();
 		
+		cstmt.close();
 		conn.close();
 		
 	}
 	
-	
-	public void addCart(int cartId) {
+	/**
+	 * 
+	 * @param data
+	 * @throws SQLException
+	 * 
+	 * 장바구니 수량 증가 기능
+	 */
+	public void addCartCount(CartCountUpdateDTO data) throws SQLException {
 		Connection conn = DBManager.getConnection();
 		
+		CallableStatement cstmt = conn.prepareCall("{call sp_add_cart(?,?,?)}");
 		
+		cstmt.setInt(1, data.getCartId());
+		cstmt.setInt(2, data.getCount());
+		cstmt.setInt(3, data.getMemberId());
+		
+		cstmt.execute();
+		
+		cstmt.close();
+		conn.close();
+	}
+	
+	/**
+	 * 
+	 * @param data
+	 * @throws SQLException
+	 * 
+	 * 장바구니 수량 감소 기능
+	 */
+	public void minusCartCount(CartCountUpdateDTO data) throws SQLException {
+		Connection conn = DBManager.getConnection();
+		
+		CallableStatement cstmt = conn.prepareCall("{call sp_minus_cart(?,?,?)}");
+		
+		cstmt.setInt(1, data.getCartId());
+		cstmt.setInt(2, data.getCount());
+		cstmt.setInt(3, data.getMemberId());
+		
+		cstmt.execute();
+		
+		cstmt.close();
+		conn.close();
+	}
+	
+	/**
+	 * 
+	 * @param cartId
+	 * @throws SQLException
+	 * 
+	 * 장바구니 삭제 기능
+	 */
+	public void deleteCartByCartIdAndMemberId(int cartId, int memberId) throws SQLException {
+		Connection conn = DBManager.getConnection();
+
+		CallableStatement cstmt = conn.prepareCall("{call sp_delete_cart(?,?)}");
+		
+		cstmt.setInt(1, cartId);
+		cstmt.setInt(2, memberId);
+		
+		cstmt.execute();
+		
+		cstmt.close();
+		conn.close();
 	}
 	
 }

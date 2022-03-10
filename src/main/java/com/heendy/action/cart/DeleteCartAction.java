@@ -13,18 +13,16 @@ import com.heendy.common.ErrorCode;
 import com.heendy.common.ErrorResponse;
 import com.heendy.common.SQLErrorCode;
 import com.heendy.dao.CartDAO;
-import com.heendy.dto.cart.CartCountUpdateDTO;
 
 /**
- * @author 이승준 장바구니 수량 증가 Action 클래스
+ * @author 이승준 자신의 장바구니 목록 중에서 장바구니 아이템을 삭제하는 Action 클래스
  */
-public class AddCartAction implements Action {
+public class DeleteCartAction implements Action {
 
 	private final CartDAO cartDAO = CartDAO.getInstance();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
 
@@ -33,22 +31,18 @@ public class AddCartAction implements Action {
 
 		try {
 			int cartId = Integer.parseInt(request.getParameter("cart_id"));
-			int count = Integer.parseInt(request.getParameter("count"));
 
-			CartCountUpdateDTO addCartDto = new CartCountUpdateDTO(cartId, memberId, count);
-
-			cartDAO.addCartCount(addCartDto);
+			cartDAO.deleteCartByCartIdAndMemberId(cartId, memberId);
 
 			response.setStatus(201);
-			response.getWriter().write("{\"updated\" : true, \"result\" :장바구니의 수량이 추가되었습니다.}");
+			response.getWriter()
+					.write("{\"deleted\" : true, \"deleted_cart_id\" : " + cartId + ", \"result\" : 장바구니 아이템이 삭제되었습니다.}");
 
 		} catch (SQLException e) {
 			int errorCode = e.getErrorCode();
-			System.out.println(errorCode);
+
 			ErrorResponse errorResponse;
-			if (errorCode == SQLErrorCode.LACK_OF_STOCK.getCode()) {
-				errorResponse = ErrorResponse.of(ErrorCode.LACK_OF_STOCK);
-			} else if (errorCode == SQLErrorCode.NO_DATA_FOUND.getCode()) {
+			if (errorCode == SQLErrorCode.NO_DATA_FOUND.getCode()) {
 				errorResponse = ErrorResponse.of(ErrorCode.NO_DATA_FOUND);
 			} else if (errorCode == SQLErrorCode.NOT_RESOURCE_OWNER.getCode()) {
 				errorResponse = ErrorResponse.of(ErrorCode.NOT_RESOURCE_OWNER);

@@ -1,11 +1,11 @@
-package com.heendy.dto.cart;
-
+package com.heendy.dto.order;
 
 /**
- * @author : 이승준
- * 장바구니 생성을 위한 DTO 클래스
+ * @author 이승준
+ * 
+ * 주문 생성 DTO 클래스	
  * */
-public class CreateCartDTO {
+public class CreateOrderDTO {
 
 	private int productId;
 	
@@ -15,7 +15,8 @@ public class CreateCartDTO {
 	
 	private int count;
 
-	public CreateCartDTO(int productId, int companyId, int memberId, int count) {
+	public CreateOrderDTO(int productId, int companyId, int memberId, int count) {
+		super();
 		this.productId = productId;
 		this.companyId = companyId;
 		this.memberId = memberId;
@@ -56,10 +57,9 @@ public class CreateCartDTO {
 
 	@Override
 	public String toString() {
-		return "CreateCartDTO [productId=" + productId + ", companyId=" + companyId + ", memberId=" + memberId
+		return "CreateOrderDTO [productId=" + productId + ", companyId=" + companyId + ", memberId=" + memberId
 				+ ", count=" + count + "]";
 	}
-	
 	
 	
 }
