@@ -9,27 +9,26 @@ import javax.servlet.http.HttpServletResponse;
 import com.heendy.action.Action;
 import com.heendy.dao.WishDAO;
 
+/**
+ * @author ê¹€ì‹œì€
+ * 
+ * ì¢‹ì•„ìš” ì‚­ì œ Action í´ë˜ìŠ¤
+ * 
+ * */
+
 public class WishDeleteAction implements Action {
 
+	private final WishDAO wishDAO = WishDAO.getInstance();
+	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int mid = Integer.parseInt(request.getParameter("memberId"));
 		int pid = Integer.parseInt(request.getParameter("productId"));
-//		int cid = Integer.parseInt(request.getParameter("companyId"));
+		int cid = Integer.parseInt(request.getParameter("companyId"));
 
-		// ÁÁ¾Æ¿ä »èÁ¦
-		WishDAO wishDAO = WishDAO.getInstance();
-		int wishDelete = wishDAO.deleteWish(mid, pid);
-		
-		if(wishDelete == 1) {
-			System.out.println("¼º°ø");
-		}else {
-			System.out.println("½ÇÆĞ");
-		}
-		
-//		String url = "pages/product/productDetail.jsp";
-//	    RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-//	    dispatcher.forward(request, response);
+		// ì¢‹ì•„ìš” ì‚­ì œ
+		int wishDelete = wishDAO.deleteWish(mid, pid, cid);
+
 	}
 
 }

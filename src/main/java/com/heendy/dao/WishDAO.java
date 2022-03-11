@@ -1,9 +1,12 @@
 package com.heendy.dao;
+
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import com.heendy.utils.DBManager;
+import oracle.jdbc.OracleTypes;
 
 import com.heendy.dto.WishDTO;
 
@@ -14,8 +17,11 @@ public class WishDAO {
 	public static WishDAO getInstance() {
 		return instance;
 	}
+
+	private Connection conn;
+	private CallableStatement cs;
 	 
-	// ÁÁ¾Æ¿äÇÑ »óÇ° ¸ñ·Ï Á¶È¸
+	// ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 	public ArrayList<WishDTO> listWish(int beginRow, int endRow, int member_id) {
 		
 		ArrayList<WishDTO> wishList = new ArrayList<WishDTO>();
@@ -24,7 +30,7 @@ public class WishDAO {
 					  + " from (select rownum as rn, p.product_id, p.product_name, p.image_url, p.product_price, p.discount_price, p.product_count from member_like_product mlp, product p where mlp.product_id=p.product_id and mlp.member_id=?) S"
 				 	  + " where S.rn between " + beginRow + " and " + endRow;
 		  
-		Connection conn = null;
+		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 				
@@ -56,7 +62,7 @@ public class WishDAO {
 	}
 	
 	
-	//ÁÁ¾Æ¿äÇÑ »óÇ° ÃÑ ¼ö
+	//ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½Ç° ï¿½ï¿½ ï¿½ï¿½
 	public int totalWishCount(int member_id) {
 		
 		int result = 0;
@@ -85,72 +91,82 @@ public class WishDAO {
 		}
 
 
+
+
+/**
+ * @author ê¹€ì‹œì€
+ * 
+ * ì¢‹ì•„ìš” ê´€ë ¨ DAO 
+ * 
+ * */
+
 	  
-    // ÁÁ¾Æ¿ä insert
+
+    
+    // ì¢‹ì•„ìš” ì¶”ê°€
 	public int insertWish(int memberId, int productId, int companyId) {
 	    int result = 0;	
-	    String sql = "insert into member_like_product(member_id, product_id, company_id) "
-	    		+ "values(?, ?, ?)";
-	    Connection conn = null;
-	    PreparedStatement pstmt = null;
+	    String sql = "{CALL sp_insert_wish(?, ?, ?)}";
+	    		
+	    conn = null;
+	    cs = null;
 	    System.out.println("DAO : insertWish");
 	    try {
 	    	conn = DBManager.getConnection();
-	    	pstmt = conn.prepareStatement(sql);
-		    pstmt.setInt(1, memberId);
-		    pstmt.setInt(2, productId);
-		    pstmt.setInt(3, companyId);
-		    result = pstmt.executeUpdate();
+	    	cs = conn.prepareCall(sql);
+		    cs.setInt(1, memberId);
+		    cs.setInt(2, productId);
+		    cs.setInt(3, companyId);
+		    result = cs.executeUpdate();
+		    System.out.println(result);
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	    } finally {
-	    	DBManager.close(conn, pstmt);
+	    	DBManager.close(conn, cs);
 	    }
 	    return result;
 	}
 	
-	// ÁÁ¾Æ¿ä delete
-	public int deleteWish(int memberId, int productId) {
+	// ì¢‹ì•„ìš” ì‚­ì œ
+	public int deleteWish(int memberId, int productId, int companyId) {
 	    int result = 0;	
-	    String sql = "delete from member_like_product where member_id = ? and product_id = ?";
-	    Connection conn = null;
-	    PreparedStatement pstmt = null;
-	    System.out.println("DAO : insertWish");
+	    String sql = "{CALL sp_delete_wish(?,?,?)}";
+	    
+	    System.out.println("DAO : deleteWish");
 	    try {
 	    	conn = DBManager.getConnection();
-	    	pstmt = conn.prepareStatement(sql);
-		    pstmt.setInt(1, memberId);
-		    pstmt.setInt(2, productId);
-		    result = pstmt.executeUpdate();
+	    	cs = conn.prepareCall(sql);
+		    cs.setInt(1, memberId);
+		    cs.setInt(2, productId);
+		    cs.setInt(3, companyId);
+		    result = cs.executeUpdate();
+		    System.out.println(result);
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	    } finally {
-	    	DBManager.close(conn, pstmt);
+	    	DBManager.close(conn, cs);
 	    }
 	    return result;
 	}
 	
-	// ÁÁ¾Æ¿ä ¿©ºÎ
-	public int wishIs(int memberId, int productId) {
+	// ì¢‹ì•„ìš” ì—¬ë¶€ check
+	public int wishCheck(int memberId, int productId, int companyId) {
 		int result = 0;	
-	    String sql = "select count(*) from member_like_product where member_id = ? and product_id = ?";
-	    Connection conn = null;
-	    PreparedStatement pstmt = null;
-	    ResultSet rs = null;    
+	    String sql = "{CALL sp_check_wish(?,?,?,?)}";
+	    
 	    try {
 	    	conn = DBManager.getConnection();
-	    	pstmt = conn.prepareStatement(sql);
-	    	pstmt.setInt(1, memberId);
-	    	pstmt.setInt(2, productId);
-	    	rs = pstmt.executeQuery();
-	    	System.out.println(sql);
-	      while (rs.next()) {
-	    	  result = rs.getInt(1);
-	      }
+	    	cs = conn.prepareCall(sql);
+	    	cs.setInt(1, memberId);
+	    	cs.setInt(2, productId);
+	    	cs.setInt(3, companyId);
+		    cs.registerOutParameter(4, OracleTypes.INTEGER);
+	    	cs.executeUpdate();
+	    	result = cs.getInt(4);
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	    } finally {
-	    	DBManager.close(conn, pstmt, rs);
+	    	DBManager.close(conn, cs);
 	    }
 		return result;
 	}

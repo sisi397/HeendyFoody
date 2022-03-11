@@ -2,6 +2,7 @@ package com.heendy.action.product;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -12,86 +13,112 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.google.gson.Gson;
 import com.heendy.action.Action;
+import com.heendy.dao.CategoryDAO;
 import com.heendy.dao.ProductDAO;
+import com.heendy.dto.CategoryDTO;
+import com.heendy.dto.PageDTO;
 import com.heendy.dto.ProductDTO;
 
+/**
+ * @author ê¹€ì‹œì€
+ * 
+ * ìƒí’ˆ ë¦¬ìŠ¤íŠ¸ë¥¼ ê°€ì ¸ì˜¤ëŠ” Action í´ë˜ìŠ¤
+ * 
+ * */
 public class ProductListAction implements Action{
 
+	private final ProductDAO productDAO = ProductDAO.getInstance();
+	private final CategoryDAO categoryDAO = CategoryDAO.getInstance();
+	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String pno = request.getParameter("pno");
-		String sort = request.getParameter("sort");
-		ProductDAO productDAO = ProductDAO.getInstance();
-		int totalCount = productDAO.totalCountProduct();// ÀüÃ¼ »óÇ° ¸ñ·Ï ¼ö
-		
-		int pageNumber = 1; // ÇöÀç ÆäÀÌÁö ¹øÈ£
-		int pagePerList = 5; // º¸¿©ÁÙ ÆäÀÌÁö ¼ö
-		int listPerPage = 20; // ÇÑ ÆäÀÌÁö ´ç º¸¿©ÁÙ °Ô½Ã±Û ¼ö
-		int totalPage = totalCount % listPerPage == 1 ? totalCount/listPerPage : totalCount/listPerPage + 1; //ÀüÃ¼ ÆäÀÌÁö ¼ö
-
-		// ÆäÀÌÁö ¹øÈ£ °è»ê
-		if(pno != null && pno.length() > 0)
-			pageNumber = Integer.parseInt(pno);
-		
-		// Á¤·Ä
-		if(sort == null || sort.length() == 0)
-			sort = "product_reg_date desc";
-		else if(sort.equals("A"))
-			sort = "product_reg_date desc"; //½Å»óÇ°¼ø
-		else if(sort.equals("B"))
-			sort = "discount_price"; //ÀÎ±â»óÇ° ¼ø
-		else if(sort.equals("C"))
-			sort = "discount_price"; //³·Àº°¡°İ ¼ø
-		else if(sort.equals("D"))
-			sort = "discount_price desc"; //³ôÀº°¡°İ ¼ø
+		try {
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
 			
-		
-		int beginRow = (pageNumber - 1) * listPerPage + 1;
-		int endRow = beginRow + listPerPage - 1;
-		if(endRow > totalCount)
-			endRow = totalCount;
-		
-		// »óÇ° LIST °¡Á®¿À±â
-		// dao¿¡¼­
-		ArrayList<ProductDTO> productList = productDAO.listProduct(beginRow, endRow, sort);
-		
-		int beginPageNumber = (pageNumber - 1)/pagePerList*pagePerList + 1;
-		int endPageNumber = beginPageNumber + pagePerList - 1;
-		if(endPageNumber > totalPage)
-			endPageNumber = totalPage;
-		
-		request.setAttribute("productList", productList);
-		request.setAttribute("beginPage", beginPageNumber);
-		request.setAttribute("endPage", endPageNumber);
-		request.setAttribute("pagePerList", pagePerList);
-		request.setAttribute("totalPageCount", totalPage);
-	    
-//		PrintWriter writer = response.getWriter();
-//		
-//		JSONObject totalObject = new JSONObject();
-//		JSONArray productArray = new JSONArray();
-//		JSONObject productInfo;
-//		for(ProductDTO product : productList) {
-//			productInfo = new JSONObject();
-//			productInfo.put("productName", product.getProductName());
-//			productInfo.put("productId", product.getProductId());
-//			productArray.add(productInfo);
-//		}
-//		totalObject.put("productList",productArray);
-//		
-//		String jsonInfo = totalObject.toJSONString();
-//		System.out.println(jsonInfo);
-//		writer.print(jsonInfo);
-//		
-//		JSONObject addObject = new JSONObject();
-//		addObject.put("beginPage", beginPageNumber);
-//		writer.print(addObject);
-//		System.out.println(addObject);
-		
-		String url = "/pages/product/productList.jsp";
-	    RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-	    dispatcher.forward(request, response);
+			// íŒŒë¼ë¯¸í„° ì •ë³´ ê°€ì ¸ì˜¤ê¸°
+			String pno = request.getParameter("pno");
+			String sort = request.getParameter("sort");
+			String menu = request.getParameter("menu");
+			String cateStr = request.getParameter("cate");
+			String pcateStr = request.getParameter("pcate");
+			
+			// ì¹´í…Œê³ ë¦¬ ì •ë³´
+			int cate = 0;
+			int pcate = 0;
+			if(cateStr != null && pcateStr != null) {
+				cate = Integer.parseInt(cateStr);
+				pcate = Integer.parseInt(pcateStr);
+			}
+
+			// ì •ë ¬ ê¸°ì¤€
+			if(sort == null || sort.length() == 0)
+				sort = "product_reg_date desc"; // ê¸°ë³¸ ì •ë ¬ : ì‹ ìƒí’ˆ ìˆœ
+			else if(sort.equals("A"))
+				sort = "product_reg_date desc"; // ì‹ ìƒí’ˆìˆœ
+			else if(sort.equals("B"))
+				sort = "like_count desc"; // ì¢‹ì•„ìš” ìˆœ
+			else if(sort.equals("C"))
+				sort = "discount_price"; // ë‚®ì€ ê°€ê²© ìˆœ
+			else if(sort.equals("D"))
+				sort = "discount_price desc"; // ë†’ì€ ê°€ê²© ìˆœ
+			
+			/*
+			 * í˜ì´ì§• ì‹œì‘
+			 * pageNumber : í˜„ì¬ í˜ì´ì§€ ë²ˆí˜¸
+			 * pagePerList : í•œë²ˆì— ë³´ì—¬ì¤„ í˜ì´ì§€ ìˆ˜
+			 * listPerPaeg : í•œ í˜ì´ì§€ ë‹¹ ë³´ì—¬ì¤„ ìƒí’ˆ ìˆ˜
+			 * totalPage : ì „ì²´ í˜ì´ì§€ ìˆ˜
+			 * totalCount : ì „ì²´ìƒí’ˆ ìˆ˜
+			 * beginPageNumber : ì‹œì‘ í˜ì´ì§€ ë²ˆí˜¸
+			 * endPageNumber : ë í˜ì´ì§€ ë²ˆí˜¸
+			 */
+			
+			int totalCount = productDAO.totalCountProduct(menu);
+			int pageNumber = 1;
+			int pagePerList = 5;
+			int listPerPage = 20;
+			int totalPage = totalCount % listPerPage == 1 ? totalCount/listPerPage : totalCount/listPerPage + 1;
+
+			// í˜ì´ì§€ ë²ˆí˜¸ ê°€ì ¸ì˜¤ê¸°. pnoê°€ ì—†ì„ ê²½ìš° = 1
+			if(pno != null && pno.length() > 0)
+				pageNumber = Integer.parseInt(pno);
+			
+			// ë¶ˆëŸ¬ì˜¬ ìƒí’ˆì˜ ì‹œì‘ ë²ˆí˜¸, ë ë²ˆí˜¸
+			int beginRow = (pageNumber - 1) * listPerPage + 1;
+			int endRow = beginRow + listPerPage - 1;
+			if(endRow > totalCount)
+				endRow = totalCount;
+			
+			// í˜ì´ì§€ ì‹œì‘ ë²ˆí˜¸, ë ë²ˆí˜¸
+			int beginPageNumber = (pageNumber - 1)/pagePerList*pagePerList + 1;
+			int endPageNumber = beginPageNumber + pagePerList - 1;
+			if(endPageNumber > totalPage)
+				endPageNumber = totalPage;
+
+			PageDTO pageInfo = new PageDTO(beginPageNumber, endPageNumber, pagePerList, totalPage);
+			
+			// ìƒí’ˆ LIST ê°€ì ¸ì˜¤ê¸°
+			ArrayList<ProductDTO> productList = productDAO.listProduct(beginRow, endRow, sort, menu, cate, pcate);
+			
+			
+			// category ë©”ë‰´ì´ë©´ : category ì •ë³´ ê°€ì ¸ì˜¤ê¸°
+			if(menu.equals("category")) {
+				ArrayList<CategoryDTO> category = categoryDAO.listCategory(cate, pcate);
+				request.setAttribute("categoryList", category);
+			}
+			
+			request.setAttribute("productList", productList);
+			request.setAttribute("pageInfo", pageInfo);
+			
+			String url = "/pages/product/productList.jsp";
+		    RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+		    dispatcher.forward(request, response);
+		} catch(Exception e) {
+			
+		}
 	}
 
 }

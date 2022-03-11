@@ -3,6 +3,7 @@ package com.heendy.dto;
 public class ProductDTO {
 	private int productId;
 	private int companyId;
+	private String companyName;
 	private int productPrice;
 	private String productName;
 	private String imageUrl;
@@ -11,7 +12,10 @@ public class ProductDTO {
 	private int discountRate;
 	private int deleted;
 	private int categoryId;
+	private int pcategoryId;
 	private int discountPrice;
+	private String parentCategoryName;
+	private String categoryName;
 	
 	public int getProductId() {
 		return productId;
@@ -78,5 +82,29 @@ public class ProductDTO {
 	}
 	public void setDiscountPrice(int discountPrice) {
 		this.discountPrice = discountPrice;
+	}
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+	public String getParentCategoryName() {
+		return parentCategoryName;
+	}
+	public void setParentCategoryName(String parentCategoryName) {
+		this.parentCategoryName = parentCategoryName;
+	}
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	public int getPcategoryId() {
+		return pcategoryId;
+	}
+	public void setPcategoryId(int pcategoryId) {
+		this.pcategoryId = pcategoryId;
 	}
 }

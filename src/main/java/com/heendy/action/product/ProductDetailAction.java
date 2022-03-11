@@ -1,39 +1,44 @@
 package com.heendy.action.product;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.heendy.action.Action;
 import com.heendy.dao.ProductDAO;
-import com.heendy.dao.WishDAO;
 import com.heendy.dto.ProductDTO;
 
+/**
+ * @author ê¹€ì‹œì€
+ * 
+ * ìƒí’ˆ ìƒì„¸ ì •ë³´ë¥¼ ê°€ì ¸ì˜¤ëŠ” Action í´ë˜ìŠ¤
+ * 
+ * */
 public class ProductDetailAction implements Action {
 
+	private final ProductDAO productDAO = ProductDAO.getInstance();
+	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String pid = request.getParameter("pid");
 
-		// »óÇ° detail °¡Á®¿À±â
-		// dao¿¡¼­
-		ProductDAO productDAO = ProductDAO.getInstance();
-		ProductDTO product = productDAO.detailProduct(pid);
+		int pid = Integer.parseInt(request.getParameter("pid"));
+		int cid = Integer.parseInt(request.getParameter("cid"));
 
+
+		// detailProduct() : ìƒí’ˆ ìƒì„¸ì •ë³´ ê°€ì ¸ì˜¤ê¸°
+		ProductDTO product = productDAO.detailProduct(pid, cid);
 		request.setAttribute("product", product);
 		
-		// ÁÁ¾Æ¿ä ¿©ºÎ °¡Á®¿À±â
-		WishDAO wishDAO = WishDAO.getInstance();
-		int wish = wishDAO.wishIs(6, product.getProductId()); // memberid Ãß°¡
-		request.setAttribute("wishIs", wish);
-		
+		// ìƒí’ˆ ìƒì„¸ë³´ê¸° í˜ì´ì§€ë¡œ ì´ë™
 		String url = "/pages/product/productDetail.jsp";
+		
 	    RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 	    dispatcher.forward(request, response);
+		
 	}
 
 }

@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import com.heendy.utils.DBManager;
 //import com.heendy.dto.CartVO;
 import com.heendy.dto.OrderDTO;
+import java.sql.Array;
+import java.sql.CallableStatement;
+import java.sql.SQLException;
+import com.heendy.dto.order.CreateCartOrderDTO;
+import com.heendy.dto.order.CreateOrderDTO;
+
 
 public class OrderDAO {
 	private OrderDAO() {} 
@@ -14,7 +20,7 @@ public class OrderDAO {
 		return instance;
 	}
 	
-	//ÁÖ¹® ³»¿ª Á¶È¸
+	//ï¿½Ö¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 	public ArrayList<OrderDTO> listOrder(int beginRow, int endRow, int member_id) {	
 		System.out.println("member_id: " + member_id);
 		System.out.println("from " + beginRow + " to " + endRow);
@@ -43,12 +49,12 @@ public class OrderDAO {
 				orderDTO.setMemberId(rs.getInt("member_id"));
 				orderDTO.setOrderTime(rs.getTimestamp("order_time"));
 				orderDTO.setOrderCount(rs.getInt("order_count"));
-				orderDTO.setOrderPrice(rs.getInt("order_price")); //ÇÒÀÎ°¡(1°³ ±âÁØ) 
+				orderDTO.setOrderPrice(rs.getInt("order_price")); //ï¿½ï¿½ï¿½Î°ï¿½(1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) 
 				orderDTO.setProductId(rs.getInt("product_id"));
 				orderDTO.setCompanyId(rs.getInt("company_id"));
 				orderDTO.setProductName(rs.getString("product_name"));
 				orderDTO.setImageUrl(rs.getString("image_url"));
-				orderDTO.setProductPrice(rs.getInt("product_price")); //¿ø°¡(1°³ ±âÁØ)
+				orderDTO.setProductPrice(rs.getInt("product_price")); //ï¿½ï¿½ï¿½ï¿½(1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 				orderDTO.setCompanyName(rs.getString("company_name"));
 				orderList.add(orderDTO);
 			}
@@ -86,4 +92,50 @@ public class OrderDAO {
 		return result;	
 	}
 	
-}//end class
+
+
+
+
+/**
+ * @author : ì´ìŠ¹ì¤€
+ * @version : 1
+ * ê²°ì œ DAO í´ë˜ìŠ¤
+ * */
+
+	
+	
+	public void createOrder(CreateOrderDTO data) throws SQLException {
+		Connection conn = DBManager.getConnection();
+		
+		CallableStatement cstmt = conn.prepareCall("{call sp_create_order(?,?,?,?)}");
+		
+		cstmt.setInt(1, data.getProductId());
+		cstmt.setInt(2, data.getCompanyId());
+		cstmt.setInt(3, data.getMemberId());
+		cstmt.setInt(4, data.getCount());
+		
+		cstmt.execute();
+		
+		cstmt.close();
+		conn.close();
+	}
+	
+	public void createCartOrder(CreateCartOrderDTO data) throws SQLException {
+		Connection conn = DBManager.getConnection();
+		
+		
+		CallableStatement cstmt = conn.prepareCall("{ call sp_create_order_from_cart(?,?) }");
+		
+		
+		Array cartIds = ((oracle.jdbc.OracleConnection)conn).createOracleArray("USER01.CARTIDSARRAY", data.getCartIds());
+		
+		cstmt.setInt(1, data.getMemberId());
+		cstmt.setArray(2, cartIds);
+		
+		cstmt.execute();
+		
+		
+		cstmt.close();
+		conn.close();
+	}
+}

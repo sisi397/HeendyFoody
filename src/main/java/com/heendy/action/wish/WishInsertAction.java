@@ -12,28 +12,26 @@ import com.heendy.dao.ProductDAO;
 import com.heendy.dao.WishDAO;
 import com.heendy.dto.ProductDTO;
 
+/**
+ * @author ê¹€ì‹œì€
+ * 
+ * ì¢‹ì•„ìš” ì¶”ê°€ Action í´ë˜ìŠ¤
+ * 
+ * */
+
 public class WishInsertAction implements Action{
 
+	private final WishDAO wishDAO = WishDAO.getInstance();
+	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int mid = Integer.parseInt(request.getParameter("memberId"));
 		int pid = Integer.parseInt(request.getParameter("productId"));
 		int cid = Integer.parseInt(request.getParameter("companyId"));
-		System.out.println(mid + " " + pid + " " + cid);
 		
-		// ÁÁ¾Æ¿ä Ãß°¡
-		WishDAO wishDAO = WishDAO.getInstance();
+		// ì¢‹ì•„ìš” ì¶”ê°€
 		int wishInsert = wishDAO.insertWish(mid, pid, cid);
 		
-		if(wishInsert == 1) {
-			System.out.println("¼º°ø");
-		}else {
-			System.out.println("½ÇÆĞ");
-		}
-		
-//		String url = "pages/product/productDetail.jsp";
-//	    RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-//	    dispatcher.forward(request, response);
 	}
 
 }

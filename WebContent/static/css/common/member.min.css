@@ -1,0 +1,265 @@
+@charset "utf-8";
+
+/**
+ * --------------------------------
+ * memeber CSS
+ * --------------------------------
+*/
+
+/* member 공통 */
+.member #contents {padding-top: 51px;}
+.member #contents .innercon {width: 680px;}
+.member #contents h2 {margin-bottom: 25px;}
+.member #contents h3 {line-height: 44px;color: #101010;font-size: 32px;}
+.member .linearea {padding: 51px 59px 59px;border: 1px solid #dbd9d6;}
+.member .linearea > .txt {margin: 20px 0 55px;color: #454545;}
+.member .agree-field .tit {padding-top: 43px;color: #101010;font-size: 18px;font-weight: 600;}
+.member .agree-field .txt-tit {display: block;margin-top: 19px;padding-top: 19px;color: #101010;font-size: 18px;font-weight: 600;border-top: 1px solid #e7e7e7;}
+.member .agree-field ul + .txt-tit {margin-top: -16px;}
+.member .agree-field > ul {margin-bottom: 40px;}
+.member .agree-field > ul li {position: relative;margin-top: 32px;}
+.member .agree-field > ul li:first-child {margin-top: 19px;}
+.member .agree-field > ul .choice {color: #aea7a2;}
+.member .agree-field .btns {margin-top: 44px;}
+.member .txt-cscenter {margin-top: 35px;color: #454545;text-align: center;}
+.member .txt-cscenter strong {display: block;color: #101010;}
+
+/* popup : 아이디/비밀번호 찾기 휴대폰인증 */
+.member .popup.popjoincertify .txt {color: #767572;}
+.member .popup.popjoincertify .infotxt {margin-top:-2px;}
+.member .popup.popjoincertify .infotxt li {font-size: 15px;}
+.member .popup.popjoincertify .btn {margin-top: 36px;width: 100%;}
+.member .popup.popjoincertify .btn-kakao {margin-top: 12px;}
+.member .popup.popjoincertify .btn-kakao:before {content: "";display: inline-block;margin: 0 5px 4px 0;width: 17px;height: 16px;vertical-align: middle;background: url("../../images/common/btn.png") no-repeat -150px -100px;}
+
+/* popup : H.Point 회원 */
+.member .popup.pophpointuser .contents {padding-bottom: 45px;}
+.member .popup.pophpointuser .contents .txt {margin-bottom: 6px;}
+.member .popup.pophpointuser .contents .txt span {display: inline-block;padding: 10px 0;color: #767572;}
+
+/* login */
+.member.login #contents {padding-top: 68px;}
+.member.login #contents .innercon {width: 440px;text-align: center;}
+.member.login #contents h2 {margin-bottom: 9px;}
+.member.login .ezwel-infowrap {padding: 26px 30px; background-color: #f8f8f8;margin-top: 30px;margin-bottom: -22px;}
+.member.login .ezwel-infowrap .infotxt {text-align: left;font-size: 16px;color: #767572;}
+.member.login .innercon .form-field {text-align: left;}
+.member.login .innercon .form-field > ul > li {margin-top: 12px;}
+.member.login .innercon .form-field > ul > li:first-child {margin-top: 36px;}
+.member.login .innercon .form-field > ul > li:nth-child(1) label:before {content: "";position: absolute;left: 26px;top: 19px;display: block;width: 15px;height: 16px;background: url("../../images/common/icon.png") no-repeat 0 0;}
+.member.login .innercon .form-field > ul > li:nth-child(2) label:before {content: "";position: absolute;left: 26px;top: 17px;display: block;width: 15px;height: 21px;background: url("../../images/common/icon.png") no-repeat -50px 0;}
+.member.login .innercon .form-field > ul > li label input[type="text"],
+.member.login .innercon .form-field > ul > li label input[type="password"] {padding-left: 59px;}
+.member.login .innercon .form-field label.form-save {display: inline-block;margin: 16px 24px 0 0;}
+.member.login .innercon .form-field label.form-save span {color: #767572;font-size: 13px;}
+.member.login .innercon .form-field .login-surport {float: right;margin-top:-15px;line-height: 1;}
+.member.login .innercon .form-field .login-surport li:before {height: 12px;}
+.member.login .innercon .form-field .login-surport li a,
+.member.login .innercon .form-field .login-surport li button {font-size: 13px;}
+.member.login .innercon .form-field .btn {margin-top: 40px;width: 100%;font-weight: 600;}
+.member.login .innercon .btn.middle {width: 100%;}
+.member.login .innercon .btn-kakao {margin-top: 80px;}
+.member.login .innercon .btn-kakao:before {content: "";display: inline-block;margin: 0 5px 4px 0;width: 25px;height: 22px;vertical-align: middle;background: url("../../images/common/btn.png") no-repeat -100px -100px;}
+.member.login .innercon .btn.lightgray {margin-top: 12px;}
+.member.login .innercon.ezwel .btn-kakao {margin-top: 10px;}
+.member.login .innercon.ezwel .btn-join {margin-top: 30px;}
+
+/* popup : 비회원 주문조회 */
+.member.login .popup.popnonmemberorder .contents {padding-bottom: 36px;}
+.member.login .popup.popnonmemberorder .form-field ul li:last-child {margin-top: 12px;}
+.member.login .popup.popnonmemberorder .inputmsg {padding-bottom: 4px;}
+.member.login .popup.popnonmemberorder .btn {margin-top: 40px;width: 100%;}
+
+/* 비회원 약관동의 */
+.member.nonmemberorder #contents h2 {font-size: 24px;}
+.member.nonmemberorder .linearea {padding-bottom: 68px;}
+.member.nonmemberorder .agree-field ul {margin: 19px 0 40px;border-top: 1px solid #e7e7e7;}
+.member.nonmemberorder .agree-field ul li {margin-top: 40px;}
+.member.nonmemberorder .agree-field ul li:first-child {margin-top: 24px;}
+.member.nonmemberorder .agree-field ul li .con {margin-top: 16px;padding: 27px 32px;height: 230px;color: #454545;background-color: #f8f8f8;overflow-y: auto;}
+.member.nonmemberorder .agree-field ul li .con strong {font-weight: 200;}
+.member.nonmemberorder .agree-field ul li .con .tbl-guide {border: 1px solid #e7e7e7;}
+.member.nonmemberorder .agree-field ul li .con .tbl-guide thead th {padding: 13px 16px;font-weight: 200;border: 1px solid #e7e7e7;}
+.member.nonmemberorder .agree-field ul li .con .tbl-guide tbody th {padding: 11px 16px;color: #454545;}
+.member.nonmemberorder .agree-field ul li .con .tbl-guide td {padding: 11px 16px;line-height: 24px;border: 1px solid #e7e7e7;background-color: #fff;}
+.member.nonmemberorder .join-info {position: relative;margin-top: 40px;padding-top: 33px;border-top: 1px solid #e7e7e7;}
+.member.nonmemberorder .join-info strong {display: block;color: #101010;font-size: 18px;font-weight: 200;}
+.member.nonmemberorder .join-info .btn-round {position: absolute;top: 49px;right: 0;padding: 0 35px 0 16px;height: 32px;line-height: 30px;color: #454545;font-weight: 600;border-radius: 16px;}
+.member.nonmemberorder .join-info .btn-round:after {right: 15px;width: 9px;height: 14px;background-position:-100px -50px;}
+
+/* 비회원 주문조회 */
+.member.nonmemberordercheck #contents {padding-top: 68px;}
+.member.nonmemberordercheck #contents .innercon {width: 440px;text-align: center;}
+.member.nonmemberordercheck #contents h2 {margin-bottom: 9px;}
+.member.nonmemberordercheck .form-field ul li {margin-top: 12px;}
+.member.nonmemberordercheck .form-field ul li:first-child {margin-top: 36px;}
+.member.nonmemberordercheck .form-field .btn {margin-top: 40px;width: 100%;font-weight: 600;}
+
+/* pwsearch */
+.member.pwsearch #contents {padding-top: 68px;}
+.member.pwsearch #contents .innercon {width: 560px;}
+.member.pwsearch .innercon h2 {text-align: center;}
+.member.pwsearch .result {padding-bottom: 32px;text-align: center;background-color: #f8f8f8;}
+.member.pwsearch .result .txt1 {padding: 33px 0 19px;color: #101010;font-size: 18px;}
+.member.pwsearch .result .data {display: inline-block;font-size: 0;text-align: left;}
+.member.pwsearch .result .data.nodata {margin-bottom:-3px;}
+.member.pwsearch .result .data.nodata:before {display: none;}
+.member.pwsearch .result .data div {display: table;margin-top: 1px;}
+.member.pwsearch .result .data span {display: table-cell;width: 140px;font-size: 15px;}
+.member.pwsearch .result .data.hpoint span {width: 180px;}
+.member.pwsearch .result .data.nodata span {width: 100px;}
+.member.pwsearch .result .data strong {display: table-cell;color: #101010;font-size: 18px;}
+.member.pwsearch .result .data.nodata strong {color: #454545;font-weight: 200;}
+.member.pwsearch .result .data strong small {display: block;margin-top: 2px;color: #767572;font-size: 15px;font-weight: 200;}
+.member.pwsearch .txt2 {margin: 26px 0 36px;color: #454545;text-align: center;}
+.member.pwsearch .txt2 ~ .btn.black {display: block;margin: 0 auto;width: 276px;}
+
+/* popup : 비밀번호 변경 윈도우팝업창 */
+.winpopup .popup.poppwchange {position: relative;top: 0;opacity: 1;background: rgba(255, 255, 255, 1);}
+.winpopup .popup.poppwchange .inner {left: 0;top: 0;transform: none;width: 100%;}
+.winpopup .popup.poppwchange .inner:after {display: none;}
+.popup.poppwchange .txt {color: #767572;}
+.popup.poppwchange .form-field > ul {margin-top: 40px;}
+.popup.poppwchange .btns {margin-top: 34px;}
+
+/* popup : 휴면계정 */
+.member .popup.popdormancynoti .contents {padding-bottom: 48px;}
+.member .popup.popdormancynoti .box {margin-top: 20px;padding: 19px 0 18px;color: #454545;}
+.member .popup.popdormancynoti .box span {color: #aea7a2;}
+
+/* popup : 휴면계정해제완료 */
+.member .popup.popdormancy .contents {padding-bottom: 48px;}
+.member .popup.popdormancy .txt + p {margin: 14px 0 19px;color: #767572;}
+.member .popup.popdormancy .txt + p strong {color: #101010;font-weight: 200;}
+.member .popup.popdormancy label small {color: #767572;font-size: 15px;}
+
+/* joinmain */
+.member.joinmain #contents h2 {font-size: 24px;}
+.member.joinmain #contents h3 {line-height: 1.6;}
+.member.joinmain .txt {color: #454545;}
+.member.joinmain .linearea {padding-top: 60px;}
+.member.joinmain .linearea .logo {text-align: left;text-indent:-9999px;background: url("../../images/sub/member.png") no-repeat 0 0;}
+.member.joinmain .linearea .logo ~ strong {display: block;margin-top: 24px;color: #101010;font-size: 18px;font-weight: 200;}
+.member.joinmain .totalmember .logo {width: 492px;height: 58px;}
+.member.joinmain .totalmember strong {margin-top: 17px;}
+.member.joinmain .totalmember .img {margin-top: 52px;width: 560px;}
+.member.joinmain .totalmember .img img {max-width: 100%;}
+.member.joinmain .totalmember .btn {margin-top: 40px;width: 100%;}
+.member.joinmain .member {margin: 48px -59px -59px;padding: 40px 59px 36px;background-color: #fff;border-top: 1px solid #dbd9d6;}
+.member.joinmain .member .logo {width: 199px;height: 29px;background-position: 0 -100px;}
+.member.joinmain .member strong {margin-top: 14px;}
+.member.joinmain .member .btn-line.black {margin-top: 29px;padding-right: 20px;color: #101010;font-size: 14px;}
+.member.joinmain .member .btn-line.black:after {margin-top:-6px;width: 9px;height: 14px;background-position:-50px -50px;}
+.member.joinmain .member .txt + .btn.black {width:100%; margin-top:40px;}
+
+/* join step */
+.member.joinstep1 #contents h2 {font-size: 24px;}
+.member.joinstep1 .agree-field .btn-line {position: absolute;top: 50%;right: 0;transform: translateY(-50%);width: 130px;height: 24px;line-height: 24px;text-align: left;text-indent:-9999px;}
+.member.joinstep1 .agree-field .btn-line:after {margin-top: -9px;width: 10px;height: 18px;background-position: 0 -50px;}
+.member.joinstep1 .agree-field .check {position: relative;margin: 0 -59px;padding: 0 59px;border-top: 1px solid #e7e7e7;}
+.member.joinstep1 .agree-field .check + .check {border-top: none;}
+.member.joinstep1 .agree-field .check strong {display: inline-block;padding-top: 33px;color: #101010;font-size: 18px;}
+.member.joinstep1 .agree-field .check strong .choice {color: #aea7a2;}
+.member.joinstep1 .agree-field .check .btn-line {right: 59px;top: 34px;transform: translateY(0);}
+.member.joinstep1 .agree-field .check .box {position: relative;margin-top: 11px;padding: 18px 24px;font-size: 0;}
+.member.joinstep1 .agree-field .check .box label {position: relative; display: inline-block;margin-right: 39px;}
+.member.joinstep1 .agree-field .check .box .pushdate {display: none;margin: 10px 0 0 103px;font-size: 13px;}
+.member.joinstep1 .agree-field .check .box .pushdate.active {display: block;}
+.member.joinstep1 .agree-field .check .infotxt {margin-top: 10px;}
+.member.joinstep1 .agree-field > .box {margin-top: 20px;padding: 27px 32px;color: #454545;}
+.member.joinstep1 .agree-field .txt-exclaim {margin-top: 24px;}
+
+.member.joinstep2 .form-field .form-birth {font-size: 0;}
+.member.joinstep2 .form-field .form-birth label {width: calc(100% - 285px);display: inline-block;margin-right: 3px;}
+.member.joinstep2 .form-field .form-birth .btn-gender {width: 136px; height: 56px;line-height: 54px;color: #7d7b79;font-size: 15px;border: 1px #aea7a2 solid; margin-left: 5px;}
+.member.joinstep2 .form-field .form-birth .btn-gender.active {border: 1px #101010 solid;color: #101010;font-weight: 600;}
+
+/*마케팅 동의*/
+.member.joinstep1 .agree-field .check.marketing-info .box label {margin-right: 0; padding-right: 40px;}
+.member.joinstep1 .agree-field .marketing-info .box.talkwrap {padding: 20px 20px 62px;}
+.member.joinstep1 .agree-field .marketing-info .box label .talk {
+    position: absolute;
+    padding: 4px 5px 6px;
+    text-align: center;
+    background-color: #fff;
+    top: 40px;
+    left: 0;
+    color: #000;
+    font-size: 13px;
+    word-break: break-all;
+    color: #ff6914;
+    border: 1px #ff6914 solid;
+    border-radius: 2px;
+}
+
+.member.joinstep1 .marketing-info .box label .talk.all {width: 166px;padding: 4px 6px 6px 5px;}
+.member.joinstep1 .marketing-info .box label .talk:before,
+.member.joinstep1 .marketing-info .box label .talk:after {content: ''; width: 0; height: 0; position: absolute;border-left: 5px solid transparent; border-right: 6px solid transparent; }
+.member.joinstep1 .marketing-info .box label .talk:before{top: -6px; left: 7px; border-bottom: 6px solid #ff6914;}
+.member.joinstep1 .marketing-info .box label .talk:after{top: -5px; left: 7px; border-bottom: 6px solid #fff;}
+
+/* e슈퍼 회원 약관동의 */
+.member.joinstep1.esuper .agree-field .tit {padding-top: 29px;}
+.member.joinstep1.esuper .agree-field > ul {margin-top: 19px;padding-top: 5px;border-top: 1px solid #e7e7e7;}
+.member.joinstep1.esuper .agree-field .btn.fill.black {margin-top: 43px;width: 100%;}
+.member.joinstep1.esuper .agree-field .txt-exclaim {margin-top: 24px;}
+
+.member.joinstep2 #contents h2 {font-size: 24px;}
+.member.joinstep2 .form-field.hpoint .tit {padding-top: 54px;}
+.member.joinstep2 .hpoint .infotxt li strong {color: #454545;font-weight: 200;}
+
+/* popup : 추천인 확인 결과 */
+.member .popup.poprecomresult .id {margin-top: 20px;min-height: 110px;max-height: 143px;background-color: #f3f3f3;overflow-y: auto;}
+.member .popup.poprecomresult .id > div {display: table;width: 100%;min-height: 110px;max-height: 143px;}
+.member .popup.poprecomresult .id > div > div {display: table-cell;vertical-align: middle;padding: 19px 0;}
+.member .popup.poprecomresult .id strong {display: block;margin-top: 16px;}
+.member .popup.poprecomresult .id strong:nth-of-type(1) {margin-top: 11px;}
+.member .popup.poprecomresult .txt {margin-top: 25px;}
+
+.member.joinstep3 #contents h2 {font-size: 24px;}
+.member.joinstep3 section {margin: 0 -59px;padding: 20px 59px;background-color: #f8f8f8;}
+.member.joinstep3 section > strong {color: #101010;font-size: 18px;font-weight: 200;}
+.member.joinstep3 .hpoint-change {margin-top: 55px;}
+.member.joinstep3 .benefit {margin-top: 55px;padding-top: 0;background: #fff;}
+.member.joinstep3 .card {margin-top: 40px;padding: 40px 60px;}
+.member.joinstep3 .card .homepay {display: inline-block;font-size: 0;vertical-align: middle;}
+.member.joinstep3 .card .homepay:before {content: "";display: block;width: 141px;height: 45px; background: url("../../images/common/icon.png") no-repeat -350px -250px;}
+.member.joinstep3 .card p {display: inline-block;margin: 7px 0 0 30px;color: #454545;font-size: 18px;vertical-align: middle;}
+.member.joinstep3 .card .btn {margin-top: 24px;width: 100%;}
+.member.joinstep3 .hpoint-change {padding: 53px 59px 38px;}
+.member.joinstep3 .hpoint-change strong {color: #454545;font-size: 20px;font-weight: 600;}
+.member.joinstep3 .hpoint-change strong + p {margin-top: 13px;line-height: 24px;font-size: 16px;}
+.member.joinstep3 .hpoint-change .btn {margin-top: 26px;width: 100%;}
+.member.joinstep3 .hpoint-change .txt-exclaim {margin-top: 32px;}
+.member.joinstep3 .hpoint-change .infotxt {margin-top: 10px;}
+.member.joinstep3 .linearea > .btn.black {margin-top: 40px;width: 100%;}
+
+/* certify 인증 안내, 인증 결과, 아이디/비밀번호 찾기 본인 인증 */
+.member.certify #contents h2 {font-size: 24px;}
+.member.certify .txt {margin-bottom: 0;}
+.member.certify .data {margin-top: 35px;padding: 33px 0 34px;font-size: 0;text-align: center;background-color: #f8f8f8;}
+.member.certify .data span {display: inline-block;padding-right: 43px;font-size: 15px;}
+.member.certify .data strong {display: inline-block;color: #101010;font-size: 18px;}
+.member.certify .infotxt {margin: -3px 0 56px 0;}
+.member.certify .txt + .btn {margin-top: 55px;}
+.member.certify .linearea > .btn {width: 100%;}
+.member.certify .btn-kakao {margin-top: 12px;}
+.member.certify .btn-kakao:before {content: "";display: inline-block;margin: 0 5px 4px 0;width: 19px;height: 18px;vertical-align: middle;background: url("../../images/common/btn.png") no-repeat -250px -400px;}
+.member.certify .btns {margin-top: 40px;}
+
+/* staff certify */
+.member.staffcertify #contents h2 {font-size: 24px;}
+.member.staffcertify .linearea {padding-bottom: 0;}
+
+/* popup : 현대식품관 전환가입 */
+.member .popup.popjoinchange .txt {margin-bottom: 0;}
+.member .popup.popjoinchange .form-field ul ~ .btn {margin-top: 35px;width: 100%;}
+
+/* adult */
+.member.adult #contents .noticedata h3 {font-size: 24px;}
+.member.adult .noticedata {margin: 76px auto 0;width: 560px;}
+
+/* 비밀번호 재설정 */
+.member.pwreset #contents h2 {font-size: 24px;}
+.member.pwreset .form-field > ul {padding-bottom:33px;margin-bottom: 40px;border-bottom: 1px solid #e7e7e7;}
+.member.pwreset .form-field .btn {display:block;margin: 0 auto;width: 276px;}

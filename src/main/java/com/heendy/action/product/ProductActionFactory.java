@@ -16,11 +16,12 @@ public class ProductActionFactory implements ActionFactory {
 	@Override
 	public Action getAction(String command) {
 		Action action = null;
+		
 	    System.out.println("ActionFactory  :" + command);
 
-	    if (command.equals("/list")) {
-	      action = new ProductListAction();
-	    } else if(command.equals("/detail")) {
+	    if (command.equals("/list.do")) {
+	    	action = new ProductListAction();
+	    } else if(command.equals("/detail.do")) {
 	    	action = new ProductDetailAction();
 	    }
 	    
