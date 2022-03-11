@@ -11,6 +11,12 @@
 	<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
 </head>
 <body>
+
+
+	<jsp:include page="header.jsp" flush="false" />
+
+	<jsp:include page="footer.jsp" flush="false" />
+	
 <a href="${contextPath }/product/list.do?menu=best">베스트</a>
 <a href="${contextPath }/product/list.do?menu=sale">세일</a>
 <a href="${contextPath }/product/list.do?menu=newprod">신상품</a>
