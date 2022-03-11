@@ -41,7 +41,7 @@ public class LoginMemberAction implements Action{
 			memberVO = memberDAO.getMember(member_name); //성공했으면 멤버를 조회해서 속성들을 가져온다
 
 			HttpSession session = request.getSession();
-			session.setAttribute("isLogin", true); //isLogin 속성을 true로 저장
+//			session.setAttribute("member_id", true); //isLogin 속성을 true로 저장
 			session.setAttribute("loginUser", memberVO);
 			url="/member/index.do";
 			request.getRequestDispatcher(url).forward(request, response);
