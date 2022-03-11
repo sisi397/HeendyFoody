@@ -17,19 +17,19 @@ public class WishAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "/pages/mypage/wish.jsp";
 		
-		//·Î±×ÀÎ ¿©ºÎ ºÐ±âÃ³¸® ÇÊ¿ä
+		//ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½Ã³ï¿½ï¿½ ï¿½Ê¿ï¿½
 		
 		String pno = request.getParameter("pno");
 		WishDAO wishDAO = WishDAO.getInstance();
 		
-		int totalCount = wishDAO.totalWishCount(6); //ÀüÃ¼ ÁÁ¾Æ¿ä »óÇ° ¼ö
+		int totalCount = wishDAO.totalWishCount(6); //ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½Ç° ï¿½ï¿½
 		System.out.println("totalCount: " + totalCount);
-		int pageNumber = 1; // ÇöÀç ÆäÀÌÁö ¹øÈ£
-		int pagePerList = 5; // º¸¿©ÁÙ ÆäÀÌÁö ¼ö
-		int listPerPage = 10; // ÇÑ ÆäÀÌÁö ´ç º¸¿©ÁÙ ÁÁ¾Æ¿ä »óÇ° ¼ö
+		int pageNumber = 1; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£
+		int pagePerList = 5; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+		int listPerPage = 10; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½Ç° ï¿½ï¿½
 
 
-		// ÆäÀÌÁö ¹øÈ£ °è»ê
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ ï¿½ï¿½ï¿½
 		if (pno == null || pno.length() == 0) {
 			pageNumber = 1;
 		}
@@ -51,7 +51,7 @@ public class WishAction implements Action {
 	    
 		int beginPageNumber = (pageNumber - 1) / pagePerList * pagePerList + 1;
 		int endPageNumber = beginPageNumber + pagePerList - 1;
-	    int totalPage = (totalCount - 1) / listPerPage + 1; // ÃÑ ÆäÀÌÁö ¼ö
+	    int totalPage = (totalCount - 1) / listPerPage + 1; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	    System.out.println("totalpage : " + totalPage);
 	    if (totalPage < endPageNumber) {
 	    	endPageNumber = totalPage;
