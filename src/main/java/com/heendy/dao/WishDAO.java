@@ -14,8 +14,8 @@ public class WishDAO {
 	public static WishDAO getInstance() {
 		return instance;
 	}
-	
-	// ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½È¸
+	 
+	// ÁÁ¾Æ¿äÇÑ »óÇ° ¸ñ·Ï Á¶È¸
 	public ArrayList<WishDTO> listWish(int beginRow, int endRow, int member_id) {
 		
 		ArrayList<WishDTO> wishList = new ArrayList<WishDTO>();
@@ -56,7 +56,7 @@ public class WishDAO {
 	}
 	
 	
-	//ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½Ç° ï¿½ï¿½ ï¿½ï¿½
+	//ÁÁ¾Æ¿äÇÑ »óÇ° ÃÑ ¼ö
 	public int totalWishCount(int member_id) {
 		
 		int result = 0;
@@ -82,10 +82,11 @@ public class WishDAO {
 			DBManager.close(conn, pstmt, rs);
 		}
 		return result;	
+		}
 
 
 	  
-    // ï¿½ï¿½ï¿½Æ¿ï¿½ insert
+    // ÁÁ¾Æ¿ä insert
 	public int insertWish(int memberId, int productId, int companyId) {
 	    int result = 0;	
 	    String sql = "insert into member_like_product(member_id, product_id, company_id) "
@@ -108,7 +109,7 @@ public class WishDAO {
 	    return result;
 	}
 	
-	// ï¿½ï¿½ï¿½Æ¿ï¿½ delete
+	// ÁÁ¾Æ¿ä delete
 	public int deleteWish(int memberId, int productId) {
 	    int result = 0;	
 	    String sql = "delete from member_like_product where member_id = ? and product_id = ?";
@@ -129,7 +130,7 @@ public class WishDAO {
 	    return result;
 	}
 	
-	// ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// ÁÁ¾Æ¿ä ¿©ºÎ
 	public int wishIs(int memberId, int productId) {
 		int result = 0;	
 	    String sql = "select count(*) from member_like_product where member_id = ? and product_id = ?";

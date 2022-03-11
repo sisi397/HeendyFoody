@@ -60,69 +60,67 @@
 		  
 		   <section class="like-section">
 		     <header class="header">
-		       <h4><span>좋아요 </span><strong>${totalCount}</strong></h4>
+		       <h4><span>좋아요 </span><strong>${totalWishCount}</strong></h4>
 		       <a href="${contextPath}/mypage/wish?pno=1" class="btn-line">더보기</a>
 		     </header>
 		  
-		     <ul class="product-list small">
-		       <c:forEach items="${wishList}" var="wishDTO">
-		         <li> <!-- 정상 -->
-			       <a href="${contextPath}/product/detail?pid=${wishDTO.productId}">
-			         <span class="thumb">
-			           <img src="${wishDTO.imageUrl}" alt="${wishDTO.productName}">
-			         </span>
-	                 <strong class="txt-ti ellipsis">${wishDTO.productName}</strong>
-	               </a>
-		           <span class="info">
-		             <span class="txt-price">
-			           <strong><em>${wishDTO.discountPrice}</em>원</strong>
-			           <del>${wishDTO.productPrice}</del>       
+		  	 <c:if test="${!empty wishList}">
+		       <ul class="product-list small">
+		         <c:forEach items="${wishList}" var="wishDTO">
+		           <li> <!-- 정상 -->
+			         <a href="${contextPath}/product/detail?pid=${wishDTO.productId}">
+			           <span class="thumb">
+			             <img src="${wishDTO.imageUrl}" alt="${wishDTO.productName}">
+			           </span>
+	                   <strong class="txt-ti ellipsis">${wishDTO.productName}</strong>
+	                 </a>
+		             <span class="info">
+		               <span class="txt-price">
+			             <strong><em>${wishDTO.discountPrice}</em>원</strong>
+			             <del>${wishDTO.productPrice}</del>       
+		               </span>
 		             </span>
-		           </span>
-		         </li>    
-		       </c:forEach>  
-		     </ul>
+		           </li>    
+		         </c:forEach>  
+		       </ul>
+		     </c:if>
+		     
+		     <c:if test="${empty wishList}">
+		   	   <div class="nodata">좋아요 상품이 아직 없습니다.</div>
+		     </c:if>
 		   </section>
 		   
 		   <section class="view-section">
 		     <header class="header">
-		       <h4><span>최근 본 상품 </span><strong>18</strong></h4>
+		       <h4><span>최근 본 상품 </span><strong>${totalRvCount}</strong></h4>
 		       <a href="${contextPath}/mypage/recent_view" class="btn-line">더보기</a>
 		     </header>
 		     
-		     <ul class="product-list small">
-		       <li> <!-- 정상 -->
-		         <a href="javascript:fnProductDetailMove('S02107069950', '', '100411', '01');">
-		           <span class="thumb">
-		             <img src="https://tohomeimage.thehyundai.com/PD/PDImages/S/9/2/2/2801001001229_00.jpg?RS=232x278" alt="[리치몬드 과자점] 까만식빵" onerror="this.src='/UIUX/w/pjtCom/images/common/noimage_232x278.jpg'">
-		           </span>
-		           <strong class="txt-ti ellipsis">[리치몬드 과자점] 까만식빵</strong>
-		         </a>
-		         <span class="info">
-		           <span class="txt-price">
-		             <strong><em>6,120</em>원</strong>
-		             <!-- 정상가가 혜택가보다 큰 경우 -->
-		             <del>7,200</del>        
-			       </span>
-		         </span>
-		       </li>
-		                           
-		       <li> <!-- 정상 -->
-		         <a href="javascript:fnProductDetailMove('S02107069951', '', '100411', '01');">
-		           <span class="thumb">
-		             <img src="https://tohomeimage.thehyundai.com/PD/PDImages/S/6/3/2/2801001001236_00.jpg?RS=232x278" alt="[리치몬드 과자점] 쿠인아망" onerror="this.src='/UIUX/w/pjtCom/images/common/noimage_232x278.jpg'">
-		           </span>
-		           <strong class="txt-ti ellipsis">[리치몬드 과자점] 쿠인아망</strong>
-		         </a>
-		         <span class="info">
-		           <span class="txt-price">
-		             <strong><em>3,310</em>원</strong>
-		             <!-- 정상가가 혜택가보다 큰 경우 -->   
-		             <del>3,900</del>   
-		           </span>
-		         </span>
-		       </li>
-		     </ul>
+		     <c:if test="${!empty rvList}">
+		       <ul class="product-list small">
+			     <c:forEach items="${rvList}" var="rvDTO">
+			       <li>
+			         <a href="${contextPath}/product/detail?pid=${rvDTO.productId}">
+			           <span class="thumb">
+			             <img src="${rvDTO.imageUrl}" alt=${rvDTO.productName}>
+			           </span>
+			           <strong class="txt-ti ellipsis">${rvDTO.productName}</strong>
+			         </a>
+			         <span class="info">
+			           <span class="txt-price">
+			             <strong><em>${rvDTO.discountPrice}</em>원</strong>
+			             <!-- 정상가가 혜택가보다 큰 경우 -->
+			             <del>${rvDTO.productPrice}</del>        
+				       </span>
+			         </span>
+			       </li>
+			     </c:forEach>                           
+		       </ul>
+		     </c:if>
+		     
+		      <c:if test="${empty rvList}">
+		   	    <div class="nodata">최근 본 상품이 아직 없습니다.</div>
+		      </c:if>
 		   </section>
 		 </section>
 	   </div>

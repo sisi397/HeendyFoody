@@ -2,7 +2,15 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%@ page import="com.heendy.utils.CookieUtils" %>
 
+<% 
+	
+	String pid = request.getParameter("pid");
+	CookieUtils ck = new CookieUtils();
+	ck.setCookie("RECENT_VIEW_ITEMS", pid, request, response);
+
+%>
 <!DOCTYPE html>
 <html lang="ko">
 
