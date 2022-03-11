@@ -20,6 +20,8 @@ private final static ActionFactory factory = new OrderActionFactory();
 		
 		if(command.equals("/orderProduct.do")) {
 			action = new OrderProductAction();
+		} else if (command.equals("/orderCartProducts.do")) {
+			action = new OrderCartProductsAction();
 		}
 		
 		return action;

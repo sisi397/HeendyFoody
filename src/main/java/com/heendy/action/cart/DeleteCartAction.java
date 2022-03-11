@@ -36,7 +36,7 @@ public class DeleteCartAction implements Action {
 
 			response.setStatus(201);
 			response.getWriter()
-					.write("{\"deleted\" : true, \"deleted_cart_id\" : " + cartId + ", \"result\" : 장바구니 아이템이 삭제되었습니다.}");
+					.write("{\"deleted\" : true, \"deleted_cart_id\" : " + cartId + ", \"result\" : \"장바구니 아이템이 삭제되었습니다.\"}");
 
 		} catch (SQLException e) {
 			int errorCode = e.getErrorCode();

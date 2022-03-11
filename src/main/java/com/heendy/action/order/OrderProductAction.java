@@ -38,7 +38,7 @@ public class OrderProductAction implements Action {
 			orderDAO.createOrder(createOrderDTO);
 			
 			response.setStatus(201);
-			response.getWriter().write("{\"created\" : true, \"result\" :주문이 완료 되었습니다.}");
+			response.getWriter().write("{\"created\" : true, \"result\" : \"주문이 완료 되었습니다.\"}");
 			
 		}catch(SQLException e) {
 			int errorCode = e.getErrorCode();
@@ -48,6 +48,7 @@ public class OrderProductAction implements Action {
 			} else if(errorCode == SQLErrorCode.LACK_OF_STOCK.getCode()) {
 				errorResponse = ErrorResponse.of(ErrorCode.LACK_OF_STOCK);
 			} else {
+				System.out.println(e.getMessage());
 				errorResponse = ErrorResponse.of(ErrorCode.UNCAUGHT_SERVER_ERROR);
 			}
 			
