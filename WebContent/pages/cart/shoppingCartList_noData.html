@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="shoppingCartList.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>장바구니</title>
+
+    <script>
+        
+    </script>
+</head>
+<body>
+    <header id="header">
+        <div class="inner-header">
+            <div class="logo">
+                <img src="header_logo_freex34.png" />
+            </div>
+            <div class="util">
+                <a href="#">로그아웃</a>
+                <a href="#">마이페이지</a>
+            </div>
+        </div>
+    </header>
+    <section id="shopping-cart-list" class="contents">
+        <div class="inner-content">
+            <h2>장바구니</h2>
+            <div class="cart-select">
+                <label>
+                    <input type="checkbox" checked="checked" name="allItemSelect" />
+                    <span>
+                        전체선택
+                    </span>
+                </label>
+                <ul class="btn-group">
+                    <li>
+                        <button type="button" >삭제</button>
+                    </li>
+                    <li>
+                        <button type="button" >품절삭제</button>
+                    </li>
+                </ul>
+            </div>
+            <form id="frmCartInfo">
+                <div class="nodata">
+                     장바구니에 담긴 상품이 없습니다.
+                </div>
+                <div class="rightarea">
+                    <!--start 결제 내역 필드-->
+                    <fieldset class="price-field">
+                        <legend style="position: absolute !important; left: -9999px">결제내역</legend>
+                        <dl class="orderprice">
+                            <dt>총 상품금액</dt>
+                            <dd>
+                                <strong>
+                                    <em id="emPriceFTotNrmlprice">0</em>원
+                                </strong>
+                            </dd>
+                        </dl>
+                        <dl class="minus">
+                            <dt>총 할인금액</dt>
+                            <dd>
+                                <strong>
+                                    <em id="emPriceFTotDcAmt">0</em>원
+                                </strong>
+                            </dd>
+                        </dl>
+                        <dl class="total">
+                            <dt>총 결제예상금액</dt>
+                            <dd>
+                                <strong>
+                                    <em id="emPriceFTotPayAmt">0</em>원
+                                </strong>
+                            </dd>
+                        </dl>
+                    </fieldset>
+                     <!--end 결제 내역 필드-->
+                     <button type="button" class="btn btn-order" disabled="disabled">
+                         주문하기
+                        <em id="emTotalItemCnt">0</em>    
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer id="footer"></footer>
+</body>
+</html>
