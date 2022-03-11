@@ -23,12 +23,16 @@ request.setCharacterEncoding("UTF-8");
 <body>
 	<div>
 		<!-- 사용 가능한 아이디 -->
-		<c:if test="${result == 1}">	
-			<h3>${id}는 사용 가능한 아이디 입니다.</h3>
-			<input type="button" class="btn fill black" value="사용하기" onclick="is_ok()">
+		<c:if test="${result == 1}">
+			<h3>${id}는사용 가능한 아이디 입니다.</h3>
+			<script type="text/javascript">
+				opener.document.joinMemberForm.name.value = "";
+			</script>
+			<input type="button" class="btn fill black" value="사용하기"
+				onclick="is_ok()">
 		</c:if>
-		<c:if test="${result == 0}">	
-			<h2>${id}는 이미 사용중인 아이디입니다.</h2>
+		<c:if test="${result == 0}">
+			<h2>${id}는이미 사용중인 아이디입니다.</h2>
 			<script type="text/javascript">
 				opener.document.joinMemberForm.name.value = "";
 			</script>

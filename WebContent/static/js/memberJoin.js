@@ -5,7 +5,7 @@
 */
 
 //회원가입시 제약조건 설정
-function login_save() {
+function join_save() {
   if (document.joinMemberForm.name.value == "") {
     alert("아이디를 입력하지 않았습니다.");
     document.joinMemberForm.name.focus();
@@ -22,6 +22,7 @@ function login_save() {
     alert("이메일을 입력하지 않았습니다.");
     document.joinMemberForm.email.focus();
   } else {
+	alert("흰디푸디 회원 가입되셨습니다. 로그인 해주세요.");
     document.joinMemberForm.submit();
   }
 }

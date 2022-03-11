@@ -71,7 +71,7 @@ request.setCharacterEncoding("UTF-8");
 					<tr>
 						<td width="400">
 							<div style="margin: 0 auto;padding-top: 30px;">
-								<button type="button" class="btn fill big black" style="margin-right:200px" onclick="login_save()">가입하기</button>
+								<button type="button" class="btn fill big black" style="margin-right:200px" onclick="join_save()">가입하기</button>
 								<button type="reset" class="btn fill big black">다시입력</button>
 							</div>
 						<td>

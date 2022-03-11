@@ -26,7 +26,7 @@ public class MemberDAO {
 	//회원 추가하기
 	public void addMember(MemberDTO memberVO) {
 		String sql = "insert into member(member_name, member_password, member_email, address, role_id) "
-				+ "values(?, admin.pack_encryption_decryption.func_encrypt(?), ?, ?, ?) ";
+				+ "values(?, pack_crypto.func_encrypt(?), ?, ?, ?) ";
 		Connection conn = null;
 		PreparedStatement pstmt = null;	    
 		try {
@@ -54,7 +54,7 @@ public class MemberDAO {
 		try {
 			conn = DBManager.getConnection();
 			String sql = "select decode(count(*), 1, 'true', 'false') as result from member";
-			sql += " where member_name=? and member_password=admin.pack_encryption_decryption.func_encrypt(?)";
+			sql += " where member_name=? and member_password=pack_crypto.func_encrypt(?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);
 			pstmt.setString(2, pwd);
@@ -78,7 +78,7 @@ public class MemberDAO {
 		PreparedStatement pstmt = null;
 		try {
 			conn = DBManager.getConnection();
-			String sql = "select admin.pack_encryption_decryption.func_decrypt(member_password) as pwd from member";
+			String sql = "select pack_crypto.func_decrypt(member_password) as pwd from member";
 			sql += " where member_name=? and member_email=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);

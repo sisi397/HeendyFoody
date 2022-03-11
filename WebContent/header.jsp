@@ -22,10 +22,13 @@ request.setCharacterEncoding("UTF-8");
 	href="${contextPath}/static/css/common/css-library.min.css">
 <link rel="stylesheet" type="text/css"
 	href="${contextPath}/static/css/common/main.min.css">
+
+<!-- 멤버 로그인 CSS -->
 <link rel="stylesheet" type="text/css"
 	href="${contextPath}/static/css/common/member.min.css">
 
 <!-- 공통 JS / jquery 라이브러리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="${contextPath}/static/js/function.min.js"></script>
 <script type="text/javascript" src="${contextPath}/static/js/jquery-library.min.js"></script>
 

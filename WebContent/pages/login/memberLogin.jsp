@@ -13,16 +13,10 @@ request.setCharacterEncoding("UTF-8");
 <head>
 <meta charset="UTF-8">
 <title>흰디푸디 투홈</title>
-<!-- 공통 CSS -->
-<link rel="stylesheet" type="text/css"
-	href="../../static/css/common/common.min.css">
-
-<!-- 멤버 Login CSS -->
-<link rel="stylesheet" type="text/css"
-	href="../../static/css/common/member.min.css">
 
 </head>
 <jsp:include page="../../header.jsp" flush="false" />
+
 <!-- 서버에서 저장한 attribute를 가져온다. -->
 <%
 String msg = (String) request.getAttribute("msg");
