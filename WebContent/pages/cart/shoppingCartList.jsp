@@ -18,7 +18,18 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="${contextPath}/static/css/shoppingcart.css" />
+
+
+<!-- 공통 CSS -->
+<link rel="stylesheet" type="text/css"
+	href="${contextPath}/static/css/common/common.min.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/shoppingcart.css" />	
+<!-- 공통 JS / jquery 라이브러리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="${contextPath}/static/js/function.min.js"></script>
+<script type="text/javascript" src="${contextPath}/static/js/jquery-library.min.js"></script>
+
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>장바구니</title>
@@ -68,6 +79,8 @@
 			}
 		
 		});
+		
+		
 
 		$(document).ready(function() {
 		
@@ -130,6 +143,19 @@
 			}
 		}
 		
+		 function checkOrderAble() {
+			var selectedItemCount = $("input:checkbox[name=itemSelect]:checked").length;
+			var orderBtn = $("#orderBtn");
+			if(selectedItemCount > 0) {
+				
+				orderBtn.removeAttr("disabled");
+			} else {
+				
+				orderBtn.attr("disabled","disabled");
+			}
+			
+		} 
+		
 		function bindCartList() {
 			//전체선택 체크박스 클릭 시
 			if($("input:checkbox[name=allItemSelect]")) {
@@ -139,6 +165,8 @@
 					
 					//가격 재계산
 					calculateSellPrice();
+					
+					checkOrderAble();
 				});
 			}
 			
@@ -165,23 +193,12 @@
 					
 					//가격 재계산
 					calculateSellPrice();
+					
+					checkOrderAble();
 				});
 			}
 		}
 		
-		/*장바구니에 담긴 수량*/
-		function bindCartTotal(obj) {
-			console.log(obj);
-			var listObj = $(obj).parents("ul");
-			
-			console.log(listObj);
-			var length = listObj.find("li").length;
-			
-			$(obj).parents("fieldset legend.tit").find("em").text(length);
-			
-			console.log(length);
-			
-		}
 		
 		/* 주문수량변경(더하기) */
 		function changeOrdQtyUp(obj) {
@@ -208,7 +225,7 @@
 		            dataType: "json",
 		            success : function(data) {
 		            	ordQty++;
-		            	bindCartTotal(obj);
+		     
 		            	$(obj).parent().find("input[name=ordQty]").val(ordQty);
 		            	
 		                calculateItemSellPrice(itemObj, obj);
@@ -352,16 +369,44 @@
 				(deleteCart(this))();
 			});
 		}
+		
+		/*장바구니 주문 validation*/
+		function orderSelectedProducts() {
+			
+			var form_data = $("#frmCartInfo").serialize();
+			
+			$.ajax({
+				type: "POST",
+				url: "${contextPath}" + "/order/orderCartProducts.do",
+				data: form_data,
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	        	dataType: "json",
+	        	success : function(data) {
+	        		alert("주문이 완료되었습니다.");
+	        		location.reload();
+	                
+	        	}, 
+	        	error: function(xhr, status, error) {
+	        		var errorResponse = JSON.parse(xhr.responseText);
+	            	var errorCode = errorResponse.code;
+	            	var message = errorResponse.message;
+	     
+	            	alert(message);
+	        	}
+			});
+		}
 		 
 	</script>
 	<header id="header">
 		<div class="inner-header">
 			<div class="logo">
+				<a href="${contextPath}/">
 				<img
 					src="${contextPath}/static/images/assets/header_logo_freex34.png" />
+					</a>
 			</div>
 			<div class="util">
-				<a href="#">로그아웃</a> <a href="#">마이페이지</a>
+				<a href="#">로그아웃</a> <a href="${contextPath}/mypage/info">마이페이지</a>
 			</div>
 		</div>
 	</header>
@@ -372,14 +417,6 @@
 				<label> <input type="checkbox" checked="checked"
 					name="allItemSelect" /> <span> 전체선택 </span>
 				</label>
-				<ul class="btn-group">
-					<li>
-						<button type="button" onclick="deleteSelectedCarts()">삭제</button>
-					</li>
-					<li>
-						<button type="button">품절삭제</button>
-					</li>
-				</ul>
 			</div>
 			<form id="frmCartInfo">
 				<c:if test="${empty normalCartList and empty soldOutCartList}">
@@ -389,12 +426,12 @@
                 </c:if>
                 <c:if test="${not empty normalCartList or not empty soldOutCartList}">
 				<!--start 장바구니 목록 -->
-				<fieldset class="list-field">
+				<fieldset class="my-list-field">
 					<legend class="tit">
 						일반구매 <em>${fn:length(normalCartList)}</em>
 					</legend>
 					<div class="cont">
-						<ul class="product-list" id="nrmlProds">
+						<ul class="my-product-list" id="nrmlProds">
 							<c:forEach var="item" items="${normalCartList}">
 								<li>
 									<input type="hidden" name="companyId" value="${item.companyId}" />
@@ -433,7 +470,6 @@
 												<input type=hidden name="dcAmt" value="${item.productPrice - item.productDisCountedPrice}" />
 										</span>
 											<div class="probtn">
-												<button type="button" id="btnWish" class="btn-wish">선물하기</button>
 												<button type="button" class="btn btn-buy" onclick="orderProduct(this)">바로구매</button>
 											</div>
 										</span>
@@ -451,12 +487,12 @@
 
 				<c:if test="${not empty soldOutCartList}">
 					<!--start 품절 상품 목록-->
-					<fieldset class="list-field">
+					<fieldset class="my-list-field">
 						<legend class="tit">
 							품절상품 <em>${fn:length(soldOutCartList)}</em>
 						</legend>
 						<div class="cont">
-							<ul class="product-list" id="soldOutProds">
+							<ul class="my-product-list" id="soldOutProds">
 								<c:forEach var="item" items="${soldOutCartList}">
 									<li data-soldoutyn="Y">
 										<input type="hidden" name="companyId" value="${item.companyId}" />
@@ -517,7 +553,7 @@
 						</dl>
 					</fieldset>
 					<!--end 결제 내역 필드-->
-					<button type="button" class="btn btn-order">
+					<button id="orderBtn" type="button" class="btn btn-order" onclick="orderSelectedProducts()">
 						주문하기 <em id="emTotalItemCnt">0</em>
 					</button>
 				</div>
@@ -525,6 +561,6 @@
 		</div>
 	</section>
 
-	<footer id="footer"></footer>
+	<jsp:include page="../../footer.jsp" flush="false" />
 </body>
 </html>
