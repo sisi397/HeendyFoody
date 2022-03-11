@@ -42,7 +42,7 @@ public class MinusCartAction implements Action {
 			cartDAO.minusCartCount(minusCartDto);
 
 			response.setStatus(201);
-			response.getWriter().write("{\"updated\" : true, \"result\" :장바구니의 수량이 감소되었습니다.}");
+			response.getWriter().write("{\"updated\" : true, \"result\" :\"장바구니의 수량이 감소되었습니다.\"}");
 
 		} catch (SQLException e) {
 			int errorCode = e.getErrorCode();
