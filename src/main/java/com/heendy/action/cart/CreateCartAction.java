@@ -39,7 +39,7 @@ public class CreateCartAction implements Action {
 			this.cartDAO.createCart(data);
 
 			response.setStatus(201);
-			response.getWriter().write("{\"created\" : true, \"result\" :장바구니에 상품이 추가되었습니다.}");
+			response.getWriter().write("{\"created\" : true, \"result\" : \"장바구니에 상품이 추가되었습니다.\"}");
 
 		} catch (SQLException e) {
 			int errorCode = e.getErrorCode();

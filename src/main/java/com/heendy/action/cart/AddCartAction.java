@@ -32,6 +32,8 @@ public class AddCartAction implements Action {
 		int memberId = 6;
 
 		try {
+			System.out.println(request.getParameter("cart_id"));
+			System.out.println(request.getParameter("count"));
 			int cartId = Integer.parseInt(request.getParameter("cart_id"));
 			int count = Integer.parseInt(request.getParameter("count"));
 
@@ -40,7 +42,7 @@ public class AddCartAction implements Action {
 			cartDAO.addCartCount(addCartDto);
 
 			response.setStatus(201);
-			response.getWriter().write("{\"updated\" : true, \"result\" :장바구니의 수량이 추가되었습니다.}");
+			response.getWriter().write("{\"updated\" : true, \"result\" : \"장바구니의 수량이 추가되었습니다.\"}");
 
 		} catch (SQLException e) {
 			int errorCode = e.getErrorCode();

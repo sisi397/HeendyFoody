@@ -38,7 +38,7 @@ public class OrderProductAction implements Action {
 			orderDAO.createOrder(createOrderDTO);
 			
 			response.setStatus(201);
-			response.getWriter().write("{\"created\" : true, \"result\" :주문이 완료 되었습니다.}");
+			response.getWriter().write("{\"created\" : true, \"result\" : \"주문이 완료 되었습니다.\"}");
 			
 		}catch(SQLException e) {
 			int errorCode = e.getErrorCode();

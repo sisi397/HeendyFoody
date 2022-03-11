@@ -46,7 +46,7 @@ public class OrderCartProductsAction implements Action {
 			orderDAO.createCartOrder(createCartOrderDTO);
 
 			response.setStatus(201);
-			response.getWriter().write("{\"created\" : true, \"result\" :주문이 완료 되었습니다.}");
+			response.getWriter().write("{\"created\" : true, \"result\" :\"주문이 완료 되었습니다.\"}");
 		} catch (SQLException e) {
 			int errorCode = e.getErrorCode();
 			ErrorResponse errorResponse;
