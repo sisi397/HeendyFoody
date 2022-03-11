@@ -1,26 +1,27 @@
 package com.heendy.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CategoryDTO {
-	private String parentCategoryName;
-	private List<String> categoryNames;
+	private int categoryId;
+	private String categoryName;
+	private int parentCategoryId;
 	
-	public CategoryDTO() {
-		super();
-		categoryNames = new ArrayList<String>();
+	public int getCategoryId() {
+		return categoryId;
 	}
-	public String getParentCategoryName() {
-		return parentCategoryName;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
-	public void setParentCategoryName(String parentCategoryName) {
-		this.parentCategoryName = parentCategoryName;
+	public String getCategoryName() {
+		return categoryName;
 	}
-	public List<String> getCategoryNames() {
-		return categoryNames;
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
-	public void setCategoryNames(String categoryNames) {
-		this.categoryNames.add(categoryNames);
+	public int getParentCategoryId() {
+		return parentCategoryId;
 	}
+	public void setParentCategoryId(int parentCategoryId) {
+		this.parentCategoryId = parentCategoryId;
+	}
+	
 }

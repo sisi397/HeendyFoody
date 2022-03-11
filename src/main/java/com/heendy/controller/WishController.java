@@ -12,35 +12,39 @@ import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
 import com.heendy.action.wish.WishActionFactory;
 
+/**
+ * @author 김시은
+ * 
+ * 좋아요 관련 Controller
+ * 
+ * */
 @WebServlet("/wish/*")
 public class WishController extends HttpServlet{
-	 private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
+	 
+	private final ActionFactory actionFactory = WishActionFactory.getInstance();
+	 
+	@Override
+	protected void doGet(HttpServletRequest request,
+	   HttpServletResponse response) throws ServletException, IOException {
+		doHandle(request, response);
+	}
 
-	  protected void doGet(HttpServletRequest request,
-	      HttpServletResponse response) throws ServletException, IOException {
-		    doHandle(request, response);
-	  }
-
-	  protected void doPost(HttpServletRequest request,
-	      HttpServletResponse response) throws ServletException, IOException {
-	    request.setCharacterEncoding("UTF-8");
-	    doHandle(request, response);
-	  }
+	@Override
+	protected void doPost(HttpServletRequest request,
+	   HttpServletResponse response) throws ServletException, IOException {
+		doHandle(request, response);
+	}
 	  
-	  protected void doHandle(HttpServletRequest request,
-		  HttpServletResponse response) throws ServletException, IOException {
-		   String command = request.getPathInfo();
-//		   String uri = request.getRequestURI();
-//		   String contextPath = request.getContextPath();
-//		   String url = uri.substring(contextPath.length()); // /*.do
-		   
-		  System.out.println("Wishcontroller : " + command);
-		  	ActionFactory af = WishActionFactory.getInstance();
-		    Action action = af.getAction(command);
-		    
-		    if (action != null) {
-		      action.execute(request, response);
-		    }
-	  }
+	protected void doHandle(HttpServletRequest request,
+		HttpServletResponse response) throws ServletException, IOException {
+		String command = request.getPathInfo();
+		
+		Action action = this.actionFactory.getAction(command);
+				    
+		if (action != null) {
+			action.execute(request, response);
+		}
+	}
 	  
 }

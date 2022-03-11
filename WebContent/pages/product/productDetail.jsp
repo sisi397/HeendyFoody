@@ -9,19 +9,7 @@
 <head>
     <!-- 새벽배송 공통 태그-->
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, viewport-fit=cover">
-    <meta name="facebook-domain-verification" content="mdeov123vj5nmzk24oy1wsyx9ukdup" />
     
-    <link rel="canonical" href="https://tohome.thehyundai.com/">
-    <!-- // 새벽배송 공통 태그-->
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-    <meta name="format-detection" content="telephone=no, email=no, address=no">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-
     <title>신상품</title>
 
 	<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
@@ -46,7 +34,7 @@
                 <div class="propic">
                     <div class="propicbig">
                         <!-- 이미지가 있을 경우 첫번째 이미지를 넣어줌. -->
-                        <img data-zoom-image="https://tohomeimage.thehyundai.com/PD/PDImages/S/3/8/6/2801001124683_00.jpg?RS=720x864" src="https://tohomeimage.thehyundai.com/PD/PDImages/S/3/8/6/2801001124683_00.jpg?RS=720x864" onerror="this.src='/UIUX/w/pjtCom/images/common/noimage_720x864.jpg'">
+                        <img data-zoom-image="../static/images/product/${productDTO.imageUrl }" src="../static/images/product/${productDTO.imageUrl }">
                         
                     </div>
                     
@@ -58,8 +46,8 @@
                         <div class="swiper-container propicsmallswiper" style="opacity: 1">
                             <div id="P_picSmall" class="swiper-wrapper" style="display:inline-block">
                                 <div class="swiper-slide">
-                                    <a class="active" href="#" data-image="https://tohomeimage.thehyundai.com/PD/PDImages/S/3/8/6/2801001124683_00.jpg?RS=720x864" data-zoom-image="https://tohomeimage.thehyundai.com/PD/PDImages/S/3/8/6/2801001124683_00.jpg?RS=1500x1800">
-                                    <img src="https://tohomeimage.thehyundai.com/PD/PDImages/S/3/8/6/2801001124683_00.jpg?RS=720x864" onerror="this.src='/UIUX/m/pjtCom/images/common/noimage_350x420.jpg'">
+                                    <a class="active" href="#" data-image="../static/images/product/${productDTO.imageUrl }" data-zoom-image="../static/images/product/${productDTO.imageUrl }">
+                                    <img src="../static/images/product/${productDTO.imageUrl }">
                                     </a>
                                 </div>           
                             </div>
@@ -139,12 +127,12 @@
                                                     &nbsp;&nbsp;&nbsp;(재고수량&nbsp;${product.productCount }개)
                                             </strong>
                                             <div class="ea-area">
-                                                <input type="number" title="수량 입력" value="1" readonly>
-                                                <button type="button" class="btn-down" onclick="fnOptionEaDown(this);">수량 낮추기</button>
-                                                <button type="button" class="btn-up" onclick="fnOptionEaUp(this);">수량 올리기</button>
+                                                <input type="number" class="pcount" title="수량 입력" value="1" readonly>
+                                                <button type="button" class="btn-down" onclick="downCount()">수량 낮추기</button>
+                                                <button type="button" class="btn-up" onclick="upCount()">수량 올리기</button>
                                             </div>
                                             <span class="txt-price"><em>
-                                            ${product.discountPrice }
+                                            <input type="text" value="${product.discountPrice }" disabled style="border:none; outline:none;text-align:right;background-color:none;">
                                             </em>원</span>
                                         </div>
                                     </div>  
@@ -157,13 +145,13 @@
                     	<p class="txt-total">총 금액 <strong><em>${product.discountPrice }</em>원</strong></p>
                         <c:if test="${product.productCount eq 0 }">
                         <div class="btns">
-                        	<button type="button" class="btn darkgray bigger btn-buy" onclick="fnPopupScaleOpenA(this, '#p_popCartAdd');">장바구니 넣어두기</button>
+                        	<button type="button" class="btn darkgray bigger btn-buy" onclick="addCartProduct()">장바구니 넣어두기</button>
                             <button type="button" class="btn fill gray bigger btn-buy" onclick="fnPDPopWeightingNight('#p_popWeightingNight');">재입고 알림 신청</button>                                                            
                         </div> 
                         </c:if>
                         <c:if test="${product.productCount ne 0 }">
                         <div class="btns">
-                        	<button type="button" class="btn orange bigger btn-buy" onclick="cartProduct()">장바구니</button>
+                        	<button type="button" class="btn orange bigger btn-buy" onclick="addCartProduct()">장바구니</button>
                         	<button type="button" class="btn fill orange bigger btn-buy" onclick="buyProduct()">바로구매</button>
                         </div>               
                         </c:if>
@@ -187,11 +175,11 @@
                     <!-- 상품상세// -->
                     <section id="p_proDetail" class="tab-contents prodetail active">
                         <h3 class="hide">상품상세</h3>
-                        <img width="0" height="0" style="border:0px;" src="https://tohomeca.thehyundai.com/Acceleration/Cached?pid=S12202099059&cVer=20220223093201&dv=pc&charset=utf-8&https=Y&inc_css=N&inc_js=N&tu=https%3A%2F%2Ftohome.thehyundai.com%2Ffront%2Fpd%2Fpdf%2FimgDetail.do%3FslitmCd%3DS12202099059">
+                        <img width="0" height="0" style="border:0px;" src="../static/images/product/${productDTO.imageUrl }">
                             <div class="detailcont">
                                 <div style="width: 100%;margin: auto; max-width: 840;">
                                 <h1 style="text-align:center">${product.productName }</h1>
-                                <img class="s-lazy s-loaded" src = "https://tohomeimage.thehyundai.com/PD/PDImages/S/3/8/6/2801001124683_00.jpg">
+                                <img class="s-lazy s-loaded" src = "../static/images/product/${productDTO.imageUrl }">
                                 <h1 style="text-align:center">상품 상세 입니다.</h1>
                                 </div>
                             </div>                        
@@ -210,16 +198,16 @@
                     <div class="optionarea">
 	                    <div class="optionls">
 	                        <div>
-	                            <strong class="txt-ti">[새벽시장] 두리향 딸기 (1kg/1단)
+	                            <strong class="txt-ti">${product.productName }
 	                                    <br>(남은 수량 ${product.productCount }개)
 	                            </strong>
 	                            <div class="ea-area">
-	                                <input type="number" title="수량 입력" value="1" readonly>
-	                                <button type="button" class="btn-down" onclick="fnOptionEaDown(this);">수량 낮추기</button>
-	                                <button type="button" class="btn-up" onclick="fnOptionEaUp(this);">수량 올리기</button>
+	                                <input type="number" class="pcount" title="수량 입력" value="1" readonly>
+	                                <button type="button" class="btn-down" onclick="downCount()">수량 낮추기</button>
+	                                <button type="button" class="btn-up" onclick="upCount()">수량 올리기</button>
 	                            </div>
 	                            <span class="txt-price"><em>
-	                            39,900
+	                            ${product.discountPrice }
 	                            </em>원</span>
 	                        </div>
 	                    </div>
@@ -227,11 +215,11 @@
                     <!-- 상품 선택 end// -->
 
                     <div class="buybutton">
-                        <p class="txt-total">총 금액 <strong><em>39,900</em>원</strong></p>
+                        <p class="txt-total">총 금액 <strong><em>${product.discountPrice }</em>원</strong></p>
                         <c:if test="${product.productCount eq 0 }">
                         <div class="btns">
-	                        <button type="button" class="btn darkgray bigger btn-buy" onclick="fnPopupScaleOpenA(this, '#p_popCartAdd');">장바구니 넣어두기</button>
-	                        <button type="button" class="btn fill gray bigger btn-buy" onclick="fnPDPopWeightingNight('#p_popWeightingNight');">재입고 알림 신청</button>                                           
+	                        <button type="button" class="btn darkgray bigger btn-buy" onclick="addCartProduct()">장바구니 넣어두기</button>
+	                        <button type="button" class="btn fill gray bigger btn-buy" onclick="">재입고 알림 신청</button>                                           
                         </div>
                         </c:if>
                         <c:if test="${product.productCount ne 0 }">
@@ -250,22 +238,9 @@
 <script>
 // 시작할 때 좋아요 여부 확인 
 $(document).ready(function(){
-	// 상품 정보 가져오기
-	/*
-	$.ajax({
-		url:'${contextPath}/product/select.do?pid=${param.pid }',
-		type: 'get',
-		dataType:'json',
-		success : function(data){
-			console.log(data);
-			'${product }' = data;
-		}
-	});
-	*/
-	
 	//좋아요 여부 가져오기
 	$.ajax({
-		url:'${contextPath}/wish/check.do?pid=${param.pid }',
+		url:'${contextPath}/wish/check.do?productId=${param.pid }&compainyId=${param.cid }',
 		type: 'get',
 		dataType:'json',
 		success : function(data){
@@ -317,24 +292,60 @@ function wishUpdate(){
 }
 
 function buyProduct(){
+	console.log("buy");
 	$.ajax({
 		url:'${contextPath}/order/orderProduct.do',
 		type: 'post',
-		dataType:'x-www-form-urlencoded',
+		dataType:'json',
 		data: {
 			product_id: ${product.productId },
 			company_id: ${product.companyId },
 			product_count : ${product.productCount}
 		},
 		success : function(data){
-			console.log(data);
-			console.log("fin");
+			alert("구매 완료하였습니다.");
 		}
 	});
 }
 
-function cartProduct(){
-	
+function addCartProduct(){
+	const pqty = document.querySelector('.pcount');
+	console.log("cart");
+	$.ajax({
+		url:'${contextPath}/cart/create.do',
+		type: 'post',
+		dataType:'json',
+		data: {
+			product_id: ${product.productId },
+			company_id: ${product.companyId },
+			count : pqty.value
+		},
+		success : function(data){
+			alert("장바구니에 담았습니다.");
+		},
+		error : function(err){
+			alert(err.code);
+		}
+	});
+}
+
+// 수량 증가
+function upCount(){
+	const pqty = document.querySelectorAll('.pcount');
+	for(var i = 0; i < pqty.length; i++){
+		console.log(pqty[i].value);
+		pqty[i].value = Number(pqty[i].value) + 1;
+	}
+	console.log(document.querySelector('.txt-total'));
+}
+
+// 수량 감소
+function downCount(){
+	const pqty = document.querySelectorAll('.pcount');
+	for(var i = 0; i < pqty.length; i++){
+		console.log(pqty[i].value);
+		pqty[i].value = Number(pqty[i].value) - 1;
+	}
 }
 </script>
 

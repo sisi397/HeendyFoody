@@ -1,44 +1,48 @@
 package com.heendy.dao;
 
-import java.sql.Array;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.heendy.dto.CategoryDTO;
 import com.heendy.dto.ProductDTO;
 
 import com.heendy.utils.*;
 
 import oracle.jdbc.OracleTypes;
 
+/**
+ * @author ê¹€ì‹œì€
+ * 
+ * ìƒí’ˆ ê´€ë ¨ DAO 
+ * 
+ * */
 public class ProductDAO {
-	private ProductDAO() {  } //½Ì±ÛÅÏ ÆĞÅÏ Ã³¸®
+	private ProductDAO() {  } //ì‹±ê¸€í„´ íŒ¨í„´ ì²˜ë¦¬
     private static ProductDAO instance = new ProductDAO();
     public static ProductDAO getInstance() {
       return instance;
     }  
     
-    // ¿À¶óÅ¬ ¿¬°á
+    // ì˜¤ë¼í´ ì—°ê²°
     private Connection conn;
     
-    // sql¹®ÀåÀü¼Û, ÇÔ¼ö È£Ãâ
+    // sqlë¬¸ì¥ì „ì†¡, í•¨ìˆ˜ í˜¸ì¶œ
     private CallableStatement cs;
     
     private ResultSet rs;
 	  
+    // ì¡°ê±´ì— ë§ëŠ” ìƒí’ˆ ë¦¬ìŠ¤íŠ¸ ë¶ˆëŸ¬ì˜¤ê¸°
 	public ArrayList<ProductDTO> listProduct(int beginRow, int endRow, String sort, String menu, int cate, int pcate) {
 	    ArrayList<ProductDTO> productList = new ArrayList<ProductDTO>();
 	    String sql = "{CALL sp_list_product(?,?,?,?,?,?,?)}";
+	    
 	    System.out.println("DAO : listProduct");
 	    try {
 	    	conn = DBManager.getConnection();
 	    	cs = conn.prepareCall(sql);
 		    
-		    //?¿¡ °ª Ã¤¿ì±â
+	    	//?ì— ê°’ ì±„ìš°ê¸°
 		    cs.setInt(1, beginRow);
 		    cs.setInt(2, endRow);
 		    cs.setString(3, sort);
@@ -48,16 +52,18 @@ public class ProductDAO {
 		    cs.registerOutParameter(7, OracleTypes.CURSOR);
 		    System.out.println(sort);
 		    /*
-		     * oracle µ¥ÀÌÅÍÇü ¼³Á¤
+		     * oracle ë°ì´í„°í˜• ì„¤ì •
 		     * sys_refcursor => oracleTypes.cursor
 		     * varchar2 => oracleTypes.varchar
 		     */
+		    
 		    cs.executeUpdate();
 		    rs = (ResultSet)cs.getObject(7);
 		    
 	    	while (rs.next()) {
 		        ProductDTO product = new ProductDTO();
 		        product.setProductId(rs.getInt("product_id"));
+		        product.setCompanyId(rs.getInt("company_id"));
 		        product.setCompanyName(rs.getString("company_name"));
 		        product.setProductPrice(rs.getInt("product_price"));
 		        product.setProductName(rs.getString("product_name"));
@@ -68,7 +74,6 @@ public class ProductDAO {
 		        product.setDeleted(rs.getInt("deleted"));
 		        product.setCategoryId(rs.getInt("category_id"));
 		        product.setDiscountPrice(rs.getInt("discount_price"));
-		        System.out.println(product.getProductId());
 		        productList.add(product);
 	    	}
 	    } catch (Exception e) {
@@ -79,29 +84,23 @@ public class ProductDAO {
 	    return productList;
 	  }
 
-	public ProductDTO detailProduct(int pid){
+	// ìƒí’ˆ ìƒì„¸ ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸°
+	public ProductDTO detailProduct(int productId, int companyId){
 		ProductDTO product = new ProductDTO();
 		
-	    String sql = "{CALL sp_select_product(?,?)}";
+	    String sql = "{CALL sp_select_product(?,?,?)}";
 	    
-	    conn = null;
-	    cs = null;
-	    rs = null;    
 	    System.out.println("DAO : detailProduct");
 	    try {
 	    	conn = DBManager.getConnection();
 	    	cs = conn.prepareCall(sql);
 		    
-		    //?¿¡ °ª Ã¤¿ì±â
-		    cs.setInt(1, pid);
-		    cs.registerOutParameter(2, OracleTypes.CURSOR);
-		    /*
-		     * oracle µ¥ÀÌÅÍÇü ¼³Á¤
-		     * sys_refcursor => oracleTypes.cursor
-		     * varchar2 => oracleTypes.varchar
-		     */
+		    cs.setInt(1, productId);
+		    cs.setInt(2, companyId);
+		    cs.registerOutParameter(3, OracleTypes.CURSOR);
+		    
 		    cs.executeUpdate();
-		    rs = (ResultSet)cs.getObject(2);
+		    rs = (ResultSet)cs.getObject(3);
 	      while (rs.next()) {
 	        product.setProductId(rs.getInt("product_id"));
 	        product.setCompanyName(rs.getString("company_Name"));
@@ -127,6 +126,7 @@ public class ProductDAO {
 	    return product;
 	}    
 
+	// í˜ì´ì§• ì²˜ë¦¬ë¥¼ ìœ„í•œ ì „ì²´ ìƒí’ˆ ê°œìˆ˜ ê°€ì ¸ì˜¤ê¸°
 	public int totalCountProduct(String menu) {
 		int result = 0;
 	    String sql = "{CALL sp_totalcount_product(?,?)}";
@@ -138,7 +138,6 @@ public class ProductDAO {
 	    	conn = DBManager.getConnection();
 	    	cs = conn.prepareCall(sql);
 		    
-		    //?¿¡ °ª Ã¤¿ì±â
 		    cs.setString(1, menu);
 		    cs.registerOutParameter(2, OracleTypes.INTEGER);
 		    
@@ -150,38 +149,5 @@ public class ProductDAO {
 	    	DBManager.close(conn, cs);
 	    }
 	    return result;
-	}
-	
-	public CategoryDTO listCategory(int pcate) {
-		CategoryDTO category = new CategoryDTO();
-		String sql = "{CALL sp_list_category(?,?,?)}";
-	    System.out.println("p : " + pcate);
-
-	    conn = null;
-	    cs = null;
-	    
-	    try {
-	    	conn = DBManager.getConnection();
-	    	cs = conn.prepareCall(sql);
-		    
-		    //?¿¡ °ª Ã¤¿ì±â
-		    cs.setInt(1, pcate);
-		    cs.registerOutParameter(2, OracleTypes.VARCHAR);
-		    cs.registerOutParameter(3, OracleTypes.CURSOR);
-		    
-		    cs.executeUpdate();
-		    category.setParentCategoryName(cs.getString(2));
-
-		    rs = (ResultSet)cs.getObject(3);
-	      while (rs.next()) {
-	        category.setCategoryNames(rs.getString(1));
-	      }
-		    
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	    } finally {
-	    	DBManager.close(conn, cs);
-	    }
-	    return category;
 	}
 }

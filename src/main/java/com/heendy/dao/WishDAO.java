@@ -9,21 +9,24 @@ import com.heendy.utils.DBManager;
 
 import oracle.jdbc.OracleTypes;
 
+/**
+ * @author ê¹€ì‹œì€
+ * 
+ * ì¢‹ì•„ìš” ê´€ë ¨ DAO 
+ * 
+ * */
 public class WishDAO {
-	private WishDAO() {  } //½Ì±ÛÅÏ ÆĞÅÏ Ã³¸®
+	private WishDAO() {  }
     private static WishDAO instance = new WishDAO();
     public static WishDAO getInstance() {
       return instance;
     }  
 	  
-
-    // ¿À¶óÅ¬ ¿¬°á
     private Connection conn;
     
-    // sql¹®ÀåÀü¼Û, ÇÔ¼ö È£Ãâ
     private CallableStatement cs;
     
-    // ÁÁ¾Æ¿ä insert
+    // ì¢‹ì•„ìš” ì¶”ê°€
 	public int insertWish(int memberId, int productId, int companyId) {
 	    int result = 0;	
 	    String sql = "{CALL sp_insert_wish(?, ?, ?)}";
@@ -47,18 +50,18 @@ public class WishDAO {
 	    return result;
 	}
 	
-	// ÁÁ¾Æ¿ä delete
-	public int deleteWish(int memberId, int productId) {
+	// ì¢‹ì•„ìš” ì‚­ì œ
+	public int deleteWish(int memberId, int productId, int companyId) {
 	    int result = 0;	
-	    String sql = "{CALL sp_delete_wish(?, ?)}";
-	    conn = null;
-	    cs = null;
+	    String sql = "{CALL sp_delete_wish(?,?,?)}";
+	    
 	    System.out.println("DAO : deleteWish");
 	    try {
 	    	conn = DBManager.getConnection();
 	    	cs = conn.prepareCall(sql);
 		    cs.setInt(1, memberId);
 		    cs.setInt(2, productId);
+		    cs.setInt(3, companyId);
 		    result = cs.executeUpdate();
 		    System.out.println(result);
 	    } catch (Exception e) {
@@ -69,20 +72,20 @@ public class WishDAO {
 	    return result;
 	}
 	
-	// ÁÁ¾Æ¿ä ¿©ºÎ
-	public int wishIs(int memberId, int productId) {
+	// ì¢‹ì•„ìš” ì—¬ë¶€ check
+	public int wishCheck(int memberId, int productId, int companyId) {
 		int result = 0;	
-	    String sql = "{CALL sp_is_wish(?,?,?)}";
-	    conn = null;
-	    cs = null; 
+	    String sql = "{CALL sp_check_wish(?,?,?,?)}";
+	    
 	    try {
 	    	conn = DBManager.getConnection();
 	    	cs = conn.prepareCall(sql);
 	    	cs.setInt(1, memberId);
 	    	cs.setInt(2, productId);
-		    cs.registerOutParameter(3, OracleTypes.INTEGER);
+	    	cs.setInt(3, companyId);
+		    cs.registerOutParameter(4, OracleTypes.INTEGER);
 	    	cs.executeUpdate();
-	    	result = cs.getInt(3);
+	    	result = cs.getInt(4);
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	    } finally {

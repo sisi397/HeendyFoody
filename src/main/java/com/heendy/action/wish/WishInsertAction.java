@@ -13,9 +13,9 @@ import com.heendy.dao.WishDAO;
 import com.heendy.dto.ProductDTO;
 
 /**
- * @author ±è½ÃÀº
+ * @author ê¹€ì‹œì€
  * 
- * ÁÁ¾Æ¿ä Ãß°¡ Action Å¬·¡½º
+ * ì¢‹ì•„ìš” ì¶”ê°€ Action í´ë˜ìŠ¤
  * 
  * */
 
@@ -29,14 +29,8 @@ public class WishInsertAction implements Action{
 		int pid = Integer.parseInt(request.getParameter("productId"));
 		int cid = Integer.parseInt(request.getParameter("companyId"));
 		
-		// ÁÁ¾Æ¿ä Ãß°¡
+		// ì¢‹ì•„ìš” ì¶”ê°€
 		int wishInsert = wishDAO.insertWish(mid, pid, cid);
-		
-		if(wishInsert == 1) {
-			System.out.println("¼º°ø");
-		}else {
-			System.out.println("½ÇÆĞ");
-		}
 		
 	}
 

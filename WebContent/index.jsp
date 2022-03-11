@@ -11,11 +11,11 @@
 	<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
 </head>
 <body>
-<a href="${contextPath }/product/list?menu=best">베스트</a>
-<a href="${contextPath }/product/list?menu=sale">세일</a>
-<a href="${contextPath }/product/list?menu=newprod">신상품</a>
-<a href="${contextPath }/product/list?menu=category&pcate=1&cate=1">과일</a>
-<a href="${contextPath }/product/list?menu=category&pcate=1&cate=9">계절과일</a>
+<a href="${contextPath }/product/list.do?menu=best">베스트</a>
+<a href="${contextPath }/product/list.do?menu=sale">세일</a>
+<a href="${contextPath }/product/list.do?menu=newprod">신상품</a>
+<a href="${contextPath }/product/list.do?menu=category&pcate=1&cate=1">과일</a>
+<a href="${contextPath }/product/list.do?menu=category&pcate=1&cate=9">계절과일</a>
 <p>
 <script>
 var prr;

@@ -6,6 +6,13 @@ public class PageDTO {
 	private int pagePerList;
 	private int totalPage;
 	
+	public PageDTO(int beginPageNumber, int endPageNumber, int pagePerList, int totalPage) {
+		super();
+		this.beginPageNumber = beginPageNumber;
+		this.endPageNumber = endPageNumber;
+		this.pagePerList = pagePerList;
+		this.totalPage = totalPage;
+	}
 	public int getBeginPageNumber() {
 		return beginPageNumber;
 	}

@@ -12,9 +12,10 @@ import com.heendy.action.Action;
 import com.heendy.dao.WishDAO;
 
 /**
- * @author ±è½ÃÀº
+ * @author ê¹€ì‹œì€
  * 
- * »óÇ°°ú »ç¿ëÀÚ id·Î ÁÁ¾Æ¿ä ¿©ºÎ¸¦ °¡Á®¿À´Â Action Å¬·¡½º
+ * ìƒí’ˆê³¼ ì‚¬ìš©ì idë¡œ ì¢‹ì•„ìš” ì—¬ë¶€ë¥¼ ê°€ì ¸ì˜¤ëŠ” Action í´ë˜ìŠ¤
+ * 
  * */
 
 public class WishCheckAction implements Action {
@@ -23,10 +24,11 @@ public class WishCheckAction implements Action {
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int pid = Integer.parseInt(request.getParameter("pid"));
+		int pid = Integer.parseInt(request.getParameter("productId"));
+		int cid = Integer.parseInt(request.getParameter("companyId"));
 
-		// ÁÁ¾Æ¿ä ¿©ºÎ °¡Á®¿À±â
-		int wish = wishDAO.wishIs(7, pid); // memberid Ãß°¡ÇØ¾ßµÊ
+		// ì¢‹ì•„ìš” ì—¬ë¶€ ê°€ì ¸ì˜¤ê¸°
+		int wish = wishDAO.wishCheck(7, pid, cid); // memberid 
 		
 		JsonObject jsonObj = new JsonObject();
 		jsonObj.addProperty("wish", wish);

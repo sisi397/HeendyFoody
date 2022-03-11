@@ -13,9 +13,10 @@ import com.heendy.dao.ProductDAO;
 import com.heendy.dto.ProductDTO;
 
 /**
- * @author ±è½ÃÀº
+ * @author ê¹€ì‹œì€
  * 
- * »óÇ° »ó¼¼ Á¤º¸¸¦ °¡Á®¿À´Â Action Å¬·¡½º
+ * ìƒí’ˆ ìƒì„¸ ì •ë³´ë¥¼ ê°€ì ¸ì˜¤ëŠ” Action í´ë˜ìŠ¤
+ * 
  * */
 public class ProductDetailAction implements Action {
 
@@ -24,17 +25,19 @@ public class ProductDetailAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		response.setContentType("application/json");
-		response.setCharacterEncoding("utf-8");
-		
 		int pid = Integer.parseInt(request.getParameter("pid"));
+		int cid = Integer.parseInt(request.getParameter("cid"));
 
-		// »óÇ° detail °¡Á®¿À±â
-		// dao¿¡¼­
-		ProductDTO product = productDAO.detailProduct(pid);
 
-		String json = new Gson().toJson(product);
-		response.getWriter().write(json);
+		// detailProduct() : ìƒí’ˆ ìƒì„¸ì •ë³´ ê°€ì ¸ì˜¤ê¸°
+		ProductDTO product = productDAO.detailProduct(pid, cid);
+		request.setAttribute("product", product);
+		
+		// ìƒí’ˆ ìƒì„¸ë³´ê¸° í˜ì´ì§€ë¡œ ì´ë™
+		String url = "/pages/product/productDetail.jsp";
+		
+	    RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+	    dispatcher.forward(request, response);
 		
 	}
 

@@ -15,19 +15,22 @@ import org.json.simple.JSONObject;
 
 import com.google.gson.Gson;
 import com.heendy.action.Action;
+import com.heendy.dao.CategoryDAO;
 import com.heendy.dao.ProductDAO;
 import com.heendy.dto.CategoryDTO;
 import com.heendy.dto.PageDTO;
 import com.heendy.dto.ProductDTO;
 
 /**
- * @author ±è½ÃÀº
+ * @author ê¹€ì‹œì€
  * 
- * »óÇ° ¸®½ºÆ®¸¦ °¡Á®¿À´Â Action Å¬·¡½º
+ * ìƒí’ˆ ë¦¬ìŠ¤íŠ¸ë¥¼ ê°€ì ¸ì˜¤ëŠ” Action í´ë˜ìŠ¤
+ * 
  * */
 public class ProductListAction implements Action{
 
 	private final ProductDAO productDAO = ProductDAO.getInstance();
+	private final CategoryDAO categoryDAO = CategoryDAO.getInstance();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,14 +38,14 @@ public class ProductListAction implements Action{
 			response.setContentType("application/json");
 			response.setCharacterEncoding("utf-8");
 			
-			// ÆÄ¶ó¹ÌÅÍ Á¤º¸ °¡Á®¿À±â
+			// íŒŒë¼ë¯¸í„° ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 			String pno = request.getParameter("pno");
 			String sort = request.getParameter("sort");
 			String menu = request.getParameter("menu");
 			String cateStr = request.getParameter("cate");
 			String pcateStr = request.getParameter("pcate");
 			
-			// Ä«Å×°í¸® Á¤º¸ 
+			// ì¹´í…Œê³ ë¦¬ ì •ë³´
 			int cate = 0;
 			int pcate = 0;
 			if(cateStr != null && pcateStr != null) {
@@ -50,66 +53,61 @@ public class ProductListAction implements Action{
 				pcate = Integer.parseInt(pcateStr);
 			}
 
-			// Á¤·Ä ±âÁØ 
+			// ì •ë ¬ ê¸°ì¤€
 			if(sort == null || sort.length() == 0)
-				sort = "product_reg_date desc";
+				sort = "product_reg_date desc"; // ê¸°ë³¸ ì •ë ¬ : ì‹ ìƒí’ˆ ìˆœ
 			else if(sort.equals("A"))
-				sort = "product_reg_date"; //½Å»óÇ°¼ø
+				sort = "product_reg_date desc"; // ì‹ ìƒí’ˆìˆœ
 			else if(sort.equals("B"))
-				sort = "like_count desc"; //ÀÎ±â»óÇ° ¼ø
+				sort = "like_count desc"; // ì¢‹ì•„ìš” ìˆœ
 			else if(sort.equals("C"))
-				sort = "discount_price"; //³·Àº°¡°İ ¼ø
+				sort = "discount_price"; // ë‚®ì€ ê°€ê²© ìˆœ
 			else if(sort.equals("D"))
-				sort = "discount_price desc"; //³ôÀº°¡°İ ¼ø
+				sort = "discount_price desc"; // ë†’ì€ ê°€ê²© ìˆœ
 			
 			/*
-			 * ÆäÀÌÂ¡ ½ÃÀÛ
-			 * pageNumber : ÇöÀç ÆäÀÌÁö ¹øÈ£
-			 * pagePerList : ÇÑ¹ø¿¡ º¸¿©ÁÙ ÆäÀÌÁö ¼ö
-			 * listPerPaeg : ÇÑ ÆäÀÌÁö ´ç º¸¿©ÁÙ »óÇ° ¼ö
-			 * totalPage : ÀüÃ¼ ÆäÀÌÁö ¼ö
-			 * totalCount : ÀüÃ¼»óÇ° ¼ö
-			 * beginPageNumber : ½ÃÀÛ ÆäÀÌÁö ¹øÈ£
-			 * endPageNumber : ³¡ ÆäÀÌÁö ¹øÈ£
+			 * í˜ì´ì§• ì‹œì‘
+			 * pageNumber : í˜„ì¬ í˜ì´ì§€ ë²ˆí˜¸
+			 * pagePerList : í•œë²ˆì— ë³´ì—¬ì¤„ í˜ì´ì§€ ìˆ˜
+			 * listPerPaeg : í•œ í˜ì´ì§€ ë‹¹ ë³´ì—¬ì¤„ ìƒí’ˆ ìˆ˜
+			 * totalPage : ì „ì²´ í˜ì´ì§€ ìˆ˜
+			 * totalCount : ì „ì²´ìƒí’ˆ ìˆ˜
+			 * beginPageNumber : ì‹œì‘ í˜ì´ì§€ ë²ˆí˜¸
+			 * endPageNumber : ë í˜ì´ì§€ ë²ˆí˜¸
 			 */
-			PageDTO pageInfo = new PageDTO();
 			
 			int totalCount = productDAO.totalCountProduct(menu);
-			
 			int pageNumber = 1;
 			int pagePerList = 5;
 			int listPerPage = 20;
 			int totalPage = totalCount % listPerPage == 1 ? totalCount/listPerPage : totalCount/listPerPage + 1;
 
-			// ÆäÀÌÁö ¹øÈ£ °¡Á®¿À±â. pno°¡ ¾øÀ» °æ¿ì = 1
+			// í˜ì´ì§€ ë²ˆí˜¸ ê°€ì ¸ì˜¤ê¸°. pnoê°€ ì—†ì„ ê²½ìš° = 1
 			if(pno != null && pno.length() > 0)
 				pageNumber = Integer.parseInt(pno);
 			
-			// ºÒ·¯¿Ã »óÇ°ÀÇ ½ÃÀÛ ¹øÈ£, ³¡ ¹øÈ£
+			// ë¶ˆëŸ¬ì˜¬ ìƒí’ˆì˜ ì‹œì‘ ë²ˆí˜¸, ë ë²ˆí˜¸
 			int beginRow = (pageNumber - 1) * listPerPage + 1;
 			int endRow = beginRow + listPerPage - 1;
 			if(endRow > totalCount)
 				endRow = totalCount;
 			
-			// ÆäÀÌÁö ½ÃÀÛ ¹øÈ£, ³¡ ¹øÈ£
+			// í˜ì´ì§€ ì‹œì‘ ë²ˆí˜¸, ë ë²ˆí˜¸
 			int beginPageNumber = (pageNumber - 1)/pagePerList*pagePerList + 1;
 			int endPageNumber = beginPageNumber + pagePerList - 1;
 			if(endPageNumber > totalPage)
 				endPageNumber = totalPage;
+
+			PageDTO pageInfo = new PageDTO(beginPageNumber, endPageNumber, pagePerList, totalPage);
 			
-			pageInfo.setBeginPageNumber(beginPageNumber);
-			pageInfo.setEndPageNumber(endPageNumber);
-			pageInfo.setPagePerList(pagePerList);
-			pageInfo.setTotalPage(totalPage);
-			
-			// »óÇ° LIST °¡Á®¿À±â
+			// ìƒí’ˆ LIST ê°€ì ¸ì˜¤ê¸°
 			ArrayList<ProductDTO> productList = productDAO.listProduct(beginRow, endRow, sort, menu, cate, pcate);
 			
 			
-			// category ¸Ş´ºÀÌ¸é : category Á¤º¸ °¡Á®¿À±â
+			// category ë©”ë‰´ì´ë©´ : category ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 			if(menu.equals("category")) {
-				CategoryDTO category = productDAO.listCategory(pcate);
-				request.setAttribute("categoryDTO", category);
+				ArrayList<CategoryDTO> category = categoryDAO.listCategory(cate, pcate);
+				request.setAttribute("categoryList", category);
 			}
 			
 			request.setAttribute("productList", productList);
