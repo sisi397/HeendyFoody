@@ -2,7 +2,6 @@
   pageEncoding="UTF-8"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -16,6 +15,26 @@
 	<link rel="stylesheet" type="text/css" href="../static/css/main.min.css">
 	<link rel="stylesheet" type="text/css" href="../static/css/css-library.min.css">
 	<link rel="stylesheet" type="text/css" href="../static/css/product.min.css">
+	
+	<style>
+	.soldout{
+		position: absolute;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    flex-direction: column;
+	    text-align: center;
+	    color: #101010;
+	    font-size: 18px;
+	    font-weight: 600;
+	    background-color: rgba(255, 255, 255, .8);
+	    z-index: 2;
+    }
+	</style>
 </head>
 
 <body>
@@ -67,6 +86,9 @@
 	        	<li>
 	        		<a href="${contextPath }/product/detail.do?pid=${productDTO.productId }&cid=${productDTO.companyId }">
 	        			<span class="thumb">
+	        			<c:if test="${productDTO.productCount == 0 }">
+	        			<span class="soldout">일시품절</span>
+	        			</c:if>
 	        				<img src="../static/images/product/${productDTO.imageUrl }" alt=""/>
 	        				<c:if test="${productDTO.discountRate != 0 }">
 	        				<div class="badgewrap">
@@ -148,4 +170,3 @@
     </script>
 </body>
 </html>
-

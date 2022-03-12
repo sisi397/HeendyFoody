@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <%@ page import="com.heendy.utils.CookieUtils" %>
 
@@ -136,11 +137,12 @@
                                             </strong>
                                             <div class="ea-area">
                                                 <input type="number" class="pcount" title="수량 입력" value="1" readonly>
-                                                <button type="button" class="btn-down" onclick="downCount()">수량 낮추기</button>
-                                                <button type="button" class="btn-up" onclick="upCount()">수량 올리기</button>
+                                                <button type="button" class="btn-down" onclick="downCount(this)">수량 낮추기</button>
+                                                <button type="button" class="btn-up" onclick="upCount(this)">수량 올리기</button>
                                             </div>
-                                            <span class="txt-price"><em>
-                                            <input type="text" value="${product.discountPrice }" disabled style="border:none; outline:none;text-align:right;background-color:none;">
+                        					<input type="hidden" name="totalPrc" value="${product.discountPrice }"/>
+                                            <span class="txt-price total-price"><em>
+                                            <fmt:formatNumber value="${product.discountPrice }" />
                                             </em>원</span>
                                         </div>
                                     </div>  
@@ -150,7 +152,7 @@
                     </div>
                     
                     <div class="buybutton" id="top_buybutton">
-                    	<p class="txt-total">총 금액 <strong><em>${product.discountPrice }</em>원</strong></p>
+                    	<p class="txt-total total-price">총 금액 <strong><em><fmt:formatNumber value="${product.discountPrice}" /></em>원</strong></p>
                         <c:if test="${product.productCount eq 0 }">
                         <div class="btns">
                         	<button type="button" class="btn darkgray bigger btn-buy" onclick="addCartProduct()">장바구니 넣어두기</button>
@@ -160,7 +162,7 @@
                         <c:if test="${product.productCount ne 0 }">
                         <div class="btns">
                         	<button type="button" class="btn orange bigger btn-buy" onclick="addCartProduct()">장바구니</button>
-                        	<button type="button" class="btn fill orange bigger btn-buy" onclick="buyProduct()">바로구매</button>
+                        	<button type="button" class="btn fill orange bigger btn-buy" onclick="buyProduct(this)">바로구매</button>
                         </div>               
                         </c:if>
                     </div>
@@ -198,7 +200,13 @@
                     
                     <%@ include file="./exchangeInfo.jsp" %>
                     
-                    <%@ include file="./review.jsp" %>  
+                    <section id="p_proReview" class="tab-contents proreview">
+                        <div class="list-top">
+                            <span class="grade-star big">
+                                <strong><em>작성된 리뷰가 없습니다.</em></strong>
+                            </span>
+                        </div>
+					</section>
                 </div>
                 
                 <div class="rightarea" id="bottom_rightarea">
@@ -211,11 +219,11 @@
 	                            </strong>
 	                            <div class="ea-area">
 	                                <input type="number" class="pcount" title="수량 입력" value="1" readonly>
-	                                <button type="button" class="btn-down" onclick="downCount()">수량 낮추기</button>
-	                                <button type="button" class="btn-up" onclick="upCount()">수량 올리기</button>
+	                                <button type="button" class="btn-down" onclick="downCount(this)">수량 낮추기</button>
+	                                <button type="button" class="btn-up" onclick="upCount(this)">수량 올리기</button>
 	                            </div>
-	                            <span class="txt-price"><em>
-	                            ${product.discountPrice }
+	                            <span class="txt-price total-price"><em>
+	                            <fmt:formatNumber value="${product.discountPrice}" />
 	                            </em>원</span>
 	                        </div>
 	                    </div>
@@ -277,6 +285,9 @@ function wishUpdate(){
 			},
 			success : function(data){
 				console.log("fin");
+			},
+			error : function(err){
+				alert(err.code);
 			}
 		});
 		
@@ -294,13 +305,16 @@ function wishUpdate(){
 			},
 			success : function(data){
 				console.log("fin");
+			},
+			error : function(err){
+				alert(err.code);
 			}
 		});
 	}
 }
 
-function buyProduct(){
-	console.log("buy");
+function buyProduct(obj){
+	const pqty = document.querySelector('.pcount');
 	$.ajax({
 		url:'${contextPath}/order/orderProduct.do',
 		type: 'post',
@@ -308,16 +322,20 @@ function buyProduct(){
 		data: {
 			product_id: ${product.productId },
 			company_id: ${product.companyId },
-			product_count : ${product.productCount}
+			product_count : pqty.value
 		},
 		success : function(data){
 			alert("구매 완료하였습니다.");
+		},
+		error : function(err){
+			alert(err.code);
 		}
 	});
 }
 
 function addCartProduct(){
 	const pqty = document.querySelector('.pcount');
+	
 	console.log("cart");
 	$.ajax({
 		url:'${contextPath}/cart/create.do',
@@ -338,21 +356,45 @@ function addCartProduct(){
 }
 
 // 수량 증가
-function upCount(){
+function upCount(obj){
 	const pqty = document.querySelectorAll('.pcount');
 	for(var i = 0; i < pqty.length; i++){
-		console.log(pqty[i].value);
 		pqty[i].value = Number(pqty[i].value) + 1;
 	}
-	console.log(document.querySelector('.txt-total'));
+
+	const value = document.querySelector('.pcount').value;
+	priceChange(value, 'up');
 }
 
 // 수량 감소
-function downCount(){
+function downCount(obj){
 	const pqty = document.querySelectorAll('.pcount');
-	for(var i = 0; i < pqty.length; i++){
-		console.log(pqty[i].value);
-		pqty[i].value = Number(pqty[i].value) - 1;
+	
+	if(pqty[0].value === 1){
+		for(var i = 0; i < pqty.length; i++){
+			pqty[i].value = Number(pqty[i].value) - 1;
+		}
+
+		const value = document.querySelector('.pcount').value;
+		priceChange(value, 'down');
+	}else{
+		alert("최소 주문 수량은 1개 입니다.");
+	}
+}
+
+// 가격 변경
+function priceChange(value, option){
+	var price = document.querySelectorAll('.total-price');
+	var totalPrc = Number($("input[name=totalPrc]").val())*value;
+	
+	if(option === 'up'){
+		for(var i = 0; i < price.length; i++){
+			$(price[i]).find("em").text(totalPrc);
+		}
+	}else{
+		for(var i = 0; i < price.length; i++){
+			$(price[i]).find("em").text(totalPrc);
+		}
 	}
 }
 </script>

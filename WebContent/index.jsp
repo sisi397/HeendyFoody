@@ -14,8 +14,6 @@
 
 
 	<jsp:include page="header.jsp" flush="false" />
-
-	<jsp:include page="footer.jsp" flush="false" />
 	
 <a href="${contextPath }/product/list.do?menu=best">베스트</a>
 <a href="${contextPath }/product/list.do?menu=sale">세일</a>
@@ -23,33 +21,290 @@
 <a href="${contextPath }/product/list.do?menu=category&pcate=1&cate=1">과일</a>
 <a href="${contextPath }/product/list.do?menu=category&pcate=1&cate=9">계절과일</a>
 <p>
-<script>
-var prr;
-$(document).ready(function(){
-	$.ajax({
-		url: '${contextPath }/product/selectList.do?menu=best',
-		type: 'get',
-		dataType:'json',
-		success : function(data){
-			console.log(data);
-			console.log("fin");
-		},
-		error: function(err){
-			console.log(err);
-		}
-	});
-	
-	//좋아요 여부 가져오기
-	$.ajax({
-		url:'${contextPath }/wish/check.do?pid=${param.pid }',
-		type: 'get',
-		dataType:'json',
-		success : function(data){
-			console.log(data);
-			console.log("fin");
-		}
-	});
-});
-</script>
+    
+    <div id="wrap" class="main">
+
+    <!-- header// -->
+    <header id="header">
+
+        <!-- topbanner : 메인에서만 노출// -->
+        
+            <div id="topBanner"></div>
+        
+        <!-- topbanner// -->
+
+        <div class="inner">
+            
+            <!-- gnbarea// -->
+            <nav class="gnbarea">         
+                
+                <!-- 팝업 : category// -->
+                <div id="popCategory">
+                	<button type="button" class="btn-category">카테고리 전체보기</button>
+                </div>
+                <!-- //팝업 : category -->
+                
+                <!-- gnb// -->
+                <ul class="gnb-list" id="homeGnbList">
+                	<li><a href="${contextPath }/product/list.do?menu=best">베스트</a></li>
+                	<li><a href="${contextPath }/product/list.do?menu=sale">세일</a></li>
+                	<li><a href="${contextPath }/product/list.do?menu=newprod">전체상품</a></li>
+                	<li><a href="${contextPath }/product/list.do?menu=category&pcate=1&cate=1">과일</a></li>
+                	<li><a href="${contextPath }/product/list.do?menu=category&pcate=1&cate=9">계절과일</a></li>
+                </ul>
+                <!-- //gnb -->
+                <button type="button" class="btn-cart" onClick="javascript:fnPdShippingBasketList( this);">장바구니<span id="basketCnt"></span></button>
+            </nav>
+            <!-- //gnbarea -->
+        </div>
+    </header>
+    <div id="contents">
+    
+    
+    
+    <!-- contents// -->        
+    <section class='mainbanner' >
+        <div class='swiper-container mainbannerswiper'>
+            <div class='swiper-wrapper'>
+            <c:forEach begin="0" end="5" varStatus="status">
+            <div class='swiper-slide'>
+                <a href='https://tohome.thehyundai.com/front/dp/dpd/mgzDetail.do?mgzNo=210407100576002&ga_param=dwMain${status.count }'>
+                    <img src='https://tohomeimage.thehyundai.com/DP/DP034/2022/03/04/093653/drmky.jpg?RS=1204x540' alt=''>
+                </a>
+            </div>
+            </c:forEach>
+	        </div>
+    	</div>
+	    <div class='innercon'>
+	        <div class='swiper-pagination-tot'>
+	            <strong>00</strong> / <span>00</span>
+	        </div>
+	        <a href='#' class='btn-play active'>재생/일시정지</a>
+	    </div>
+	</section>
+	<div id='cdnTimeSale'>
+    	<section class='timesale'  id='timeSale'>
+        	<div class='innercon'>
+	            <h2>
+	                <span class='bl' style='border-top:4px solid '><i style='border-bottom:4px solid '></i></span>
+	                <strong style='color:;font-weight:bold'>알뜰 장보기</strong>
+	                <small style='color:;font-weight:normal'>지금 이 순간 만날 수 있는 특가</small>
+	            </h2>
+	            <div class='swiper-container timesaleswiper'>
+	                <div class='swiper-wrapper saleprod'></div>
+	             </div>	
+            </div>
+        </section>
+    </div>
+            <section class='innercon exhibition' data-aos='fade-up'></section>
+            <section class='innercon mdspick' data-aos='fade-up'>
+                <h2><span class='bl' style='border-top:4px solid '><i style='border-bottom:4px solid '></i></span><strong
+                        style='color:;font-weight:bold'>Heendy's Pick</strong><small style='color:;font-weight:normal'></small></h2>
+                <ul class='product-list small bestprodlist'>
+                    
+                </ul>
+            </section>
+            <section class='innercon exhibition' data-aos='fade-up'></section>
+            <section class='innercon' data-aos='fade-up'>
+                <h2><span class='bl' style='border-top:4px solid '><i style='border-bottom:4px solid '></i></span><strong
+                        style='color:;font-weight:bold'>신상품</strong><small style='color:;font-weight:normal'>HeendyFoody의 신상품을
+                        만나보세요</small><a href='https://tohome.thehyundai.com/front/dp/dpa/newProd.do' class='btn all'>전체보기</a></h2>
+                <ul class='product-list newprodlist'>
+                    
+                    </ul>
+            </section>
+            <section class="categoryprod">
+            </section>
+            
+            <script>
+            $(document).ready(function(){
+          //세일 가장 많이 하는 상품 가져오기
+        	var html = "";
+        	$.ajax({
+        		url:'${contextPath}/product/select.do',
+        		type: 'post',
+        		dataType:'json',
+        		async:false,
+        		data:{
+        			beginRow:1,
+        			endRow:2,
+        			sort:'E',
+        			menu:'sale'
+        		},
+        		success : function(data){
+        			for(var i in data){
+        				html += "<div class='swiper-slide' data-time-start='' data-time-end=''>";
+        				html += "<a href=''><span class='thumb'>";
+        				html += "<img src='https://tohomeimage.thehyundai.com/PD/PDImages/S/1/3/9/8809720269931_00.jpg?RS=720x864' alt='' onerror=''>";
+        				html += "<span class='badge'><strong>"+data[i].discountRate+"%</strong></span></span>";
+        				html += "<strong class='txt-ti ellipsis'>"+data[i].productName+"(250g*2)</strong>";
+        				html += "<span class='txt-price'>";
+        				html += "<strong><em>"+data[i].discountPrice+"</em>원</strong><del>"+data[i].productPrice+"</del>";
+        				html += "</span> </a>";
+        				html += "<button type='button' class='btn-cart' onclick=''>장바구니 담기</button></div>"
+        			}
+        			$(".saleprod").html(html);
+        		}
+        	});
+        	
+            	//MD's pick 정보 4개 가져오기
+            	var html = "";
+            	$.ajax({
+            		url:'${contextPath}/product/select.do',
+            		type: 'post',
+            		dataType:'json',
+            		async:false,
+            		data:{
+            			beginRow:1,
+            			endRow:3,
+            			sort:'B',
+            			menu:'best'
+            		},
+            		success : function(data){
+            			console.log("md : ", data)
+            			for(var i in data){
+            				html += "<li>";
+            				html += "<a href=''>";
+            				html += "<span class='thumb'>";
+            				html += "<img src='https://tohomeimage.thehyundai.com/PD/PDImages//S/7/0/3/8809539023489_01.jpg?RS=350x420' alt='' onerror=''>";
+            				html += "<div class='badgewrap'>";
+            				if(data[i].discountRate > 0){
+                				html += "<span class='badge'><strong>" + data[i].discountRate + "%</strong></span>";
+            				}
+            				html += "</div></span>";
+            				html += "<strong class='txt-ti'>"+ data[i].productName + "</strong> </a>";
+            				html += "<span class='info'><span class='txt-price'><strong><em>"+data[i].discountPrice + "</em>원</strong>";
+            				if(data[i].discountRate > 0) {
+            					html += "<del>"+data[i].productPrice+"</del>";
+            				}
+            				html += "</span><button type='button' class='btn-cart' onclick=''>장바구니 담기</button></span>";
+            				html += "<span class='tag'><span>신상품</span></span></li>";
+            			}
+            			$(".bestprodlist").html(html);
+            		}
+            	});
+            	
+	          //신상품 정보 4개 가져오기
+	        	var html = "";
+	        	$.ajax({
+	        		url:'${contextPath}/product/select.do',
+	        		type: 'post',
+	        		dataType:'json',
+	        		async:false,
+	        		data:{
+	        			beginRow:1,
+	        			endRow:4,
+	        			sort:'A',
+	        			menu:'newprod'
+	        		},
+	        		success : function(data){
+	        			console.log("new : ", data)
+	        			for(var i in data){
+	        				html += "<li>";
+	        				html += "<a href=''>";
+	        				html += "<span class='thumb'>";
+	        				html += "<img src='https://tohomeimage.thehyundai.com/PD/PDImages//S/7/0/3/8809539023489_01.jpg?RS=350x420' alt='' onerror=''>";
+	        				html += "<div class='badgewrap'>";
+	        				if(data[i].discountRate > 0){
+	            				html += "<span class='badge'><strong>" + data[i].discountRate + "%</strong></span>";
+	        				}
+	        				html += "</div></span>";
+	        				html += "<strong class='txt-ti ellipsis'>"+ data[i].productName + "</strong> </a>";
+	        				html += "<span class='info'><span class='txt-price'><strong><em>"+data[i].discountPrice + "</em>원</strong>";
+	        				if(data[i].discountRate > 0) {
+	        					html += "<del>"+data[i].productPrice+"</del>";
+	        				}
+	        				html += "</span><button type='button' class='btn-cart' onclick=''>장바구니 담기</button></span>";
+	        				html += "<span class='tag'><span>신상품</span></span></li>";
+	        			}
+	        			$(".newprodlist").html(html);
+	        		}
+	        	});
+            
+
+        	// 카테고리 목록 불러오기 => 카테고리 목록 뿌려주기 
+        	// 카테고리 개수만큼 반복해서 상품 6개 뽑아오기 단, 부모 카테고리는 패스, 
+        	var html = "";
+        	var list = "";
+        	
+
+        	function prodlist(cid, pcid){
+        		console.log("cid",cid, pcid);
+        		$.ajax({
+	        		url:'${contextPath}/product/select.do',
+	        		type: 'post',
+	        		dataType:'json',
+	        		async:false,
+	        		data:{
+	        			beginRow:1,
+	        			endRow:6,
+	        			menu : 'category',
+	        			cate : cid,
+	        			pcate : pcid,
+	        		},
+	        		success : function(data){
+	        			console.log("list : ", data);
+	        			list += "<div class='swiper-slide '>";
+	        			list += "<ul class='product-list big'>";
+	        			for(var i in data){
+	        				list += "<li><a href=''><span class='thumb'>";
+	        				list += "<img src='https://tohomeimage.thehyundai.com/PD/PDImages/S/2/9/7/8806079686792_00.jpg?RS=350x420' alt='' onerror=''>";
+	        				list += "<div class='badgewrap'></div>";
+	        				list += "</span><strong class='txt-ti ellipsis'>"+data[i].productName+"</strong></a>";
+	        				list += "<span class='info'><span class='txt-price'><strong><em>"+data[i].discountPrice+"</em>원</strong></span></span>"
+	        				list += "</li>"
+	        			}
+	        			list += "</ul></div>"
+	        		},
+	        		error: function(err){
+	        			console.log(err);
+	        		}
+	        	});
+        	}
+        	
+        	$.ajax({
+        		url:'${contextPath}/product/category.do',
+        		type: 'post',
+        		dataType:'json',
+        		async:false,
+        		data:{
+        			cate : 0,
+        			pcate : 0
+        		},
+        		success : function(data){
+        			console.log(data);
+        			var i = 1;
+        			while(i < data.length){
+        				console.log(i);
+        				if(data[i].categoryId == data[i].parentCategoryId){
+        					html += "<section class='innercon category' data-aos='fade-up'>"
+        					html += "<h2><strong style='color:;font-weight:'>" + data[i].categoryName + "</strong>";
+        					html += "<a href='${contextPath }/product/list.do?menu=category&cate='"+data[i].categoryId+"&pcate="+data[i].parentCategoryId+" class='btn all'>"
+        					html += data[i].categoryName + " 전체보기 </a>";
+        	                html += "</h2>";
+        	                html += "<div class='swiper-container categorytitleswiper'>";
+        	                html += "<div class='swiper-wrapper'>";
+        	                i++;
+        	                while(i != data.length && data[i].categoryId != data[i].parentCategoryId){
+        	                	console.log(data[i])
+        	                	html += "<div class='swiper-slide'>" + data[i].categoryName + "</div>";
+        	                	prodlist(data[i].categoryId, data[i].parentCategoryId);
+        	                	i++;
+        	                }
+        	                
+        	                html += "</div><div class='swiper-pagination-categorytitle'></div></div>";
+        	                html += "<div class='swiper-container categoryswiper'><div class='swiper-wrapper'>";
+        	                html += list;
+        	                html += "</div><div class='swiper-pagination-categorytitle'></div></div></section>";
+        				}
+        			}
+        			$(".categoryprod").append(html);
+        		}
+        	});
+        	
+        });
+            </script>
+
+	<jsp:include page="footer.jsp" flush="false" />
 </body>
 </html>
