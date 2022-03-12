@@ -25,8 +25,8 @@ public class MemberDAO {
 
 	//회원 추가하기
 	public void addMember(MemberDTO memberVO) {
-		String sql = "insert into member(member_name, member_password, member_email, address, role_id) "
-				+ "values(?, pack_crypto.func_encrypt(?), ?, ?, ?) ";
+		String sql = "insert into member(member_name, member_password, member_email, address, role_id, birth_date) "
+				+ "values(?, pack_crypto.func_encrypt(?), ?, ?, ?, ?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;	    
 		try {
@@ -37,6 +37,7 @@ public class MemberDAO {
 			pstmt.setString(3, memberVO.getMemberEmail());
 			pstmt.setString(4, memberVO.getAddress());
 			pstmt.setInt(5, memberVO.getRoleId());
+			pstmt.setString(6, memberVO.getBirthDate());
 			pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
