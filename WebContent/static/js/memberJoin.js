@@ -3,6 +3,18 @@
 * MEMBER JS
 * --------------------------------
 */
+$(document).ready(function(){
+	$("input[name='checkRadio']:radio").change(function(){	//checkRadio에 변경이 발생한경우
+		 var serviceType = this.value;	// 라디오버튼의 value를 가져온다.
+		if(serviceType == "normal"){ // 일반회원 가입의 경우
+			$('#normalForm').show();
+			$('#companyForm').hide();
+		}else{	//업체회원 가입의 경우
+			$('#companyForm').show();
+			$('#normalForm').hide();
+		}
+	})
+})
 
 //회원가입시 제약조건 설정
 function join_save() {
