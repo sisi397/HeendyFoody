@@ -14,7 +14,6 @@ public class MemberDTO {
 	private String birthDate;
 
 	public MemberDTO() {
-		System.out.println("memberDTO생성");
 	}
 	
 	

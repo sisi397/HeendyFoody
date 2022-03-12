@@ -35,6 +35,8 @@ public class MemberActionFactory implements ActionFactory{
 			action = new FindMemberIdAction();
 		}else if(command.equals("/findMemberPw.do")) {	//비밀번호 찾기
 			action = new FindMemberPwAction();
+		}else if(command.equals("/addCompanyMember.do")) {	//업체 회원가입
+			action = new AddCompanyMemberAction();
 		}
 		return action;
 	}
