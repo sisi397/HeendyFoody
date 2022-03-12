@@ -406,7 +406,7 @@
 					</a>
 			</div>
 			<div class="util">
-				<a href="#">로그아웃</a> <a href="${contextPath}/mypage/info">마이페이지</a>
+				<a href="${contextPath}/member/logout.do">로그아웃</a> <a href="${contextPath}/mypage/info">마이페이지</a>
 			</div>
 		</div>
 	</header>

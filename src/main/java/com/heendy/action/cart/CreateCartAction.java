@@ -6,14 +6,19 @@ import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.heendy.action.Action;
 import com.heendy.common.ErrorCode;
 import com.heendy.common.ErrorResponse;
 import com.heendy.common.SQLErrorCode;
+import com.heendy.common.exception.MemberNotExistSession;
 import com.heendy.dao.CartDAO;
+import com.heendy.dto.MemberDTO;
 import com.heendy.dto.cart.CreateCartDTO;
+import com.heendy.utils.SessionUserService;
+import com.heendy.utils.UserService;
 
 /**
  * @author 이승준 장바구니 신규 생성을 위한 Action 클래스
@@ -21,6 +26,8 @@ import com.heendy.dto.cart.CreateCartDTO;
 public class CreateCartAction implements Action {
 
 	private final CartDAO cartDAO = CartDAO.getInstance();
+	
+	private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,14 +35,14 @@ public class CreateCartAction implements Action {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("utf-8");
 
-			/* 테스트용 멤버 id */
-			int memberId = 6;
+			MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
+
 
 			int productId = Integer.parseInt(request.getParameter("product_id"));
 			int companyId = Integer.parseInt(request.getParameter("company_id"));
 			int count = Integer.parseInt(request.getParameter("count"));
 
-			CreateCartDTO data = new CreateCartDTO(productId, companyId, memberId, count);
+			CreateCartDTO data = new CreateCartDTO(productId, companyId, member.getMemberId(), count);
 			this.cartDAO.createCart(data);
 
 			response.setStatus(201);
