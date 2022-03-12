@@ -312,7 +312,7 @@
         		},
         		success : function(data){
         			console.log(data);
-        			var i = 1;
+        			var i = 0;
         			while(i < data.length){
         				console.log(i);
         				if(data[i].categoryId == data[i].parentCategoryId){
