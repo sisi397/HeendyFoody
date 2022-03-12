@@ -77,7 +77,7 @@ public class ProductListAction implements Action{
 			 * endPageNumber : 끝 페이지 번호
 			 */
 			
-			int totalCount = productDAO.totalCountProduct(menu);
+			int totalCount = productDAO.totalCountProduct(menu, cate, pcate);
 			int pageNumber = 1;
 			int pagePerList = 5;
 			int listPerPage = 20;

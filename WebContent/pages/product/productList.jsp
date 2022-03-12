@@ -8,13 +8,13 @@
 <head>
     <meta charset="UTF-8">
 	
-	<title>신상품</title>
+	<title>상품보기</title>
 	
 	<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="../static/css/common.min.css">
-	<link rel="stylesheet" type="text/css" href="../static/css/main.min.css">
-	<link rel="stylesheet" type="text/css" href="../static/css/css-library.min.css">
-	<link rel="stylesheet" type="text/css" href="../static/css/product.min.css">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/common.min.css">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/main.min.css">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/css-library.min.css">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/product.min.css">
 	
 	<style>
 	.soldout{
@@ -38,6 +38,7 @@
 </head>
 
 <body>
+	<jsp:include page="/header.jsp" />
     <div id="wrap" class="main product category">
 	    <!-- contents// -->
 	    <div id="contents">
@@ -53,6 +54,7 @@
 	    		<div class="depth-sub">
 	    			<ul>
 	    				<li class="" id="cate${categoryList[1].categoryId }"><a href="${contextPath }/product/list.do?menu=category&cate=${categoryList[1].categoryId}&pcate=${categoryList[1].parentCategoryId}">전체보기</a> </li>
+	    				
 	    				<c:forEach items="${categoryList }" var="category" begin="2">
 	    					<li class="" id="cate${category.categoryId }"><a href="${contextPath }/product/list.do?menu=category&cate=${category.categoryId}&pcate=${category.parentCategoryId}">${category.categoryName }</a></li>
 	    				</c:forEach>
@@ -89,7 +91,7 @@
 	        			<c:if test="${productDTO.productCount == 0 }">
 	        			<span class="soldout">일시품절</span>
 	        			</c:if>
-	        				<img src="../static/images/product/${productDTO.imageUrl }" alt=""/>
+	        				<img src="${contextPath}/static/images/product/${productDTO.imageUrl }" alt="" onerror="${contextPath}/static/images/product/pro01.jpg"/>
 	        				<c:if test="${productDTO.discountRate != 0 }">
 	        				<div class="badgewrap">
 					            <span class="badge"><strong> ${productDTO.discountRate }% </strong></span>
@@ -135,16 +137,16 @@
 	        </c:if>
 	        </div>
 	    </div>
+    <jsp:include page="/footer.jsp" />
     <!-- //contents -->
     </div>
     <script>
     $(document).ready(function(){
     	$('#sortType${param.sort }').css('font-weight', '600');
-    	var menu = 'sf';
+    	var menu = 'category';
     	console.log("ho")
     	if (menu == "${param.menu }"){
     		document.getElementById('cate${param.cate}').className = "active"
-    		consoloe.log(document.getElementById('cate${param.cate}').className);
     	}
     });
     
@@ -161,9 +163,13 @@
     		success : function(data){
     			alert("장바구니에 담았습니다.");
     		},
-    		error : function(error){
-    			console.log("err");
-    		}
+    		error: function(xhr, status, error) {
+        		var errorResponse = JSON.parse(xhr.responseText);
+            	var errorCode = errorResponse.code;
+            	var message = errorResponse.message;
+     
+            	alert(message);
+        	}
     	});
     }
     

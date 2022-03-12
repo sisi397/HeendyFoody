@@ -23,18 +23,40 @@
 
 	<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="../static/css/product.min.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/common.min.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/main.min.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/css-library.min.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/s-style_v2.min.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/static/css/product.min.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/static/css/common.min.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/static/css/main.min.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/static/css/css-library.min.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/static/css/s-style_v2.min.css">
     
-    <script type="text/javascript" src="../static/js/jquery-library.min.js"></script>
-    <script type="text/javascript" src="../static/js/function.min.js"></script>
+    <script type="text/javascript" src="${contextPath}/static/js/jquery-library.min.js"></script>
+    <script type="text/javascript" src="${contextPath}/static/js/function.min.js"></script>
+    
+    <style>
+	.soldout{
+		position: absolute;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    flex-direction: column;
+	    text-align: center;
+	    color: #101010;
+	    font-size: 18px;
+	    font-weight: 600;
+	    background-color: rgba(255, 255, 255, .8);
+	    z-index: 2;
+    }
+	</style>
 </head>
 
 <body>
 <!-- contents// -->
+    
+<jsp:include page="/header.jsp" />
 <div id="wrap" class="product detail">
     <div id="contents">
         <div class="innercon">
@@ -42,8 +64,10 @@
                 <!-- propic// -->
                 <div class="propic">
                     <div class="propicbig">
-                        <!-- 이미지가 있을 경우 첫번째 이미지를 넣어줌. -->
-                        <img data-zoom-image="../static/images/product/${productDTO.imageUrl }" src="../static/images/product/${productDTO.imageUrl }">
+                    	<c:if test="${product.productCount == 0 }">
+	        			<span class="soldout">일시품절</span>
+	        			</c:if>
+                        <img data-zoom-image="${contextPath}/static/images/product/${productDTO.imageUrl }" src="${contextPath}/static/images/product/${productDTO.imageUrl }">
                         
                     </div>
                     
@@ -55,8 +79,8 @@
                         <div class="swiper-container propicsmallswiper" style="opacity: 1">
                             <div id="P_picSmall" class="swiper-wrapper" style="display:inline-block">
                                 <div class="swiper-slide">
-                                    <a class="active" href="#" data-image="../static/images/product/${productDTO.imageUrl }" data-zoom-image="../static/images/product/${productDTO.imageUrl }">
-                                    <img src="../static/images/product/${productDTO.imageUrl }">
+                                    <a class="active" href="#" data-image="${contextPath}/static/images/product/${productDTO.imageUrl }" data-zoom-image="${contextPath}/static/images/product/${productDTO.imageUrl }">
+                                    <img src="${contextPath}/static/images/product/${productDTO.imageUrl }">
                                     </a>
                                 </div>           
                             </div>
@@ -77,9 +101,14 @@
                         <span>세일상품</span>
                     </div>
                     </c:if>
+                    <c:if test="${product.discountRate == 0 }">
+                    <div class="tag">
+                        <span>신상품</span>
+                    </div>
+                    </c:if>
                     
                     <div class="brandwrap" id="brand_section">
-                        <a href="#">${product.companyName }</a>
+                        <a href="">${product.companyName }</a>
                     </div>
                     <div class="price" id="price_section">
                     	<c:if test="${product.discountRate != 0 }">
@@ -108,28 +137,20 @@
                         	<dd>국내산</dd>
                         	<dt>포장타입</dt>
                         	<dd>포장</dd>
-                        	
                             <dt>배송형태</dt>
-                            <dd id="deliverySection">
-                                    새벽배송 / 밤 11시까지 결제 시
-                                <br>
-									배송비 3,500원 (5만원 이상 구매 시 무료)
-                                <br>
-                            </dd>
+                            <dd id="deliverySection">새벽배송 / 밤 11시까지 결제 시<br>배송비 3,500원 (5만원 이상 구매 시 무료)<br></dd>
                             
                             <dt id="tagListSection1">추천태그</dt>
                             <dd id="tagListSection2">
                             	<div class="hashtag">
-                            		<a href="${contextPath }/product/list?cate=${product.pcategoryId }&pcate=${product.pcategoryId }&menu=category">#${product.parentCategoryName }</a>
-                            		<a href="${contextPath }/product/list?cate=${product.categoryId }&pcate=${product.pcategoryId }&menu=category">#${product.categoryName }</a>
+                            		<a href="${contextPath }/product/list.do?cate=${product.pcategoryId }&pcate=${product.pcategoryId }&menu=category">#${product.parentCategoryName }</a>
+                            		<a href="${contextPath }/product/list.do?cate=${product.categoryId }&pcate=${product.pcategoryId }&menu=category">#${product.categoryName }</a>
                             	</div>
                             </dd>
                             
                             <dt>상품선택</dt>
                             <dd>
-                                <!-- 상품선택// start-->
                                 <div class="optionarea" id="top_optionarea">
-                                    
                                     <div class="optionls">
                                         <div>
                                             <strong class="txt-ti">${product.productName }
@@ -156,7 +177,7 @@
                         <c:if test="${product.productCount eq 0 }">
                         <div class="btns">
                         	<button type="button" class="btn darkgray bigger btn-buy" onclick="addCartProduct()">장바구니 넣어두기</button>
-                            <button type="button" class="btn fill gray bigger btn-buy" onclick="fnPDPopWeightingNight('#p_popWeightingNight');">재입고 알림 신청</button>                                                            
+                            <button type="button" class="btn fill gray bigger btn-buy" onclick="productalarm()">재입고 알림 신청</button>                                                            
                         </div> 
                         </c:if>
                         <c:if test="${product.productCount ne 0 }">
@@ -185,11 +206,11 @@
                     <!-- 상품상세// -->
                     <section id="p_proDetail" class="tab-contents prodetail active">
                         <h3 class="hide">상품상세</h3>
-                        <img width="0" height="0" style="border:0px;" src="../static/images/product/${productDTO.imageUrl }">
+                        <img width="0" height="0" style="border:0px;" src="${contextPath }/static/images/product/${productDTO.imageUrl }">
                             <div class="detailcont">
                                 <div style="width: 100%;margin: auto; max-width: 840;">
                                 <h1 style="text-align:center">${product.productName }</h1>
-                                <img class="s-lazy s-loaded" src = "../static/images/product/${productDTO.imageUrl }">
+                                <img class="s-lazy s-loaded" src = "${contextPath }/static/images/product/${productDTO.imageUrl }">
                                 <h1 style="text-align:center">상품 상세 입니다.</h1>
                                 </div>
                             </div>                        
@@ -235,7 +256,7 @@
                         <c:if test="${product.productCount eq 0 }">
                         <div class="btns">
 	                        <button type="button" class="btn darkgray bigger btn-buy" onclick="addCartProduct()">장바구니 넣어두기</button>
-	                        <button type="button" class="btn fill gray bigger btn-buy" onclick="">재입고 알림 신청</button>                                           
+	                        <button type="button" class="btn fill gray bigger btn-buy" onclick="productalarm()">재입고 알림 신청</button>                                           
                         </div>
                         </c:if>
                         <c:if test="${product.productCount ne 0 }">
@@ -250,25 +271,38 @@
         </div>
     </div>
     <!-- //contents -->
+    <jsp:include page="/footer.jsp" />
 </div>
 <script>
 // 시작할 때 좋아요 여부 확인 
 $(document).ready(function(){
 	//좋아요 여부 가져오기
 	$.ajax({
-		url:'${contextPath}/wish/check.do?productId=${param.pid }&compainyId=${param.cid }',
-		type: 'get',
+		url:'${contextPath}/wish/check.do',
+		type: 'post',
 		dataType:'json',
+		data : {
+			productId: ${param.pid },
+			companyId: ${param.cid }
+		},
 		success : function(data){
 			if(data.wish === 1){
 				document.getElementById('wish').className = "btn-wish active";
 			}else{
 				document.getElementById('wish').className = "btn-wish";
 			}
-		}
+		},
+		error: function(xhr, status, error) {
+    		var errorResponse = JSON.parse(xhr.responseText);
+        	var errorCode = errorResponse.code;
+        	var message = errorResponse.message;
+ 
+        	alert(message);
+    	}
 	});
 });
 
+// 좋아요 버튼 클릭할 경우
 function wishUpdate(){
 	if(document.getElementById('wish').className === "btn-wish"){ // 좋아요가 안눌려있을 경우
 		document.getElementById('wish').className = "btn-wish active";
@@ -286,9 +320,13 @@ function wishUpdate(){
 			success : function(data){
 				console.log("fin");
 			},
-			error : function(err){
-				alert(err.code);
-			}
+			error: function(xhr, status, error) {
+        		var errorResponse = JSON.parse(xhr.responseText);
+            	var errorCode = errorResponse.code;
+            	var message = errorResponse.message;
+     
+            	alert(message);
+        	}
 		});
 		
 	}else{
@@ -302,17 +340,23 @@ function wishUpdate(){
 			data: {
 				productId: ${product.productId },
 				memberId: 7, // 세션에서 memberId 가져오기
+				companyId: ${product.companyId },
 			},
 			success : function(data){
 				console.log("fin");
 			},
-			error : function(err){
-				alert(err.code);
-			}
+			error: function(xhr, status, error) {
+        		var errorResponse = JSON.parse(xhr.responseText);
+            	var errorCode = errorResponse.code;
+            	var message = errorResponse.message;
+     
+            	alert(message);
+        	}
 		});
 	}
 }
 
+// 바로구매
 function buyProduct(obj){
 	const pqty = document.querySelector('.pcount');
 	$.ajax({
@@ -327,12 +371,17 @@ function buyProduct(obj){
 		success : function(data){
 			alert("구매 완료하였습니다.");
 		},
-		error : function(err){
-			alert(err.code);
-		}
+		error: function(xhr, status, error) {
+    		var errorResponse = JSON.parse(xhr.responseText);
+        	var errorCode = errorResponse.code;
+        	var message = errorResponse.message;
+ 
+        	alert(message);
+    	}
 	});
 }
 
+// 장바구니 추가
 function addCartProduct(){
 	const pqty = document.querySelector('.pcount');
 	
@@ -349,9 +398,13 @@ function addCartProduct(){
 		success : function(data){
 			alert("장바구니에 담았습니다.");
 		},
-		error : function(err){
-			alert(err.code);
-		}
+		error: function(xhr, status, error) {
+    		var errorResponse = JSON.parse(xhr.responseText);
+        	var errorCode = errorResponse.code;
+        	var message = errorResponse.message;
+ 
+        	alert(message);
+    	}
 	});
 }
 
@@ -396,6 +449,11 @@ function priceChange(value, option){
 			$(price[i]).find("em").text(totalPrc);
 		}
 	}
+}
+
+// 재고 알림
+function productalarm(){
+	alert("재입고 알림이 신청되었습니다.")
 }
 </script>
 
