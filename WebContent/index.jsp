@@ -9,9 +9,27 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
+	
+	<style type = "text/css"> <!-- 로딩바스타일 -->
+		body
+		{
+		 text-align: center;
+		 margin: 0 auto;
+		}
+		#Progress_Loading
+		{
+		 position: absolute;
+		 left: 50%;
+		 top: 50%;
+		 background: #ffffff;
+		}
+	</style>
 </head>
 <body>
 
+<div id = "Progress_Loading"><!-- 로딩바 -->
+<img src="${contextPath }/static/images/common/loding.gif"/>
+</div>
 
 	<jsp:include page="header.jsp" flush="false" />
 	
@@ -42,6 +60,17 @@
                 <div id="popCategory">
                 	<button type="button" class="btn-category">카테고리 전체보기</button>
                 </div>
+               	<div id ="p_popCategory" class ="popcategory">
+	               	<nav class="lnb-list">
+	               		<ul class="lnb">
+	               			<li class="depth1"><button type="button">과일과 채소</button>
+	                			<ul class="depth2">
+	                				<li><a>전체보기</a></li>
+	                			</ul>
+	                		</li>	
+	               		</ul>
+               		</nav>
+               	</div>
                 <!-- //팝업 : category -->
                 
                 <!-- gnb// -->
@@ -90,9 +119,7 @@
 	                <strong style='color:;font-weight:bold'>알뜰 장보기</strong>
 	                <small style='color:;font-weight:normal'>지금 이 순간 만날 수 있는 특가</small>
 	            </h2>
-	            <div class='swiper-container timesaleswiper'>
-	                <div class='swiper-wrapper saleprod'></div>
-	             </div>	
+	            <div class='saleprod'></div>
             </div>
         </section>
     </div>
@@ -118,6 +145,17 @@
             
             <script>
             $(document).ready(function(){
+            	
+            	   $('#Progress_Loading').hide(); //첫 시작시 로딩바를 숨겨준다.
+            	})
+            	.ajaxStart(function(){
+            		$('#Progress_Loading').show(); //ajax실행시 로딩바를 보여준다.
+            	})
+            	.ajaxStop(function(){
+            		$('#Progress_Loading').hide(); //ajax종료시 로딩바를 숨겨준다.
+            	});
+            
+            $(document).ready(function(){
           //세일 가장 많이 하는 상품 가져오기
         	var html = "";
         	$.ajax({
@@ -127,13 +165,14 @@
         		async:false,
         		data:{
         			beginRow:1,
-        			endRow:2,
+        			endRow:1,
         			sort:'E',
         			menu:'sale'
         		},
         		success : function(data){
         			for(var i in data){
-        				html += "<div class='swiper-slide' data-time-start='' data-time-end=''>";
+        				html += "<div class='swiper-container timesaleswiper'>";
+        				html += "<div class='swiper-wrapper'><div class='swiper-slide' data-time-start='' data-time-end=''>";
         				html += "<a href=''><span class='thumb'>";
         				html += "<img src='https://tohomeimage.thehyundai.com/PD/PDImages/S/1/3/9/8809720269931_00.jpg?RS=720x864' alt='' onerror=''>";
         				html += "<span class='badge'><strong>"+data[i].discountRate+"%</strong></span></span>";
@@ -141,7 +180,7 @@
         				html += "<span class='txt-price'>";
         				html += "<strong><em>"+data[i].discountPrice+"</em>원</strong><del>"+data[i].productPrice+"</del>";
         				html += "</span> </a>";
-        				html += "<button type='button' class='btn-cart' onclick=''>장바구니 담기</button></div>"
+        				html += "<button type='button' class='btn-cart' onclick=''>장바구니 담기</button></div></div></div>	"
         			}
         			$(".saleprod").html(html);
         		}
