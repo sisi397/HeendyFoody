@@ -105,7 +105,7 @@ request.setCharacterEncoding("UTF-8");
 		<!-- 업체 로그인 폼 -->
 		<form name="joinCompanyForm" id="companyForm" style="display: none"
 			action="${contextPath}/member/addCompanyMember.do" method="post">
-			<input type="hidden" name="role" id="nomal_role" value="2">
+			<input type="hidden" name="role" id="nomal_role" value="1">
 			<table>
 				<tr>
 					<td width="400"><p>업체 아이디(이름) *</td>
