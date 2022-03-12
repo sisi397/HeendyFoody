@@ -11,19 +11,21 @@ public class MemberDTO {
 	private int point;
 	private Date memberRegDate;
 	private int roleId;
+	private String birthDate;
 
 	public MemberDTO() {
 		System.out.println("memberDTO생성");
 	}
 	
 	
-	public MemberDTO(String memberName, String memberPassword, String memberEmail, String address, int roleId) {
+	public MemberDTO(String memberName, String memberPassword, String memberEmail, String address, int roleId, String birthDate) {
 		super();
 		this.memberName = memberName;
 		this.memberPassword = memberPassword;
 		this.memberEmail = memberEmail;
 		this.address = address;
 		this.roleId = roleId;
+		this.birthDate = birthDate;
 	}
 
 	public int getMemberId() {
@@ -87,6 +89,16 @@ public class MemberDTO {
 
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
+	}
+
+
+	public String getBirthDate() {
+		return birthDate;
+	}
+
+
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
 	}
 	
 }

@@ -5,7 +5,6 @@
 <%
 request.setCharacterEncoding("UTF-8");
 %>
-
 <!-- /HeendyFoody 까지 표시 -->
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
@@ -65,7 +64,7 @@ request.setCharacterEncoding("UTF-8");
 							<a href="${contextPath}/member/logout.do">로그아웃</a>
 						</c:otherwise>
 					</c:choose>
-					<a href="#">마이페이지</a>
+					<a href="${contextPath}/mypage/info">마이페이지</a>
 				</div>
 
 			</div>

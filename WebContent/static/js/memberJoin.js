@@ -15,13 +15,15 @@ function join_save() {
 	}else if (document.joinMemberForm.pwd.value == "") {
     alert("비밀번호를 입력하지 않았습니다.");
     document.joinMemberForm.pwd.focus();
-  } else if ((document.joinMemberForm.pwd.value != document.joinMemberForm.chkpwd.value)) {
+  } else if (document.joinMemberForm.pwd.value != document.joinMemberForm.chkpwd.value) {
     alert("비밀번호가 일치하지 않습니다.");
     document.joinMemberForm.pwd.focus();
   } else if (document.joinMemberForm.email.value == "") {
     alert("이메일을 입력하지 않았습니다.");
     document.joinMemberForm.email.focus();
-  } else {
+  } else if (document.joinMemberForm.birthdate.value == ""){
+	alert("생년월일을 입력하지 않았습니다.")
+}else {
 	alert("흰디푸디 회원 가입되셨습니다. 로그인 해주세요.");
     document.joinMemberForm.submit();
   }
