@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import com.heendy.utils.DBManager;
 import oracle.jdbc.OracleTypes;
@@ -63,7 +64,7 @@ public class WishDAO {
 	
 	
 	//���ƿ��� ��ǰ �� ��
-	public int totalWishCount(int member_id) {
+	public int totalWishCount(int member_id){
 		
 		int result = 0;
 		String sql = "select count(*) from member_like_product where member_id=?";
@@ -104,7 +105,7 @@ public class WishDAO {
 
     
     // 좋아요 추가
-	public int insertWish(int memberId, int productId, int companyId) {
+	public int insertWish(int memberId, int productId, int companyId) throws SQLException{
 	    int result = 0;	
 	    String sql = "{CALL sp_insert_wish(?, ?, ?)}";
 	    		
@@ -128,7 +129,7 @@ public class WishDAO {
 	}
 	
 	// 좋아요 삭제
-	public int deleteWish(int memberId, int productId, int companyId) {
+	public int deleteWish(int memberId, int productId, int companyId) throws SQLException{
 	    int result = 0;	
 	    String sql = "{CALL sp_delete_wish(?,?,?)}";
 	    
@@ -150,7 +151,7 @@ public class WishDAO {
 	}
 	
 	// 좋아요 여부 check
-	public int wishCheck(int memberId, int productId, int companyId) {
+	public int wishCheck(int memberId, int productId, int companyId) throws SQLException{
 		int result = 0;	
 	    String sql = "{CALL sp_check_wish(?,?,?,?)}";
 	    

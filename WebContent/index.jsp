@@ -32,13 +32,8 @@
 </div>
 
 	<jsp:include page="header.jsp" flush="false" />
+	<%@ include file="/navbar.jsp" %>
 	
-<a href="${contextPath }/product/list.do?menu=best">베스트</a>
-<a href="${contextPath }/product/list.do?menu=sale">세일</a>
-<a href="${contextPath }/product/list.do?menu=newprod">신상품</a>
-<a href="${contextPath }/product/list.do?menu=category&pcate=1&cate=1">과일</a>
-<a href="${contextPath }/product/list.do?menu=category&pcate=1&cate=9">계절과일</a>
-<p>
     
     <div id="wrap" class="main">
 
