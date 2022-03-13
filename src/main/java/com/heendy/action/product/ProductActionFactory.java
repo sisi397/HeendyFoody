@@ -2,6 +2,7 @@ package com.heendy.action.product;
 
 import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
+import com.heendy.action.company.CreateProductAction;
 
 public class ProductActionFactory implements ActionFactory {
 	

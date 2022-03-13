@@ -3,8 +3,10 @@ package com.heendy.dao;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.heendy.dto.CreateProductDTO;
 import com.heendy.dto.ProductDTO;
 
 import com.heendy.utils.*;
@@ -149,5 +151,33 @@ public class ProductDAO {
 	    	DBManager.close(conn, cs);
 	    }
 	    return result;
+	}
+	
+	/**
+	 * @author 이승준
+	 * 
+	 * @param CreateProductDTO
+	 * 
+	 * 상품 생성하기 
+	 * */
+	public void createProduct(CreateProductDTO data) throws SQLException {
+		
+		Connection conn = DBManager.getConnection();
+		
+		CallableStatement cstmt = conn.prepareCall("{call sp_create_product(?,?,?,?,?,?,?)}");
+		
+		cstmt.setInt(1, data.getCompanyId());
+		cstmt.setString(2, data.getProductName());
+		cstmt.setInt(3, data.getPrice());
+		cstmt.setInt(4,  data.getDicountRate());
+		cstmt.setInt(5, data.getCount());
+		cstmt.setString(6, data.getImageName());
+		cstmt.setInt(7,data.getCategoryId());
+		
+		cstmt.execute();
+		
+		cstmt.close();
+		conn.close();
+		
 	}
 }
