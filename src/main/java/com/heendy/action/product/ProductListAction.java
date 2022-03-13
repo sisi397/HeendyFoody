@@ -42,17 +42,18 @@ public class ProductListAction implements Action{
 			String pno = request.getParameter("pno");
 			String sort = request.getParameter("sort");
 			String menu = request.getParameter("menu");
-			String cateStr = request.getParameter("cate");
-			String pcateStr = request.getParameter("pcate");
-			
+
 			// 카테고리 정보
 			int cate = 0;
 			int pcate = 0;
-			if(cateStr != null && pcateStr != null) {
-				cate = Integer.parseInt(cateStr);
-				pcate = Integer.parseInt(pcateStr);
+			if(menu.equals("category")) {
+				String cateStr = request.getParameter("cate");
+				String pcateStr = request.getParameter("pcate");
+				if(cateStr != null && pcateStr != null) {
+					cate = Integer.parseInt(cateStr);
+					pcate = Integer.parseInt(pcateStr);
+				}
 			}
-
 			// 정렬 기준
 			if(sort == null || sort.length() == 0)
 				sort = "product_reg_date desc"; // 기본 정렬 : 신상품 순
@@ -76,7 +77,7 @@ public class ProductListAction implements Action{
 			 * endPageNumber : 끝 페이지 번호
 			 */
 			
-			int totalCount = productDAO.totalCountProduct(menu);
+			int totalCount = productDAO.totalCountProduct(menu, cate, pcate);
 			int pageNumber = 1;
 			int pagePerList = 5;
 			int listPerPage = 20;
@@ -97,12 +98,16 @@ public class ProductListAction implements Action{
 			int endPageNumber = beginPageNumber + pagePerList - 1;
 			if(endPageNumber > totalPage)
 				endPageNumber = totalPage;
+			
+			if(menu.equals("best")) {
+				beginRow = 1;
+				endRow = 30;
+			}
 
 			PageDTO pageInfo = new PageDTO(beginPageNumber, endPageNumber, pagePerList, totalPage);
 			
 			// 상품 LIST 가져오기
 			ArrayList<ProductDTO> productList = productDAO.listProduct(beginRow, endRow, sort, menu, cate, pcate);
-			
 			
 			// category 메뉴이면 : category 정보 가져오기
 			if(menu.equals("category")) {

@@ -2,23 +2,44 @@
   pageEncoding="UTF-8"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
     <meta charset="UTF-8">
 	
-	<title>신상품</title>
+	<title>상품보기</title>
 	
 	<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="../static/css/common.min.css">
-	<link rel="stylesheet" type="text/css" href="../static/css/main.min.css">
-	<link rel="stylesheet" type="text/css" href="../static/css/css-library.min.css">
-	<link rel="stylesheet" type="text/css" href="../static/css/product.min.css">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/common.min.css">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/main.min.css">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/css-library.min.css">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/product.min.css">
+	
+	<style>
+	.soldout{
+		position: absolute;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    flex-direction: column;
+	    text-align: center;
+	    color: #101010;
+	    font-size: 18px;
+	    font-weight: 600;
+	    background-color: rgba(255, 255, 255, .8);
+	    z-index: 2;
+    }
+	</style>
 </head>
 
 <body>
+	<jsp:include page="/header.jsp" />
+	<%@ include file="/navbar.jsp" %>
     <div id="wrap" class="main product category">
 	    <!-- contents// -->
 	    <div id="contents">
@@ -34,6 +55,7 @@
 	    		<div class="depth-sub">
 	    			<ul>
 	    				<li class="" id="cate${categoryList[1].categoryId }"><a href="${contextPath }/product/list.do?menu=category&cate=${categoryList[1].categoryId}&pcate=${categoryList[1].parentCategoryId}">전체보기</a> </li>
+	    				
 	    				<c:forEach items="${categoryList }" var="category" begin="2">
 	    					<li class="" id="cate${category.categoryId }"><a href="${contextPath }/product/list.do?menu=category&cate=${category.categoryId}&pcate=${category.parentCategoryId}">${category.categoryName }</a></li>
 	    				</c:forEach>
@@ -67,7 +89,10 @@
 	        	<li>
 	        		<a href="${contextPath }/product/detail.do?pid=${productDTO.productId }&cid=${productDTO.companyId }">
 	        			<span class="thumb">
-	        				<img src="../static/images/product/${productDTO.imageUrl }" alt=""/>
+	        			<c:if test="${productDTO.productCount == 0 }">
+	        			<span class="soldout">일시품절</span>
+	        			</c:if>
+	        				<img src="${contextPath}/static/images/product/${productDTO.imageUrl }" alt="" onerror="${contextPath}/static/images/product/pro01.jpg"/>
 	        				<c:if test="${productDTO.discountRate != 0 }">
 	        				<div class="badgewrap">
 					            <span class="badge"><strong> ${productDTO.discountRate }% </strong></span>
@@ -113,16 +138,16 @@
 	        </c:if>
 	        </div>
 	    </div>
+    <jsp:include page="/footer.jsp" />
     <!-- //contents -->
     </div>
     <script>
     $(document).ready(function(){
     	$('#sortType${param.sort }').css('font-weight', '600');
-    	var menu = 'sf';
+    	var menu = 'category';
     	console.log("ho")
     	if (menu == "${param.menu }"){
     		document.getElementById('cate${param.cate}').className = "active"
-    		consoloe.log(document.getElementById('cate${param.cate}').className);
     	}
     });
     
@@ -139,13 +164,20 @@
     		success : function(data){
     			alert("장바구니에 담았습니다.");
     		},
-    		error : function(error){
-    			console.log("err");
-    		}
+    		error: function(xhr, status, error) {
+        		var errorResponse = JSON.parse(xhr.responseText);
+            	var errorCode = errorResponse.code;
+            	var message = errorResponse.message;
+
+            	if(errorCode == "ERROR-041"){
+                	alert("로그인 후 이용해 주세요.");
+            	}else{
+            		alert(message);
+            	}
+        	}
     	});
     }
     
     </script>
 </body>
 </html>
-

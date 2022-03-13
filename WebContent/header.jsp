@@ -45,7 +45,7 @@ request.setCharacterEncoding("UTF-8");
 		<div class="inner">
 			<!-- toparea// -->
 			<div class="toparea">
-				<h1>
+				<h1 style="margin-top:0px">
 					<a href="${contextPath}/member/index.do"><img
 						src="${contextPath}/static/images/common/header_logo.png"
 						alt="현대식품관"></a>

@@ -3,6 +3,7 @@ package com.heendy.dao;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.heendy.dto.ProductDTO;
@@ -33,7 +34,7 @@ public class ProductDAO {
     private ResultSet rs;
 	  
     // 조건에 맞는 상품 리스트 불러오기
-	public ArrayList<ProductDTO> listProduct(int beginRow, int endRow, String sort, String menu, int cate, int pcate) {
+	public ArrayList<ProductDTO> listProduct(int beginRow, int endRow, String sort, String menu, int cate, int pcate) throws SQLException{
 	    ArrayList<ProductDTO> productList = new ArrayList<ProductDTO>();
 	    String sql = "{CALL sp_list_product(?,?,?,?,?,?,?)}";
 	    
@@ -50,7 +51,7 @@ public class ProductDAO {
 		    cs.setInt(5, cate);
 		    cs.setInt(6, pcate);
 		    cs.registerOutParameter(7, OracleTypes.CURSOR);
-		    System.out.println(sort);
+		    System.out.println(beginRow + " " + endRow + " " + sort +  " " + cate + " " + pcate);
 		    /*
 		     * oracle 데이터형 설정
 		     * sys_refcursor => oracleTypes.cursor
@@ -75,6 +76,7 @@ public class ProductDAO {
 		        product.setCategoryId(rs.getInt("category_id"));
 		        product.setDiscountPrice(rs.getInt("discount_price"));
 		        productList.add(product);
+		        System.out.println(product.getProductId());
 	    	}
 	    } catch (Exception e) {
 	    	e.printStackTrace();
@@ -85,7 +87,7 @@ public class ProductDAO {
 	  }
 
 	// 상품 상세 정보 불러오기
-	public ProductDTO detailProduct(int productId, int companyId){
+	public ProductDTO detailProduct(int productId, int companyId) throws SQLException{
 		ProductDTO product = new ProductDTO();
 		
 	    String sql = "{CALL sp_select_product(?,?,?)}";
@@ -127,9 +129,9 @@ public class ProductDAO {
 	}    
 
 	// 페이징 처리를 위한 전체 상품 개수 가져오기
-	public int totalCountProduct(String menu) {
+	public int totalCountProduct(String menu, int cate, int pcate) throws SQLException{
 		int result = 0;
-	    String sql = "{CALL sp_totalcount_product(?,?)}";
+	    String sql = "{CALL sp_totalcount_product(?,?,?,?)}";
 
 	    conn = null;
 	    cs = null;
@@ -139,10 +141,12 @@ public class ProductDAO {
 	    	cs = conn.prepareCall(sql);
 		    
 		    cs.setString(1, menu);
-		    cs.registerOutParameter(2, OracleTypes.INTEGER);
+		    cs.setInt(2, cate);
+		    cs.setInt(3, pcate);
+		    cs.registerOutParameter(4, OracleTypes.INTEGER);
 		    
 		    cs.executeUpdate();
-		    result = cs.getInt(2);
+		    result = cs.getInt(4);
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	    } finally {

@@ -30,7 +30,7 @@ public class CookieUtils {
 	   }
 	  }
 	  
-	  // String ¹è¿­¿¡ ´ã°å´ø °ªµéÀ» List·Î ´Ù½Ã ´ã´Â´Ù.
+	  // String ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Listï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½Â´ï¿½.
 	  if(cookieValues != null){
 	   list = new ArrayList<String>(Arrays.asList(cookieValues));
 	  }
@@ -43,17 +43,28 @@ public class CookieUtils {
 	  
 	  String sumValue = "";
 	  
-	  if (list != null) {
-		  for (int i = 0; i < list.size(); i++) {
-			  if (list.get(i).equals(value)) {
-				  list.remove(new String(value));
-			  }
-			  sumValue += list.get(i) + ",";
+	  if(list != null) {
+		  list.removeIf(elem -> elem.equals(value));
+		  for(String v: list) {
+			  sumValue += v + ",";
 		  }
 		  sumValue += value;
+		  
 	  } else {
 		  sumValue = value;
 	  }
+	  
+//	  if (list != null) {
+//		  for (int i = 0; i < list.size(); i++) {
+//			  if (list.get(i).equals(value)) {
+//				  list.remove(new String(value));
+//			  }
+//			  sumValue += list.get(i) + ",";
+//		  }
+//		  sumValue += value;
+//	  } else {
+//		  sumValue = value;
+//	  }
 	  
 //	  String sumValue = "";
 //	  int equalsValueCnt = 0;

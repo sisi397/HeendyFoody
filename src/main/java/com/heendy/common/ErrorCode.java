@@ -13,7 +13,6 @@ public enum ErrorCode {
 	
 	OUT_BOUND_RANGE("ERROR-003","최소 1개 이상 장바구니에 담아야 합니다.", 400),
 	
-	
 	/*
 	 * author : 이승준
 	 * 공통적으로 발생하는 SQL error code
@@ -21,14 +20,29 @@ public enum ErrorCode {
 	NO_DATA_FOUND("ERROR-020","해당 데이터를 찾을 수 없습니다.", 404),
 	
 	NOT_RESOURCE_OWNER("ERROR-021","해당 리소스의 소유자가 아닙니다.", 403),
-	
+
 	/*
 	 * 
 	 * author : 이승준
 	 * 공통 Error code
 	 * */
-	UNCAUGHT_SERVER_ERROR("ERROR-040","서버에서 예상치 못한 에러가 발생",500);
+	UNCAUGHT_SERVER_ERROR("ERROR-040","서버에서 예상치 못한 에러가 발생",500),
 	
+	UNATHORIZED_USER("ERROR-041","인증되지 않은 사용자입니다.",401),
+
+	/*
+	 * author : 김시은
+	 * 좋아요 관련 Error code
+	 * */
+	
+	ALREADY_LIKE_EXIST("ERROR-050","이미 좋아요 된 상품입니다.", 400),
+
+	/*
+	 * author : 김시은
+	 * 상품 관련 Error code
+	 * */
+	
+	ALREADY_DELETED_PRODUCT("ERROR-060","존재하지 않는 상품입니다.", 400);
 	
 	
 	private final String code;
