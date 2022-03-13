@@ -27,10 +27,9 @@
 		    <li class="lnb-depth1">
 			  <a href="#">활동 관리</a>
 			  <ul class="lnb-depth2">
-			    <li><a href="${contextPath}/mypage/order_list">주문 내역</a></li>
-	            <li><a href="${contextPath}/mypage/wish">좋아요</a></li>
-			    <li><a href="${contextPath}/mypage/recent_view">최근 본 상품</a></li>
-			    <li><a href="${contextPath}/mypage/personal_info">개인정보 이용현황</a></li>
+			    <li><a href="${contextPath}/mypage/order_list.do">주문 내역</a></li>
+	            <li><a href="${contextPath}/mypage/wish.do">좋아요</a></li>
+			    <li><a href="${contextPath}/mypage/recent_view.do">최근 본 상품</a></li>
 			  </ul>
 		    </li>
 		  </ul>
@@ -39,7 +38,7 @@
 		<!-- 주문 내역 컨텐츠  -->
 		<section class="conarea">
 		  <h3 class="tit">주문목록</h3>
-		  <hr>
+
 		  <div class="orderlist-area">
 	
 			<!-- 주문 내역이 있다면 -->
@@ -54,7 +53,7 @@
 		                </label>
 		                <div class="contr">
 		                  <div class="info1">
-	                        <a href="${contextPath}/product/detail?pid=${orderDTO.productId}">
+	                        <a href="${contextPath}/product/detail.do?pid=${orderDTO.productId}&cid=${orderDTO.companyId}">
 	                          <strong class="txt-ti ellipsis product-name">${orderDTO.productName}</strong>
 	                        </a>
 	                        <p class="company-name">${orderDTO.companyName}</p>                      
@@ -81,6 +80,18 @@
 			        </c:forEach>		
 				  </ul>
 				</div>
+		      <!-- 페이지네이션 -->
+		      <div class="pagination">
+		   		<c:if test="${beginPage > pagePerList}">
+				  <a class="prev" href="${contextPath}/mypage/order_list.do?pno=${beginPage-1}">이전</a>
+				</c:if>
+				<c:forEach var="pno" begin="${beginPage}" end="${endPage}">
+				  <span class="num"><a href="${contextPath}/mypage/order_list.do?pno=${pno}">${pno}</a></span>
+				</c:forEach>
+				<c:if test="${endPage < totalPageCount}">
+				  <a class="next" href="${contextPath}/mypage/order_list.do?pno=${endPage + 1}">다음</a>
+				</c:if>
+			  </div>
 		      </c:if>
 			
 			  <!-- 주문 내역이 없다면 -->
@@ -88,18 +99,6 @@
 		   	    <div class="nodata">주문내역이 없습니다.</div>
 		      </c:if>
 		      
-		      <!-- 페이지네이션 -->
-		      <div class="pagination">
-		   		<c:if test="${beginPage > pagePerList}">
-				  <a class="prev" href="${contextPath}/mypage/order_list?pno=${beginPage-1}">이전</a>
-				</c:if>
-				<c:forEach var="pno" begin="${beginPage}" end="${endPage}">
-				  <span class="num"><a href="${contextPath}/mypage/order_list?pno=${pno}">${pno}</a></span>
-				</c:forEach>
-				<c:if test="${endPage < totalPageCount}">
-				  <a class="next" href="${contextPath}/mypage/order_list?pno=${endPage + 1}">다음</a>
-				</c:if>
-			  </div>
 				
 		  </div>
 		</section>

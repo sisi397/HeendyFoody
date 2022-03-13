@@ -26,7 +26,7 @@ public class WishCheckAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int pid = Integer.parseInt(request.getParameter("productId"));
 		int cid = Integer.parseInt(request.getParameter("companyId"));
-
+		
 		// 좋아요 여부 가져오기
 		int wish = wishDAO.wishCheck(7, pid, cid); // memberid 
 		

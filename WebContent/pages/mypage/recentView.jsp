@@ -11,6 +11,10 @@
 <link href="${contextPath}/static/css/common.min.css" rel="stylesheet" type="text/css">
 <link href="${contextPath}/static/css/css-library.min.css" rel="stylesheet" type="text/css">
 <link href="${contextPath}/static/css/mypage.min.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/static/css/recent-view.css" rel="stylesheet" type="text/css">
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+
 </head>
 
 <body>
@@ -23,10 +27,9 @@
 		    <li class="lnb-depth1">
 			  <a href="#">활동 관리</a>
 			  <ul class="lnb-depth2">
-			    <li><a href="${contextPath}/mypage/order_list">주문 내역</a></li>
-	            <li><a href="${contextPath}/mypage/wish">좋아요</a></li>
-			    <li><a href="${contextPath}/mypage/recent_view">최근 본 상품</a></li>
-			    <li><a href="${contextPath}/mypage/personal_info">개인정보 이용현황</a></li>
+			    <li><a href="${contextPath}/mypage/order_list.do">주문 내역</a></li>
+	            <li><a href="${contextPath}/mypage/wish.do">좋아요</a></li>
+			    <li><a href="${contextPath}/mypage/recent_view.do">최근 본 상품</a></li>
 			  </ul>
 		    </li>
 		  </ul>
@@ -34,40 +37,56 @@
 		
 		<section class="conarea">
           <h3 class="tit">최근 본 상품</h3>
+          <c:if test="${!empty rvList}">
            <div class="recent-list">
-             <ul>
+             <ul class="rv-main">
                <li class="grid-sizer"></li>
                	 <c:forEach items="${rvList}" var="rvDTO">
-                 <li>
-                   <a href="${contextPath}/product/detail?pid=${rvDTO.productId}">
-       				<img src="${rvDTO.imageUrl}" alt="${rvDTO.productName}">         
+                 <li class="figure">
+                 	<c:if test="${rvDTO.deleted == 1}">
+		              <span class="soldout">판매중단</span>
+		              <a href="#">
+       				  <img src="${rvDTO.imageUrl}" alt="${rvDTO.productName}" class="rv-img">         
+                     </a> 
+		            </c:if>
+		            <c:if test="${rvDTO.productCount == 0 && rvDTO.deleted != 1}">
+                   <a href="${contextPath}/product/detail.do?pid=${rvDTO.productId}&cid=${rvDTO.companyId}">
+		              <span class="soldout">일시품절</span>
+       				<img src="${rvDTO.imageUrl}" alt="${rvDTO.productName}" class="rv-img">         
                    </a> 
+		            </c:if>	
+		          <c:if test="${rvDTO.productCount > 0 && rvDTO.deleted != 1}">
+                   <a href="${contextPath}/product/detail.do?pid=${rvDTO.productId}&cid=${rvDTO.companyId}">
+       				<img src="${rvDTO.imageUrl}" alt="${rvDTO.productName}" class="rv-img">         
+                   </a> 
+		            </c:if>			            
                  </li>
                </c:forEach>
              </ul>
-           </div>           
+           </div>
+          </c:if>
+          
+         <c:if test="${empty rvList}">
+	   	   <div class="nodata">최근 본 상품이 아직 없습니다.</div>
+	     </c:if>           
         </section>
       
       </div>
     </div>
   </div>
   <script>
-  $(document).ready(function(){
 
-      var $grid = null;
-
-      $(".recent-list ul").imagesLoaded(function(){
-          $grid = $(".recent-list ul").masonry({
-              columnWidth: ".grid-sizer",
-              itemSelector: "li",
-              gutter:0,
-              stagger:0,
-              horizontalOrder : true,
-              percentPosition: true
-          });
-      });
+  var msnry = new Masonry( ".recent-list ul", {
+	  itemSelector: ".figure",
+	  columnWidth: ".grid-sizer",
+	  percentPosition: true,
+	  gutter: 0,
   });
   
+  imagesLoaded( ".recent-list ul" ).on( "progress", function() {
+	  msnry.layout();
+	  });
+
   </script>
 </body>
 </html>

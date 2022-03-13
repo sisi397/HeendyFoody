@@ -248,7 +248,7 @@
 $(document).ready(function(){
 	//좋아요 여부 가져오기
 	$.ajax({
-		url:'${contextPath}/wish/check.do?productId=${param.pid }&compainyId=${param.cid }',
+		url:'${contextPath}/wish/check.do?productId=${param.pid }&companyId=${param.cid }',
 		type: 'get',
 		dataType:'json',
 		success : function(data){

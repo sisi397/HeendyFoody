@@ -24,32 +24,6 @@
 <a href="${contextPath }/product/list.do?menu=category&pcate=1&cate=9">계절과일</a>
 <p>
 <script>
-var prr;
-$(document).ready(function(){
-	$.ajax({
-		url: '${contextPath }/product/selectList.do?menu=best',
-		type: 'get',
-		dataType:'json',
-		success : function(data){
-			console.log(data);
-			console.log("fin");
-		},
-		error: function(err){
-			console.log(err);
-		}
-	});
-	
-	//좋아요 여부 가져오기
-	$.ajax({
-		url:'${contextPath }/wish/check.do?pid=${param.pid }',
-		type: 'get',
-		dataType:'json',
-		success : function(data){
-			console.log(data);
-			console.log("fin");
-		}
-	});
-});
 </script>
 </body>
 </html>
