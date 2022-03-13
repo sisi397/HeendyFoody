@@ -18,7 +18,7 @@ import com.heendy.dto.MemberDTO;
 /**
  * Servlet Filter implementation class LoginFilter
  */
-@WebFilter(urlPatterns = {"/member/memberJoin.do", "/member/memberLogin.do", "/mypage/*"})
+@WebFilter(urlPatterns = {"/member/memberJoin.do", "/member/memberLogin.do", "/mypage/*", "/company/*"})
 public class LoginFilter implements Filter {
 
     /**
@@ -43,15 +43,20 @@ public class LoginFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpSession session = req.getSession();
 		MemberDTO loginUser= (MemberDTO)session.getAttribute("loginUser");	//loginUser DTO객체 받아오기
-
+		//CompanyMemberDTO loginCompanyUser = (CompanyMemberDTO)session.getAttribute("loginCompanyUser");
+		
 		String toPath = req.getServletPath();
+		
+		System.out.println(System.getProperty("os.name"));
 	
 		
 		//로그인 X + 로그인 회원가입 > 흐름 이어가기
+		//if((loginUser == null || loginCompanyUser == null) && toPath.equals("/member")) {
 		if(loginUser == null && toPath.equals("/member")) {
 			chain.doFilter(request, response);
 		
 		//로그인 O + 로그인 회원가입 > 홈으로 리다이렉트
+		//}else if ((loginUser != null || loginCompanyUser != null)&& toPath.equals("/member")) {	
 		}else if (loginUser != null && toPath.equals("/member")) {	
 			HttpServletResponse res = (HttpServletResponse)response;
 			String contextPath = req.getContextPath();
@@ -69,7 +74,18 @@ public class LoginFilter implements Filter {
 		//로그인 O + 마이페이지 > 흐름 이어가기
 		} else if (loginUser != null && toPath.equals("/mypage")) {
 			chain.doFilter(request, response);
-		}
+		} //<--- 밑 주석 해제하면 삭제할 }
+		
+		//업체 로그인 O + 업체 페이지 > 흐름 이어가기
+//		} else if (loginCompanyUser != null && toPath.equals("/company")) {
+//			chain.doFilter(request, response);
+		
+//		} else if (loginCompanyUser != null && !toPath.equals("/company")) {
+//			HttpServletResponse res = (HttpServletResponse)response;
+//			res.setContentType("text/html; charset=UTF-8");
+//			PrintWriter out = res.getWriter();
+//			out.println("<script>alert('접근할 수 없는 페이지입니다');location.href='http://localhost:8090/HeendyFoody/company/'</script>");
+//		}
 
 	}
 
