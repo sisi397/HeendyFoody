@@ -39,6 +39,7 @@
 
 <body>
 	<jsp:include page="/header.jsp" />
+	<%@ include file="/navbar.jsp" %>
     <div id="wrap" class="main product category">
 	    <!-- contents// -->
 	    <div id="contents">
@@ -167,8 +168,12 @@
         		var errorResponse = JSON.parse(xhr.responseText);
             	var errorCode = errorResponse.code;
             	var message = errorResponse.message;
-     
-            	alert(message);
+
+            	if(errorCode == "ERROR-041"){
+                	alert("로그인 후 이용해 주세요.");
+            	}else{
+            		alert(message);
+            	}
         	}
     	});
     }

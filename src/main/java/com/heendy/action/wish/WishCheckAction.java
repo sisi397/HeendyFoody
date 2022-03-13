@@ -6,13 +6,18 @@ import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.heendy.action.Action;
 import com.heendy.common.ErrorCode;
 import com.heendy.common.ErrorResponse;
+import com.heendy.common.exception.MemberNotExistSession;
 import com.heendy.dao.WishDAO;
+import com.heendy.dto.MemberDTO;
+import com.heendy.utils.SessionUserService;
+import com.heendy.utils.UserService;
 
 /**
  * @author 김시은
@@ -24,15 +29,17 @@ import com.heendy.dao.WishDAO;
 public class WishCheckAction implements Action {
 
 	private final WishDAO wishDAO = WishDAO.getInstance();
+	private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
+
 			int pid = Integer.parseInt(request.getParameter("productId"));
 			int cid = Integer.parseInt(request.getParameter("companyId"));
-
+			MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
+		try {
 			// 좋아요 여부 가져오기
-			int wish = wishDAO.wishCheck(7, pid, cid); // memberid 
+			int wish = wishDAO.wishCheck(member.getMemberId(), pid, cid); 
 			
 			JsonObject jsonObj = new JsonObject();
 			jsonObj.addProperty("wish", wish);

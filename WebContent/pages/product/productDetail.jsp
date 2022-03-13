@@ -57,6 +57,7 @@
 <!-- contents// -->
     
 <jsp:include page="/header.jsp" />
+	<%@ include file="/navbar.jsp" %>
 <div id="wrap" class="product detail">
     <div id="contents">
         <div class="innercon">
@@ -251,8 +252,8 @@
                     </div>
                     <!-- 상품 선택 end// -->
 
-                    <div class="buybutton">
-                        <p class="txt-total">총 금액 <strong><em>${product.discountPrice }</em>원</strong></p>
+                    <div class="buybutton" style="opacity:1;visibility:visible;">
+                        <p class="txt-total total-price">총 금액 <strong><em><fmt:formatNumber value="${product.discountPrice}" /></em>원</strong></p>
                         <c:if test="${product.productCount eq 0 }">
                         <div class="btns">
 	                        <button type="button" class="btn darkgray bigger btn-buy" onclick="addCartProduct()">장바구니 넣어두기</button>
@@ -296,8 +297,8 @@ $(document).ready(function(){
     		var errorResponse = JSON.parse(xhr.responseText);
         	var errorCode = errorResponse.code;
         	var message = errorResponse.message;
- 
-        	alert(message);
+        	
+        	console.log(message);
     	}
 	});
 });
@@ -305,7 +306,6 @@ $(document).ready(function(){
 // 좋아요 버튼 클릭할 경우
 function wishUpdate(){
 	if(document.getElementById('wish').className === "btn-wish"){ // 좋아요가 안눌려있을 경우
-		document.getElementById('wish').className = "btn-wish active";
 		
 		//좋아요 insert
 		$.ajax({
@@ -314,24 +314,26 @@ function wishUpdate(){
 			dataType:'json',
 			data: {
 				productId: ${product.productId },
-				memberId: 7, // 세션에서 memberId 가져오기
 				companyId: ${product.companyId },
 			},
 			success : function(data){
-				console.log("fin");
+				document.getElementById('wish').className = "btn-wish active";
+				console.log("insert")
 			},
 			error: function(xhr, status, error) {
+    			console.log(xhr)
         		var errorResponse = JSON.parse(xhr.responseText);
             	var errorCode = errorResponse.code;
             	var message = errorResponse.message;
-     
-            	alert(message);
+     			console.log(error)
+            	if(errorCode == "ERROR-041"){
+                	alert("로그인 후 이용해 주세요.");
+            	}else{
+            		alert(message);
+            	}
         	}
 		});
-		
 	}else{
-		document.getElementById('wish').className = "btn-wish";
-		
 		//좋아요 delete
 		$.ajax({
 			url:'${contextPath}/wish/delete.do',
@@ -339,18 +341,21 @@ function wishUpdate(){
 			dataType:'json',
 			data: {
 				productId: ${product.productId },
-				memberId: 7, // 세션에서 memberId 가져오기
 				companyId: ${product.companyId },
 			},
 			success : function(data){
-				console.log("fin");
+				document.getElementById('wish').className = "btn-wish";
 			},
 			error: function(xhr, status, error) {
         		var errorResponse = JSON.parse(xhr.responseText);
             	var errorCode = errorResponse.code;
             	var message = errorResponse.message;
-     
-            	alert(message);
+
+            	if(errorCode == "ERROR-041"){
+                	alert("로그인 후 이용해 주세요.");
+            	}else{
+            		alert(message);
+            	}
         	}
 		});
 	}
@@ -375,8 +380,12 @@ function buyProduct(obj){
     		var errorResponse = JSON.parse(xhr.responseText);
         	var errorCode = errorResponse.code;
         	var message = errorResponse.message;
- 
-        	alert(message);
+
+        	if(errorCode == "ERROR-041"){
+            	alert("로그인 후 이용해 주세요.");
+        	}else{
+        		alert(message);
+        	}
     	}
 	});
 }
@@ -402,8 +411,12 @@ function addCartProduct(){
     		var errorResponse = JSON.parse(xhr.responseText);
         	var errorCode = errorResponse.code;
         	var message = errorResponse.message;
- 
-        	alert(message);
+
+        	if(errorCode == "ERROR-041"){
+            	alert("로그인 후 이용해 주세요.");
+        	}else{
+        		alert(message);
+        	}
     	}
 	});
 }
@@ -423,7 +436,7 @@ function upCount(obj){
 function downCount(obj){
 	const pqty = document.querySelectorAll('.pcount');
 	
-	if(pqty[0].value === 1){
+	if(pqty[0].value != 1){
 		for(var i = 0; i < pqty.length; i++){
 			pqty[i].value = Number(pqty[i].value) - 1;
 		}
@@ -453,7 +466,7 @@ function priceChange(value, option){
 
 // 재고 알림
 function productalarm(){
-	alert("재입고 알림이 신청되었습니다.")
+	alert("준비중 입니다.")
 }
 </script>
 

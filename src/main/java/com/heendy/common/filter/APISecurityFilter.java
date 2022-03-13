@@ -34,6 +34,7 @@ import com.heendy.utils.UserService;
 				"/cart/addCount.do",
 				"/cart/minusCount.do",
 				"/cart/delete.do",
+				"/wish/*",
 				"/order/*"
 		}
 )
