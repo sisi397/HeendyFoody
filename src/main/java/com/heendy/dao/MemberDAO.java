@@ -156,12 +156,12 @@ public class MemberDAO {
 
 		MemberDTO memberVO= null;
 		String sql = "select * from member where member_name=?";	     
-		Connection connn = null;
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			connn = DBManager.getConnection();
-			pstmt = connn.prepareStatement(sql);
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);
 			rs = pstmt.executeQuery();
 			if(rs.next()){
@@ -178,7 +178,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBManager.close(connn, pstmt, rs);
+			DBManager.close(conn, pstmt, rs);
 		}
 		return memberVO;
 	}

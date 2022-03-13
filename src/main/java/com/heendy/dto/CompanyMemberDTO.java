@@ -19,6 +19,8 @@ public class CompanyMemberDTO {
 		this.companyEmail = companyEmail;
 		this.role_id = role_id;
 	}
+	public CompanyMemberDTO() {
+	}
 	public int getCompanyId() {
 		return companyId;
 	}
