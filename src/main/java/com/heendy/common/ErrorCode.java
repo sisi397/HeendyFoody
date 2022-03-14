@@ -29,11 +29,14 @@ public enum ErrorCode {
 	UNCAUGHT_SERVER_ERROR("ERROR-040","서버에서 예상치 못한 에러가 발생",500),
 	
 	UNATHORIZED_USER("ERROR-041","인증되지 않은 사용자입니다.",401),
+	
+	INVALID_FIELDS("ERROR-042","요청한 필드의 값이 유효하지 않습니다.",400),
 
 	/*
 	 * author : 김시은
 	 * 좋아요 관련 Error code
 	 * */
+	
 	
 	ALREADY_LIKE_EXIST("ERROR-050","이미 좋아요 된 상품입니다.", 400),
 
