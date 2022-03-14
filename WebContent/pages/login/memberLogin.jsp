@@ -31,7 +31,7 @@ if (c != null) {
 %>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("input[name='checkLoginRadio']:radio").change(function() { //checkLoginRadio에 변경이 발생한경우
+		$("input[name='checkLoginRadio']:radio").on('click', function() { //checkLoginRadio에 변경이 발생한경우
 			var serviceType = this.value; // 라디오버튼의 value를 가져온다.
 			if (serviceType == "normal") { // 일반회원 가입의 경우
 				$('#normalLoginForm').show();
@@ -70,8 +70,9 @@ if (c != null) {
 			<p class="txt" style="margin: 10px 0px 20px;">흰디푸드 아이디를 입력해 주세요.</p>
 			<!-- 라디오 박스 -->
 			<div style="margin-bottom: 30px;">
-				<input type="radio" name="checkLoginRadio" value="normal"
-					checked="checked" style="position: inherit;">일반회원 <input
+				<input type="radio" name="checkLoginRadio" value="normal" checked="checked"
+					style="position: inherit;">일반회원 
+					<input
 					type="radio" name="checkLoginRadio" value="company"
 					style="position: inherit; margin-left: 100px">업체 회원
 			</div>
@@ -102,7 +103,7 @@ if (c != null) {
 					<!-- 쿠키에 저장된 값이 있다면 체크 상태로 둔다. 아니라면 "" -->
 
 					<ul class="btn-group login-surport">
-						<li><a href="${contextPath}/pages/login/memberJoin.jsp">회원가입</a></li>
+						<li><a href="${contextPath}/member/memberJoin.do">회원가입</a></li>
 						<li><a href="${contextPath}/pages/login/findId.jsp"
 							onclick="window.open(this.href, '_blank', 'width=450, height=150'); return false;">아이디
 								찾기</a></li>
@@ -137,7 +138,7 @@ if (c != null) {
 					</ul>
 
 					<ul class="btn-group login-surport">
-						<li><a href="${contextPath}/pages/login/memberJoin.jsp">회원가입</a></li>
+						<li><a href="${contextPath}/member/memberJoin.do">회원가입</a></li>
 					</ul>
 					<button type="button" id="btnLogin" class="btn fill big black"
 						onclick="check_clogin_input()">로그인</button>
