@@ -17,33 +17,37 @@
 	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/product.min.css">
 	
 	<style>
-	.soldout{
-		position: absolute;
-	    top: 0;
-	    left: 0;
-	    width: 100%;
-	    height: 100%;
-	    display: flex;
-	    align-items: center;
-	    justify-content: center;
-	    flex-direction: column;
-	    text-align: center;
-	    color: #101010;
-	    font-size: 18px;
-	    font-weight: 600;
-	    background-color: rgba(255, 255, 255, .8);
-	    z-index: 2;
-    }
+		.soldout{
+			position: absolute;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    flex-direction: column;
+		    text-align: center;
+		    color: #101010;
+		    font-size: 18px;
+		    font-weight: 600;
+		    background-color: rgba(255, 255, 255, .8);
+		    z-index: 2;
+	    }
 	</style>
 </head>
 
 <body>
-	<jsp:include page="/header.jsp" />
 	<%@ include file="/navbar.jsp" %>
+	<input type="hidden" name="paramSort" value="${param.sort }"/>
+	<input type="hidden" name="paramPno" value="${param.pno }"/>
+	<input type="hidden" name="paramMenu" value="${param.menu }"/>
+	<input type="hidden" name="paramCate" value="${param.cate }"/>
+	<input type="hidden" name="paramPcate" value="${param.pcate }"/>
     <div id="wrap" class="main product category">
-	    <!-- contents// -->
 	    <div id="contents">
 	        <div class="innercon">
+	        <!-- // 카테고리 메뉴일 경우 카테고리 표시 -->
 	        <c:if test="${param.menu eq 'category' }">
 	    	<section class="categorylist">
 	    		<div class="depth">
@@ -55,7 +59,6 @@
 	    		<div class="depth-sub">
 	    			<ul>
 	    				<li class="" id="cate${categoryList[1].categoryId }"><a href="${contextPath }/product/list.do?menu=category&cate=${categoryList[1].categoryId}&pcate=${categoryList[1].parentCategoryId}">전체보기</a> </li>
-	    				
 	    				<c:forEach items="${categoryList }" var="category" begin="2">
 	    					<li class="" id="cate${category.categoryId }"><a href="${contextPath }/product/list.do?menu=category&cate=${category.categoryId}&pcate=${category.parentCategoryId}">${category.categoryName }</a></li>
 	    				</c:forEach>
@@ -63,94 +66,169 @@
 	    		</div>
 	    	</section>
 	    	</c:if>
+	        <!-- 카테고리 메뉴일 경우 카테고리 표시 끝 //-->
 	    	
+	    	<!-- 메뉴 제목 -->
 	        <c:if test="${param.menu eq 'best' }"><h2>베스트</h2></c:if>
 	        <c:if test="${param.menu eq 'sale' }"><h2>세일</h2></c:if>
-	        <c:if test="${param.menu eq 'newprod' }"><h2>신상품</h2></c:if>
-	        <!-- filter// -->
+	        <c:if test="${param.menu eq 'newprod' }"><h2>전체상품</h2></c:if>
+	        
+	        <!-- // 정렬기준 -->
 	        <c:if test="${param.menu ne 'best' }">
-            <section class="list-filter" style="height:40px;">
+            <section class="list-filter" style="height:40px">
                 <div class="filter-wrapper">
 	                <div class="form-filter">
 	                    <ul class="btn-group" id="sortType">
-	                        <li><a href="${contextPath }/product/list.do?sort=A&menu=${param.menu }&cate=${param.cate}&pcate=${param.pcate}"><button type="button" id="sortTypeA" class="active" onclick="sortType('A');">신상품순</button></a></li>
-	                        <li><a href="${contextPath }/product/list.do?sort=B&menu=${param.menu }&cate=${param.cate}&pcate=${param.pcate}"><button type="button" id="sortTypeB" onclick="sortType('B');">인기상품순</button></a></li>
-	                        <li><a href="${contextPath }/product/list.do?sort=C&menu=${param.menu }&cate=${param.cate}&pcate=${param.pcate}"><button type="button" id="sortTypeC" onclick="sortType('C');">낮은가격순</button></a></li>
-	                        <li><a href="${contextPath }/product/list.do?sort=D&menu=${param.menu }&cate=${param.cate}&pcate=${param.pcate}"><button type="button" id="sortTypeD" onclick="sortType('D');">높은가격순</button></a></li>
+	                        <li><button type="button" id="sortTypeA" onclick="sortType('A');">신상품순</button></li>
+	                        <li><button type="button" id="sortTypeB" onclick="sortType('B');">인기상품순</button></li>
+	                        <li><button type="button" id="sortTypeC" onclick="sortType('C');">낮은가격순</button></li>
+	                        <li><button type="button" id="sortTypeD" onclick="sortType('D');">높은가격순</button></li>
 	                    </ul>
 	                </div>
 	            </div>
             </section>
             </c:if>
+	        <!-- 정렬기준 끝 //-->
             
-	        <ul class="product-list" id="ulItemList">
-	        <c:if test="${!empty productList }">
-	        	<c:forEach items="${productList }" var="productDTO" varStatus="status">
-	        	<li>
-	        		<a href="${contextPath }/product/detail.do?pid=${productDTO.productId }&cid=${productDTO.companyId }">
-	        			<span class="thumb">
-	        			<c:if test="${productDTO.productCount == 0 }">
-	        			<span class="soldout">일시품절</span>
-	        			</c:if>
-	        				<img src="${contextPath}/static/images/product/${productDTO.imageUrl }" alt="" onerror="${contextPath}/static/images/product/pro01.jpg"/>
-	        				<c:if test="${productDTO.discountRate != 0 }">
-	        				<div class="badgewrap">
-					            <span class="badge"><strong> ${productDTO.discountRate }% </strong></span>
-					        </div>
-					        </c:if>
-	        			</span>
-	        			<strong class="txt-ti ellipsis">${productDTO.productName}</strong>
-	        		</a>
-	        		<span class="info">
-                        <span class="txt-price">
-                        	<strong><em>${productDTO.discountPrice }</em>원</strong>
-                        	<c:if test="${productDTO.discountRate > 0 }">
-                        		<del>${productDTO.productPrice }</del>
-                        	</c:if>
-                        </span>
-                        <button type="button" class="btn-cart" onclick="addCartProduct(${productDTO.productId }, ${productDTO.companyId }, 1)">장바구니 담기</button>
-                    </span>
-                    <span class="tag">
-                    	<c:if test="${productDTO.discountRate > 0 }">
-                        	<span>세일상품</span>
-                        </c:if>
-                    </span> 
-        		</li>
-        		</c:forEach>
-        	</c:if>
-        	<c:if test="${empty productList }">
-        		<div style="text-align:center; margin:100px;"> 상품이 없습니다. </div>
-        	</c:if>
-	        </ul>
+            <!-- 상품 리스트 -->
+	        <section class="list-product"></section>
 	        
-	        <c:if test="${param.menu ne 'best' }">
-	        <div class="pagination">
-	        	<c:if test="${pageInfo.beginPageNumber > pageInfo.pagePerList}">
-					<a class="prev" href="<c:url value="/product/list.do?pno=${pageInfo.beginPageNumber-1}&menu=${param.menu }&sort=${param.sort }&cate=${param.cate }&pcate=${param.pcate }"/>">이전</a>
-				</c:if>
-				<c:forEach var="pno" begin="${pageInfo.beginPageNumber}" end="${pageInfo.endPageNumber}">
-					<span class="num"><a href="<c:url value="/product/list.do?pno=${pno}&menu=${param.menu }&sort=${param.sort }&cate=${param.cate }&pcate=${param.pcate }" />">${pno}</a></span>
-				</c:forEach>
-				<c:if test="${pageInfo.endPageNumber < pageInfo.totalPage}">
-					<a class="next" href="<c:url value="/product/list.do?pno=${pageInfo.endPageNumber + 1}&menu=${param.menu }&sort=${param.sort }&cate=${param.cate }&pcate=${param.pcate }"/>">다음</a>
-				</c:if>
-	        </div>
-	        </c:if>
+	        <!-- 페이지 번호 -->
+	        <div class="pagination"></div>
 	        </div>
 	    </div>
     <jsp:include page="/footer.jsp" />
-    <!-- //contents -->
     </div>
     <script>
     $(document).ready(function(){
-    	$('#sortType${param.sort }').css('font-weight', '600');
     	var menu = 'category';
-    	console.log("ho")
+    	
     	if (menu == "${param.menu }"){
     		document.getElementById('cate${param.cate}').className = "active"
     	}
+    	
+    	loadProductList();
     });
     
+    // 페이지 이동
+   	function movePage(pno){
+    	var pno = $("input[name='paramPno']").val(pno);
+    	loadProductList();
+   	}
+   	
+    // 정렬
+    function sortType(sort){
+    	$('#sortTypeA').css('font-weight', 'normal');
+    	$('#sortTypeB').css('font-weight', 'normal');
+    	$('#sortTypeC').css('font-weight', 'normal');
+    	$('#sortTypeD').css('font-weight', 'normal');
+    	$('#sortType'+sort).css('font-weight', '600');
+    	var pno = $("input[name='paramPno']").val(1); // 첫 페이지로 이동
+    	var sort = $("input[name='paramSort']").val(sort);
+    	loadProductList();
+   	}
+    
+    function loadProductList(){
+    	var sort = $("input[name='paramSort']").val();
+    	var menu = $("input[name='paramMenu']").val();
+    	var pno = $("input[name='paramPno']").val();
+    	var cate = $("input[name='paramCate']").val();
+    	var pcate = $("input[name='paramPcate']").val();
+    	
+    	var html = "";
+    	$.ajax({
+    		url:'${contextPath}/product/select.do',
+    		type: 'post',
+    		dataType:'json',
+    		data:{
+    			sort: sort,
+    			menu: menu,
+    			pno: pno,
+    			cate: cate,
+    			pcate: pcate
+    		},
+    		success : function(data){
+				html += "<ul class='product-list' id = 'ulItemList'>";
+				if(data.length > 0){
+	    			for(var i in data){
+	    				html += "<li>";
+	    				html += "<a href='${contextPath }/product/detail.do?pid="+data[i].productId+"&cid="+data[i].companyId+"'>";
+	    				html += "<span class='thumb'>";
+	    				if(data[i].productCount == 0){
+	    					html += "<span class='soldout'>일시품절</span>";
+	    				}
+	    				html += "<img src='${contextPath}/static/images/product/"+data[i].imageUrl+"' alt='' onerror=''/>"
+	    				if(data[i].discountRate != 0){
+	    					html += "<div class='badgewrap'><span class='badge'>";
+	    					html += "<strong>"+data[i].discountRate+"%</strong></span></div>";
+	    				}
+	    				html += "</span><strong class='txt-ti ellipsis'>"+data[i].productName+"</strong></a>";
+	    				html += "<span class='info'><span class='txt-price'><strong><em>"+data[i].discountPrice+"</em>원</strong>";
+	    				if(data[i].discountRate > 0){
+	    					html += "<del>"+data[i].productPrice+"</del>";
+	    				}
+	    				html += "</span><button type='button' class='btn-cart' onclick='addCartProduct("+data[i].productId+","+data[i].companyId+", 1)'>장바구니 담기</button>";
+	    				html += "</span><span class='tag'>";
+	    				if(data[i].discountRate > 0){
+	    					html += "<span> 세일상품 </span>"
+	    				}
+	    				html += "</span></li>"
+	    			}
+				}else{
+					html += "<div style='text-align:center; margin:100px;'>상품이 없습니다.</div>";
+				}
+				html += "</ul>";
+				$(".list-product").html(html);
+				if(menu != 'best'){
+					loadPagination();
+				}
+    		}
+    	});
+    }
+    
+    // 비동기로 페이지 불러오기
+    function loadPagination(){
+    	var menu = $("input[name='paramMenu']").val();
+    	var pno = $("input[name='paramPno']").val();
+    	var cate = $("input[name='paramCate']").val();
+    	var pcate = $("input[name='paramPcate']").val();
+    	
+    	var html = "";
+    	$.ajax({
+    		url:'${contextPath}/product/pagination.do',
+    		type: 'post',
+    		dataType:'json',
+    		data:{
+    			menu: menu,
+    			pno: pno,
+    			cate: cate,
+    			pcate: pcate
+    		},
+    		success : function(data){
+    			if(data.beginPageNumber > data.pagePerList){
+    				html += "<button onclick='movePage("+(data.beginPageNumber - 1)+")'>";
+    				html += "<a class='prev'>이전</a></button>";
+    			}
+    			for(var i = data.beginPageNumber; i <= data.endPageNumber; i++){
+    				if(i == pno){
+        				html += "<button onclick='movePage("+i+")'><span class='num'><a style='border:3px solid #e7e7e7'>"+i+"</a></span></button>";
+    				}else{
+        				html += "<button onclick='movePage("+i+")'><span class='num'><a>"+i+"</a></span></button>";
+    				}
+    			}
+    			if(data.endPageNumber < data.totalPage){
+    				html += "<button onclick='movePage("+(data.endPageNumber + 1)+")'>";
+    				html += "<a class='next'>다음</a></button>";
+    			}
+	    			
+				$(".pagination").html(html);
+				
+				window.scrollTo(0, 0);
+    		}
+    	});
+    }
+    
+    // 장바구니 담기
     function addCartProduct(pid, cid, qty){
     	$.ajax({
     		url:'${contextPath}/cart/create.do',
@@ -177,7 +255,6 @@
         	}
     	});
     }
-    
     </script>
 </body>
 </html>

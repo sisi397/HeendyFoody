@@ -15,7 +15,7 @@ public enum ErrorCode {
 	
 	/*
 	 * author : 이승준
-	 * 공통적으로 발생하는 SQL error code
+	 * 공통적으로 발생하는 error code
 	 * */
 	NO_DATA_FOUND("ERROR-020","해당 데이터를 찾을 수 없습니다.", 404),
 	
@@ -29,7 +29,10 @@ public enum ErrorCode {
 	UNCAUGHT_SERVER_ERROR("ERROR-040","서버에서 예상치 못한 에러가 발생",500),
 	
 	UNATHORIZED_USER("ERROR-041","인증되지 않은 사용자입니다.",401),
-
+	
+	INVALID_FIELDS("ERROR-042","요청한 필드의 값이 유효하지 않습니다.",400),
+	
+	NOT_SUPPORT_IMAGE_FILE("ERROR-043","지원되지 않는 파일 확장자 입니다.", 400),
 	/*
 	 * author : 김시은
 	 * 좋아요 관련 Error code
@@ -43,7 +46,6 @@ public enum ErrorCode {
 	 * */
 	
 	ALREADY_DELETED_PRODUCT("ERROR-060","존재하지 않는 상품입니다.", 400);
-	
 	
 	private final String code;
 	

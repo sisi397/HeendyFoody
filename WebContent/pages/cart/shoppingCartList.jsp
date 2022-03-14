@@ -86,6 +86,7 @@
 		
 			window.setTimeout(calculateSellPrice, 500);
 			bindCartList();
+			checkOrderAble();
 
 		});
 		
@@ -143,7 +144,8 @@
 			}
 		}
 		
-		 function checkOrderAble() {
+		/*결제 가능한지 여부 확인 - 장바구니 1개이상 체크되어야 함.*/
+		function checkOrderAble() {
 			var selectedItemCount = $("input:checkbox[name=itemSelect]:checked").length;
 			var orderBtn = $("#orderBtn");
 			if(selectedItemCount > 0) {
@@ -210,6 +212,7 @@
 		  
 		    var cartId = Number(itemObj.find("input:checkbox[name=itemSelect]").val());
 		    
+		    $(obj).attr("disabled","disabled");
 		    
 		    
 		    var data = {
@@ -239,6 +242,9 @@
 		     
 		            	
 		                alert(message);
+		            },
+		            complete: function(xhr, status) {
+		            	$(obj).removeAttr("disabled");
 		            }
 		    });
 		}
@@ -254,7 +260,7 @@
 		    var cartId = Number(itemObj.find("input:checkbox[name=itemSelect]").val());
 		    
 		    
-		   
+		    $(obj).attr("disabled","disabled");
 		    
 		    var data = {
 				cart_id : cartId,
@@ -281,6 +287,9 @@
 		     
 		            	
 		                alert(message);
+		            },
+		            complete: function(xhr, status) {
+		            	$(obj).removeAttr("disabled");
 		            }
 		    });
 		}
@@ -314,7 +323,7 @@
 	            	var errorResponse = JSON.parse(xhr.responseText);
 	            	var errorCode = errorResponse.code;
 	            	var message = errorResponse.message;
-	     
+	     			
 	            	
 	                alert(message);
 	            }

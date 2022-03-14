@@ -2,47 +2,56 @@ package com.heendy.action.cart;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.heendy.action.Action;
 import com.heendy.common.ErrorCode;
 import com.heendy.common.ErrorResponse;
+import com.heendy.common.ErrorResponse.ErrorField;
 import com.heendy.common.SQLErrorCode;
-import com.heendy.common.exception.MemberNotExistSession;
+import com.heendy.common.ValidableAction;
 import com.heendy.dao.CartDAO;
-import com.heendy.dto.MemberDTO;
 import com.heendy.dto.cart.CartCountUpdateDTO;
-import com.heendy.utils.SessionUserService;
-import com.heendy.utils.UserService;
+import com.heendy.utils.Validation;
 
 /**
  * @author 이승준 장바구니 수량 감소 Action 클래스
  */
-public class MinusCartAction implements Action {
+public class MinusCartAction implements Action, ValidableAction {
 
 	private final CartDAO cartDAO = CartDAO.getInstance();
 
-	private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
-	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
 
-		MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
-		
+		int memberId = (int) request.getAttribute("memberId");
 
 		try {
+			List<ErrorResponse.ErrorField> errors = valid(request);
+			
+			if (errors.size() != 0) {
+				ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_FIELDS);
+
+				errorResponse.setErrors(errors);
+
+				String json = new Gson().toJson(errorResponse);
+				response.setStatus(errorResponse.getStatus());
+				response.getWriter().write(json);
+				return;
+			}
+
 			int cartId = Integer.parseInt(request.getParameter("cart_id"));
 			int count = Integer.parseInt(request.getParameter("count"));
 
-			CartCountUpdateDTO minusCartDto = new CartCountUpdateDTO(cartId, member.getMemberId(), count);
+			CartCountUpdateDTO minusCartDto = new CartCountUpdateDTO(cartId, memberId, count);
 
 			cartDAO.minusCartCount(minusCartDto);
 
@@ -67,6 +76,29 @@ public class MinusCartAction implements Action {
 			response.getWriter().write(json);
 		}
 
+	}
+
+	@Override
+	public List<ErrorField> valid(HttpServletRequest request) {
+		List<ErrorResponse.ErrorField> errors = new ArrayList<>();
+
+		String cartId = request.getParameter("cart_id");
+		String count = request.getParameter("count");
+
+		System.out.println(request.getParameter("cart_id"));
+		System.out.println(request.getParameter("count"));
+
+		Validation validation = Validation.getInstance();
+
+		if (!validation.validNotEmpty(cartId)) {
+			errors.add(new ErrorResponse.ErrorField("cart_id", cartId, "값이 비어있습니다."));
+		}
+
+		if (!validation.validNotEmpty(count)) {
+			errors.add(new ErrorResponse.ErrorField("count", count, "값이 비어있습니다."));
+		}
+
+		return errors;
 	}
 
 }

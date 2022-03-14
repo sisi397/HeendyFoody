@@ -3,3 +3,28 @@
 .mypage .list-field .product-list .info .probtn .btn {
 	width: 110px;
 }
+
+.normal {
+	position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 2 !important;
+}
+
+.soldout {
+	position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    color: #101010 !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    background-color: rgba(255, 255, 255, .8) !important;
+    z-index: 2 !important;
+    }

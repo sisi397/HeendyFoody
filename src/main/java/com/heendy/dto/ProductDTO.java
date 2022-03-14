@@ -1,5 +1,11 @@
 package com.heendy.dto;
 
+/**
+ * @author 김시은
+ * 
+ * 상품 DTO
+ * 
+ * */
 public class ProductDTO {
 	private int productId;
 	private int companyId;

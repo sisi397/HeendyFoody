@@ -56,22 +56,20 @@
 <body>
 <!-- contents// -->
     
-<jsp:include page="/header.jsp" />
 	<%@ include file="/navbar.jsp" %>
 <div id="wrap" class="product detail">
     <div id="contents">
         <div class="innercon">
             <section class="proinfo-area">
-                <!-- propic// -->
                 <div class="propic">
+                	<!-- 상품 이미지 -->
                     <div class="propicbig">
+                		<!-- 품절일 경우 이미지 -->
                     	<c:if test="${product.productCount == 0 }">
 	        			<span class="soldout">일시품절</span>
 	        			</c:if>
                         <img data-zoom-image="${contextPath}/static/images/product/${productDTO.imageUrl }" src="${contextPath}/static/images/product/${productDTO.imageUrl }">
-                        
                     </div>
-                    
                     <div class="propicsmall">
                         <div class="swiper-pagination-propic"><span class="current">1</span> / <span class="total">1</span></div>
                         <div class="swiper-button-next-propic"></div>
@@ -88,9 +86,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- //propic -->
                 
-                <!-- proinfo// -->
+                <!-- 상품 정보 -->
                 <div class="proinfo">
                     <h2>
                         <strong>${product.productName }</strong>
@@ -100,11 +97,6 @@
                     <c:if test="${product.discountRate > 0 }">
                     <div class="tag">
                         <span>세일상품</span>
-                    </div>
-                    </c:if>
-                    <c:if test="${product.discountRate == 0 }">
-                    <div class="tag">
-                        <span>신상품</span>
                     </div>
                     </c:if>
                     
@@ -189,12 +181,11 @@
                         </c:if>
                     </div>
                 </div>
-                <!-- //proinfo -->
             </section>
             
             <div class="prodetailcont">
                 <div class="prodetail-area">
-                    <!-- tabs// -->
+                    <!-- //tabs -->
                     <div class="tab-menu protabs">
                         <a href="#p_proDetail" class="active"><span>상세정보</span></a>
                         <a href="#p_proBuyinfo"><span>구매정보</span></a>
@@ -202,9 +193,9 @@
                         <a href="#p_proReview"><span>리뷰 <em id="reviewCnt">
                         </em></span></a>
                     </div>
-                    <!-- //tabs -->            
+                    <!-- tabs// -->            
                 
-                    <!-- 상품상세// -->
+                    <!-- //상품상세 -->
                     <section id="p_proDetail" class="tab-contents prodetail active">
                         <h3 class="hide">상품상세</h3>
                         <img width="0" height="0" style="border:0px;" src="${contextPath }/static/images/product/${productDTO.imageUrl }">
@@ -216,8 +207,9 @@
                                 </div>
                             </div>                        
                     </section>
-                    <!-- //상품상세 -->
+                    <!-- 상품상세 // -->
                     
+                    <!-- // 기타 메뉴 -->
                     <%@ include file="./buyInfo.jsp" %>
                     
                     <%@ include file="./exchangeInfo.jsp" %>
@@ -229,10 +221,11 @@
                             </span>
                         </div>
 					</section>
+                    <!-- 기타 메뉴 // -->
                 </div>
                 
+                <!-- 오른쪽 영역 : 수량입력 및 구매  -->
                 <div class="rightarea" id="bottom_rightarea">
-                    <!-- 상품 선택 start// -->
                     <div class="optionarea">
 	                    <div class="optionls">
 	                        <div>
@@ -250,8 +243,7 @@
 	                        </div>
 	                    </div>
                     </div>
-                    <!-- 상품 선택 end// -->
-
+                    
                     <div class="buybutton" style="opacity:1;visibility:visible;">
                         <p class="txt-total total-price">총 금액 <strong><em><fmt:formatNumber value="${product.discountPrice}" /></em>원</strong></p>
                         <c:if test="${product.productCount eq 0 }">
@@ -271,203 +263,202 @@
             </div>
         </div>
     </div>
-    <!-- //contents -->
     <jsp:include page="/footer.jsp" />
 </div>
 <script>
 // 시작할 때 좋아요 여부 확인 
-$(document).ready(function(){
+	$(document).ready(function(){
+		if("${sessionScope.loginUser}" != ""){
+			wishCheck();
+		}
+	});
+
 	//좋아요 여부 가져오기
-	$.ajax({
-		url:'${contextPath}/wish/check.do',
-		type: 'post',
-		dataType:'json',
-		data : {
-			productId: ${param.pid },
-			companyId: ${param.cid }
-		},
-		success : function(data){
-			if(data.wish === 1){
-				document.getElementById('wish').className = "btn-wish active";
-			}else{
-				document.getElementById('wish').className = "btn-wish";
-			}
-		},
-		error: function(xhr, status, error) {
-    		var errorResponse = JSON.parse(xhr.responseText);
-        	var errorCode = errorResponse.code;
-        	var message = errorResponse.message;
-        	
-        	console.log(message);
-    	}
-	});
-});
+	function wishCheck(){
+		$.ajax({
+			url:'${contextPath}/wish/check.do?productId=${param.pid }&companyId=${param.cid }',
+			type: 'get',
+			dataType:'json',
+			success : function(data){
+				if(data.wish === 1){
+					document.getElementById('wish').className = "btn-wish active";
+				}else{
+					document.getElementById('wish').className = "btn-wish";
+				}
+			},
+			error: function(xhr, status, error) {
+	    		var errorResponse = JSON.parse(xhr.responseText);
+	        	var errorCode = errorResponse.code;
+	        	var message = errorResponse.message;
+	        	
+	        	alert(message);
+	    	}
+		});
+	}
+	
+	// 좋아요 버튼 클릭할 경우
+	function wishUpdate(){
+		if(document.getElementById('wish').className === "btn-wish"){ // 좋아요가 안눌려있을 경우
+			
+			//좋아요 insert
+			$.ajax({
+				url:'${contextPath}/wish/insert.do',
+				type: 'post',
+				dataType:'json',
+				data: {
+					productId: ${product.productId },
+					companyId: ${product.companyId },
+				},
+				success : function(data){
+					document.getElementById('wish').className = "btn-wish active";
+				},
+				error: function(xhr, status, error) {
+	        		var errorResponse = JSON.parse(xhr.responseText);
+	            	var errorCode = errorResponse.code;
+	            	var message = errorResponse.message;
+	            	
+	            	if(errorCode == "ERROR-041"){
+	                	alert("로그인 후 이용해 주세요.");
+	            	}else{
+	            		alert(message);
+	            	}
+	        	}
+			});
+		}else{
+			//좋아요 delete
+			$.ajax({
+				url:'${contextPath}/wish/delete.do',
+				type: 'post',
+				dataType:'json',
+				data: {
+					productId: ${product.productId },
+					companyId: ${product.companyId },
+				},
+				success : function(data){
+					document.getElementById('wish').className = "btn-wish";
+				},
+				error: function(xhr, status, error) {
+	        		var errorResponse = JSON.parse(xhr.responseText);
+	            	var errorCode = errorResponse.code;
+	            	var message = errorResponse.message;
+	
+	            	if(errorCode == "ERROR-041"){
+	                	alert("로그인 후 이용해 주세요.");
+	            	}else{
+	            		alert(message);
+	            	}
+	        	}
+			});
+		}
+	}
 
-// 좋아요 버튼 클릭할 경우
-function wishUpdate(){
-	if(document.getElementById('wish').className === "btn-wish"){ // 좋아요가 안눌려있을 경우
+	// 바로구매
+	function buyProduct(obj){
+		const pqty = document.querySelector('.pcount');
+		$.ajax({
+			url:'${contextPath}/order/orderProduct.do',
+			type: 'post',
+			dataType:'json',
+			data: {
+				product_id: ${product.productId },
+				company_id: ${product.companyId },
+				product_count : pqty.value
+			},
+			success : function(data){
+				alert("구매 완료하였습니다.");
+			},
+			error: function(xhr, status, error) {
+	    		var errorResponse = JSON.parse(xhr.responseText);
+	        	var errorCode = errorResponse.code;
+	        	var message = errorResponse.message;
+	
+	        	if(errorCode == "ERROR-041"){
+	            	alert("로그인 후 이용해 주세요.");
+	        	}else{
+	        		alert(message);
+	        	}
+	    	}
+		});
+	}
+
+	// 장바구니 추가
+	function addCartProduct(){
+		const pqty = document.querySelector('.pcount');
 		
-		//좋아요 insert
+		console.log("cart");
 		$.ajax({
-			url:'${contextPath}/wish/insert.do',
+			url:'${contextPath}/cart/create.do',
 			type: 'post',
 			dataType:'json',
 			data: {
-				productId: ${product.productId },
-				companyId: ${product.companyId },
+				product_id: ${product.productId },
+				company_id: ${product.companyId },
+				count : pqty.value
 			},
 			success : function(data){
-				document.getElementById('wish').className = "btn-wish active";
-				console.log("insert")
+				alert("장바구니에 담았습니다.");
 			},
 			error: function(xhr, status, error) {
-    			console.log(xhr)
-        		var errorResponse = JSON.parse(xhr.responseText);
-            	var errorCode = errorResponse.code;
-            	var message = errorResponse.message;
-     			console.log(error)
-            	if(errorCode == "ERROR-041"){
-                	alert("로그인 후 이용해 주세요.");
-            	}else{
-            		alert(message);
-            	}
-        	}
-		});
-	}else{
-		//좋아요 delete
-		$.ajax({
-			url:'${contextPath}/wish/delete.do',
-			type: 'post',
-			dataType:'json',
-			data: {
-				productId: ${product.productId },
-				companyId: ${product.companyId },
-			},
-			success : function(data){
-				document.getElementById('wish').className = "btn-wish";
-			},
-			error: function(xhr, status, error) {
-        		var errorResponse = JSON.parse(xhr.responseText);
-            	var errorCode = errorResponse.code;
-            	var message = errorResponse.message;
-
-            	if(errorCode == "ERROR-041"){
-                	alert("로그인 후 이용해 주세요.");
-            	}else{
-            		alert(message);
-            	}
-        	}
+	    		var errorResponse = JSON.parse(xhr.responseText);
+	        	var errorCode = errorResponse.code;
+	        	var message = errorResponse.message;
+	
+	        	if(errorCode == "ERROR-041"){
+	            	alert("로그인 후 이용해 주세요.");
+	        	}else{
+	        		alert(message);
+	        	}
+	    	}
 		});
 	}
-}
 
-// 바로구매
-function buyProduct(obj){
-	const pqty = document.querySelector('.pcount');
-	$.ajax({
-		url:'${contextPath}/order/orderProduct.do',
-		type: 'post',
-		dataType:'json',
-		data: {
-			product_id: ${product.productId },
-			company_id: ${product.companyId },
-			product_count : pqty.value
-		},
-		success : function(data){
-			alert("구매 완료하였습니다.");
-		},
-		error: function(xhr, status, error) {
-    		var errorResponse = JSON.parse(xhr.responseText);
-        	var errorCode = errorResponse.code;
-        	var message = errorResponse.message;
-
-        	if(errorCode == "ERROR-041"){
-            	alert("로그인 후 이용해 주세요.");
-        	}else{
-        		alert(message);
-        	}
-    	}
-	});
-}
-
-// 장바구니 추가
-function addCartProduct(){
-	const pqty = document.querySelector('.pcount');
-	
-	console.log("cart");
-	$.ajax({
-		url:'${contextPath}/cart/create.do',
-		type: 'post',
-		dataType:'json',
-		data: {
-			product_id: ${product.productId },
-			company_id: ${product.companyId },
-			count : pqty.value
-		},
-		success : function(data){
-			alert("장바구니에 담았습니다.");
-		},
-		error: function(xhr, status, error) {
-    		var errorResponse = JSON.parse(xhr.responseText);
-        	var errorCode = errorResponse.code;
-        	var message = errorResponse.message;
-
-        	if(errorCode == "ERROR-041"){
-            	alert("로그인 후 이용해 주세요.");
-        	}else{
-        		alert(message);
-        	}
-    	}
-	});
-}
-
-// 수량 증가
-function upCount(obj){
-	const pqty = document.querySelectorAll('.pcount');
-	for(var i = 0; i < pqty.length; i++){
-		pqty[i].value = Number(pqty[i].value) + 1;
-	}
-
-	const value = document.querySelector('.pcount').value;
-	priceChange(value, 'up');
-}
-
-// 수량 감소
-function downCount(obj){
-	const pqty = document.querySelectorAll('.pcount');
-	
-	if(pqty[0].value != 1){
+	// 수량 증가
+	function upCount(obj){
+		const pqty = document.querySelectorAll('.pcount');
 		for(var i = 0; i < pqty.length; i++){
-			pqty[i].value = Number(pqty[i].value) - 1;
+			pqty[i].value = Number(pqty[i].value) + 1;
 		}
-
-		const value = document.querySelector('.pcount').value;
-		priceChange(value, 'down');
-	}else{
-		alert("최소 주문 수량은 1개 입니다.");
-	}
-}
-
-// 가격 변경
-function priceChange(value, option){
-	var price = document.querySelectorAll('.total-price');
-	var totalPrc = Number($("input[name=totalPrc]").val())*value;
 	
-	if(option === 'up'){
-		for(var i = 0; i < price.length; i++){
-			$(price[i]).find("em").text(totalPrc);
-		}
-	}else{
-		for(var i = 0; i < price.length; i++){
-			$(price[i]).find("em").text(totalPrc);
+		const value = document.querySelector('.pcount').value;
+		priceChange(value, 'up');
+	}
+
+	// 수량 감소
+	function downCount(obj){
+		const pqty = document.querySelectorAll('.pcount');
+		
+		if(pqty[0].value != 1){
+			for(var i = 0; i < pqty.length; i++){
+				pqty[i].value = Number(pqty[i].value) - 1;
+			}
+	
+			const value = document.querySelector('.pcount').value;
+			priceChange(value, 'down');
+		}else{
+			alert("최소 주문 수량은 1개 입니다.");
 		}
 	}
-}
 
-// 재고 알림
-function productalarm(){
-	alert("준비중 입니다.")
-}
+	// 가격 변경
+	function priceChange(value, option){
+		var price = document.querySelectorAll('.total-price');
+		var totalPrc = Number($("input[name=totalPrc]").val())*value;
+		
+		if(option === 'up'){
+			for(var i = 0; i < price.length; i++){
+				$(price[i]).find("em").text(totalPrc);
+			}
+		}else{
+			for(var i = 0; i < price.length; i++){
+				$(price[i]).find("em").text(totalPrc);
+			}
+		}
+	}
+
+	// 재고 알림
+	function productalarm(){
+		alert("준비중 입니다.")
+	}
 </script>
 
 </body>

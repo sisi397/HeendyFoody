@@ -43,16 +43,16 @@ public class CookieUtils {
 	  
 	  String sumValue = "";
 	  
-	  if(list != null) {
-		  list.removeIf(elem -> elem.equals(value));
-		  for(String v: list) {
-			  sumValue += v + ",";
-		  }
-		  sumValue += value;
-		  
-	  } else {
-		  sumValue = value;
-	  }
+      if(list != null) {
+          list.removeIf(elem -> elem.equals(value));
+          for(String v: list) {
+              sumValue += v + ",";
+          }
+          sumValue += value;
+
+      } else {
+          sumValue = value;
+      }
 	  
 //	  if (list != null) {
 //		  for (int i = 0; i < list.size(); i++) {
@@ -81,7 +81,7 @@ public class CookieUtils {
 	  
 	  if(!sumValue.equals("")){
 	   Cookie cookie = new Cookie(key, URLEncoder.encode(sumValue, encoding));
-	   cookie.setMaxAge(60 * 60 * 24);
+	   cookie.setMaxAge(-1);
 	   cookie.setPath(path);
 	   response.addCookie(cookie);
 	  }
