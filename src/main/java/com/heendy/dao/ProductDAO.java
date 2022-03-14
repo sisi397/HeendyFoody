@@ -132,7 +132,7 @@ public class ProductDAO {
 	public int totalCountProduct(String menu, int cate, int pcate) throws SQLException{
 		int result = 0;
 	    String sql = "{CALL sp_totalcount_product(?,?,?,?)}";
-
+	    System.out.println(menu);
 	    conn = null;
 	    cs = null;
 	    System.out.println("DAO : totalCountProduct");
@@ -147,6 +147,7 @@ public class ProductDAO {
 		    
 		    cs.executeUpdate();
 		    result = cs.getInt(4);
+		    System.out.println("totalcount : " + result);
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	    } finally {

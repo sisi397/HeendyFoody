@@ -60,4 +60,75 @@ public class ChartDataDAO {
 	    }
 	    return memberList;
 	}
+	
+	// 날짜별 구매자 수 data 가져오기
+		public List<JSONObject> orderInfo(int cid, String sort, int pid) {
+			List<JSONObject> orderList = new LinkedList<JSONObject>();
+			
+			String sql = "{CALL SP_PRODUCT_ORDERINFO(?,?,?,?)}";
+		    
+		    try {
+		    	conn = DBManager.getConnection();
+		    	cs = conn.prepareCall(sql);
+
+			    cs.setInt(1, cid);
+			    cs.setInt(2, pid);
+			    cs.setString(3, sort);
+			    cs.registerOutParameter(4, OracleTypes.CURSOR);
+			    
+			    cs.executeUpdate();
+			    
+			    rs = (ResultSet)cs.getObject(4);
+			    
+			    JSONObject orderObj = null;
+		        while (rs.next()) {
+		        	String group = rs.getString("sorting");
+		    	    int count = rs.getInt("count");
+		    	    orderObj = new JSONObject();
+		    	    orderObj.put("group", group);
+		    	    orderObj.put("count", count);
+		    	    orderList.add(orderObj);
+		        }
+			    
+		    } catch (Exception e) {
+		    	e.printStackTrace();
+		    } finally {
+		    	DBManager.close(conn, cs);
+		    }
+		    return orderList;
+		}
+
+		public List<JSONObject> productList(int cid) {
+			List<JSONObject> productList = new LinkedList<JSONObject>();
+			
+			String sql = "{CALL SP_COMPANY_PRODUCT(?,?)}";
+		    
+		    try {
+		    	conn = DBManager.getConnection();
+		    	cs = conn.prepareCall(sql);
+
+			    cs.setInt(1, cid);
+			    cs.registerOutParameter(2, OracleTypes.CURSOR);
+			    
+			    cs.executeUpdate();
+			    
+			    rs = (ResultSet)cs.getObject(2);
+			    
+			    JSONObject productObj = null;
+		        while (rs.next()) {
+		        	int productId= rs.getInt("product_id");
+		    	    String productName = rs.getString("product_name");
+		    	    productObj = new JSONObject();
+		    	    productObj.put("productId", productId);
+		    	    productObj.put("productName", productName);
+		    	    productList.add(productObj);
+		        }
+			    
+		    } catch (Exception e) {
+		    	e.printStackTrace();
+		    } finally {
+		    	DBManager.close(conn, cs);
+		    }
+		    return productList;
+		}
 }

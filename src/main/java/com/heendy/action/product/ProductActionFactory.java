@@ -20,11 +20,11 @@ public class ProductActionFactory implements ActionFactory {
 	    System.out.println("ActionFactory  :" + command);
 
 	    if (command.equals("/list.do")) {
-	    	action = new ProductListAction();
+	    	action = new ProductListViewAction();
 	    } else if(command.equals("/detail.do")) {
 	    	action = new ProductDetailAction();
 	    } else if(command.equals("/select.do")) {
-	    	action = new ProductListViewAction();
+	    	action = new ProductListAction();
 	    } else if(command.equals("/category.do")) {
 	    	action = new CategoryAction();
 	    }

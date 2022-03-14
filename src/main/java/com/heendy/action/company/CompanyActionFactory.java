@@ -1,13 +1,13 @@
-package com.heendy.action.admin;
+package com.heendy.action.company;
 
 import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
 
-public class AdminActionFactory implements ActionFactory {
+public class CompanyActionFactory implements ActionFactory {
 	
-	private final static ActionFactory factory = new AdminActionFactory();
+	private final static ActionFactory factory = new CompanyActionFactory();
 	
-	private AdminActionFactory() {} 
+	private CompanyActionFactory() {} 
 	
 	public static ActionFactory getInstance() {
 		return factory;
@@ -21,6 +21,10 @@ public class AdminActionFactory implements ActionFactory {
 
 	    if (command.equals("/ageinfoChart.do")) {
 	    	action = new AgeInfoAction();
+	    } else if(command.equals("/orderinfoChart.do")) {
+	    	action = new OrderInfoAction();
+	    } else if(command.equals("/productList.do")) {
+	    	action = new productListAction();
 	    }
 	    
 		return action;

@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
-import com.heendy.action.admin.AdminActionFactory;
+import com.heendy.action.company.CompanyActionFactory;
 
 @WebServlet("/admin/*")
-public class AdminController extends HttpServlet {
+public class CompanyController extends HttpServlet {
 	
-	private final ActionFactory actionFactory = AdminActionFactory.getInstance();
+	private final ActionFactory actionFactory = CompanyActionFactory.getInstance();
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
