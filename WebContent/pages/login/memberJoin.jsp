@@ -42,7 +42,7 @@ request.setCharacterEncoding("UTF-8");
 		<!-- 선택한 라디오 박스에 따라 폼 변경 -->
 		<form name="joinMemberForm" id="normalForm"
 			action="${contextPath}/member/addMember.do" method="post">
-			<input type="hidden" name="role" id="nomal_role" value="2">
+			<input type="hidden" name="role" id="company_role" value="2">
 			<table>
 
 				<tr>
@@ -102,10 +102,10 @@ request.setCharacterEncoding("UTF-8");
 				</tr>
 			</table>
 		</form>
-
+		<!-- 업체 로그인 폼 -->
 		<form name="joinCompanyForm" id="companyForm" style="display: none"
-			action="${contextPath}/member/바꿔.do" method="post">
-			<input type="hidden" name="role" id="nomal_role" value="2">
+			action="${contextPath}/member/addCompanyMember.do" method="post">
+			<input type="hidden" name="role" id="nomal_role" value="1">
 			<table>
 				<tr>
 					<td width="400"><p>업체 아이디(이름) *</td>
@@ -139,7 +139,7 @@ request.setCharacterEncoding("UTF-8");
 					<td width="200"><p>업체 이메일*</td>
 				</tr>
 				<tr>
-					<td width="400"><input type="text" name="company_address"></td>
+					<td width="400"><input type="text" name="company_email"></td>
 				</tr>
 				<tr>
 				</tr>
