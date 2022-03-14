@@ -32,11 +32,13 @@ public class WishDeleteAction implements Action {
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int pid = Integer.parseInt(request.getParameter("productId"));
-		int cid = Integer.parseInt(request.getParameter("companyId"));
-		MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("utf-8");
 		
 		try {
+			int pid = Integer.parseInt(request.getParameter("productId"));
+			int cid = Integer.parseInt(request.getParameter("companyId"));
+			MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
 			// 좋아요 삭제
 			int wishDelete = wishDAO.deleteWish(member.getMemberId(), pid, cid);
 			

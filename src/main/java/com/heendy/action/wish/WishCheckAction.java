@@ -33,11 +33,14 @@ public class WishCheckAction implements Action {
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
 
+		try {
 			int pid = Integer.parseInt(request.getParameter("productId"));
 			int cid = Integer.parseInt(request.getParameter("companyId"));
 			MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
-		try {
+			
 			// 좋아요 여부 가져오기
 			int wish = wishDAO.wishCheck(member.getMemberId(), pid, cid); 
 			

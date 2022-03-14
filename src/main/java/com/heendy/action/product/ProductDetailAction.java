@@ -28,6 +28,8 @@ public class ProductDetailAction implements Action {
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("application/json");
+		response.setCharacterEncoding("utf-8");
 
 		try {
 			int pid = Integer.parseInt(request.getParameter("pid"));

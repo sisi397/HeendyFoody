@@ -27,6 +27,8 @@ public class PaginationAction implements Action {
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("application/json");
+		response.setCharacterEncoding("utf-8");
 		try {
 			// 파라미터 정보 가져오기
 			String pno = request.getParameter("pno");  // 현재 페이지 번호

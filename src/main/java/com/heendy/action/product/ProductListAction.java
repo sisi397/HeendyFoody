@@ -31,6 +31,8 @@ public class ProductListAction implements Action {
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("application/json");
+		response.setCharacterEncoding("utf-8");
 		try {
 			// 파라미터 정보 가져오기
 			String beginRowStr = request.getParameter("beginRow");

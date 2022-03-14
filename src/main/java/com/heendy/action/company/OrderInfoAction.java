@@ -35,6 +35,8 @@ public class OrderInfoAction implements Action {
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("application/json");
+		response.setCharacterEncoding("utf-8");
 		try{
 			String sort = request.getParameter("sort"); // 분류 (년도별, 월별, 일별)
 			int pid = Integer.parseInt(request.getParameter("productId")); // 주문 내역을 분석할 상품 (전체상품(0) or 상품id)

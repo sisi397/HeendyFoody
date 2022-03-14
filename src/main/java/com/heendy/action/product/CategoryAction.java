@@ -27,6 +27,8 @@ public class CategoryAction implements Action {
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
 		try {
 			int cate = Integer.parseInt(request.getParameter("cate"));
 			int pcate = Integer.parseInt(request.getParameter("pcate"));
