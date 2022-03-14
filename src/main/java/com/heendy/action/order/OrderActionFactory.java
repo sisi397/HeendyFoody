@@ -10,6 +10,8 @@ private final static ActionFactory factory = new OrderActionFactory();
 	
 	private OrderActionFactory() {} 
 	
+
+	
 	public static ActionFactory getInstance() {
 		return factory;
 	}
@@ -17,6 +19,8 @@ private final static ActionFactory factory = new OrderActionFactory();
 	@Override
 	public Action getAction(String command) {
 		Action action = null;
+		
+		
 		
 		if(command.equals("/orderProduct.do")) {
 			action = new OrderProductAction();

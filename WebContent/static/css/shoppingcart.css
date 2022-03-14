@@ -1,3 +1,9 @@
+/*
+	작성자 : 이승준
+	작성일 : 2022.03.05
+*/
+
+
 /*===== Reset CSS ======*/
 
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,
@@ -47,7 +53,7 @@ a {
 }
 
 body {
-    position: relative;
+    position: relative ;
     width: 100%;
     height: 100%;
     overflow-y: scroll;
@@ -91,7 +97,7 @@ button:disabled {
 /*==== css ======*/
 
 .btn {
-  display: inline-block;
+  display: inline-block ;
   position: relative;
   padding: 0 12px;
   height: 42px;
@@ -155,34 +161,30 @@ button:disabled {
   color: #101010;
 }
 
-input[type="checkbox"] {
+#shopping-cart-list input[type="checkbox"] {
   position: absolute;
   left: -9999px;
 }
 
-[type=checkbox] {
+#shopping-cart-list [type=checkbox] {
   box-sizing: border-box;
   padding: 0;
 }
 
-.cart-select {
+#shopping-cart-list .cart-select {
   position: relative;
   margin-top: 40px;
   padding-bottom: 18px;
   text-align: right;
 }
 
-.cart-select label {
-  position: absolute;
-  left: 0;
-  top: 0;
-}
 
-.cart-select label span {
+
+#shopping-cart-list .cart-select label span {
   color: #767572;
 }
 
-input[type="checkbox"] + span {
+#shopping-cart-list input[type="checkbox"] + span {
   position: relative;
   display: inline-block;
   padding-left: 30px;
@@ -193,23 +195,23 @@ input[type="checkbox"] + span {
   vertical-align: top;
 }
 
-input[type="checkbox"]:checked + span::before {
+#shopping-cart-list input[type="checkbox"]:checked + span::before {
   background-position: -50px 0;
 }
 
-input[type="checkbox"] + span::before {
+#shopping-cart-list input[type="checkbox"] + span::before {
   background-position: 0 0;
 }
 
-input[type="checkbox"] + span::before {
+#shopping-cart-list input[type="checkbox"] + span::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   display: inline-block;
-  width: 22px;
-  height: 22px;
-  background-image: url(../images/assets/form.png);
+  width: 22px !important;
+  height: 22px !important;
+  background-image: url(../images/common/form.png);
 
 }
 
@@ -218,10 +220,10 @@ input[type="checkbox"] + span::before {
 }
 
 .btn-group li {
-  position: relative;
-  display: inline-block;
-  margin-left: 11px;
-  padding-left: 13px;
+  position: relative !important;
+  display: inline-block !important;
+  margin-left: 11px !important;
+  padding-left: 13px !important;
 }
 
 .btn-group > li > button {
@@ -247,22 +249,22 @@ input[type="checkbox"] + span::before {
 }
 
 .btn-group li:first-child {
-  margin-left: 0;
-  padding-left: 0
+  margin-left: 0 !important;
+  padding-left: 0 !important;
 }
 
 
-.list-field {
+.my-list-field {
   border-bottom: 2px solid #767752;
 }
 
-.list-field .tit {
+.my-list-field .tit {
   display: block;
   width: 100%;
   border-top: 2px solid #767752;
 } 
 
-.list-field ~ .list-field .tit {
+.my-list-field ~ .my-list-field .tit {
   border-top: none;
 }
 
@@ -281,35 +283,35 @@ input[type="checkbox"] + span::before {
   font-family: 'NotoSansKR', sans-serif;
 }
 
-#frmCartInfo .list-field .cont {
+#frmCartInfo .my-list-field .cont {
   padding-bottom: 40px;
 }
 
-.product-list {
+#frmCartInfo .my-product-list {
   position: relative;
 }
 
-.product-list::after {
+#frmCartInfo .my-product-list::after {
   content: '';
   display: block;
   clear: both;
 }
 
-.product-list li {
+#frmCartInfo .my-product-list li {
   position: relative;
   margin-top: 24px;
   padding-bottom: 24px;
   border-bottom: 1px solid #e7e7e7;
 }
 
-.product-list li::after {
+#frmCartInfo .my-product-list li::after {
   content: '';
   display: block;
   clear: both;
 }
 
 
-.product-list > li .btn-del {
+#frmCartInfo .my-product-list > li .btn-del {
   position: absolute;
   top: 0;
   right: 0;
@@ -320,7 +322,7 @@ input[type="checkbox"] + span::before {
   z-index: 1;
 }
 
-.product-list > li .btn-del::after {
+#frmCartInfo .my-product-list > li .btn-del::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -328,10 +330,10 @@ input[type="checkbox"] + span::before {
   transform: translate(-50%,-50%);
   width: 14px;
   height: 14px;
-  background: url("../images/assets/btn.png") no-repeat -100px 0;
+  background: url("../images/common/btn.png") no-repeat -100px 0;
 }
 
-.product-list .thumb {
+#frmCartInfo .my-product-list .thumb {
   position: relative;
   display: block;
   float: left;
@@ -339,20 +341,20 @@ input[type="checkbox"] + span::before {
   width: 104px;
 }
 
-.product-list .thumb input[type="checkbox"] + span {
+#frmCartInfo .my-product-list .thumb input[type="checkbox"] + span {
   padding: 0;
 }
 
-.product-list .thumb input[type="checkbox"] + span::before {
+#frmCartInfo .my-product-list .thumb input[type="checkbox"] + span::before {
   z-index: 1;
 }
 
-.product-list .thumb img {
+#frmCartInfo .my-product-list .thumb img {
   width: 100%;
   height: 125px;
 }
 
-.product-list .thumb + .contr {
+#frmCartInfo .my-product-list .thumb + .contr {
   position: relative;
   padding-right: 130px;
   padding-bottom: 55px;
@@ -364,12 +366,12 @@ input[type="checkbox"] + span::before {
 
 
 
-.product-list a {
+#frmCartInfo .my-product-list a {
   position: relative;
   display: block;
 }
 
-.product-list .txt-ti {
+#frmCartInfo .my-product-list .txt-ti {
   display: block;
   max-height: 48px;
   margin-top: 5px;
@@ -382,7 +384,7 @@ input[type="checkbox"] + span::before {
   padding-right: 60px;
 }
 
-.product-list .info {
+#frmCartInfo .my-product-list .info {
   position: absolute;
   left: 0;
   bottom: 8px;
@@ -391,11 +393,11 @@ input[type="checkbox"] + span::before {
   font-size: 0;
 }
 
-.product-list .info .ea-area {
+#frmCartInfo .my-product-list .info .ea-area {
   margin-right: 24px;
 }
 
-.ea-area {
+#frmCartInfo .ea-area {
   display: inline-block;
   position: relative;
   width: 112px;
@@ -404,7 +406,7 @@ input[type="checkbox"] + span::before {
   overflow: hidden;
   
 }
-.ea-area input {
+#frmCartInfo .ea-area input {
   padding: 0 32px;
   width: 100%;
   height: 32px;
@@ -450,7 +452,7 @@ input[type=number] {
   display: inline-block;
   width: 12px;
   height: 12px;
-  background: url("../images/assets/btn.png") no-repeat 0 0;
+  background: url("../images/common/btn.png") no-repeat 0 0;
 }
 
 .ea-area .btn-down {
@@ -471,7 +473,7 @@ input[type=number] {
   background-color: transparent;
 }
 
-.product-list .info .txt-price {
+#frmCartInfo .my-product-list .info .txt-price {
   display: inline-block;
   margin-top: 0;
   line-height: 32px;
@@ -479,20 +481,20 @@ input[type=number] {
   font-size: 14px;
 }
 
-.product-list .info .txt-price em {
+#frmCartInfo .my-product-list .info .txt-price em {
   font-size: 20px;
   font-weight: 700;
   font-family: 'NotoSansKR', sans-serif;
 }
 
-.product-list .probtn {
+#frmCartInfo .my-product-list .probtn {
   position: absolute;
   right: 0;
   bottom: 0;
   font-size: 0;
 }
 
-.product-list .info .probtn .btn-wish {
+#frmCartInfo .my-product-list .info .probtn .btn-wish {
   position: relative;
   display: inline-block;
   margin-right: 4px;
@@ -503,7 +505,7 @@ input[type=number] {
   border: 1px solid #dbd9d6;
 }
 
-.product-list .info .probtn .btn-wish::after {
+#frmCartInfo .my-product-list .info .probtn .btn-wish::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -512,7 +514,7 @@ input[type=number] {
   margin-left: -10px;
   width: 20px;
   height: 18px;
-  background: url("../images/assets/btn.png") no-repeat -200px -100px;
+  background: url("../images/common/btn.png") no-repeat -200px -100px;
 }
 
 @keyframes wishMotion {
@@ -532,12 +534,12 @@ input[type=number] {
   }
 }
 
-.product-list .info .probtn .btn-wish.active::after {
+#frmCartInfo .my-product-list .info .probtn .btn-wish.active::after {
   background-position: -250px -100px;
   animation: wishMotion .4s ease-in;
 }
 
-.product-list .info .probtn .btn-buy {
+#frmCartInfo .my-product-list .info .probtn .btn-buy {
   padding: 0 18px;
   color: #ff6913;
   border: 1px solid #ff6913;
@@ -645,7 +647,7 @@ input[type=number] {
   margin: 0 auto 15px;
   width: 80px;
   height: 80px;
-  background: url(../images/assets/icon.png) no-repeat -400px 0;
+  background: url(../images/common/icon.png) no-repeat -400px 0;
 }
 
 

@@ -11,16 +11,24 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.heendy.action.Action;
+import com.heendy.common.exception.MemberNotExistSession;
 import com.heendy.dao.CartDAO;
+import com.heendy.dto.MemberDTO;
 import com.heendy.dto.cart.CartItemDTO;
+import com.heendy.utils.SessionUserService;
+import com.heendy.utils.UserService;
 
 public class CartViewAction implements Action {
 
 	private final CartDAO cartDAO = CartDAO.getInstance();
 
 	private final String VIEW_URL = "/pages/cart/shoppingCartList.jsp";
+	
+
+	private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,9 +36,9 @@ public class CartViewAction implements Action {
 		try {
 
 			/* 테스트 멤버ID */
-			int memberId = 6;
+			MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
 
-			List<CartItemDTO> cartList = cartDAO.getCartList(memberId);
+			List<CartItemDTO> cartList = cartDAO.getCartList(member.getMemberId());
 			
 			/*일반 장바구니 리스트*/
 			List<CartItemDTO> normalCartList = cartList

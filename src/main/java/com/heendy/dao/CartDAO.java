@@ -75,7 +75,7 @@ public class CartDAO {
 	 * @param data
 	 * @throws SQLException
 	 * 
-	 *                      장바구니 추가 기능
+	 * 장바구니 추가 기능
 	 */
 	public void createCart(CreateCartDTO data) throws SQLException {
 
@@ -100,7 +100,7 @@ public class CartDAO {
 	 * @param data
 	 * @throws SQLException
 	 * 
-	 *                      장바구니 수량 증가 기능
+	 * 장바구니 수량 증가 기능
 	 */
 	public void addCartCount(CartCountUpdateDTO data) throws SQLException {
 		Connection conn = DBManager.getConnection();
@@ -122,7 +122,7 @@ public class CartDAO {
 	 * @param data
 	 * @throws SQLException
 	 * 
-	 *                      장바구니 수량 감소 기능
+	 * 장바구니 수량 감소 기능
 	 */
 	public void minusCartCount(CartCountUpdateDTO data) throws SQLException {
 		Connection conn = DBManager.getConnection();
@@ -144,7 +144,7 @@ public class CartDAO {
 	 * @param cartId
 	 * @throws SQLException
 	 * 
-	 *                      장바구니 삭제 기능
+	 * 장바구니 삭제 기능
 	 */
 	public void deleteCartByCartIdAndMemberId(int cartId, int memberId) throws SQLException {
 		Connection conn = DBManager.getConnection();
@@ -159,5 +159,8 @@ public class CartDAO {
 		cstmt.close();
 		conn.close();
 	}
+	
+	
+	
 
 }
