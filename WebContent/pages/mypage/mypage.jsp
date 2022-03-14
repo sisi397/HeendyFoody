@@ -133,12 +133,12 @@
 		              <span class="txt-price">
 		                <!-- 할인하는 경우 -->
 		                <c:if test="${wishDTO.discountPrice != wishDTO.productPrice}">
-			              <strong><em>${wishDTO.discountPrice}</em>원</strong>
-			              <del>${wishDTO.productPrice}</del>       
+			              <strong><em><fmt:formatNumber value="${wishDTO.discountPrice}"/></em>원</strong>
+			              <del><fmt:formatNumber value="${wishDTO.productPrice}"/></del>       
 			            </c:if>
 			            <!-- 할인하지 않는 경우 -->
 			            <c:if test="${wishDTO.discountPrice == wishDTO.productPrice}">
-			              <strong><em>${wishDTO.discountPrice}</em>원</strong>     
+			              <strong><em><fmt:formatNumber value="${wishDTO.discountPrice}"/></em>원</strong>     
 			            </c:if>
 		              </span>
 		            </span>   
@@ -192,12 +192,12 @@
 			          <span class="txt-price">
 			            <!-- 할인하는 경우 -->
 			            <c:if test="${rvDTO.discountPrice != rvDTO.productPrice}">
-			              <strong><em>${rvDTO.discountPrice}</em>원</strong>
-			              <del>${rvDTO.productPrice}</del>        
+			              <strong><em><fmt:formatNumber value="${rvDTO.discountPrice}"/></em>원</strong>
+			              <del><fmt:formatNumber value="${rvDTO.productPrice}"/></del>        
 			            </c:if>
 			            <!-- 할인하지 않는 경우 -->
 			            <c:if test="${rvDTO.discountPrice == rvDTO.productPrice}">
-			              <strong><em>${rvDTO.discountPrice}</em>원</strong>   
+			              <strong><em><fmt:formatNumber value="${rvDTO.discountPrice}"/></em>원</strong>   
 			            </c:if>
 				      </span>
 			        </span>   

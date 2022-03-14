@@ -75,12 +75,12 @@
 	                      <span class="txt-price">
 	                        <!-- 원가와 주문가(할인가) 다르다면 -->                            
 	                        <c:if test="${wishDTO.discountPrice != wishDTO.productPrice}">
-		                      <strong><em>${wishDTO.discountPrice}</em>원</strong>
-	                          <del>${wishDTO.productPrice}</del>
+		                      <strong><em><fmt:formatNumber value="${wishDTO.discountPrice}"/></em>원</strong>
+	                          <del><fmt:formatNumber value="${wishDTO.productPrice}"/></del>
 	                        </c:if> 
 	                        <!-- 원가와 주문가(할인가) 같다면 -->
 	                        <c:if test="${wishDTO.discountPrice == wishDTO.productPrice}">
-		                      <strong><em>${wishDTO.discountPrice}</em>원</strong>
+		                      <strong><em><fmt:formatNumber value="${wishDTO.discountPrice}"/></em>원</strong>
 		                    </c:if>      
 	                      </span>
 	                      <div class="probtn">
@@ -252,7 +252,7 @@
 				var pCnt = parseInt(info[2]);
 				if (pCnt === 0) {
 					console.log('success');
-					//wishDelete(pId, cId);				
+					wishDelete(pId, cId);				
 				}
 			})
 		}	

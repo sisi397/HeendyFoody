@@ -50,12 +50,12 @@
 		                    <span class="txt-price">
 		                      <!-- 원가와 주문가(할인가) 다르다면 -->
 		                      <c:if test="${orderDTO.productPrice != orderDTO.orderPrice}">
-		                           <strong><em class="str-price">${orderDTO.orderPrice}</em>원</strong>
-		                           <del>${orderDTO.productPrice}</del>
+		                           <strong><em class="str-price"><fmt:formatNumber value="${orderDTO.orderPrice}"/></em>원</strong>
+		                           <del><fmt:formatNumber value="${orderDTO.productPrice}"/></del>
 		                      </c:if> 
 		                      <!-- 원가와 주문가(할인가) 같다면 -->
 		                      <c:if test="${orderDTO.productPrice == orderDTO.orderPrice}">
-		                        <strong><em class="str-price">${orderDTO.orderPrice}</em>원</strong>
+		                        <strong><em class="str-price"><fmt:formatNumber value="${orderDTO.orderPrice}"/></em>원</strong>
 		                      </c:if>                              
 		                    </span>
 		                  </span>
