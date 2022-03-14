@@ -28,9 +28,9 @@
 		  <h3 class="tit">좋아요</h3>
 		  
 		  <div class="list-filter">
-	        <label><input type="checkbox" id="checkAll" onclick="fn_checkboxAll();"><span class="select-all">전체선택</span></label>
-	        <button type="button" onclick="fn_deleteCheckList();" class="btn small lightgray">선택삭제</button>
-	        <button type="button" onclick="fn_deleteSoldoutList();" class="btn small lightgray">품절삭제</button>
+	        <label><input type="checkbox" id="checkAll" onclick="selectAll(this);"><span class="select-all">전체선택</span></label>
+	        <button type="button" onclick="deleteCheckList();" class="btn small lightgray">선택삭제</button>
+	        <button type="button" onclick="deleteSoldoutList();" class="btn small lightgray">품절삭제</button>
 	      </div>
 	       
 	      <fieldset class="list-field">
@@ -42,7 +42,7 @@
 	              <li>
 		            <button type="button" class="btn-del" onclick="wishDelete(${wishDTO.productId}, ${wishDTO.companyId});">삭제</button>
 		              <label class="thumb">
-		                <input type="checkbox" name="checkboxAll" value="${wishDTO.productId}">
+		                <input type="checkbox" name="checkboxAll" onclick="checkSelectAll();" value="${wishDTO.productId}, ${wishDTO.companyId}, ${wishDTO.productCount}">
 		                <!-- 상품이 삭제된 경우 -->
 		                <c:if test="${wishDTO.deleted == 1}">
 		                  <span class="soldout">판매중단</span>
@@ -145,7 +145,6 @@
 			},
 			success : function(data){
 				console.log(data);
-				alert("좋아요를 삭제합니다");
 				location.reload();
 			},
 			error : function(err) {
@@ -188,6 +187,75 @@
 	//상품 수량이 없는 경우
 	function restockAlarm() {
 		alert("준비 중입니다");	
+	}
+	
+	//체크박스 전체 선택 및 해제
+	function selectAll(selectAll) {
+
+		var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+	
+		checkboxes.forEach((checkbox) => {
+			checkbox.checked = selectAll.checked
+		})		
+	}
+	
+	//선택된 체크박스 삭제
+	function deleteCheckList() {
+		var checkBoxArr = [];
+		var checked = document.querySelectorAll('input[name="checkboxAll"]:checked');
+		
+		checked.forEach((check) => {
+			checkBoxArr.push(check.value);
+		})
+		console.log(checkBoxArr);
+		
+		if (checkBoxArr != null) {
+			checkBoxArr.forEach((check) => {
+				var info = check.split(",");
+				console.log(info);
+				var pId = parseInt(info[0]);
+				var cId = parseInt(info[1]);
+				wishDelete(pId, cId);
+			})
+		}		
+	}
+	
+	//체크박스 중 하나라도 선택 해제되면 전체 선택 해제
+	function checkSelectAll() {
+		var allBoxes = document.querySelectorAll('input[name="checkboxAll"]'); //전체 체크박스 
+		var checked = document.querySelectorAll('input[name="checkboxAll"]:checked'); //선택된 체크박스
+		var selectAll = document.querySelector('input[id="checkAll"]'); //전체 체크하는 체크박스 하나
+		
+		if (allBoxes.length === checked.length) {
+			selectAll.checked = true;
+		} else {
+			selectAll.checked = false;
+		}
+	}
+	
+	//수량이 0인 일시품절 상품 일괄 삭제
+	function deleteSoldoutList() {
+		var checkBoxArr = [];
+		var allBoxes = document.querySelectorAll('input[name="checkboxAll"]'); //전체 체크박스
+		
+		allBoxes.forEach((check) => {
+			checkBoxArr.push(check.value);
+		})
+		console.log(checkBoxArr);
+		
+		if (checkBoxArr != null) {
+			checkBoxArr.forEach((check) => {
+				var info = check.split(",");
+				console.log(info);
+				var pId = parseInt(info[0]);
+				var cId = parseInt(info[1]);
+				var pCnt = parseInt(info[2]);
+				if (pCnt === 0) {
+					console.log('success');
+					//wishDelete(pId, cId);				
+				}
+			})
+		}	
 	}
   </script>
 </body>
