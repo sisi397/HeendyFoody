@@ -33,27 +33,23 @@
 	}
 	
 	.select-css::-ms-expand {
-	  /* for IE 11 */
 	  display: none;
 	}
+			.swiper-wrapper ::-webkit-scrollbar {
+			    width: 5px;
+			    height: 7px;
+			}
+			 
+			.swiper-wrapper ::-webkit-scrollbar-track {
+			    background-color: rgba(230,230,230,0.8);
+			    border-radius: 7px;
+			}
+			 
+			.swiper-wrapper ::-webkit-scrollbar-thumb {
+			    background-color: rgba(100,100,100,0.4);
+			    border-radius: 7px;
+			}
 	</style>
-	
-	<style>
-				.swiper-wrapper ::-webkit-scrollbar {
-				    width: 5px;
-				    height: 7px;
-				}
-				 
-				.swiper-wrapper ::-webkit-scrollbar-track {
-				    background-color: rgba(230,230,230,0.8);
-				    border-radius: 7px;
-				}
-				 
-				.swiper-wrapper ::-webkit-scrollbar-thumb {
-				    background-color: rgba(100,100,100,0.4);
-				    border-radius: 7px;
-				}
-		</style>
 </head>
 
 <body>
@@ -118,7 +114,7 @@
 
 <script type="text/javascript">
 
-	// 업체 회원의 상품 목록
+	// 업체 회원의 상품 목록 불러오기
 	var html = "";
 	var list = "";
 	$.ajax({
@@ -144,13 +140,17 @@
 			$(".productList").append(html);
 			$(".product").append(list);
 		},
-	  error : function(xhr, type) {
-	      alert('server error occoured')
-	         }
-	});//ajax 데이터 로드 끝
+		error: function(xhr, status, error) {
+    		var errorResponse = JSON.parse(xhr.responseText);
+        	var errorCode = errorResponse.code;
+        	var message = errorResponse.message;
+        	
+        	alert(message);
+    	}
+	});//상품목록 불러오기 끝
 	
-	
-	// ===== 구매자 주 연령층 ===== //
+	// ===== 차트그리기 시작 ====== //
+	// ===== PieChart : 구매자 주 연령층 ===== //
 	
 	//db 데이터 저장 객체
 	var queryObject = "";
@@ -162,23 +162,23 @@
 		dataType:'json',
 		async: false,
 		success : function(data){
-			console.log(data);
 			queryObject = eval('('+JSON.stringify(data) +')');
 			queryObjectLen = queryObject.ageinfo.length;
+			
+			google.load("visualization", "1", {packages:["corechart"]}); //구글 그래프 그리기 시작
+			google.setOnLoadCallback(drawAgeinfoChart);
 		},
-	  error : function(xhr, type) {
-	      alert('server error occoured')
-	         }
-	});//ajax 데이터 로드 끝
+		error: function(xhr, status, error) {
+    		var errorResponse = JSON.parse(xhr.responseText);
+        	var errorCode = errorResponse.code;
+        	var message = errorResponse.message;
+        	
+        	alert(message);
+    	}
+	});//구매자 주 연령층 끝
 	
 	
-	//구글 그래프 그리기 시작
-	google.load("visualization", "1", {packages:["corechart"]});
-	google.setOnLoadCallback(drawAgeinfoChart);
-	
-	// ===== 구매자 주 연령층 끝 ===== //
-	
-	// ===== 날짜별 판매량 ===== //
+	// ===== LineChart : 날짜별 판매량 ===== //
 	
 	//db 데이터 저장 객체
 	var orderObject = "";
@@ -197,22 +197,23 @@
 			sort: 'YY-MM-DD',
 		},
 		success : function(data){
-			console.log(data);
 			orderObject = eval('('+JSON.stringify(data) +')');
 			orderObjectLen = orderObject.orderinfo.length;
+			
+			google.load("visualization", "1", {packages:["corechart"]});
+			google.setOnLoadCallback(drawOrderinfoChart);
 		},
-	  error : function(xhr, type) {
-	      alert('server error occoured')
-	         }
-	});//ajax 데이터 로드 끝
+		error: function(xhr, status, error) {
+    		var errorResponse = JSON.parse(xhr.responseText);
+        	var errorCode = errorResponse.code;
+        	var message = errorResponse.message;
+        	
+        	alert(message);
+    	}
+	});//날짜별 판매량 끝 
 	
 	
-	//구글 그래프 그르기 시작
-	google.load("visualization", "1", {packages:["corechart"]});
-	google.setOnLoadCallback(drawOrderinfoChart);
-	// ===== 날짜별 판매량 끝 ===== //
-	
-	// ===== 차트그리기 ===== //
+	// ===== 차트그리기 함수 ===== //
 	 function drawAgeinfoChart() {
 	      var data = new google.visualization.DataTable();
 	      data.addColumn('string', 'group');
@@ -234,8 +235,7 @@
 				chartArea:{left:50,top:50,width:'90%',height:'95%'},
 		};
 	
-		var chart = 
-		new google.visualization.PieChart(document.getElementById('piechart'));
+		var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 	
 		chart.draw(data,options);
 	}//drawChart() end 그래프 그리기 끝
@@ -269,22 +269,25 @@
 				chartArea:{left:50,top:50,width:'85%',height:'70%'},
 		};
 	
-		var chart = 
-		new google.visualization.LineChart(document.getElementById('orderchart'));
+		var chart = new google.visualization.LineChart(document.getElementById('orderchart'));
 	
 		chart.draw(data,options);
-	}//drawChart() end 그래프 그리기 끝
+	}//lineChart() end 그래프 그리기 끝
 	
+	// LineChart 옵션 변경
+	// 상품목록 변경
 	function selectProductId(value){
 		$("input[name=productId]").val(value);
 		changeOrderChart();
 	}
 	
+	// 날짜 변경
 	function selectDate(value){
 		$("input[name=dateSort]").val(value);
 		changeOrderChart();
 	}
 	
+	// Chart를 다시 그리기 위한 데이터 가져오기
 	function changeOrderChart(){
 		$.ajax({
 			url:'${contextPath}/company/orderinfoChart.do',
@@ -296,7 +299,6 @@
 			},
 			async:false,
 			success : function(data){
-				console.log(data);
 				orderObject = eval('('+JSON.stringify(data) +')');
 				orderObjectLen = orderObject.orderinfo.length;
 
@@ -304,9 +306,13 @@
 				google.load("visualization", "1", {packages:["corechart"]});
 				google.setOnLoadCallback(drawOrderinfoChart);
 			},
-		  error : function(xhr, type) {
-		      alert('server error occoured')
-		         }
+			error: function(xhr, status, error) {
+	    		var errorResponse = JSON.parse(xhr.responseText);
+	        	var errorCode = errorResponse.code;
+	        	var message = errorResponse.message;
+	        	
+	        	alert(message);
+	    	}
 		});//ajax 데이터 로드 끝
 	}
       

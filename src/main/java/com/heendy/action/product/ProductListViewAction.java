@@ -15,6 +15,8 @@ import org.json.simple.JSONObject;
 
 import com.google.gson.Gson;
 import com.heendy.action.Action;
+import com.heendy.common.ErrorCode;
+import com.heendy.common.ErrorResponse;
 import com.heendy.dao.CategoryDAO;
 import com.heendy.dao.ProductDAO;
 import com.heendy.dto.CategoryDTO;
@@ -24,7 +26,7 @@ import com.heendy.dto.ProductDTO;
 /**
  * @author 김시은
  * 
- * 상품 리스트를 가져오는 Action 클래스
+ * 상품 목록으로 페이지 이동하는 Action 클래스
  * 
  * */
 public class ProductListViewAction implements Action{
@@ -34,9 +36,6 @@ public class ProductListViewAction implements Action{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			response.setContentType("application/json");
-			response.setCharacterEncoding("utf-8");
-			
 			// 파라미터 정보 가져오기
 			String menu = request.getParameter("menu");
 
@@ -52,7 +51,6 @@ public class ProductListViewAction implements Action{
 				}
 			}
 			
-			
 			// category 메뉴이면 : category 정보 가져오기
 			if(menu.equals("category")) {
 				ArrayList<CategoryDTO> category = categoryDAO.listCategory(cate, pcate);
@@ -62,8 +60,14 @@ public class ProductListViewAction implements Action{
 			String url = "/pages/product/productList.jsp";
 		    RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		    dispatcher.forward(request, response);
-		} catch(Exception e) {
+		}  catch (SQLException e){
+			ErrorResponse errorResponse;
 			
+			errorResponse = ErrorResponse.of(ErrorCode.UNCAUGHT_SERVER_ERROR);
+			
+			String json = new Gson().toJson(errorResponse);
+			response.setStatus(errorResponse.getStatus());
+			response.getWriter().write(json);
 		}
 	}
 

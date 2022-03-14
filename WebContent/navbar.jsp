@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
 <%
 request.setCharacterEncoding("UTF-8");
@@ -44,8 +45,8 @@ request.setCharacterEncoding("UTF-8");
 			<div class="toparea">
 				<h1 style="margin-top:0px">
 					<a href="${contextPath}/member/index.do"><img
-						src="${contextPath}/static/images/common/header_logo.png"
-						alt="현대식품관"></a>
+						src="${contextPath}/static/images/common/logo_header.png"
+						alt="흰디푸디" class="heendy-logo-header"></a>
 				</h1>
 
 				<div class="util">
@@ -91,8 +92,6 @@ request.setCharacterEncoding("UTF-8");
            	<li><a href="${contextPath }/product/list.do?menu=best">베스트</a></li>
            	<li><a href="${contextPath }/product/list.do?menu=sale">세일</a></li>
            	<li><a href="${contextPath }/product/list.do?menu=newprod">전체상품</a></li>
-           	<li><a href="${contextPath }/product/list.do?menu=category&pcate=1&cate=1">과일</a></li>
-           	<li><a href="${contextPath }/product/list.do?menu=category&pcate=1&cate=9">계절과일</a></li>
            </ul>
            <!-- //gnb -->
            <button type="button" class="btn-cart" onClick="cartView();" style="top:7px;">장바구니</button>

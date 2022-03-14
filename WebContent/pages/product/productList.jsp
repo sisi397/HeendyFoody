@@ -17,23 +17,23 @@
 	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/product.min.css">
 	
 	<style>
-	.soldout{
-		position: absolute;
-	    top: 0;
-	    left: 0;
-	    width: 100%;
-	    height: 100%;
-	    display: flex;
-	    align-items: center;
-	    justify-content: center;
-	    flex-direction: column;
-	    text-align: center;
-	    color: #101010;
-	    font-size: 18px;
-	    font-weight: 600;
-	    background-color: rgba(255, 255, 255, .8);
-	    z-index: 2;
-    }
+		.soldout{
+			position: absolute;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    flex-direction: column;
+		    text-align: center;
+		    color: #101010;
+		    font-size: 18px;
+		    font-weight: 600;
+		    background-color: rgba(255, 255, 255, .8);
+		    z-index: 2;
+	    }
 	</style>
 </head>
 
@@ -45,9 +45,9 @@
 	<input type="hidden" name="paramCate" value="${param.cate }"/>
 	<input type="hidden" name="paramPcate" value="${param.pcate }"/>
     <div id="wrap" class="main product category">
-	    <!-- contents// -->
 	    <div id="contents">
 	        <div class="innercon">
+	        <!-- // 카테고리 메뉴일 경우 카테고리 표시 -->
 	        <c:if test="${param.menu eq 'category' }">
 	    	<section class="categorylist">
 	    		<div class="depth">
@@ -59,7 +59,6 @@
 	    		<div class="depth-sub">
 	    			<ul>
 	    				<li class="" id="cate${categoryList[1].categoryId }"><a href="${contextPath }/product/list.do?menu=category&cate=${categoryList[1].categoryId}&pcate=${categoryList[1].parentCategoryId}">전체보기</a> </li>
-	    				
 	    				<c:forEach items="${categoryList }" var="category" begin="2">
 	    					<li class="" id="cate${category.categoryId }"><a href="${contextPath }/product/list.do?menu=category&cate=${category.categoryId}&pcate=${category.parentCategoryId}">${category.categoryName }</a></li>
 	    				</c:forEach>
@@ -67,11 +66,14 @@
 	    		</div>
 	    	</section>
 	    	</c:if>
+	        <!-- 카테고리 메뉴일 경우 카테고리 표시 끝 //-->
 	    	
+	    	<!-- 메뉴 제목 -->
 	        <c:if test="${param.menu eq 'best' }"><h2>베스트</h2></c:if>
 	        <c:if test="${param.menu eq 'sale' }"><h2>세일</h2></c:if>
 	        <c:if test="${param.menu eq 'newprod' }"><h2>전체상품</h2></c:if>
-	        <!-- filter// -->
+	        
+	        <!-- // 정렬기준 -->
 	        <c:if test="${param.menu ne 'best' }">
             <section class="list-filter" style="height:40px">
                 <div class="filter-wrapper">
@@ -86,20 +88,21 @@
 	            </div>
             </section>
             </c:if>
+	        <!-- 정렬기준 끝 //-->
             
+            <!-- 상품 리스트 -->
 	        <section class="list-product"></section>
 	        
+	        <!-- 페이지 번호 -->
 	        <div class="pagination"></div>
 	        </div>
 	    </div>
     <jsp:include page="/footer.jsp" />
-    <!-- //contents -->
     </div>
     <script>
     $(document).ready(function(){
-    	$('#sortType${param.sort }').css('font-weight', '600');
     	var menu = 'category';
-    	console.log("ho")
+    	
     	if (menu == "${param.menu }"){
     		document.getElementById('cate${param.cate}').className = "active"
     	}
@@ -107,18 +110,20 @@
     	loadProductList();
     });
     
+    // 페이지 이동
    	function movePage(pno){
     	var pno = $("input[name='paramPno']").val(pno);
     	loadProductList();
    	}
    	
+    // 정렬
     function sortType(sort){
     	$('#sortTypeA').css('font-weight', 'normal');
     	$('#sortTypeB').css('font-weight', 'normal');
     	$('#sortTypeC').css('font-weight', 'normal');
     	$('#sortTypeD').css('font-weight', 'normal');
     	$('#sortType'+sort).css('font-weight', '600');
-    	var pno = $("input[name='paramPno']").val(1);
+    	var pno = $("input[name='paramPno']").val(1); // 첫 페이지로 이동
     	var sort = $("input[name='paramSort']").val(sort);
     	loadProductList();
    	}
@@ -129,7 +134,7 @@
     	var pno = $("input[name='paramPno']").val();
     	var cate = $("input[name='paramCate']").val();
     	var pcate = $("input[name='paramPcate']").val();
-    	console.log(menu);
+    	
     	var html = "";
     	$.ajax({
     		url:'${contextPath}/product/select.do',
@@ -143,7 +148,6 @@
     			pcate: pcate
     		},
     		success : function(data){
-    			console.log(data);
 				html += "<ul class='product-list' id = 'ulItemList'>";
 				if(data.length > 0){
 	    			for(var i in data){
@@ -182,6 +186,7 @@
     	});
     }
     
+    // 비동기로 페이지 불러오기
     function loadPagination(){
     	var menu = $("input[name='paramMenu']").val();
     	var pno = $("input[name='paramPno']").val();
@@ -200,7 +205,6 @@
     			pcate: pcate
     		},
     		success : function(data){
-    			console.log(data);
     			if(data.beginPageNumber > data.pagePerList){
     				html += "<button onclick='movePage("+(data.beginPageNumber - 1)+")'>";
     				html += "<a class='prev'>이전</a></button>";
@@ -218,13 +222,14 @@
     			}
 	    			
 				$(".pagination").html(html);
+				
 				window.scrollTo(0, 0);
     		}
     	});
     }
     
+    // 장바구니 담기
     function addCartProduct(pid, cid, qty){
-    	console.log("cart담기 시작");
     	$.ajax({
     		url:'${contextPath}/cart/create.do',
     		type: 'post',
@@ -250,7 +255,6 @@
         	}
     	});
     }
-    
     </script>
 </body>
 </html>

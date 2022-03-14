@@ -14,6 +14,13 @@ import com.heendy.common.ErrorResponse;
 import com.heendy.dao.ProductDAO;
 import com.heendy.dto.PageDTO;
 
+/**
+ * 
+ * @author 김시은
+ * 
+ * 페이지 정보를 구하는 Action 클래스
+ * 
+ */
 public class PaginationAction implements Action {
 
 	private final ProductDAO productDAO = ProductDAO.getInstance();
@@ -21,12 +28,9 @@ public class PaginationAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			response.setContentType("application/json");
-			response.setCharacterEncoding("utf-8");
-			
 			// 파라미터 정보 가져오기
-			String pno = request.getParameter("pno");
-			String menu = request.getParameter("menu");
+			String pno = request.getParameter("pno");  // 현재 페이지 번호
+			String menu = request.getParameter("menu"); // 현재 페이지 메뉴 정보
 
 			// 카테고리 정보
 			int cate = 0;
@@ -51,6 +55,8 @@ public class PaginationAction implements Action {
 			 * endPageNumber : 끝 페이지 번호
 			 */
 			
+			// 메뉴에 따라 전체 상품 개수를 가져온다.
+			// category 메뉴일 경우 categoryId, parentCategoryId가 필요
 			int totalCount = productDAO.totalCountProduct(menu, cate, pcate);
 			int pageNumber = 1;
 			int pagePerList = 5;
@@ -73,7 +79,6 @@ public class PaginationAction implements Action {
 			response.getWriter().write(json);
 			
 		} catch (SQLException e){
-			int errorCode = e.getErrorCode();
 			ErrorResponse errorResponse;
 			
 			errorResponse = ErrorResponse.of(ErrorCode.UNCAUGHT_SERVER_ERROR);
