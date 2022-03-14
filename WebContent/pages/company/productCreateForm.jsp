@@ -1,3 +1,8 @@
+<!-- 
+	author : 이승준
+	상품 등록 화면
+ -->
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -20,16 +25,12 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>상품 등록</title>
-<style>
-</style>
 
 </head>
 <body>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			var errorMessage =
-	<%=request.getAttribute("errorMsg")%>
-		;
+			var errorMessage = <%=request.getAttribute("errorMsg")%>;
 			if (errorMessage != null) {
 				alert(errorMessage);
 			}
@@ -69,17 +70,9 @@
 				});
 			});
 
-			/* $("#productNameInput").on("change keyup paste input", function() {
-				console.log($(this))
-				var value = $(this).val();
-				console.log(value)
-				if (value.length == 0) {
-					alert("error");
-				}
-			}); */
-
 		});
 
+		/*상품 등록 함수*/
 		function onSubmit() {
 			var selectCategoryValue = $("#categorySelect").val();
 			var productNameObj = $("#productNameInput");
@@ -119,13 +112,16 @@
 						alert(message);
 					}
 				})
+			} else {
+				alert("필수 값들을 입력해주세요.");
 			}
 			
 			
 		}
 		
+		/*상품 등록전 input field 값 검증*/
 		function checkSubmit(productNameObj, priceObj,discoutRateObj,countObj,imgUrlInput) {
-			var result = true;
+			var valid = true;
 			if (!checkProdutNameInput(productNameObj)) {
 				productNameObj.addClass("is-invalid");
 				valid = false;
@@ -161,7 +157,7 @@
 				imgUrlInput.removeClass("is-invalid");
 			}
 			
-			return result;
+			return valid;
 		}
 		
 
@@ -192,11 +188,11 @@
 			var value = $(obj).val();
 			console.log(value)
 			var result = true;
-
-			if (value.lenght > 3 || value.length == 0 || value.trim().length == 0 || isNaN(value) || value < 0) {
+			
+			if (value.length == 0 || value.trim().length == 0 || isNaN(value) || value < 0 || value > 100) {
 				result = false;
 			}
-
+			
 			return result;
 		}
 		/*상품 재고 input 검증*/
