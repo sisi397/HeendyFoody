@@ -13,21 +13,21 @@ public class CreateProductDTO {
 	
 	private int count;
 	
-	private String imageName;
+	private String imageUrl;
 	
 	private int categoryId;
 	
 	
 
 	
-	public CreateProductDTO(int companyId, String productName, int price, int dicountRate, int count, String imageName,
+	public CreateProductDTO(int companyId, String productName, int price, int dicountRate, int count, String imageUrl,
 			int categoryId) {
 		this.companyId = companyId;
 		this.productName = productName;
 		this.price = price;
 		this.dicountRate = dicountRate;
 		this.count = count;
-		this.imageName = imageName;
+		this.imageUrl = imageUrl;
 		this.categoryId = categoryId;
 	}
 
@@ -70,13 +70,12 @@ public class CreateProductDTO {
 	public void setCount(int count) {
 		this.count = count;
 	}
-
-	public String getImageName() {
-		return imageName;
+	public String getImageUrl() {
+		return this.imageUrl;
 	}
 
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	public int getCategoryId() {
@@ -90,7 +89,7 @@ public class CreateProductDTO {
 	@Override
 	public String toString() {
 		return "CreateProductDTO [companyId=" + companyId + ", productName=" + productName + ", price=" + price
-				+ ", dicountRate=" + dicountRate + ", count=" + count + ", imageName=" + imageName + ", categoryId="
+				+ ", dicountRate=" + dicountRate + ", count=" + count + ", imageName=" + imageUrl + ", categoryId="
 				+ categoryId + "]";
 	}
 	

@@ -17,8 +17,10 @@ private final static ActionFactory factory = new CompanyActionFactory();
 	public Action getAction(String command) {
 		Action action = null;
 		
-		if(command.equals("/create.do")) {
+		if(command.equals("/createProduct.do")) {
 			action = new CreateProductAction();
+		} else if(command.equals("/createProductForm.do")) {
+			action = new ProductCreateFormAction();
 		}
 		return action;
 	}

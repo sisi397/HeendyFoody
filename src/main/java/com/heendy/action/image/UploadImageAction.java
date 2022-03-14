@@ -106,8 +106,13 @@ public class UploadImageAction implements Action {
 				}
 			}
 			
+			String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ request.getContextPath() + "/image/product?name=";
+			
+			String imgUrl = url + savedImageNames.get(0);
+			
 			response.setStatus(201);
-			String json = new Gson().toJson(new SuccessRes(savedImageNames.get(0)));
+			String json = new Gson().toJson(new SuccessRes(imgUrl));
 			response.getWriter().write(json);
 		
 		} catch (Exception e) {

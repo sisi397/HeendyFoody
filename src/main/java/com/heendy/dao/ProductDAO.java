@@ -171,7 +171,7 @@ public class ProductDAO {
 		cstmt.setInt(3, data.getPrice());
 		cstmt.setInt(4,  data.getDicountRate());
 		cstmt.setInt(5, data.getCount());
-		cstmt.setString(6, data.getImageName());
+		cstmt.setString(6, data.getImageUrl());
 		cstmt.setInt(7,data.getCategoryId());
 		
 		cstmt.execute();
