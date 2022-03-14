@@ -1,5 +1,10 @@
 package com.heendy.utils;
 
+/**
+ * @author 이승준
+ * 
+ * request 파라미터 검증 Class
+ * */
 public class Validation {
 
 	private final static Validation INSTANCE = new Validation();
@@ -24,9 +29,22 @@ public class Validation {
 		if(target == null || target.length == 0) {
 			result = false;
 		}
+	
 		
 		return result;
 	}
 	
+	public boolean validIsNumber(String target) {
+		return target.chars().allMatch(Character::isDigit);
+	}
+	
+	public boolean validMin(int target, int minValue) {
+		
+		return target >= minValue;
+	}
+	
+	public boolean validMax(int target, int maxValue) {
+		return target <= maxValue;
+	}
 	
 }

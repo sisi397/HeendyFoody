@@ -1,6 +1,8 @@
 package com.heendy.action.company;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,14 +15,17 @@ import com.heendy.common.ErrorResponse;
 import com.heendy.dao.ProductDAO;
 import com.heendy.dto.CreateProductDTO;
 
+/**
+ * @author 이승준
+ * 
+ * 상품 생성 Action 클래스
+ */
 public class CreateProductAction implements Action {
 
 	private final ProductDAO productDAO = ProductDAO.getInstance();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("application/json");
-		response.setCharacterEncoding("utf-8");
 
 		/* test 업체 아이디 */
 		int companyId = 1;
@@ -38,7 +43,7 @@ public class CreateProductAction implements Action {
 					imageUrl, categoryId);
 
 			productDAO.createProduct(createProductDTO);
-			
+
 			response.setStatus(201);
 			response.getWriter().write("{\"created\" : true, \"result\" : \"상품이 추가되었습니다.\"}");
 

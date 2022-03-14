@@ -65,10 +65,10 @@
 			<h2>업체회원</h2>
 			<ul>
 				<li class="lnb-depth2">
-				<a href="#">홈</a>
+				<a href="${contextPath}/company/company.do">홈</a>
 				</li>
 				<li class="lnb-depth2">
-				<a href="#">상품 관리</a>
+				<a href="${contextPath}/company/createProductForm.do">상품 관리</a>
 				</li>
 			</ul>
 		</section>

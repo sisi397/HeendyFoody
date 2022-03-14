@@ -127,6 +127,11 @@ button:disabled {
     justify-content: space-between;
 }
 
+#header .inner-header .logo img {
+	width: 232px;
+	height: 59px;
+}
+
 .util a {
     font-family: 'NotoSansKR', sans-serif;
     font-size: 13px;

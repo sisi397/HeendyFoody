@@ -6,6 +6,11 @@ import javax.servlet.http.HttpSession;
 
 import com.heendy.dto.MemberDTO;
 
+/**
+ * @author 이승준
+ * 
+ * MeberDTO 타입의 객체를 HttpSession 에 저장/읽기 기능을 제공하는 클래스
+ * */
 public class SessionUserService implements UserService<MemberDTO,HttpSession> {
 	
 	private final static SessionUserService INSTANCE = new SessionUserService();

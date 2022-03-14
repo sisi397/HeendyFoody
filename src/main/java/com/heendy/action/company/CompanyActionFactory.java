@@ -28,7 +28,7 @@ public class CompanyActionFactory implements ActionFactory {
 	    } else if(command.equals("/company.do")) {
 	    	action = new CompanyPageViewAction();
 	    } else if(command.equals("/createProduct.do")) {
-			action = new CreateProductAction();
+			action = new CreateProductProxyAction(new CreateProductAction());
 		} else if(command.equals("/createProductForm.do")) {
 			action = new ProductCreateFormAction();
 		}
