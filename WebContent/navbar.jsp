@@ -28,11 +28,6 @@
 				<li><a href="${contextPath }/product/list.do?menu=best">베스트</a></li>
 				<li><a href="${contextPath }/product/list.do?menu=sale">세일</a></li>
 				<li><a href="${contextPath }/product/list.do?menu=newprod">신상품</a></li>
-				<li><a
-					href="${contextPath }/product/list.do?menu=category&cate=1&pcate=1">과일과
-						채소</a></li>
-				<li><a
-					href="${contextPath }/product/list.do?menu=category&cate=9&pcate=1">계절과일</a></li>
 			</ul>
 			<!-- //gnb -->
 			<button type="button" class="btn-cart" onClick="cartView();"
@@ -57,9 +52,9 @@ $(document).ready(function () {
 			pcate : 0
 		},
 		success : function(response){
-			console.log(response);
-			var parentCategory = [];
-			var childCategory = [];
+			console.log("navBar : " + response);
+			var parentCategory = [];	// 부모 카테고리를 담을 리스트
+			var childCategory = [];		// 자식 카테고리를 담을 리스트
 			for(i in response){
 
 				if(response[i].categoryId == response[i].parentCategoryId){
@@ -67,11 +62,6 @@ $(document).ready(function () {
 				}else{
 					childCategory.push([response[i].categoryId, response[i].categoryName, response[i].parentCategoryId]);
 				}
-/* 				html += "<li class='depth1'>";
-				html += "<button type='button' onclick=location.href='${contextPath}/product/list.do?menu=category&cate=" + response[i].categoryId + "&pcate=" + response[i].parentCategoryId + "'>" + response[i].categoryName + "</button>";
-				html += "</li>"; */
-				console.log(parentCategory);
-				console.log(childCategory);
 			}
 			for(i in parentCategory){
 				html += "<li class='depth1'>";

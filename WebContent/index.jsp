@@ -135,7 +135,7 @@
         		}
         	});
         	
-            	//MD's pick 정보 4개 가져오기
+            	//Heendy's pick 정보 4개 가져오기
             	var html = "";
             	$.ajax({
             		url:'${contextPath}/product/select.do',
@@ -217,7 +217,7 @@
         	
 
         	function prodlist(cid, pcid){
-        		console.log("cid",cid, pcid);
+        		console.log("cid : ",cid, pcid);
         		$.ajax({
 	        		url:'${contextPath}/product/select.do',
 	        		type: 'post',
