@@ -8,11 +8,12 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 
 import com.heendy.action.Action;
+import com.heendy.dao.OrderDAO;
 import com.heendy.dao.RecentViewDAO;
-//import com.heendy.dto.MemberDTO;
+import com.heendy.dto.MemberDTO;
 import com.heendy.dao.WishDAO;
 import com.heendy.dto.RecentViewDTO;
 import com.heendy.dto.WishDTO;
@@ -24,36 +25,46 @@ public class MyPageAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		String url = "/pages/mypage/mypage.jsp"; 
 		
-//	    HttpSession session = request.getSession();
-//	    MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
+	    HttpSession session = request.getSession();
+	    MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
 
-//	    if (loginUser == null) {
-//	        url = "/pages/login_form";
-//	      } 
-//	    else {
-//			WishDAO wishDAO = WishDAO.getInstance();
-//	    	
-//	    }
+	    request.setAttribute("loginUser", loginUser);	    	
+	    
+	    int memberId = loginUser.getMemberId();
+
 		
 		WishDAO wishDAO = WishDAO.getInstance();
-		int totalWishCount = wishDAO.totalWishCount(6);
+		int totalWishCount = wishDAO.totalWishCount(memberId);
 		
-		int beginRow = 1;
-		int endRow = 5;
-		if(endRow > totalWishCount) {
-			endRow = totalWishCount;
+		if (totalWishCount == 0) {
+			ArrayList<WishDTO> wishList = new ArrayList<>();
+			request.setAttribute("totalWishCount", totalWishCount);
+			request.setAttribute("wishList", wishList);
+			
+		} else {
+			
+    		int endRow = totalWishCount;
+    		int beginRow = endRow - 4;
+    		if (beginRow < 1) {
+    			beginRow = 1;
+    		}
+
+			ArrayList<WishDTO> wishList = wishDAO.listWish(beginRow, endRow, memberId);
+			
+			request.setAttribute("totalWishCount", totalWishCount);
+			request.setAttribute("wishList", wishList);
 		}
 		
-		ArrayList<WishDTO> wishList = wishDAO.listWish(beginRow, endRow, 6);
 		
-	    request.setAttribute("totalWishCount", totalWishCount);
-	    request.setAttribute("wishList", wishList);
+		OrderDAO orderDAO = OrderDAO.getInstance();
+		int totalOrderCount = orderDAO.totalCountOrder(memberId);
+		request.setAttribute("totalOrderCount", totalOrderCount);
 	    
 	    
 	    CookieUtils ck = new CookieUtils();
 		List<String> rvItems = ck.getValueList("RECENT_VIEW_ITEMS", request);
 		
-		//Integer[]�� ��ȯ �۾�
+
 		if (rvItems != null) {
 			String[] rvStrArray = rvItems.toArray(new String[rvItems.size()]);	
 			

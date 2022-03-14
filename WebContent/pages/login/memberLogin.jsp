@@ -13,7 +13,6 @@ request.setCharacterEncoding("UTF-8");
 <head>
 <meta charset="UTF-8">
 <title>흰디푸디 투홈</title>
-
 </head>
 <jsp:include page="../../header.jsp" flush="false" />
 
@@ -31,6 +30,18 @@ if (c != null) {
 }
 %>
 <script type="text/javascript">
+	$(document).ready(function() {
+		$("input[name='checkLoginRadio']:radio").change(function() { //checkLoginRadio에 변경이 발생한경우
+			var serviceType = this.value; // 라디오버튼의 value를 가져온다.
+			if (serviceType == "normal") { // 일반회원 가입의 경우
+				$('#normalLoginForm').show();
+				$('#companyLoginForm').hide();
+			} else { //업체회원 가입의 경우
+				$('#companyLoginForm').show();
+				$('#normalLoginForm').hide();
+			}
+		})
+	})
 	function check_login_input() {
 		if (document.memberLoginForm.id.value == "") {
 			alert("아이디를 입력하세요.");
@@ -41,23 +52,40 @@ if (c != null) {
 			document.memberLoginForm.submit();
 		}
 	}
+	function check_clogin_input() {
+		if (document.companyMemberLoginForm.id.value == "") {
+			alert("업체 아이디를 입력하세요.");
+			document.companyMemberLoginForm.id.focus();
+		} else if (document.companyMemberLoginForm.pwd.value == "") {
+			alert("업체 비밀번호를 입력하세요.");
+		} else {
+			document.companyMemberLoginForm.submit();
+		}
+	}
 </script>
 <div id="wrap" class="member login">
 	<div id="contents">
 		<div class="innercon">
 			<h2>로그인</h2>
-			<p class="txt">흰디푸드 아이디를 입력해 주세요.</p>
-
-			<form name="memberLoginForm"
+			<p class="txt" style="margin: 10px 0px 20px;">흰디푸드 아이디를 입력해 주세요.</p>
+			<!-- 라디오 박스 -->
+			<div style="margin-bottom: 30px;">
+				<input type="radio" name="checkLoginRadio" value="normal"
+					checked="checked" style="position: inherit;">일반회원 <input
+					type="radio" name="checkLoginRadio" value="company"
+					style="position: inherit; margin-left: 100px">업체 회원
+			</div>
+			<form name="memberLoginForm" id="normalLoginForm"
 				action="${contextPath}/member/loginMember.do" method="post">
 				<fieldset class="form-field">
 					<legend class="hide">로그인</legend>
 
 					<ul>
+						<!-- cookieVal이 ""이 아니라면 cookieVal값을 넣고 아니라면 "" -->
 						<li><label class="form-entry"> <input type="text"
 								id="id" name="id" class="big" title="아이디 입력" placeholder="아이디"
 								value="<%=cookieVal != "" ? cookieVal : ""%>"
-								onkeydown="javascript:fn.inputMsgClear('#id');"> <!-- cookieVal이 ""이 아니라면 cookieVal값을 넣고 아니라면 "" -->
+								onkeydown="javascript:fn.inputMsgClear('#id');">
 								<button type="button" class="btn-del">삭제</button>
 						</label></li>
 						<li><label class="form-entry"> <input type="password"
@@ -82,7 +110,37 @@ if (c != null) {
 							onclick="window.open(this.href, '_blank', 'width=450, height=200'); return false;">비밀번호
 								찾기</a></li>
 					</ul>
-					<button type="button" id="btnLogin" class="btn fill big black" onclick="check_login_input()">로그인</button>
+					<button type="button" id="btnLogin" class="btn fill big black"
+						onclick="check_login_input()">로그인</button>
+				</fieldset>
+			</form>
+
+			<form name="companyMemberLoginForm" id="companyLoginForm" style="display:none"
+				action="${contextPath}/member/loginCompanyMember.do" method="post">
+				<fieldset class="form-field">
+					<legend class="hide">로그인</legend>
+
+					<ul>
+						<!-- cookieVal이 ""이 아니라면 cookieVal값을 넣고 아니라면 "" -->
+						<li><label class="form-entry"> <input type="text"
+								id="id" name="id" class="big" title="업체 아이디 입력"
+								placeholder="업체 아이디"
+								onkeydown="javascript:fn.inputMsgClear('#id');">
+								<button type="button" class="btn-del">삭제</button>
+						</label></li>
+						<li><label class="form-entry"> <input type="password"
+								id="pwd" name="pwd" class="big" title="업체 비밀번호 입력"
+								placeholder="업체 비밀번호" value=''
+								onkeydown="javascript:fn.inputMsgClear('#pwd');">
+								<button type="button" class="btn-del">삭제</button>
+						</label></li>
+					</ul>
+
+					<ul class="btn-group login-surport">
+						<li><a href="${contextPath}/pages/login/memberJoin.jsp">회원가입</a></li>
+					</ul>
+					<button type="button" id="btnLogin" class="btn fill big black"
+						onclick="check_clogin_input()">로그인</button>
 				</fieldset>
 			</form>
 		</div>

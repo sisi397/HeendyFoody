@@ -21,7 +21,8 @@ public class AddMemberAction implements Action{
 		String email = request.getParameter("email");
 		String address = request.getParameter("address");
 		int role_id = Integer.parseInt(request.getParameter("role"));
-		MemberDTO memberVO = new MemberDTO(name, pwd, email, address, role_id);
+		String birthDate = request.getParameter("birthdate");
+		MemberDTO memberVO = new MemberDTO(name, pwd, email, address, role_id, birthDate);
 		memberDAO.addMember(memberVO);
 		System.out.println("회원이 추가 되었습니다.");
 		

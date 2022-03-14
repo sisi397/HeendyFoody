@@ -4,12 +4,14 @@ package com.heendy.dto;
 public class WishDTO {
 	
 	  private int memberId;
+	  private int companyId;
 	  private int productId;
 	  private String productName;
 	  private String imageUrl;
 	  private int productPrice;
 	  private int discountPrice;
 	  private int productCount;
+	  private int deleted;
 	  
 	  
 	public int getMemberId() {
@@ -18,6 +20,14 @@ public class WishDTO {
 	
 	public void setMemberId(int memberId) {
 		this.memberId = memberId;
+	}
+	
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
 	}
 	
 	public int getProductId() {
@@ -67,4 +77,13 @@ public class WishDTO {
 	public void setProductCount(int productCount) {
 		this.productCount = productCount;
 	}
+	
+	public int getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(int deleted) {
+		this.deleted = deleted;
+	}
+
 }

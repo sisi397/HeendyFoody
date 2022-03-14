@@ -22,7 +22,7 @@ public class RecentViewDAO {
 	private CallableStatement cstmt;
 	private ResultSet rs;
 	
-	//ÃÖ±Ù º» »óÇ°¸ñ·Ï Á¶È¸
+	//ï¿½Ö±ï¿½ ï¿½ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 	public ArrayList<RecentViewDTO> listRecentView(Integer[] rvProducts) {	
 		System.out.println("rv_list: " + rvProducts);
 		
@@ -44,11 +44,13 @@ public class RecentViewDAO {
 			while (rs.next()) {
 				RecentViewDTO recentViewDTO = new RecentViewDTO();
 				recentViewDTO.setProductId(rs.getInt("product_id"));
+				recentViewDTO.setCompanyId(rs.getInt("company_id"));
 				recentViewDTO.setProductName(rs.getString("product_name"));
 				recentViewDTO.setImageUrl(rs.getString("image_url"));
 				recentViewDTO.setProductCount(rs.getInt("product_count"));
-				recentViewDTO.setProductPrice(rs.getInt("product_price")); //¿ø°¡(1°³ ±âÁØ)
-				recentViewDTO.setDiscountPrice(rs.getInt("discount_price")); //ÇÒÀÎ°¡(1°³ ±âÁØ) 
+				recentViewDTO.setProductPrice(rs.getInt("product_price")); //ï¿½ï¿½ï¿½ï¿½(1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+				recentViewDTO.setDiscountPrice(rs.getInt("discount_price")); //ï¿½ï¿½ï¿½Î°ï¿½(1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) 
+				recentViewDTO.setDeleted(rs.getInt("deleted"));
 				recentViewList.add(recentViewDTO);
 			}
 		} catch (Exception e) {

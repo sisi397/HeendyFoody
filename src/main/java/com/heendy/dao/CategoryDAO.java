@@ -51,14 +51,16 @@ public class CategoryDAO {
 		    
 		    cs.executeUpdate();
 		    String categoryName = cs.getString(3);
-		    CategoryDTO category = new CategoryDTO();
-		    category.setCategoryName(categoryName);
-		    categoryList.add(category);
+		    if(cate != 0 && pcate != 0) {
+			    CategoryDTO categoryname = new CategoryDTO();
+			    categoryname.setCategoryName(categoryName);
+			    categoryList.add(categoryname);
+		    }
 		    
 		    rs = (ResultSet)cs.getObject(4);
 		    
 	        while (rs.next()) {
-	    	   category = new CategoryDTO();
+	           CategoryDTO category = new CategoryDTO();
 	    	   category.setCategoryId(rs.getInt("category_id"));
 	    	   category.setCategoryName(rs.getString("category_name"));
 	    	   category.setParentCategoryId(rs.getInt("parent_category_id"));

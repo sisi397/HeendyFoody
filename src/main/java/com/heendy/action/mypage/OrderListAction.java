@@ -7,8 +7,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 //import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 
 import com.heendy.action.Action;
+import com.heendy.dto.MemberDTO;
 import com.heendy.dto.OrderDTO;
 import com.heendy.dao.OrderDAO;
 
@@ -18,65 +20,73 @@ public class OrderListAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "/pages/mypage/orderHistory.jsp";
 		
-//		·Î±×ÀÎ ¿©ºÎ
-//	    HttpSession session = request.getSession();
-//	    MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
-
-//	    if (loginUser == null) {
-//	        url = "/pages/login_form.jsp";
-//	      } 
-//	    else {
-//			
-//	    }
-		
-		
-		String pno = request.getParameter("pno");
-		OrderDAO orderDAO = OrderDAO.getInstance();
-		
-		int totalCount = orderDAO.totalCountOrder(); //ÀüÃ¼ ÁÖ¹®³»¿ª ¼ö	
-		int pageNumber = 1; // ÇöÀç ÆäÀÌÁö ¹øÈ£
-		int pagePerList = 5; // º¸¿©ÁÙ ÆäÀÌÁö ¼ö
-		int listPerPage = 2; // ÇÑ ÆäÀÌÁö ´ç º¸¿©ÁÙ ÁÖ¹®³»¿ª ¼ö
-
-
-		// ÆäÀÌÁö ¹øÈ£ °è»ê
-		if (pno == null || pno.length() == 0) {
-			pageNumber = 1;
-		}
-		try {
-			pageNumber = Integer.parseInt(pno);
-		} 
-		catch(NumberFormatException e) {
-			pageNumber = 1;
-		}
-				
-		int beginRow = (pageNumber - 1) * listPerPage + 1;
-		int endRow = beginRow + listPerPage - 1;
-		if(endRow > totalCount) {
-			endRow = totalCount;
-		}
-		
-		
-	    ArrayList<OrderDTO> orderList = orderDAO.listOrder(beginRow, endRow, 6);
-	    System.out.println("-----------------");
-	    System.out.println("totalOrderCnt: " + totalCount);
-	    System.out.println("slice size: " + orderList.size());
+		HttpSession session = request.getSession();
+	    MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
 	    
-		int beginPageNumber = (pageNumber - 1) / pagePerList * pagePerList + 1;
-		int endPageNumber = beginPageNumber + pagePerList - 1;
-	    int totalPage = (totalCount - 1) / listPerPage + 1; // ÃÑ ÆäÀÌÁö ¼ö
-	    System.out.println("totalpage : " + totalPage);
-	    if (totalPage < endPageNumber) {
-	    	endPageNumber = totalPage;
-	    }	    
-
-	    
-	    request.setAttribute("beginPage", beginPageNumber);
-	    request.setAttribute("endPage", endPageNumber);
-	    request.setAttribute("pagePerList", pagePerList);
-	    request.setAttribute("totalPageCount", totalPage);
-	    
-	    request.setAttribute("orderList", orderList);
-	    request.getRequestDispatcher(url).forward(request, response);
+    	request.setAttribute("loginUser", loginUser);	    	
+    	int memberId = loginUser.getMemberId();
+    	
+    	    	
+    	String pno = request.getParameter("pno");
+    	OrderDAO orderDAO = OrderDAO.getInstance();
+    	
+    	int totalCount = orderDAO.totalCountOrder(memberId); //ï¿½ï¿½Ã¼ ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½	
+    	
+    	if (totalCount == 0) {
+    		ArrayList<OrderDTO> orderList = new ArrayList<>();
+    		request.setAttribute("orderList", orderList);
+    		
+    	} else {
+    		
+    		int pageNumber = 1; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£
+    		int pagePerList = 5; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    		int listPerPage = 10; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    		
+    		
+    		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ ï¿½ï¿½ï¿½
+    		if (pno == null || pno.length() == 0) {
+    			pageNumber = 1;
+    		}
+    		try {
+    			pageNumber = Integer.parseInt(pno);
+    		} 
+    		catch(NumberFormatException e) {
+    			pageNumber = 1;
+    		}
+    		
+    		int beginRow = (pageNumber - 1) * listPerPage + 1;
+    		int endRow = beginRow + listPerPage - 1;
+    		if(endRow > totalCount) {
+    			endRow = totalCount;
+    		}
+    		
+    		
+    		
+    		ArrayList<OrderDTO> orderList = orderDAO.listOrder(beginRow, endRow, memberId);
+    		System.out.println("-----------------");
+    		System.out.println("totalOrderCnt: " + totalCount);
+    		System.out.println("slice size: " + orderList.size());
+    		
+    		int beginPageNumber = (pageNumber - 1) / pagePerList * pagePerList + 1;
+    		int endPageNumber = beginPageNumber + pagePerList - 1;
+    		int totalPage = (totalCount - 1) / listPerPage + 1; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    		System.out.println("totalpage : " + totalPage);
+    		if (totalPage < endPageNumber) {
+    			endPageNumber = totalPage;
+    		}	    
+    		
+    		
+    		request.setAttribute("beginPage", beginPageNumber);
+    		request.setAttribute("endPage", endPageNumber);
+    		request.setAttribute("pagePerList", pagePerList);
+    		request.setAttribute("totalPageCount", totalPage);
+    		
+    		request.setAttribute("orderList", orderList);
+    		
+    	}
+    	
+    	
+    	request.getRequestDispatcher(url).forward(request, response);
+    
 	}
 }
