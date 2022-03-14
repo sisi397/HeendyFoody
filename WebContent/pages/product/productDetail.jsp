@@ -278,13 +278,9 @@
 $(document).ready(function(){
 	//좋아요 여부 가져오기
 	$.ajax({
-		url:'${contextPath}/wish/check.do',
-		type: 'post',
+		url:'${contextPath}/wish/check.do?productId=${param.pid }&companyId=${param.cid }',
+		type: 'get',
 		dataType:'json',
-		data : {
-			productId: ${param.pid },
-			companyId: ${param.cid }
-		},
 		success : function(data){
 			if(data.wish === 1){
 				document.getElementById('wish').className = "btn-wish active";

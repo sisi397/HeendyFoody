@@ -2,6 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
+<style>
+#footer .info .logo:after {
+	width: 120% !important;
+	height: 80% !important;
+	background-size: contain !important;
+	background: url(../static/images/common/logo_footer1.png) no-repeat 0 0;
+}
+</style>
+
 	<!-- footer// -->
 	<footer id="footer">
 		<div class="util">
