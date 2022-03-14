@@ -66,10 +66,10 @@ public class OrderDAO {
 		return orderList;
 	}
 	
-	public int totalCountOrder() {
+	public int totalCountOrder(int member_id) {
 		
 		int result = 0;
-		String sql = "select count(*) from product_order";
+		String sql = "select count(*) from product_order where member_id=?";
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -79,6 +79,7 @@ public class OrderDAO {
 			conn = DBManager.getConnection();
 			System.out.println("***************************DB*********************************");
 			pstmt = conn.prepareStatement(sql);	
+			pstmt.setInt(1, member_id);		
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
