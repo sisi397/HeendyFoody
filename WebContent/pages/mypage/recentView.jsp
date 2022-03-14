@@ -19,6 +19,7 @@
 
 <body>
   <div id="wrap" class="mypage recentprd">
+  <jsp:include page="../../header.jsp" flush="false" />
     <div id="contents">
       <div class="innercon">
 		<section class="lnbarea">
@@ -73,6 +74,7 @@
       
       </div>
     </div>
+    <jsp:include page="../../footer.jsp" flush="false" />
   </div>
   <script>
 

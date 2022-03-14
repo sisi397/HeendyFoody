@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.heendy.action.Action;
+import com.heendy.dao.OrderDAO;
 import com.heendy.dao.RecentViewDAO;
 import com.heendy.dto.MemberDTO;
 import com.heendy.dao.WishDAO;
@@ -53,6 +54,11 @@ public class MyPageAction implements Action {
 			request.setAttribute("totalWishCount", totalWishCount);
 			request.setAttribute("wishList", wishList);
 		}
+		
+		
+		OrderDAO orderDAO = OrderDAO.getInstance();
+		int totalOrderCount = orderDAO.totalCountOrder(memberId);
+		request.setAttribute("totalOrderCount", totalOrderCount);
 	    
 	    
 	    CookieUtils ck = new CookieUtils();

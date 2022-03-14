@@ -38,6 +38,12 @@ request.setCharacterEncoding("UTF-8");
 <!-- 회원가입시 input 제약조건 JS -->
 <script type="text/javascript" src="${contextPath}/static/js/memberJoin.js"></script>
 </head>
+<style>
+.heendy-logo-header {
+width: 55%;
+}
+
+</style>
 <body>
 
 	<!-- header// -->
@@ -48,8 +54,8 @@ request.setCharacterEncoding("UTF-8");
 			<div class="toparea">
 				<h1>
 					<a href="${contextPath}/member/index.do"><img
-						src="${contextPath}/static/images/common/header_logo.png"
-						alt="현대식품관"></a>
+						src="${contextPath}/static/images/common/logo_header.png"
+						alt="흰디푸디" class="heendy-logo-header"></a>
 				</h1>
 
 				<div class="util">

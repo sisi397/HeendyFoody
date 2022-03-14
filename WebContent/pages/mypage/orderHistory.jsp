@@ -17,6 +17,7 @@
 
 <body>
   <div id="wrap" class="mypage orderlist">
+  <jsp:include page="../../header.jsp" flush="false" />
     <div id="contents">
 
 	  <!-- 좌측 내비게이션 -->
@@ -104,6 +105,7 @@
 		</section>
 	  </div>
 	</div>
+	<jsp:include page="../../footer.jsp" flush="false" />
   </div>
 </body>
 </html>

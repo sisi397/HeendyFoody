@@ -30,10 +30,10 @@
 }
 </style>
 <body>
-  <jsp:include page="../../header.jsp" flush="false" />
 
 	
   <div id="wrap" class="mypage mypage main">
+  <jsp:include page="../../header.jsp" flush="false" />
     <div id="contents">
 	  <div class="innercon">
 	    <section class="lnbarea">
@@ -70,7 +70,35 @@
 		               <strong><span id="upointCurAmt">${loginUser.point}</span>P</span></strong> H.Point
 		             </div>
 		           </a>
-		         </li>                                                                                             
+		         </li> 
+		         <li>
+		           <a href="#">
+		             <div class="inner">
+		               <strong><span id="upointCurAmt">${totalOrderCount}</span>°³</span></strong> ORDER
+		             </div>
+		           </a>
+		         </li>  
+		         <li>
+		           <a href="#">
+		             <div class="inner">
+		               <strong><span id="upointCurAmt">${totalWishCount}</span>°³</span></strong> LIKE
+		             </div>
+		           </a>
+		         </li>  
+		         <li>
+		           <a href="#">
+		             <div class="inner">
+		               <strong><span id="upointCurAmt">${totalRvCount}</span>°³</span></strong> VIEW
+		             </div>
+		           </a>
+		         </li> 
+		         <li>
+		           <a href="#">
+		             <div class="inner">
+		               <strong><span id="upointCurAmt"><img src="${contextPath}/static/images/common/cursor_heendy.png" alt="heendy"></span></strong> Heendy
+		             </div>
+		           </a>
+		         </li>                                                                                                
 		       </ul>
 		     </div>
 		   </section>
@@ -184,7 +212,7 @@
 		 </section>
 	   </div>
     </div>
+    <jsp:include page="../../footer.jsp" flush="false" />
   </div>
-  
 </body>
 </html>

@@ -1,14 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>HeendyFoody</title>
-</head>
 
-<body>
+
+
+<style>
+#footer .info .logo:after {
+	width: 120% !important;
+	height: 80% !important;
+	background-size: contain !important;
+	background: url(../static/images/common/logo_footer1.png) no-repeat 0 0;
+}
+</style>
+
 	<!-- footer// -->
 	<footer id="footer">
 		<div class="util">
@@ -84,5 +88,3 @@
 		<button type="button" class="btn-top" onclick="GA_Event('PC_공통', 'TOP', 'TOP');">TOP</button>
 		<!-- //topbtn -->
 	</footer>
-</body>
-</html>
