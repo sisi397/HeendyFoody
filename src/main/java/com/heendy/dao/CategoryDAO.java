@@ -38,7 +38,6 @@ public class CategoryDAO {
 		ArrayList<CategoryDTO> categoryList = new ArrayList<CategoryDTO>();
 		
 		String sql = "{CALL sp_list_category(?,?,?,?)}";
-	    System.out.println("p : " + pcate);
 	    
 	    try {
 	    	conn = DBManager.getConnection();
@@ -51,6 +50,7 @@ public class CategoryDAO {
 		    
 		    cs.executeUpdate();
 		    String categoryName = cs.getString(3);
+		    System.out.println("카테고리이름: " + categoryName);
 		    if(cate != 0 && pcate != 0) {
 			    CategoryDTO categoryname = new CategoryDTO();
 			    categoryname.setCategoryName(categoryName);

@@ -7,9 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-	<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
-	
+<title>흰디 푸디 투홈</title>
 	<style type = "text/css"> <!-- 로딩바스타일 -->
 		body
 		{
