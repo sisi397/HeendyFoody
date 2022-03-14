@@ -10,14 +10,16 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 
+import com.google.gson.Gson;
 import com.heendy.action.Action;
 import com.heendy.common.exception.MemberNotExistSession;
 import com.heendy.dao.ChartDataDAO;
 import com.heendy.dto.MemberDTO;
+import com.heendy.dto.ProductDTO;
 import com.heendy.utils.SessionUserService;
 import com.heendy.utils.UserService;
 
-public class OrderInfoAction implements Action {
+public class ProductListAction implements Action {
 
 	private final ChartDataDAO chartDataDAO = ChartDataDAO.getInstance();
 	private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
@@ -26,17 +28,14 @@ public class OrderInfoAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
-		String sort = request.getParameter("sort");
-		int pid = Integer.parseInt(request.getParameter("productId"));
 		//MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
 		
 			int cid = 1;
+
+			List<ProductDTO> data = chartDataDAO.productList(cid);
 			
-			List<JSONObject> data = chartDataDAO.orderInfo(cid, sort, pid);
-			
-			JSONObject responseObj = new JSONObject();
-			responseObj.put("orderinfo", data);
-			response.getWriter().write(responseObj.toString());
+			String json = new Gson().toJson(data);
+			response.getWriter().write(json);
 	}
 
 }

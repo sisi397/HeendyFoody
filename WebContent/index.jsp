@@ -31,7 +31,6 @@
 <img src="${contextPath }/static/images/common/loding.gif"/>
 </div>
 
-	<jsp:include page="header.jsp" flush="false" />
 	<%@ include file="/navbar.jsp" %>
 	
     

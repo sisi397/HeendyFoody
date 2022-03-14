@@ -12,7 +12,7 @@ import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
 import com.heendy.action.company.CompanyActionFactory;
 
-@WebServlet("/admin/*")
+@WebServlet("/company/*")
 public class CompanyController extends HttpServlet {
 	
 	private final ActionFactory actionFactory = CompanyActionFactory.getInstance();

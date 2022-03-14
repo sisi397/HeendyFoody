@@ -37,6 +37,23 @@
 	  display: none;
 	}
 	</style>
+	
+	<style>
+				.swiper-wrapper ::-webkit-scrollbar {
+				    width: 5px;
+				    height: 7px;
+				}
+				 
+				.swiper-wrapper ::-webkit-scrollbar-track {
+				    background-color: rgba(230,230,230,0.8);
+				    border-radius: 7px;
+				}
+				 
+				.swiper-wrapper ::-webkit-scrollbar-thumb {
+				    background-color: rgba(100,100,100,0.4);
+				    border-radius: 7px;
+				}
+		</style>
 </head>
 
 <body>
@@ -44,43 +61,58 @@
 <div id="wrap">
 	<div id="contents">
 	<div class="innercon">
-	<section class="lnbarea">
-		<h2>업체회원</h2>
-		<ul>
-			<li class="lnb-depth2">
-			<a href="#">홈</a>
-			</li>
-			<li class="lnb-depth2">
-			<a href="#">상품 관리</a>
-			</li>
-		</ul>
-	</section>
-	<section class="conarea">
-		<section class="chart" style="background-color:#f8f8f8">
-			<div style="width:100%;">
-				<div style="background-color: white;width:40%;height:430px;display:inline-block;margin:10px;">
-					<div id="piechart" style="width: 100%; height: 100%;"></div>
-				</div>
-				<div style="background-color: white;width:55%;height:400px;display:inline-block;margin:10px;">
-									
-					<div id="orderchart" style="width: 100%; height: 100%;"></div>
-					<div class="productList" style="text-align:center; margin:10px;">
-						<span>구분 : </span>
-						<input type="hidden" name="dateSort" value="YY-MM-DD"/>
-						<input type="hidden" name="productId" value="0"/>
-						<select class="select-css" onchange='selectDate(this.value)'>
-							<option value="YY-MM-DD">일별</option>
-							<option value="MM">월별</option>
-							<option value="YYYY">년도별</option>
-						</select>
+		<section class="lnbarea">
+			<h2>업체회원</h2>
+			<ul>
+				<li class="lnb-depth2">
+				<a href="#">홈</a>
+				</li>
+				<li class="lnb-depth2">
+				<a href="#">상품 관리</a>
+				</li>
+			</ul>
+		</section>
+		<section class="conarea">
+			<section class="chart" style="background-color:#f8f8f8">
+				<div style="width:100%;">
+					<div style="background-color: white;width:40%;height:430px;display:inline-block;margin:10px;">
+						<div id="piechart" style="width: 100%; height: 100%;"></div>
+					</div>
+					<div style="background-color: white;width:55%;height:400px;display:inline-block;margin:10px;">
+										
+						<div id="orderchart" style="width: 100%; height: 100%;"></div>
+						<div class="productList" style="text-align:center; margin:10px;">
+							<span>구분 : </span>
+							<input type="hidden" name="dateSort" value="YY-MM-DD"/>
+							<input type="hidden" name="productId" value="0"/>
+							<select class="select-css" onchange='selectDate(this.value)'>
+								<option value="YY-MM-DD">일별</option>
+								<option value="MM">월별</option>
+								<option value="YYYY">년도별</option>
+							</select>
+						</div>
 					</div>
 				</div>
-			</div>
+			</section>
 		
+		<section class='innercon category' data-aos='fade-up' style="margin-top:30px;">
+                <h2><strong style='color:;font-weight:'>상품목록</strong></h2>
+                <div class='swiper-container categoryswiper'>
+                    <div class='swiper-wrapper'>
+                        <div class='swiper-slide ' style="overflow-x:scroll;height:360px;">
+                            
+                <div class="product">
+                	
+                </div>
+                        </div>
+                    </div>
+                    <div class='swiper-pagination-category'></div>
+                </div>
+            </section>
 		</section>
-	</section>
 	</div>
-	</div>
+</div>
+<jsp:include page="/footer.jsp" flush="false" />
 </div>
 
 
@@ -88,25 +120,35 @@
 
 	// 업체 회원의 상품 목록
 	var html = "";
+	var list = "";
 	$.ajax({
-		url:'${contextPath}/admin/productList.do',
+		url:'${contextPath}/company/productList.do',
 		dataType:'json',
-		async:false,
 		success : function(data){
 			console.log(data);
+
+			list += "<ul style='width:"+data.length * 220+"px;'>";
+			
 			html += "<span>상품목록 : </span>";
 			html += "<select class='select-css' onchange='selectProductId(this.value)' style='width: 200px;'>";
 			html += "<option value=0>전체</option>";
-			for(var i in data.productList){
-				html += "<option value="+data.productList[i].productId +">" + data.productList[i].productName + "</option>";
+			for(var i in data){
+				html += "<option value="+data[i].productId +">" + data[i].productName + "</option>";
+				list += "<li style='float:left; margin:10px;'>";
+				list += "<a><img src='https://tohomeimage.thehyundai.com/PD/PDImages/S/9/8/2/8809607171289_00.jpg?RS=350x420' style='width:200px;height:250px;'></a>";
+				list += "</span><strong class='txt-ti ellipsis'>"+data[i].productName+"</strong></a><span class='info'>";
+				list += "<span class='txt-price'><strong><em>"+data[i].discountPrice+"</em>원</strong></span></span></li>";
 			}	
 			html += "</select>";
+			list += "</ul>";
 			$(".productList").append(html);
+			$(".product").append(list);
 		},
 	  error : function(xhr, type) {
 	      alert('server error occoured')
 	         }
 	});//ajax 데이터 로드 끝
+	
 	
 	// ===== 구매자 주 연령층 ===== //
 	
@@ -116,9 +158,9 @@
 	var queryObjectLen="";
 	
 	$.ajax({
-		url:'${contextPath}/admin/ageinfoChart.do',
+		url:'${contextPath}/company/ageinfoChart.do',
 		dataType:'json',
-		async:false,
+		async: false,
 		success : function(data){
 			console.log(data);
 			queryObject = eval('('+JSON.stringify(data) +')');
@@ -146,9 +188,9 @@
 	//db 데이터 저장 객체
 	
 	$.ajax({
-		url:'${contextPath}/admin/orderinfoChart.do',
+		url:'${contextPath}/company/orderinfoChart.do',
 		dataType:'json',
-		async:false,
+		async: false,
 		type:'post',
 		data:{
 			productId : 0,
@@ -245,7 +287,7 @@
 	
 	function changeOrderChart(){
 		$.ajax({
-			url:'${contextPath}/admin/orderinfoChart.do',
+			url:'${contextPath}/company/orderinfoChart.do',
 			type:'post',
 			dataType:'json',
 			data:{
@@ -269,6 +311,5 @@
 	}
       
 </script>
-<jsp:include page="/footer.jsp" flush="false" />
 </body>
 </html>

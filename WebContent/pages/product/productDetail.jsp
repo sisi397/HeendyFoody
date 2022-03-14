@@ -56,7 +56,6 @@
 <body>
 <!-- contents// -->
     
-<jsp:include page="/header.jsp" />
 	<%@ include file="/navbar.jsp" %>
 <div id="wrap" class="product detail">
     <div id="contents">

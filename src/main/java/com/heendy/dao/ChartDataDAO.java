@@ -3,10 +3,13 @@ package com.heendy.dao;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.json.simple.JSONObject;
+
+import com.heendy.dto.ProductDTO;
 import com.heendy.utils.DBManager;
 
 import oracle.jdbc.OracleTypes;
@@ -98,9 +101,9 @@ public class ChartDataDAO {
 		    return orderList;
 		}
 
-		public List<JSONObject> productList(int cid) {
-			List<JSONObject> productList = new LinkedList<JSONObject>();
-			
+		public List<ProductDTO> productList(int cid) {
+			 ArrayList<ProductDTO> productList = new ArrayList<ProductDTO>();
+			    
 			String sql = "{CALL SP_COMPANY_PRODUCT(?,?)}";
 		    
 		    try {
@@ -114,14 +117,22 @@ public class ChartDataDAO {
 			    
 			    rs = (ResultSet)cs.getObject(2);
 			    
-			    JSONObject productObj = null;
 		        while (rs.next()) {
-		        	int productId= rs.getInt("product_id");
-		    	    String productName = rs.getString("product_name");
-		    	    productObj = new JSONObject();
-		    	    productObj.put("productId", productId);
-		    	    productObj.put("productName", productName);
-		    	    productList.add(productObj);
+		        	ProductDTO product = new ProductDTO();
+			        product.setProductId(rs.getInt("product_id"));
+			        product.setCompanyId(rs.getInt("company_id"));
+			        product.setCompanyName(rs.getString("company_name"));
+			        product.setProductPrice(rs.getInt("product_price"));
+			        product.setProductName(rs.getString("product_name"));
+			        product.setImageUrl(rs.getString("image_url"));
+			        product.setProductCount(rs.getInt("product_count"));
+			        product.setProductRegDate(rs.getString("product_reg_date"));
+			        product.setDiscountRate(rs.getInt("discount_rate"));
+			        product.setDeleted(rs.getInt("deleted"));
+			        product.setCategoryId(rs.getInt("category_id"));
+			        product.setDiscountPrice(rs.getInt("discount_price"));
+			        productList.add(product);
+			        System.out.println(product.getProductId());
 		        }
 			    
 		    } catch (Exception e) {

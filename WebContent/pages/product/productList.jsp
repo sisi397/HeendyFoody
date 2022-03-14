@@ -38,7 +38,6 @@
 </head>
 
 <body>
-	<jsp:include page="/header.jsp" />
 	<%@ include file="/navbar.jsp" %>
 	<input type="hidden" name="paramSort" value="${param.sort }"/>
 	<input type="hidden" name="paramPno" value="${param.pno }"/>
@@ -71,7 +70,7 @@
 	    	
 	        <c:if test="${param.menu eq 'best' }"><h2>베스트</h2></c:if>
 	        <c:if test="${param.menu eq 'sale' }"><h2>세일</h2></c:if>
-	        <c:if test="${param.menu eq 'newprod' }"><h2>신상품</h2></c:if>
+	        <c:if test="${param.menu eq 'newprod' }"><h2>전체상품</h2></c:if>
 	        <!-- filter// -->
 	        <c:if test="${param.menu ne 'best' }">
             <section class="list-filter" style="height:40px">
@@ -90,21 +89,7 @@
             
 	        <section class="list-product"></section>
 	        
-	        <c:if test="${param.menu ne 'best' }">
-	        <div class="pagination">
-	        	<c:if test="${pageInfo.beginPageNumber > pageInfo.pagePerList}">
-					<button onclick="movePage(${pageInfo.beginPageNumber - 1 })">
-					<a class="prev">">이전</a></button>
-				</c:if>
-				<c:forEach var="pno" begin="${pageInfo.beginPageNumber}" end="${pageInfo.endPageNumber}">
-					<button onclick="movePage(${pno})"><span class="num"><a>${pno}</a></span></button>
-				</c:forEach>
-				<c:if test="${pageInfo.endPageNumber < pageInfo.totalPage}">
-					<button onclick="movePage(${pageInfo.endPageNumber + 1 })">
-					<a class="next">다음</a></button>
-				</c:if>
-	        </div>
-	        </c:if>
+	        <div class="pagination"></div>
 	        </div>
 	    </div>
     <jsp:include page="/footer.jsp" />
@@ -123,19 +108,19 @@
     });
     
    	function movePage(pno){
-    	var sort = $("input[name='paramSort']").val();
-    	var menu = $("input[name='paramMenu']").val();
-    	var cate = $("input[name='paramCate']").val();
-    	var pcate = $("input[name='paramPcate']").val();
-    	location.href = "${contextPath }/product/list.do?pno="+pno+"&menu="+menu+"&sort="+sort+"&cate="+cate+"&pcate="+pcate;
+    	var pno = $("input[name='paramPno']").val(pno);
+    	loadProductList();
    	}
    	
     function sortType(sort){
-    	var menu = $("input[name='paramMenu']").val();
+    	$('#sortTypeA').css('font-weight', 'normal');
+    	$('#sortTypeB').css('font-weight', 'normal');
+    	$('#sortTypeC').css('font-weight', 'normal');
+    	$('#sortTypeD').css('font-weight', 'normal');
+    	$('#sortType'+sort).css('font-weight', '600');
     	var pno = $("input[name='paramPno']").val(1);
-    	var cate = $("input[name='paramCate']").val();
-    	var pcate = $("input[name='paramPcate']").val();
-    	location.href = "${contextPath }/product/list.do?pno="+pno+"&menu="+menu+"&sort="+sort+"&cate="+cate+"&pcate="+pcate;
+    	var sort = $("input[name='paramSort']").val(sort);
+    	loadProductList();
    	}
     
     function loadProductList(){
@@ -150,7 +135,6 @@
     		url:'${contextPath}/product/select.do',
     		type: 'post',
     		dataType:'json',
-    		async:false,
     		data:{
     			sort: sort,
     			menu: menu,
@@ -179,7 +163,7 @@
 	    				if(data[i].discountRate > 0){
 	    					html += "<del>"+data[i].productPrice+"</del>";
 	    				}
-	    				html += "</span><button type='button' class='btn-cart' onclick'addCartProduct("+data[i].productId+","+data[i].companyId+", 1)>장바구니 담기</button>";
+	    				html += "</span><button type='button' class='btn-cart' onclick='addCartProduct("+data[i].productId+","+data[i].companyId+", 1)'>장바구니 담기</button>";
 	    				html += "</span><span class='tag'>";
 	    				if(data[i].discountRate > 0){
 	    					html += "<span> 세일상품 </span>"
@@ -191,11 +175,56 @@
 				}
 				html += "</ul>";
 				$(".list-product").html(html);
+				if(menu != 'best'){
+					loadPagination();
+				}
+    		}
+    	});
+    }
+    
+    function loadPagination(){
+    	var menu = $("input[name='paramMenu']").val();
+    	var pno = $("input[name='paramPno']").val();
+    	var cate = $("input[name='paramCate']").val();
+    	var pcate = $("input[name='paramPcate']").val();
+    	
+    	var html = "";
+    	$.ajax({
+    		url:'${contextPath}/product/pagination.do',
+    		type: 'post',
+    		dataType:'json',
+    		data:{
+    			menu: menu,
+    			pno: pno,
+    			cate: cate,
+    			pcate: pcate
+    		},
+    		success : function(data){
+    			console.log(data);
+    			if(data.beginPageNumber > data.pagePerList){
+    				html += "<button onclick='movePage("+(data.beginPageNumber - 1)+")'>";
+    				html += "<a class='prev'>이전</a></button>";
+    			}
+    			for(var i = data.beginPageNumber; i <= data.endPageNumber; i++){
+    				if(i == pno){
+        				html += "<button onclick='movePage("+i+")'><span class='num'><a style='border:3px solid #e7e7e7'>"+i+"</a></span></button>";
+    				}else{
+        				html += "<button onclick='movePage("+i+")'><span class='num'><a>"+i+"</a></span></button>";
+    				}
+    			}
+    			if(data.endPageNumber < data.totalPage){
+    				html += "<button onclick='movePage("+(data.endPageNumber + 1)+")'>";
+    				html += "<a class='next'>다음</a></button>";
+    			}
+	    			
+				$(".pagination").html(html);
+				window.scrollTo(0, 0);
     		}
     	});
     }
     
     function addCartProduct(pid, cid, qty){
+    	console.log("cart담기 시작");
     	$.ajax({
     		url:'${contextPath}/cart/create.do',
     		type: 'post',

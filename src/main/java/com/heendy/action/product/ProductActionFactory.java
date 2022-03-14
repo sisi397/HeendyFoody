@@ -27,6 +27,8 @@ public class ProductActionFactory implements ActionFactory {
 	    	action = new ProductListAction();
 	    } else if(command.equals("/category.do")) {
 	    	action = new CategoryAction();
+	    } else if(command.equals("/pagination.do")) {
+	    	action = new PaginationAction();
 	    }
 	    
 		return action;
