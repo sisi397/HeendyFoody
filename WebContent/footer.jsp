@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-
 <style>
 #footer .info .logo:after {
 	width: 120% !important;
@@ -69,7 +68,7 @@
 
 		<div class="info">
 			<div class="inner">
-				<div class="logo">현대식품관</div>
+				<div class="logo">흰디푸디</div>
 				<div id="fnDawnBizpCrstList">
 					<strong>(주)흰디푸디</strong><br> <span> 대표 : 현대IT&E 개발자
 						양성교육 1차 PJT 4조</span><br> <span> 주소 : 서울 송파구 중대로 135 </span><br>

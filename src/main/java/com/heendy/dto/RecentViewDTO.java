@@ -1,5 +1,9 @@
 package com.heendy.dto;
 
+/**
+ * @author 이지민
+ * 최근 본 상품 목록 DTO 클래스
+ * */
 public class RecentViewDTO {
 	
 	private int productId;

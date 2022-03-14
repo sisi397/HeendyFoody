@@ -9,7 +9,8 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
+ 
+  <!--404 에러페이지 -->
   <error-page>
   	<error-code>404</error-code>
   	<location>/404error.jsp</location>

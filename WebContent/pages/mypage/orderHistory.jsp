@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR" isELIgnored="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>¡÷πÆ ≥ªø™</title>
+<title>Ï£ºÎ¨∏ ÎÇ¥Ïó≠</title>
 <link href="${contextPath}/static/css/common.min.css" rel="stylesheet" type="text/css">
 <link href="${contextPath}/static/css/css-library.min.css" rel="stylesheet" type="text/css">
 <link href="${contextPath}/static/css/mypage.min.css" rel="stylesheet" type="text/css">
@@ -19,35 +19,20 @@
   <div id="wrap" class="mypage orderlist">
   <jsp:include page="../../header.jsp" flush="false" />
     <div id="contents">
-
-	  <!-- ¡¬√¯ ≥ª∫Ò∞‘¿Ãº« -->
 	  <div class="innercon">
-		<section class="lnbarea">
-		  <h2>∏∂¿Ã∆‰¿Ã¡ˆ</h2>
-		  <ul>
-		    <li class="lnb-depth1">
-			  <a href="#">»∞µø ∞¸∏Æ</a>
-			  <ul class="lnb-depth2">
-			    <li><a href="${contextPath}/mypage/order_list.do">¡÷πÆ ≥ªø™</a></li>
-	            <li><a href="${contextPath}/mypage/wish.do">¡¡æ∆ø‰</a></li>
-			    <li><a href="${contextPath}/mypage/recent_view.do">√÷±Ÿ ∫ª ªÛ«∞</a></li>
-			  </ul>
-		    </li>
-		  </ul>
-		</section> 
+      <%@ include file="/pages/mypage/sidebar.jsp" %>
 	
-		<!-- ¡÷πÆ ≥ªø™ ƒ¡≈Ÿ√˜  -->
+		<!-- Ï£ºÎ¨∏ ÎÇ¥Ïó≠ Ïª®ÌÖêÏ∏†  -->
 		<section class="conarea">
-		  <h3 class="tit">¡÷πÆ∏Ò∑œ</h3>
+		  <h3 class="tit">Ï£ºÎ¨∏Î™©Î°ù</h3>
 
 		  <div class="orderlist-area">
 	
-			<!-- ¡÷πÆ ≥ªø™¿Ã ¿÷¥Ÿ∏È -->
+			<!-- Ï£ºÎ¨∏ ÎÇ¥Ïó≠Ïù¥ ÏûàÎã§Î©¥ -->
 		  	<c:if test="${!empty orderList}">
 			    <div class="cont">
 		          <ul class="product-order-list">
-			        <c:forEach items="${orderList}" var="orderDTO">
-		                                        
+			        <c:forEach items="${orderList}" var="orderDTO">	                                        
 		              <li dlvDivision="1_DAWN" data-dlvc_pay_gbcd="10" class="product-order-item">
 		              	<label class="thumb">
 		                  <div><img src="${orderDTO.imageUrl}" class="product-img"></div>
@@ -61,51 +46,49 @@
 	                      </div>
 		                  
 		                  <span class="info2">
-		                    <p class="product-count">ºˆ∑Æ: ${orderDTO.orderCount}</p>
+		                    <p class="product-count">ÏàòÎüâ: ${orderDTO.orderCount}</p>
 		                    <span class="txt-price">
-		                      <!-- ø¯∞°øÕ ¡÷πÆ∞°(«“¿Œ∞°) ¥Ÿ∏£¥Ÿ∏È -->
+		                      <!-- ÏõêÍ∞ÄÏôÄ Ï£ºÎ¨∏Í∞Ä(Ìï†Ïù∏Í∞Ä) Îã§Î•¥Îã§Î©¥ -->
 		                      <c:if test="${orderDTO.productPrice != orderDTO.orderPrice}">
-		                           <strong><em class="str-price">${orderDTO.orderPrice}</em>ø¯</strong>
+		                           <strong><em class="str-price">${orderDTO.orderPrice}</em>Ïõê</strong>
 		                           <del>${orderDTO.productPrice}</del>
 		                      </c:if> 
-		                      <!-- ø¯∞°øÕ ¡÷πÆ∞°(«“¿Œ∞°) ∞∞¥Ÿ∏È -->
+		                      <!-- ÏõêÍ∞ÄÏôÄ Ï£ºÎ¨∏Í∞Ä(Ìï†Ïù∏Í∞Ä) Í∞ôÎã§Î©¥ -->
 		                      <c:if test="${orderDTO.productPrice == orderDTO.orderPrice}">
-		                        <strong><em class="str-price">${orderDTO.orderPrice}</em>ø¯</strong>
+		                        <strong><em class="str-price">${orderDTO.orderPrice}</em>Ïõê</strong>
 		                      </c:if>                              
 		                    </span>
 		                  </span>
 		                </div>          
 		              </li>
-		              <hr class="line">
-			
+		              <hr class="line">			
 			        </c:forEach>		
 				  </ul>
 				</div>
-		      <!-- ∆‰¿Ã¡ˆ≥◊¿Ãº« -->
+		      <!-- ÌéòÏù¥ÏßÄÎÑ§Ïù¥ÏÖò -->
 		      <div class="pagination">
 		   		<c:if test="${beginPage > pagePerList}">
-				  <a class="prev" href="${contextPath}/mypage/order_list.do?pno=${beginPage-1}">¿Ã¿¸</a>
+				  <a class="prev" href="${contextPath}/mypage/order_list.do?pno=${beginPage-1}">Ïù¥Ï†Ñ</a>
 				</c:if>
 				<c:forEach var="pno" begin="${beginPage}" end="${endPage}">
 				  <span class="num"><a href="${contextPath}/mypage/order_list.do?pno=${pno}">${pno}</a></span>
 				</c:forEach>
 				<c:if test="${endPage < totalPageCount}">
-				  <a class="next" href="${contextPath}/mypage/order_list.do?pno=${endPage + 1}">¥Ÿ¿Ω</a>
+				  <a class="next" href="${contextPath}/mypage/order_list.do?pno=${endPage + 1}">Îã§Ïùå</a>
 				</c:if>
 			  </div>
 		      </c:if>
 			
-			  <!-- ¡÷πÆ ≥ªø™¿Ã æ¯¥Ÿ∏È -->
+			  <!-- Ï£ºÎ¨∏ ÎÇ¥Ïó≠Ïù¥ ÏóÜÎã§Î©¥ -->
 		  	  <c:if test="${empty orderList}">
-		   	    <div class="nodata">¡÷πÆ≥ªø™¿Ã æ¯Ω¿¥œ¥Ÿ.</div>
+		   	    <div class="nodata">Ï£ºÎ¨∏ÎÇ¥Ïó≠Ïù¥ ÏóÜÏäµÎãàÎã§.</div>
 		      </c:if>
-		      
-				
+		      			
 		  </div>
 		</section>
 	  </div>
 	</div>
-	<jsp:include page="../../footer.jsp" flush="false" />
+	<%@ include file="/footer.jsp" %>
   </div>
 </body>
 </html>

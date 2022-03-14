@@ -1,17 +1,20 @@
 package com.heendy.dto;
 
-
+/**
+ * @author 이지민
+ * 좋아요한 상품 목록 DTO 클래스
+ * */
 public class WishDTO {
 	
-	  private int memberId;
-	  private int companyId;
-	  private int productId;
-	  private String productName;
-	  private String imageUrl;
-	  private int productPrice;
-	  private int discountPrice;
-	  private int productCount;
-	  private int deleted;
+	private int memberId;
+	private int companyId;
+	private int productId;
+	private String productName;
+	private String imageUrl;
+	private int productPrice;
+	private int discountPrice;
+	private int productCount;
+	private int deleted;
 	  
 	  
 	public int getMemberId() {

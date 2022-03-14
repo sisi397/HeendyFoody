@@ -2,8 +2,8 @@ package com.heendy.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import com.heendy.utils.DBManager;
 import oracle.jdbc.OracleTypes;
@@ -12,7 +12,7 @@ import com.heendy.dto.WishDTO;
 
 
 public class WishDAO {
-	private WishDAO() {} 
+	private WishDAO() {} //싱글턴 패턴 처리
 	private static WishDAO instance = new WishDAO();
 	public static WishDAO getInstance() {
 		return instance;
@@ -21,78 +21,81 @@ public class WishDAO {
 	private Connection conn;
 	private CallableStatement cs;
 	 
-	// ���ƿ��� ��ǰ ��� ��ȸ
-	public ArrayList<WishDTO> listWish(int beginRow, int endRow, int member_id) {
+	/**
+	 * @author : 이지민
+	 * 좋아요 목록 DAO 클래스
+	 * */
+	
+	// 좋아요 목록 조회 메서드
+	public ArrayList<WishDTO> listWish(int beginRow, int endRow, int member_id) throws SQLException {
 		System.out.println(beginRow + " to " + endRow);
 		
+		//좋아요 목록 담을 ArrayList
 		ArrayList<WishDTO> wishList = new ArrayList<WishDTO>();
 
-		String sql =  "select S.*"
-					  + " from (select rownum as rn, p.product_id, p.company_id, p.product_name, p.image_url, p.product_price, p.discount_price, p.product_count, p.deleted from member_like_product mlp, product p where mlp.product_id=p.product_id and mlp.member_id=? order by rn desc) S"
-				 	  + " where S.rn between " + beginRow + " and " + endRow;
-		  
+		//DB 연결 및 callable 문장 호출
+		Connection conn = DBManager.getConnection();
+		CallableStatement cstmt = conn.prepareCall("{call sp_list_wish(?,?,?,?)}");
 		
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-				
-		try {
-			conn = DBManager.getConnection();
-			System.out.println("***************************DB*********************************");
-			
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, member_id);		
-			rs = pstmt.executeQuery();			
-			
-			while (rs.next()) {
-				WishDTO wishDTO = new WishDTO();
-				wishDTO.setMemberId(member_id);
-				wishDTO.setCompanyId(rs.getInt("company_id"));
-				wishDTO.setProductId(rs.getInt("product_id"));
-				wishDTO.setProductName(rs.getString("product_name"));
-				wishDTO.setImageUrl(rs.getString("image_url"));
-				wishDTO.setProductPrice(rs.getInt("product_price")); //����(1�� ����)
-				wishDTO.setDiscountPrice(rs.getInt("discount_price")); //���ΰ�(1�� ����) 
-				wishDTO.setProductCount(rs.getInt("product_count"));
-				wishDTO.setDeleted(rs.getInt("deleted"));
-				wishList.add(wishDTO);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBManager.close(conn, pstmt, rs);
+		//?에 인자 넘기기
+		cstmt.setInt(1, beginRow);
+		cstmt.setInt(2, endRow);
+		cstmt.setInt(3, member_id);
+		cstmt.registerOutParameter(4, OracleTypes.CURSOR); //return 받을 위치와 타입 설정
+		
+		//수행
+		cstmt.executeQuery();
+
+		//return 값 받기
+		ResultSet rs =  (ResultSet) cstmt.getObject(4);
+		  		
+		while (rs.next()) {
+			WishDTO wishDTO = new WishDTO();
+			wishDTO.setMemberId(member_id);
+			wishDTO.setCompanyId(rs.getInt("company_id"));
+			wishDTO.setProductId(rs.getInt("product_id"));
+			wishDTO.setProductName(rs.getString("product_name"));
+			wishDTO.setImageUrl(rs.getString("image_url"));
+			wishDTO.setProductPrice(rs.getInt("product_price")); //원가
+			wishDTO.setDiscountPrice(rs.getInt("discount_price")); //할인가 
+			wishDTO.setProductCount(rs.getInt("product_count"));
+			wishDTO.setDeleted(rs.getInt("deleted"));
+			wishList.add(wishDTO);
 		}
+		
+		rs.close();
+		cstmt.close();
+		conn.close();	
+		
 		return wishList;
 	}
 	
 	
-	//���ƿ��� ��ǰ �� ��
-	public int totalWishCount(int member_id) {
+	//총 좋아요 개수 조회 메서드
+	public int totalWishCount(int member_id) throws SQLException {
 		
+		//변수 초기화
 		int result = 0;
-		String sql = "select count(*) from member_like_product where member_id=?";
 		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+		//DB 연결 및 callable 문장 수행
+		Connection conn = DBManager.getConnection();
+		CallableStatement cstmt = conn.prepareCall("{call sp_totalcount_wish(?,?)}");
 		
-		try {
-			conn = DBManager.getConnection();
-			System.out.println("***************************DB*********************************");
-			pstmt = conn.prepareStatement(sql);	
-			pstmt.setInt(1, member_id);		
-			rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				result = rs.getInt(1);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBManager.close(conn, pstmt, rs);
-		}
+		//?에 인자 넘기기
+		cstmt.setInt(1, member_id);
+		cstmt.registerOutParameter(2, OracleTypes.INTEGER); //return 받을 위치와 타입 설정
+		
+		//수행
+		cstmt.executeQuery();
+
+		//return 값 받기
+		result = cstmt.getInt(2);
+				
+		cstmt.close();
+		conn.close();
+		
 		return result;	
 		}
-
 
 
 

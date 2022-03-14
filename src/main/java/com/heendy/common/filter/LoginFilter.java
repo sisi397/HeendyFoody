@@ -18,7 +18,7 @@ import com.heendy.dto.MemberDTO;
 /**
  * Servlet Filter implementation class LoginFilter
  */
-@WebFilter(urlPatterns = {"/member/memberJoin.do", "/member/memberLogin.do", "/mypage/*", "/company/*"})
+@WebFilter(urlPatterns = {"/member/memberJoin.do", "/member/memberLogin.do", "/mypage/*" }) //"/company/*"
 public class LoginFilter implements Filter {
 
     /**
