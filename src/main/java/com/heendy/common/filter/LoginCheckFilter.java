@@ -22,11 +22,7 @@ import com.heendy.utils.UserService;
 /**
  * Servlet Filter implementation class LoginCheckFilter
  */
-@WebFilter(filterName="loginCheckFilter", urlPatterns = {
-		"/mypage/*",
-		"/cart/shoppingCartList.do",
-		"/company/*",
-        })
+@WebFilter(filterName="loginCheckFilter")
 public class LoginCheckFilter implements Filter {
 
 	private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
@@ -57,7 +53,7 @@ public class LoginCheckFilter implements Filter {
 		try {
 			
 			MemberDTO member = userService.loadUser(session).orElseThrow(MemberNotExistSession::new);
-			
+			System.out.println(member.getMemberName() + "$$$$$$$$$$$$$$$$$$$$$$$");
 			req.setAttribute("loginUser", member);
 			chain.doFilter(request, response);
 			

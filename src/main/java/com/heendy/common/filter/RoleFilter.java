@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+import com.heendy.common.ErrorCode;
+import com.heendy.common.ErrorResponse;
 import com.heendy.common.exception.MemberNotExistSession;
 import com.heendy.dto.MemberDTO;
 import com.heendy.utils.SessionUserService;
@@ -23,11 +26,7 @@ import com.heendy.utils.UserService;
 /**
  * Servlet Filter implementation class RoleFilter
  */
-@WebFilter(filterName="roleFilter", urlPatterns = {
-		"/mypage/*",
-		"/cart/shoppingCartList.do",
-		"/company/*",
-        })
+@WebFilter(filterName="roleFilter")
 public class RoleFilter implements Filter {
 	
 	
@@ -54,18 +53,50 @@ public class RoleFilter implements Filter {
 			
 		//로그인된 세션(클라이언트)인지 확인(HttpSession객체를 얻으려면 HttpServletRequest가 필요.)
 		HttpServletRequest req = (HttpServletRequest)request;
+		HttpServletResponse res = (HttpServletResponse)response;
 		
 		MemberDTO member = (MemberDTO)req.getAttribute("loginUser");
+		System.out.println(member +"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 
 		String toPath = req.getServletPath();
+		String requestPath = req.getRequestURI().substring(req.getContextPath().length());
+		System.out.println("requestPath: " + requestPath);
+
 		
-		if (member.getRoleId() == 2 && toPath.equals("/company")) {
-			HttpServletResponse res = (HttpServletResponse)response;
+		if (member.getRoleId() == 1 && (
+				requestPath.equals("/cart/create.do") || 
+				requestPath.equals("/cart/addCount.do") ||
+				requestPath.equals("/cart/minusCount.do") ||
+				requestPath.equals("/cart/delete.do") ||
+				toPath.equals("/wish") ||
+				toPath.equals("/order") ||
+				requestPath.equals("/product/select.do") 
+				)) { 
+			
+			System.out.println("%%%%%%%%%%%%%%%%%%%%%");
+			ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.FORBIDDEN_USER);
+			String json = new Gson().toJson(errorResponse);
+			res.setStatus(errorResponse.getStatus());
+			res.getWriter().write(json);
+			
+		} else if (member.getRoleId() == 2 && (
+				requestPath.equals("/company/createProduct.do") ||
+				requestPath.equals("/company/orderinfoChart.do") || 
+				requestPath.equals("/company/productList.do") )) {
+				
+			ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.FORBIDDEN_USER);
+			String json = new Gson().toJson(errorResponse);
+			res.setStatus(errorResponse.getStatus());
+			res.getWriter().write(json);
+			
+		} else if (member.getRoleId() == 2 && toPath.equals("/company")) {
+
 			res.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = res.getWriter();
 			out.println("<script>alert('접근할 수 없는 페이지입니다');location.href='http://localhost:8090/HeendyFoody'</script>");
+		
 		} else if (member.getRoleId() == 1 && !toPath.equals("/company")) {
-			HttpServletResponse res = (HttpServletResponse)response;
+
 			res.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = res.getWriter();
 			out.println("<script>alert('접근할 수 없는 페이지입니다');location.href='http://localhost:8090/HeendyFoody/company/company.do'</script>");

@@ -29,13 +29,27 @@
 		<filter-name>loginCheckFilter</filter-name>
 		<url-pattern>/mypage/*</url-pattern>
 		<url-pattern>/cart/shoppingCartList.do</url-pattern>
-		<url-pattern>/company/*</url-pattern>
+		<url-pattern>/company/company.do</url-pattern>
+		<url-pattern>/company/createProductForm.do</url-pattern>	
 	</filter-mapping>
 	
 	<filter-mapping>
+		<filter-name>apiCheckFilter</filter-name>
+		<url-pattern>/cart/create.do</url-pattern>
+		<url-pattern>/cart/addCount.do</url-pattern>
+		<url-pattern>/cart/minusCount.do</url-pattern>
+		<url-pattern>/cart/delete.do</url-pattern>
+		<url-pattern>/wish/*</url-pattern>
+		<url-pattern>/order/*</url-pattern>
+		<url-pattern>/company/createProduct.do</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
 		<filter-name>roleFilter</filter-name>
 		<url-pattern>/mypage/*</url-pattern>
-		<url-pattern>/cart/shoppingCartList.do</url-pattern>
+		<url-pattern>/cart/*</url-pattern>
+		<url-pattern>/order/*</url-pattern>
+		<url-pattern>/wish/*</url-pattern>
 		<url-pattern>/company/*</url-pattern>
 	</filter-mapping>
 

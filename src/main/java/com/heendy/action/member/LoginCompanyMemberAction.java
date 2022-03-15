@@ -54,9 +54,8 @@ public class LoginCompanyMemberAction implements Action {
 
 		}else {
 			System.out.println("업체 로그인 실패");
-			url="/pages/login/loginFail.jsp";
-			request.setAttribute("msg", "아이디와 비밀번호를 다시 확인하세요.");
-			request.getRequestDispatcher(url).forward(request, response);
+			url=request.getContextPath() + "/pages/login/loginFail.jsp";
+			response.sendRedirect(url);
 		}
 	}
 
