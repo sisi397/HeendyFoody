@@ -42,6 +42,9 @@
 		<url-pattern>/wish/*</url-pattern>
 		<url-pattern>/order/*</url-pattern>
 		<url-pattern>/company/createProduct.do</url-pattern>
+		<url-pattern>/company/productList.do</url-pattern>
+		<url-pattern>/company/orderinfoChart.do</url-pattern>
+		<url-pattern>/company/ageinfoChart.do</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>
@@ -61,7 +64,7 @@
 
 	<context-param>
 		<param-name>WindowsUploadImagePath</param-name>
-		<param-value></param-value>
+		<param-value>C:/Users/jiminlee/Desktop/upload</param-value>
 	</context-param>
 	
   <error-page>

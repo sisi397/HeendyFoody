@@ -71,7 +71,9 @@ width: 55%;
 							<a href="${contextPath}/member/logout.do">로그아웃</a>
 						</c:otherwise>
 					</c:choose>
+					<c:if test="${sessionScope.loginUser.roleId == 2}">
 					<a href="${contextPath}/mypage/info.do">마이페이지</a>
+					</c:if>
 				</div>
 
 			</div>

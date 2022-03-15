@@ -37,6 +37,7 @@ public class ProductListAction implements Action {
 			response.setCharacterEncoding("utf-8");
 			try{
 				MemberDTO member = (MemberDTO) request.getAttribute("loginUser");
+				System.out.println(member + "**************productlistaction*************");
 				int cid = member.getMemberId();
 				
 				// chartDataDAO에서 업체별 상품정보를 가져옴

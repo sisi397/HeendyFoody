@@ -55,8 +55,9 @@ public class RoleFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse res = (HttpServletResponse)response;
 		
+		
 		MemberDTO member = (MemberDTO)req.getAttribute("loginUser");
-		System.out.println(member +"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+		System.out.println(member.getMemberName() +"^^^^^^^^^^^rolefilter^^^^^^^^^^^^^^");
 
 		String toPath = req.getServletPath();
 		String requestPath = req.getRequestURI().substring(req.getContextPath().length());
@@ -77,7 +78,6 @@ public class RoleFilter implements Filter {
 				requestPath.equals("/product/select.do") 
 				)) { 
 			
-			System.out.println("%%%%%%%%%%%%%%%%%%%%%");
 			ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.FORBIDDEN_USER);
 			String json = new Gson().toJson(errorResponse);
 			res.setStatus(errorResponse.getStatus());

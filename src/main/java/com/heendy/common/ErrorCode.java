@@ -35,7 +35,11 @@ public enum ErrorCode {
 	INVALID_FIELDS("ERROR-042","요청한 필드의 값이 유효하지 않습니다.",400),
 	
 	NOT_SUPPORT_IMAGE_FILE("ERROR-043","지원되지 않는 파일 확장자 입니다.", 400),
-	
+	/*
+	 * author : 이지민
+	 * 공통 Error code
+	 * */
+	SERVER_CHECK_TIME("ERROR-045", "서버 점검 시간입니다.", 400),
 	
 	
 	/*
