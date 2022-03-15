@@ -28,18 +28,8 @@ import com.heendy.utils.UserService;
  * API 검증필터로, 인증되지 않은 사용자를 검증하는 필터이다.
  */
 
-@WebFilter(urlPatterns = 
-	{ 
-			"/cart/create.do", 
-			"/cart/addCount.do", 
-			"/cart/minusCount.do", 
-			"/cart/delete.do",
-			"/wish/*",
-			"/order/*",
-			"/product/list.do",
-			"/product/select.do",
-			"/company/"
-	})
+
+@WebFilter(filterName="apiCheckFilter")
 
 public class APISecurityFilter implements Filter {
 
@@ -56,6 +46,7 @@ public class APISecurityFilter implements Filter {
 		
 		HttpServletRequest req = (HttpServletRequest) request;
 		
+
 
 		HttpSession session = req.getSession();
 

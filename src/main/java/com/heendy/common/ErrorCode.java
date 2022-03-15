@@ -30,6 +30,8 @@ public enum ErrorCode {
 	
 	UNATHORIZED_USER("ERROR-041","인증되지 않은 사용자입니다.",401),
 	
+	FORBIDDEN_USER("ERROR-044", "권한이 없는 사용자입니다.", 403),
+	
 	INVALID_FIELDS("ERROR-042","요청한 필드의 값이 유효하지 않습니다.",400),
 	
 	NOT_SUPPORT_IMAGE_FILE("ERROR-043","지원되지 않는 파일 확장자 입니다.", 400),

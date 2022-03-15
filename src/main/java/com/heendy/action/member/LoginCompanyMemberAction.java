@@ -49,14 +49,15 @@ public class LoginCompanyMemberAction implements Action {
 		
 		
             
-			url = request.getContextPath() + "/company/company.do";	//로그인 성공 시 이동할 페이지 지정
-			response.sendRedirect(url);
+			//url = request.getContextPath() + "/company/company.do";	//로그인 성공 시 이동할 페이지 지정
+			//response.sendRedirect(url);
+			url = "/company/company.do";
+			request.getRequestDispatcher(url).forward(request, response);
 
 		}else {
 			System.out.println("업체 로그인 실패");
-			url="/pages/login/loginFail.jsp";
-			request.setAttribute("msg", "아이디와 비밀번호를 다시 확인하세요.");
-			request.getRequestDispatcher(url).forward(request, response);
+			url=request.getContextPath() + "/pages/login/loginFail.jsp";
+			response.sendRedirect(url);
 		}
 	}
 
