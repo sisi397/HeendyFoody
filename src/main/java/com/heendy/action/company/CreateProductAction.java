@@ -14,6 +14,7 @@ import com.heendy.common.ErrorCode;
 import com.heendy.common.ErrorResponse;
 import com.heendy.dao.ProductDAO;
 import com.heendy.dto.CreateProductDTO;
+import com.heendy.dto.MemberDTO;
 
 /**
  * @author 이승준
@@ -27,8 +28,7 @@ public class CreateProductAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		/* test 업체 아이디 */
-		int companyId = 1;
+		MemberDTO member = (MemberDTO) request.getAttribute("loginUser");
 
 		String productName = request.getParameter("productName");
 		int price = Integer.parseInt(request.getParameter("price"));
@@ -39,7 +39,7 @@ public class CreateProductAction implements Action {
 
 		try {
 
-			CreateProductDTO createProductDTO = new CreateProductDTO(companyId, productName, price, dicountRate, count,
+			CreateProductDTO createProductDTO = new CreateProductDTO(member.getMemberId(), productName, price, dicountRate, count,
 					imageUrl, categoryId);
 
 			productDAO.createProduct(createProductDTO);

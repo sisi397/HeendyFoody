@@ -40,7 +40,7 @@ public class OrderProductAction implements Action {
 
 		try {
 			
-		    MemberDTO member = (MemberDTO) request.getAttribute("member");
+			MemberDTO member = (MemberDTO) request.getAttribute("loginUser");
 
 			int proudctId = Integer.parseInt(request.getParameter("product_id"));
 			int companyId = Integer.parseInt(request.getParameter("company_id"));

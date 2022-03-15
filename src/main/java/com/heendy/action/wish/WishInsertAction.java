@@ -32,7 +32,7 @@ import com.heendy.utils.UserService;
 public class WishInsertAction implements Action{
 
 	private final WishDAO wishDAO = WishDAO.getInstance();
-	private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
+	//private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,8 +42,10 @@ public class WishInsertAction implements Action{
 		try{
 			int pid = Integer.parseInt(request.getParameter("productId"));
 			int cid = Integer.parseInt(request.getParameter("companyId"));
-			MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
+			//MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
 			// 좋아요 추가
+			
+			MemberDTO member = (MemberDTO) request.getAttribute("loginUser");	
 			int wishInsert = wishDAO.insertWish(member.getMemberId(), pid, cid);
 			
 			response.setStatus(201);

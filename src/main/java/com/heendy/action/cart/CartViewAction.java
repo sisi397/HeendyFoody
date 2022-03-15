@@ -34,7 +34,7 @@ public class CartViewAction implements Action {
 		try {
 
 		
-			MemberDTO member = (MemberDTO) request.getAttribute("member");
+			MemberDTO member = (MemberDTO) request.getAttribute("loginUser");
 
 			List<CartItemDTO> cartList = cartDAO.getCartList(member.getMemberId());
 			

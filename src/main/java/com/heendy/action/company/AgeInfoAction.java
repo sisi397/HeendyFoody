@@ -30,19 +30,16 @@ import com.heendy.utils.UserService;
 public class AgeInfoAction implements Action {
 
 	private final ChartDataDAO chartDataDAO = ChartDataDAO.getInstance();
-	private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
 		try{
-			//MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
-			
-			int cid = 1; //업체 id
+			MemberDTO member = (MemberDTO) request.getAttribute("loginUser");
 
 			// 구매자 연령층 정보를 chartDataDAO에서 받아옴
-			List<JSONObject> data = chartDataDAO.ageInfo(cid);
+			List<JSONObject> data = chartDataDAO.ageInfo(member.getMemberId());
 			
 			JSONObject responseObj = new JSONObject();
 			responseObj.put("ageinfo", data);

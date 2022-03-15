@@ -12,9 +12,13 @@ import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
 import com.heendy.dao.MemberDAO;
 import com.heendy.dto.MemberDTO;
+import com.heendy.utils.SessionUserService;
+import com.heendy.utils.UserService;
 
 public class LoginMemberAction implements Action{
 	private final MemberDAO memberDAO = MemberDAO.getInstance();
+	
+	private final UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,8 +45,8 @@ public class LoginMemberAction implements Action{
 			memberVO = memberDAO.getMember(member_name); //성공했으면 멤버를 조회해서 속성들을 가져온다
 
 			HttpSession session = request.getSession();
-//			session.setAttribute("member_id", true); //isLogin 속성을 true로 저장
-			session.setAttribute("loginUser", memberVO);
+		
+			userService.saveUser(memberVO, session);
 			url="/member/index.do";
 			request.getRequestDispatcher(url).forward(request, response);
 		}else {		//로그인 실패시

@@ -31,7 +31,6 @@ import com.heendy.utils.UserService;
 public class OrderInfoAction implements Action {
 
 	private final ChartDataDAO chartDataDAO = ChartDataDAO.getInstance();
-	private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,7 +41,8 @@ public class OrderInfoAction implements Action {
 			int pid = Integer.parseInt(request.getParameter("productId")); // 주문 내역을 분석할 상품 (전체상품(0) or 상품id)
 			//MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
 			
-			int cid = 1; //업체 id
+			MemberDTO member = (MemberDTO) request.getAttribute("loginUser");
+			int cid = member.getMemberId(); //업체 id
 			
 			// chartDataDAO에서 주문내역 정보를 가져옴
 			List<JSONObject> data = chartDataDAO.orderInfo(cid, sort, pid);

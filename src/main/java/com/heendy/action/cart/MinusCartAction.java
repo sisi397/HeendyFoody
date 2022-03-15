@@ -29,7 +29,7 @@ public class MinusCartAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 
-		MemberDTO member = (MemberDTO) request.getAttribute("member");
+		MemberDTO member = (MemberDTO) request.getAttribute("loginUser");
 
 		try {
 		

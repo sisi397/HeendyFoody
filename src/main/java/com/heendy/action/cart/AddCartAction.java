@@ -34,7 +34,7 @@ public class AddCartAction implements Action {
 
 		try {
 
-			MemberDTO member = (MemberDTO) request.getAttribute("member");
+			MemberDTO member = (MemberDTO) request.getAttribute("loginUser");
 
 			int cartId = Integer.parseInt(request.getParameter("cart_id"));
 			int count = Integer.parseInt(request.getParameter("count"));

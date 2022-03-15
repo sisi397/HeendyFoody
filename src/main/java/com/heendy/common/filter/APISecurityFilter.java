@@ -25,12 +25,21 @@ import com.heendy.utils.UserService;
  * 
  * @author 이승준
  *
- *         API 검증필터로, 인증되지 않은 사용자를 검증하는 필터이다.
+ * API 검증필터로, 인증되지 않은 사용자를 검증하는 필터이다.
  */
 
-@WebFilter(urlPatterns = { "/cart/create.do", "/cart/addCount.do", "/cart/minusCount.do", "/cart/delete.do", "/wish/*",
-		"/order/*" })
-
+@WebFilter(urlPatterns = 
+	{ 
+			"/cart/create.do", 
+			"/cart/addCount.do", 
+			"/cart/minusCount.do", 
+			"/cart/delete.do",
+			"/wish/*",
+			"/order/*",
+			"/product/list.do",
+			"/product/select.do",
+			"/company/createProduct.do"
+	})
 public class APISecurityFilter implements Filter {
 
 	private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
@@ -43,8 +52,13 @@ public class APISecurityFilter implements Filter {
 
 		res.setContentType("application/json");
 		res.setCharacterEncoding("utf-8");
-
+		
 		HttpServletRequest req = (HttpServletRequest) request;
+		
+		System.out.println(req.getRequestURI());
+		
+		String requestPath = req.getRequestURL().substring(req.getContextPath().length()+1);
+
 		HttpSession session = req.getSession();
 
 		try {
