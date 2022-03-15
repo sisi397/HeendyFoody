@@ -12,11 +12,6 @@
 
 <!-- 로딩바스타일 -->
 <style type="text/css">
-body {
-	text-align: center;
-	margin: 0 auto;
-}
-
 #Progress_Loading {
 	position: absolute;
 	left: 50%;
@@ -105,8 +100,8 @@ body {
 			<section class="categoryprod"></section>
 			<!-- 카테고리별 상품 끝 //-->
 
-			<jsp:include page="footer.jsp" flush="false" />
 		</div>
+		<jsp:include page="footer.jsp" flush="false" />
 	</div>
 	<script>
 		$(document).ready(function(){
