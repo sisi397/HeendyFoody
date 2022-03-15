@@ -2,40 +2,49 @@ package com.heendy.action.cart;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 import com.google.gson.Gson;
 import com.heendy.action.Action;
 import com.heendy.common.ErrorCode;
 import com.heendy.common.ErrorResponse;
 import com.heendy.common.SQLErrorCode;
+import com.heendy.common.ValidableAction;
 import com.heendy.dao.CartDAO;
+import com.heendy.dto.MemberDTO;
 import com.heendy.dto.cart.CreateCartDTO;
+import com.heendy.utils.Validation;
+
 
 /**
- * @author 이승준 장바구니 신규 생성을 위한 Action 클래스
+ * @author 이승준 
+ * 
+ * 장바구니 신규 생성을 위한 Action 클래스
  */
 public class CreateCartAction implements Action {
 
 	private final CartDAO cartDAO = CartDAO.getInstance();
+	
+	
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			response.setContentType("application/json");
-			response.setCharacterEncoding("utf-8");
+			
+			MemberDTO member = (MemberDTO) request.getAttribute("member");
 
-			/* 테스트용 멤버 id */
-			int memberId = 6;
 
 			int productId = Integer.parseInt(request.getParameter("product_id"));
 			int companyId = Integer.parseInt(request.getParameter("company_id"));
 			int count = Integer.parseInt(request.getParameter("count"));
 
-			CreateCartDTO data = new CreateCartDTO(productId, companyId, memberId, count);
+			CreateCartDTO data = new CreateCartDTO(productId, companyId, member.getMemberId(), count);
 			this.cartDAO.createCart(data);
 
 			response.setStatus(201);
@@ -66,5 +75,6 @@ public class CreateCartAction implements Action {
 		}
 
 	}
+	
 
 }

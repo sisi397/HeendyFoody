@@ -5,7 +5,6 @@
 <%
 request.setCharacterEncoding("UTF-8");
 %>
-
 <!-- /HeendyFoody 까지 표시 -->
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
@@ -53,7 +52,7 @@ width: 55%;
 		<div class="inner">
 			<!-- toparea// -->
 			<div class="toparea">
-				<h1>
+				<h1 style="margin-top:0px">
 					<a href="${contextPath}/member/index.do"><img
 						src="${contextPath}/static/images/common/logo_header.png"
 						alt="흰디푸디" class="heendy-logo-header"></a>
@@ -72,7 +71,7 @@ width: 55%;
 							<a href="${contextPath}/member/logout.do">로그아웃</a>
 						</c:otherwise>
 					</c:choose>
-					<a href="#">마이페이지</a>
+					<a href="${contextPath}/mypage/info">마이페이지</a>
 				</div>
 
 			</div>

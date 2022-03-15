@@ -1,10 +1,17 @@
 package com.heendy.dto;
 
+
+/**
+ * @author 김시은
+ * 
+ * 페이지 정보 DTO
+ * 
+ * */
 public class PageDTO {
-	private int beginPageNumber;
-	private int endPageNumber;
-	private int pagePerList;
-	private int totalPage;
+	private int beginPageNumber; // 시작페이지
+	private int endPageNumber; // 끝 페이지
+	private int pagePerList; // 페이지당 리스트 개수
+	private int totalPage; // 전체 페이지 수
 	
 	public PageDTO(int beginPageNumber, int endPageNumber, int pagePerList, int totalPage) {
 		super();

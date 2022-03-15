@@ -13,51 +13,27 @@ import javax.servlet.http.HttpServletResponse;
 import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
 import com.heendy.action.member.MemberActionFactory;
-import com.heendy.dao.MemberDAO;
-import com.heendy.dto.MemberDTO;
 
-/**
- * Servlet implementation class MemberController
- */
 @WebServlet("/member/*")
 public class MemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	MemberDAO memberDAO;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public MemberController() {
         super();
     }
 
-	/**
-	 * @see Servlet#init(ServletConfig)
-	 */
 	public void init() throws ServletException {
-		memberDAO = MemberDAO.getInstance();
 		System.out.println("멤버 컨트롤러 실행");
 	}
 
-	/**
-	 * @see Servlet#destroy()
-	 */
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doHandle(request, response);
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doHandle(request, response);
 	}
 	
@@ -70,7 +46,7 @@ public class MemberController extends HttpServlet {
 		ActionFactory af = MemberActionFactory.getInstance();
 		Action action = af.getAction(command);
 		
-		if(command != null && action != null) {
+		if(action != null) {
 		System.out.println(action + "을 실행합니다.");
 		action.execute(request, response);
 		}

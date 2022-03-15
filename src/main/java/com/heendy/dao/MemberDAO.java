@@ -28,8 +28,8 @@ public class MemberDAO {
 
 	//회원 추가하기
 	public void addMember(MemberDTO memberVO) {
-		String sql = "insert into member(member_name, member_password, member_email, address, role_id) "
-				+ "values(?, pack_crypto.func_encrypt(?), ?, ?, ?) ";
+		String sql = "insert into member(member_name, member_password, member_email, address, role_id, birth_date) "
+				+ "values(?, pack_crypto.func_encrypt(?), ?, ?, ?, ?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;	    
 		try {
@@ -40,6 +40,7 @@ public class MemberDAO {
 			pstmt.setString(3, memberVO.getMemberEmail());
 			pstmt.setString(4, memberVO.getAddress());
 			pstmt.setInt(5, memberVO.getRoleId());
+			pstmt.setString(6, memberVO.getBirthDate());
 			pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -158,12 +159,12 @@ public class MemberDAO {
 
 		MemberDTO memberVO= null;
 		String sql = "select * from member where member_name=?";	     
-		Connection connn = null;
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			connn = DBManager.getConnection();
-			pstmt = connn.prepareStatement(sql);
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);
 			rs = pstmt.executeQuery();
 			if(rs.next()){
@@ -180,7 +181,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBManager.close(connn, pstmt, rs);
+			DBManager.close(conn, pstmt, rs);
 		}
 		return memberVO;
 	}

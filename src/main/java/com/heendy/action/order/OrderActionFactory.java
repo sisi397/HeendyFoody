@@ -10,6 +10,8 @@ private final static ActionFactory factory = new OrderActionFactory();
 	
 	private OrderActionFactory() {} 
 	
+
+	
 	public static ActionFactory getInstance() {
 		return factory;
 	}
@@ -18,10 +20,12 @@ private final static ActionFactory factory = new OrderActionFactory();
 	public Action getAction(String command) {
 		Action action = null;
 		
+		
+		
 		if(command.equals("/orderProduct.do")) {
-			action = new OrderProductAction();
+			action = new OrderProductProxyAction(new OrderProductAction());
 		} else if (command.equals("/orderCartProducts.do")) {
-			action = new OrderCartProductsAction();
+			action = new OrderCartProductsProxyAction(new OrderCartProductsAction());
 		}
 		
 		return action;
