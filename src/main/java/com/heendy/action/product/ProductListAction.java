@@ -19,10 +19,15 @@ import com.heendy.dao.ProductDAO;
 import com.heendy.dto.CategoryDTO;
 import com.heendy.dto.ProductDTO;
 
+/**
+ * @author 김시은
+ * 
+ * 메뉴에 따라 상품 리스트를 불러오는 Action 클래스
+ * 
+ */
 public class ProductListAction implements Action {
 
 	private final ProductDAO productDAO = ProductDAO.getInstance();
-	private final CategoryDAO categoryDAO = CategoryDAO.getInstance();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,9 +37,9 @@ public class ProductListAction implements Action {
 			// 파라미터 정보 가져오기
 			String beginRowStr = request.getParameter("beginRow");
 			String endRowStr = request.getParameter("endRow");
-			String sort = request.getParameter("sort");
-			String menu = request.getParameter("menu");
-			String pno = request.getParameter("pno");
+			String sort = request.getParameter("sort"); // 정렬기준
+			String menu = request.getParameter("menu"); // 메뉴정보
+			String pno = request.getParameter("pno"); // 페이지 정보
 			
 			// 카테고리 정보
 			int cate = 0;
@@ -48,6 +53,7 @@ public class ProductListAction implements Action {
 				}
 			}
 			
+			// 화면에 뿌려줄 페이지 열번호 구하기
 			int totalCount = productDAO.totalCountProduct(menu, cate, pcate);
 			int pageNumber = 1;
 			int listPerPage = 20;
@@ -56,6 +62,7 @@ public class ProductListAction implements Action {
 			if(pno != null && pno.length() > 0)
 				pageNumber = Integer.parseInt(pno);
 			
+			// 시작, 끝 열번호 구하기.
 			int beginRow = 0;
 			int endRow = 0;
 			if(beginRowStr != null && endRowStr != null) {
@@ -90,7 +97,6 @@ public class ProductListAction implements Action {
 			response.getWriter().write(json);
 			
 		} catch (SQLException e){
-			int errorCode = e.getErrorCode();
 			ErrorResponse errorResponse;
 			
 			errorResponse = ErrorResponse.of(ErrorCode.UNCAUGHT_SERVER_ERROR);

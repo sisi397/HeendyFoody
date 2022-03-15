@@ -15,23 +15,14 @@ import javax.servlet.annotation.WebFilter;
 @WebFilter("/HeendyFoody/*")
 public class EncodingFilter implements Filter {
 	private String encoding = "utf-8";	//필드에 encoding변수 저장
-    /**
-     * Default constructor. 
-     */
+
     public EncodingFilter() {
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see Filter#destroy()
-	 */
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
+
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		System.out.println("인코딩 필터 동작중...");
 		//요청 인코딩이 설정되지 않은 경우

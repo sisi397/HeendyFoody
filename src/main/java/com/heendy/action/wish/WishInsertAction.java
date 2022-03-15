@@ -36,11 +36,13 @@ public class WishInsertAction implements Action{
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("application/json");
+		response.setCharacterEncoding("utf-8");
+		
+		try{
 			int pid = Integer.parseInt(request.getParameter("productId"));
 			int cid = Integer.parseInt(request.getParameter("companyId"));
 			MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
-		
-		try{
 			// 좋아요 추가
 			int wishInsert = wishDAO.insertWish(member.getMemberId(), pid, cid);
 			

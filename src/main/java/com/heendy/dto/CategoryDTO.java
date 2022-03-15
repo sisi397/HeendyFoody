@@ -1,5 +1,11 @@
 package com.heendy.dto;
 
+/**
+ * @author 김시은
+ * 
+ * 카테고리 정보 DTO
+ * 
+ * */
 public class CategoryDTO {
 	private int categoryId;
 	private String categoryName;

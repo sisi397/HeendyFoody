@@ -19,9 +19,26 @@ import com.heendy.utils.SessionUserService;
 import com.heendy.utils.UserService;
 
 /**
- * Servlet Filter implementation class LoginFilter
+ * @author 문석호
+ * 로그인 검증 필터 세션이 로그인 한 기록을 가지고 있다면 
+ * 접근을 막아야할 action을 담는다.
+ * 막은 접근은 메인페이지로 redirect 한다.
+ *
  */
-@WebFilter(urlPatterns = {"/member/memberJoin.do", "/member/memberLogin.do", "/mypage/*" ,"/cart/shoppingCartList.do"})
+
+@WebFilter(urlPatterns = {
+		"/member/memberJoin.do", 	//로그인 페이지로 이동 
+		"/member/addMember.do",		//회원가입 기능
+		"/member/loginMember.do", 	//로그인 기능
+		"/member/idCheck.do",		//아이디 중복 확인 기능
+		"/member/findMemberId.do",	//아이디 찾기 기능
+		"/member/findMemberPw.do",	//비밀번호 찾기 기능
+		"/member/addCompanyMember.do",	//업체 회원가입 기능
+		"/member/memberLogin.do",	//회원가입 페이지로 이동
+		"/member/loginCompanyMember.do",	//업체 로그인 기능
+        "/mypage/*"
+        })
+
 public class LoginFilter implements Filter {
 
 	private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
@@ -29,19 +46,12 @@ public class LoginFilter implements Filter {
      * Default constructor. 
      */
     public LoginFilter() {
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see Filter#destroy()
-	 */
+
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		try {
 			
