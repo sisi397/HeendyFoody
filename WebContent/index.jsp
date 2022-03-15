@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
@@ -63,7 +64,26 @@
 								style='color:; font-weight: bold'>알뜰 장보기</strong> <small
 								style='color:; font-weight: normal'>지금 이 순간 만날 수 있는 특가</small>
 						</h2>
-						<div class='saleprod'></div>
+						<div class='saleprod'>
+					      	<div class='swiper-container timesaleswiper'>
+					      		<c:forEach items="${saleProduct}" var="product">
+					      		<div class='swiper-wrapper'>
+						      		<div class='swiper-slide' data-time-start='' data-time-end=''>
+						      		<a href='${contextPath}/product/detail.do?pid=${product.productId}&cid=${product.companyId}'>
+							      		<span class='thumb'>
+								      		<img src="${product.imageUrl}"alt='' onerror=''>
+								      		<span class='badge'><strong>${product.discountRate }%</strong></span>
+							      		</span>
+							      		<strong class='txt-ti ellipsis'>${product.productName }</strong>
+							      		<strong><em>${product.discountPrice }</em>원</strong><del>${product.productPrice}원</del>
+							      		<span class='txt-price'></span> 
+						      		</a>
+						      		<button type='button' class='btn-cart' onclick=''>장바구니 담기</button>
+						      		</div>
+					      		</div>
+						      	</c:forEach>
+					      	</div>
+						</div>
 					</div>
 				</section>
 			</div>
@@ -78,7 +98,27 @@
 						style='color:; font-weight: bold'>Heendy's Pick</strong><small
 						style='color:; font-weight: normal'></small>
 				</h2>
-				<ul class='product-list small bestprodlist'></ul>
+				<ul class='product-list small bestprodlist'>
+					<c:forEach items="${bestProduct}" var="product">
+			       	<li>
+			       		<a href='${contextPath}/product/detail.do?pid=${product.productId }&cid=${product.companyId}'>
+			       		<span class='thumb'>
+			       		<img src='https://tohomeimage.thehyundai.com/PD/PDImages//S/7/0/3/8809539023489_01.jpg?RS=350x420' alt='' onerror=''>
+			       		<div class='badgewrap'>
+			       		<c:if test="${product.discountRate > 0}">
+			       			<span class='badge'><strong>${product.discountRate }%</strong></span>
+			       		</c:if>
+			       		</div>
+			       		</span>
+			       		<strong class='txt-ti'>${product.productName }</strong> </a>
+			       		<span class='info'><span class='txt-price'><strong><em>${product.discountPrice }</em>원</strong>
+			       		<c:if test="${product.discountRate > 0}">
+			       			<del>${product.productPrice}</del>
+			       		</c:if>
+			       		</span><button type='button' class='btn-cart' onclick=''>장바구니 담기</button></span>
+			       	</li>
+			       	</c:forEach>
+				</ul>
 			</section>
 			<!-- 좋아요 많은 상품 끝 // -->
 			<!-- // 신상품 리스트 -->
@@ -93,11 +133,95 @@
 						href='${contextPath}/product/detail.do?'
 						class='btn all'>전체보기</a>
 				</h2>
-				<ul class='product-list newprodlist'></ul>
+				<ul class='product-list newprodlist'>
+					<c:forEach items="${saleProduct}" var="product">
+			       	<li>
+				       	<a href='${contextPath}/product/detail.do?pid=${product.productId }&cid=${product.companyId}'>
+					       	<span class='thumb'>
+					       	<img src='https://tohomeimage.thehyundai.com/PD/PDImages//S/7/0/3/8809539023489_01.jpg?RS=350x420' alt='' onerror=''>
+						       	<div class='badgewrap'>
+						       	<c:if test="${product.discountRate > 0}">
+						       		<span class='badge'><strong>${product.discountRate}%</strong></span>
+						       	</c:if>
+					       		</div>
+				       		</span>
+				       		<strong class='txt-ti ellipsis'>${product.productName }</strong> 
+				       	</a>
+				       	<span class='info'>
+				       		<span class='txt-price'><strong><em>${product.discountPrice}</em>원</strong>
+					       	<c:if test="${product.discountRate > 0}">
+					       		<del>${product.productPrice }</del>
+						   	</c:if>
+				       		</span>
+				       		<button type='button' class='btn-cart' onclick=''>장바구니 담기</button>
+				       	</span>
+				       	<span class='tag'><span>신상품</span></span>
+				   	</li>
+				   	</c:forEach>
+				</ul>
 			</section>
 			<!-- 신상품 리스트 끝 // -->
+			
 			<!-- // 카테고리별 상품 -->
-			<section class="categoryprod"></section>
+			<section class="categoryprod">
+			
+			<c:forEach items="${categoryList }" var="category" varStatus="status">
+		<c:if test="${category.categoryId == category.parentCategoryId}">
+      	<section class='innercon category' data-aos='fade-up'>
+	      	<h2><strong style='color:;font-weight:'>${category.categoryName}</strong>
+		      	<a href='${contextPath }/product/list.do?menu=category&cate=${category.categoryId}&pcate=${category.parentCategoryId}' class='btn all'>
+		      	${category.categoryName}전체보기 </a>
+	      	</h2>
+	      	<div class='swiper-container categorytitleswiper'>
+	      	<div class='swiper-wrapper'>
+	      	
+		</c:if>
+	
+      	<c:if test="${status.index != 0 && categoryList[status.index-1].categoryId == categoryList[status.index-1].parentCategoryId && category.categoryId != category.parentCategoryId}">
+
+	      	<div class='swiper-slide'>${category.categoryName }</div>  
+	      	<c:if test="${status.index == status.end || categoryList[status.index+1].categoryId == categoryList[status.index+1].parentCategoryId }">
+	      	</div><div class='swiper-pagination-categorytitle'></div></div>
+			<div class='swiper-container categoryswiper'><div class='swiper-wrapper'>
+			</c:if>
+	      	<div class='swiper-slide '>
+	      	<ul class='product-list big'>
+	      	<!-- listProduct : 상품 리스트 -->
+	      	<c:forEach items="${listProduct}" var="productMap">
+	      		<c:if test="${productMap.key == category.categoryId}">
+	      		<c:forEach items="${productMap.value}" var="product" varStatus="status">
+				<li>
+					<a href='${contextPath}/product/detail.do?pid=${product.productId}&cid=${product.companyId}'><span class='thumb'>
+					<img src='https://tohomeimage.thehyundai.com/PD/PDImages/S/2/9/7/8806079686792_00.jpg?RS=350x420' alt='' onerror=''>
+					<div class='badgewrap'></div>
+					</span><strong class='txt-ti ellipsis'>${product.productName}</strong></a>
+					<span class='info'><span class='txt-price'><strong><em>${product.discountPrice}</em>원</strong></span></span>
+				</li>
+				</c:forEach>
+	      		</c:if>
+	      	</c:forEach>
+	      	<!-- <c:forEach items="${listProduct.value }" var="product" varStatus="status">
+			<li>
+				<a href='${contextPath}/product/detail.do?pid=${product.productId}&cid=${product.companyId}'><span class='thumb'>
+				<img src='https://tohomeimage.thehyundai.com/PD/PDImages/S/2/9/7/8806079686792_00.jpg?RS=350x420' alt='' onerror=''>
+				<div class='badgewrap'></div>
+				</span><strong class='txt-ti ellipsis'>${product.productName}</strong></a>
+				<span class='info'><span class='txt-price'><strong><em>${product.discountPrice}</em>원</strong></span></span>
+			</li>
+			</c:forEach> -->
+			</ul>
+			</div>
+		</c:if>
+		<c:if test="${status.index == status.end || categoryList[status.index+1].categoryId == categoryList[status.index+1].parentCategoryId }">
+			
+			</div>
+			<div class='swiper-pagination-categorytitle'></div>
+			</div>
+			</section>
+		</c:if>
+	</c:forEach>
+			
+			</section>
 			<!-- 카테고리별 상품 끝 //-->
 
 		</div>
@@ -116,10 +240,10 @@
           
 		$(document).ready(function(){
 			
-			
+		/* 	
 	    /* @author 김시은, 문석호
 	    세일 가장 많이 하는 상품 가져오기
-	    */
+	    *//*
 	    var html = "";
       	$.ajax({
       		url:'${contextPath}/product/select.do',
@@ -149,9 +273,10 @@
       			$(".saleprod").html(html);
       		}
       	});
+      	
       	/* @autor 김시은, 문석호 
       	   Heendys's pick 정보 3개 가져오기
-      	*/
+      	*//*
        	var html = "";
        	$.ajax({
        		url:'${contextPath}/product/select.do',
@@ -187,11 +312,12 @@
        		error: function(err){
        			console.log(err);
        		}
-       	});
-          	
+       	});*/
+       		
       	/* @autor 김시은, 문석호 
    	   		신상품 4개 가져오기
    		*/
+   		/*
        	var html = "";
        	$.ajax({
        		url:'${contextPath}/product/select.do',
@@ -228,8 +354,9 @@
        		error: function(err){
        			console.log(err);
        		}
-       	});
-
+       	});*/
+       	 
+       	 
        	/*
        		@Author 김시은
        		카테고리 목록 불러오기 => 카테고리 목록 뿌려주기
@@ -272,6 +399,7 @@
       	}
       	
       	//카테고리 전체 물러오기
+      	/*
       	$.ajax({
       		url:'${contextPath}/product/category.do',
       		type: 'post',
@@ -309,8 +437,63 @@
       			}
       			$(".categoryprod").append(html);
       		}
-      	});
+      	});*/
       	
+      	<c:forEach items="${categoryList }" var="category" varStatus="status">
+		<c:if test="${category.categoryId == category.parentCategoryId}">
+      	<section class='innercon category' data-aos='fade-up'>
+	      	<h2><strong style='color:;font-weight:'>${category.categoryName}</strong>
+		      	<a href='${contextPath }/product/list.do?menu=category&cate=${category.categoryId}&pcate=${category.parentCategoryId}' class='btn all'>
+		      	${category.categoryName}전체보기 </a>
+	      	</h2>
+	      	<div class='swiper-container categorytitleswiper'>
+	      	<div class='swiper-wrapper'>
+	      	
+		</c:if>
+	
+      	<c:if test="${status.index != 0 && categoryList[status.index-1].categoryId == categoryList[status.index-1].parentCategoryId && category.categoryId != category.parentCategoryId}">
+			
+	      	<div class='swiper-slide'>${category.categoryName }</div>  
+	      	<c:if test="${status.index == status.end || categoryList[status.index+1].categoryId == categoryList[status.index+1].parentCategoryId }">
+		      	</div><div class='swiper-pagination-categorytitle'></div></div>
+				<div class='swiper-container categoryswiper'><div class='swiper-wrapper'>
+			</c:if>
+	      	<div class='swiper-slide '>
+	      	<ul class='product-list big'>
+	      	<!-- listProduct : 상품 리스트 -->
+	      	<c:forEach items="${listProduct}" var="productMap">
+	      		<c:if test="${productMap.key == category.categoryId}">
+	      		<c:forEach items="${productMap.value}" var="product" varStatus="status">
+				<li>
+					<a href='${contextPath}/product/detail.do?pid=${product.productId}&cid=${product.companyId}'><span class='thumb'>
+					<img src='https://tohomeimage.thehyundai.com/PD/PDImages/S/2/9/7/8806079686792_00.jpg?RS=350x420' alt='' onerror=''>
+					<div class='badgewrap'></div>
+					</span><strong class='txt-ti ellipsis'>${product.productName}</strong></a>
+					<span class='info'><span class='txt-price'><strong><em>${product.discountPrice}</em>원</strong></span></span>
+				</li>
+				</c:forEach>
+	      		</c:if>
+	      	</c:forEach>
+	      	<!-- <c:forEach items="${listProduct.value }" var="product" varStatus="status">
+			<li>
+				<a href='${contextPath}/product/detail.do?pid=${product.productId}&cid=${product.companyId}'><span class='thumb'>
+				<img src='https://tohomeimage.thehyundai.com/PD/PDImages/S/2/9/7/8806079686792_00.jpg?RS=350x420' alt='' onerror=''>
+				<div class='badgewrap'></div>
+				</span><strong class='txt-ti ellipsis'>${product.productName}</strong></a>
+				<span class='info'><span class='txt-price'><strong><em>${product.discountPrice}</em>원</strong></span></span>
+			</li>
+			</c:forEach> -->
+			</ul>
+			</div>
+		</c:if>
+		<c:if test="${status.index == status.end || categoryList[status.index+1].categoryId == categoryList[status.index+1].parentCategoryId }">
+			
+			</div>
+			<div class='swiper-pagination-categorytitle'></div>
+			</div>
+			</section>
+		</c:if>
+	</c:forEach>
       });
 	</script>
 </body>
