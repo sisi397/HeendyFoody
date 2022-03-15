@@ -74,6 +74,7 @@ public class ProductDAO {
 	        product.setDiscountRate(rs.getInt("discount_rate"));
 	        product.setDeleted(rs.getInt("deleted"));
 	        product.setCategoryId(rs.getInt("category_id"));
+	        product.setPcategoryId(rs.getInt("parent_category_id"));
 	        product.setDiscountPrice(rs.getInt("discount_price"));
 	        productList.add(product);
 	    }

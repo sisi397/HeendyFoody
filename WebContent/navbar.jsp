@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" isELIgnored="false"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    
 <%
 request.setCharacterEncoding("UTF-8");
 %>
@@ -37,6 +37,14 @@ request.setCharacterEncoding("UTF-8");
 <!-- 회원가입시 input 제약조건 JS -->
 <script type="text/javascript" src="${contextPath}/static/js/memberJoin.js"></script>
 </head>
+<style>
+.heendy-logo-header {
+width: 55%;
+}
+
+</style>
+<body>
+
 	<!-- header// -->
 	<header id="header" class="short">
 
