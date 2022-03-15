@@ -439,61 +439,7 @@
       		}
       	});*/
       	
-      	<c:forEach items="${categoryList }" var="category" varStatus="status">
-		<c:if test="${category.categoryId == category.parentCategoryId}">
-      	<section class='innercon category' data-aos='fade-up'>
-	      	<h2><strong style='color:;font-weight:'>${category.categoryName}</strong>
-		      	<a href='${contextPath }/product/list.do?menu=category&cate=${category.categoryId}&pcate=${category.parentCategoryId}' class='btn all'>
-		      	${category.categoryName}전체보기 </a>
-	      	</h2>
-	      	<div class='swiper-container categorytitleswiper'>
-	      	<div class='swiper-wrapper'>
-	      	
-		</c:if>
-	
-      	<c:if test="${status.index != 0 && categoryList[status.index-1].categoryId == categoryList[status.index-1].parentCategoryId && category.categoryId != category.parentCategoryId}">
-			
-	      	<div class='swiper-slide'>${category.categoryName }</div>  
-	      	<c:if test="${status.index == status.end || categoryList[status.index+1].categoryId == categoryList[status.index+1].parentCategoryId }">
-		      	</div><div class='swiper-pagination-categorytitle'></div></div>
-				<div class='swiper-container categoryswiper'><div class='swiper-wrapper'>
-			</c:if>
-	      	<div class='swiper-slide '>
-	      	<ul class='product-list big'>
-	      	<!-- listProduct : 상품 리스트 -->
-	      	<c:forEach items="${listProduct}" var="productMap">
-	      		<c:if test="${productMap.key == category.categoryId}">
-	      		<c:forEach items="${productMap.value}" var="product" varStatus="status">
-				<li>
-					<a href='${contextPath}/product/detail.do?pid=${product.productId}&cid=${product.companyId}'><span class='thumb'>
-					<img src='https://tohomeimage.thehyundai.com/PD/PDImages/S/2/9/7/8806079686792_00.jpg?RS=350x420' alt='' onerror=''>
-					<div class='badgewrap'></div>
-					</span><strong class='txt-ti ellipsis'>${product.productName}</strong></a>
-					<span class='info'><span class='txt-price'><strong><em>${product.discountPrice}</em>원</strong></span></span>
-				</li>
-				</c:forEach>
-	      		</c:if>
-	      	</c:forEach>
-	      	<!-- <c:forEach items="${listProduct.value }" var="product" varStatus="status">
-			<li>
-				<a href='${contextPath}/product/detail.do?pid=${product.productId}&cid=${product.companyId}'><span class='thumb'>
-				<img src='https://tohomeimage.thehyundai.com/PD/PDImages/S/2/9/7/8806079686792_00.jpg?RS=350x420' alt='' onerror=''>
-				<div class='badgewrap'></div>
-				</span><strong class='txt-ti ellipsis'>${product.productName}</strong></a>
-				<span class='info'><span class='txt-price'><strong><em>${product.discountPrice}</em>원</strong></span></span>
-			</li>
-			</c:forEach> -->
-			</ul>
-			</div>
-		</c:if>
-		<c:if test="${status.index == status.end || categoryList[status.index+1].categoryId == categoryList[status.index+1].parentCategoryId }">
-			
-			</div>
-			<div class='swiper-pagination-categorytitle'></div>
-			</div>
-			</section>
-		</c:if>
-	</c:forEach>
+
       });
 	</script>
 </body>

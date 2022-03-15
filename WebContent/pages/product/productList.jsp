@@ -157,7 +157,7 @@
 	    				if(data[i].productCount == 0){
 	    					html += "<span class='soldout'>일시품절</span>";
 	    				}
-	    				html += "<img src='${contextPath}/static/images/product/"+data[i].imageUrl+"' alt='' onerror=''/>"
+	    				html += "<img src='" +data[i].imageUrl+ "' alt='' onerror=''/>"
 	    				if(data[i].discountRate != 0){
 	    					html += "<div class='badgewrap'><span class='badge'>";
 	    					html += "<strong>"+data[i].discountRate+"%</strong></span></div>";
