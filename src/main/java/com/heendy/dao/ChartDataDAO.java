@@ -49,7 +49,7 @@ public class ChartDataDAO {
 	    cs.executeUpdate();
 	    
 	    rs = (ResultSet)cs.getObject(2);
-	    
+	    System.out.println(rs);
 	    JSONObject memberObj = null;
         while (rs.next()) {
         	String group = rs.getString("sorting");
@@ -60,7 +60,7 @@ public class ChartDataDAO {
     	    memberList.add(memberObj);
         }
 		    
-	    DBManager.close(conn, cs);
+	    DBManager.close(conn, cs, rs);
 	    
 	    return memberList;
 	}
@@ -93,7 +93,7 @@ public class ChartDataDAO {
     	    orderList.add(orderObj);
         }
 		    
-	    DBManager.close(conn, cs);
+	    DBManager.close(conn, cs, rs);
 	    
 	    return orderList;
 	}
@@ -132,7 +132,7 @@ public class ChartDataDAO {
 	        System.out.println(product.getProductId());
         }
 		 
-	        DBManager.close(conn, cs);
+	        DBManager.close(conn, cs, rs);
 	    	
 	    return productList;
 	}
