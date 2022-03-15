@@ -56,7 +56,7 @@ public class LoginFilter implements Filter {
 				
 			HttpServletResponse res = (HttpServletResponse)response;
 			String contextPath = req.getContextPath();
-			res.sendRedirect(contextPath + "/index.jsp");
+			res.sendRedirect(contextPath + "/main");
 				
 			
 		} catch(MemberNotExistSession e) {

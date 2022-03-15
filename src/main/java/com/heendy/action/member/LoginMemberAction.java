@@ -47,8 +47,8 @@ public class LoginMemberAction implements Action{
 			HttpSession session = request.getSession();
 		
 			userService.saveUser(memberVO, session);
-			url="/member/index.do";
-			request.getRequestDispatcher(url).forward(request, response);
+			url = request.getContextPath() + "/main";	//로그인 성공 시 이동할 페이지 지정
+			response.sendRedirect(url);
 		}else {		//로그인 실패시
 			System.out.println("로그인 실패");
 			url="/pages/login/loginFail.jsp";
