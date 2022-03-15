@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" isELIgnored="false"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    
 <%
 request.setCharacterEncoding("UTF-8");
 %>
@@ -43,6 +43,14 @@ width: 55%;
 
 </style>
 </head>
+<style>
+.heendy-logo-header {
+width: 55%;
+}
+
+</style>
+<body>
+
 	<!-- header// -->
 	<header id="header" class="short">
 
@@ -68,7 +76,7 @@ width: 55%;
 							<a href="${contextPath}/member/logout.do">로그아웃</a>
 						</c:otherwise>
 					</c:choose>
-					<a href="${contextPath}/mypage/info">마이페이지</a>
+					<a href="${contextPath}/mypage/info.do">마이페이지</a>
 				</div>
 
 			</div>

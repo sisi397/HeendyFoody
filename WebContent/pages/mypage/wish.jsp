@@ -11,8 +11,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="${contextPath}/static/js/function.min.js"></script>
 <script type="text/javascript" src="${contextPath}/static/js/jquery-library.min.js"></script>
-<link href="${contextPath}/static/css/common.min.css" rel="stylesheet" type="text/css">
-<link href="${contextPath}/static/css/css-library.min.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/static/css/common/common.min.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/static/css/common/css-library.min.css" rel="stylesheet" type="text/css">
 <link href="${contextPath}/static/css/mypage.min.css" rel="stylesheet" type="text/css">
 <link href="${contextPath}/static/css/wish.css" rel="stylesheet" type="text/css">
 </head>

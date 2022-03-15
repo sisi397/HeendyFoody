@@ -38,9 +38,9 @@ public class WishDeleteAction implements Action {
 		try {
 			int pid = Integer.parseInt(request.getParameter("productId"));
 			int cid = Integer.parseInt(request.getParameter("companyId"));
-//			MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
-			
-			MemberDTO member = (MemberDTO) request.getAttribute("loginUser");	
+
+		    MemberDTO member = (MemberDTO) request.getAttribute("loginUser");
+
 			// 좋아요 삭제
 			int wishDelete = wishDAO.deleteWish(member.getMemberId(), pid, cid);
 			

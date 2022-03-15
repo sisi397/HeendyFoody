@@ -29,8 +29,7 @@ import com.heendy.utils.UserService;
 public class WishCheckAction implements Action {
 
 	private final WishDAO wishDAO = WishDAO.getInstance();
-	//private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
-	
+
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			response.setContentType("application/json");
@@ -39,8 +38,6 @@ public class WishCheckAction implements Action {
 		try {
 			int pid = Integer.parseInt(request.getParameter("productId"));
 			int cid = Integer.parseInt(request.getParameter("companyId"));
-//			MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
-//			
 			
 			MemberDTO member = (MemberDTO) request.getAttribute("loginUser");	
 			// 좋아요 여부 가져오기

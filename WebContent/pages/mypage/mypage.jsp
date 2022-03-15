@@ -8,9 +8,9 @@
 <head>
 <meta charset="EUC-KR">
 <title>마이페이지 | HeendyFoody </title>
-<link href="${contextPath}/static/css/common.min.css" rel="stylesheet" type="text/css">
-<link href="${contextPath}/static/css/css-library.min.css" rel="stylesheet" type="text/css">
-<link href="${contextPath}/static/css/member.min.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/static/css/common/common.min.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/static/css/common/css-library.min.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/static/css/common/member.min.css" rel="stylesheet" type="text/css">
 <link href="${contextPath}/static/css/mypage.min.css" rel="stylesheet" type="text/css">
 </head>
 <style>
@@ -33,7 +33,7 @@
 	
   <div id="wrap" class="mypage mypage main">
   <!-- header include -->
-  <jsp:include page="../../header.jsp" flush="false" />
+	<%@ include file="/navbar.jsp"%>
   
     <div id="contents">
 	  <div class="innercon">

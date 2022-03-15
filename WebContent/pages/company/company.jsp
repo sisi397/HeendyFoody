@@ -13,8 +13,8 @@
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	
 		
-	<link href="${contextPath}/static/css/common.min.css" rel="stylesheet" type="text/css">
-	<link href="${contextPath}/static/css/css-library.min.css" rel="stylesheet" type="text/css">
+	<link href="${contextPath}/static/css/common/common.min.css" rel="stylesheet" type="text/css">
+	<link href="${contextPath}/static/css/common/css-library.min.css" rel="stylesheet" type="text/css">
 	<link href="${contextPath}/static/css/member.min.css" rel="stylesheet" type="text/css">
 	<link href="${contextPath}/static/css/mypage.min.css" rel="stylesheet" type="text/css">
 	
@@ -120,6 +120,7 @@
 	$.ajax({
 		url:'${contextPath}/company/productList.do',
 		dataType:'json',
+		async:false,
 		success : function(data){
 			console.log(data);
 

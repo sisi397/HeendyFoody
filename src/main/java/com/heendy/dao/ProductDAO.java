@@ -38,7 +38,7 @@ public class ProductDAO {
 	public ArrayList<ProductDTO> listProduct(int beginRow, int endRow, String sort, String menu, int cate, int pcate) throws SQLException{
 	    ArrayList<ProductDTO> productList = new ArrayList<ProductDTO>();
 	    
-	    String sql = "{CALL sp_list_product(?,?,?,?,?,?,?)}";
+	    String sql = "{CALL pkg_product.sp_list_product(?,?,?,?,?,?,?)}";
 	    
     	conn = DBManager.getConnection();
     	cs = conn.prepareCall(sql);
@@ -88,7 +88,7 @@ public class ProductDAO {
 	public ProductDTO detailProduct(int productId, int companyId) throws SQLException{
 		ProductDTO product = new ProductDTO();
 		
-	    String sql = "{CALL sp_select_product(?,?,?)}";
+	    String sql = "{CALL pkg_product.sp_select_product(?,?,?)}";
 	    
     	conn = DBManager.getConnection();
     	cs = conn.prepareCall(sql);
@@ -125,7 +125,7 @@ public class ProductDAO {
 	// 페이징 처리를 위한 전체 상품 개수 가져오기
 	public int totalCountProduct(String menu, int cate, int pcate) throws SQLException{
 		int result = 0;
-	    String sql = "{CALL sp_totalcount_product(?,?,?,?)}";
+	    String sql = "{CALL pkg_product.sp_totalcount_product(?,?,?,?)}";
 	    
     	conn = DBManager.getConnection();
     	cs = conn.prepareCall(sql);
@@ -154,7 +154,7 @@ public class ProductDAO {
 		
 		Connection conn = DBManager.getConnection();
 		
-		CallableStatement cstmt = conn.prepareCall("{call sp_create_product(?,?,?,?,?,?,?)}");
+		CallableStatement cstmt = conn.prepareCall("{call pkg_product.sp_create_product(?,?,?,?,?,?,?)}");
 		
 		cstmt.setInt(1, data.getCompanyId());
 		cstmt.setString(2, data.getProductName());

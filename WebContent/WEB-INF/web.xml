@@ -13,6 +13,33 @@
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 
+	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<url-pattern>/member/memberJoin.do</url-pattern>
+		<url-pattern>/member/addMember.do</url-pattern>
+		<url-pattern>/member/loginMember.do</url-pattern>
+		<url-pattern>/member/idCheck.do</url-pattern>
+		<url-pattern>/member/findMemberId.do</url-pattern>
+		<url-pattern>/member/addCompanyMember.do</url-pattern>
+		<url-pattern>/member/memberLogin.do</url-pattern>
+		<url-pattern>/member/loginCompanyMember.do</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>loginCheckFilter</filter-name>
+		<url-pattern>/mypage/*</url-pattern>
+		<url-pattern>/cart/shoppingCartList.do</url-pattern>
+		<url-pattern>/company/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>roleFilter</filter-name>
+		<url-pattern>/mypage/*</url-pattern>
+		<url-pattern>/cart/shoppingCartList.do</url-pattern>
+		<url-pattern>/company/*</url-pattern>
+	</filter-mapping>
+
+
 	<context-param>
 		<param-name>MacUploadImagePath</param-name>
 		<param-value>/Users/tmdwns/dev/eclipse-workspace/HeendyFoody/WebContent/upload</param-value>

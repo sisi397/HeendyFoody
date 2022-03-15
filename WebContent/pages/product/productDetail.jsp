@@ -24,9 +24,9 @@
 	<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="${contextPath}/static/css/product.min.css">
-    <link rel="stylesheet" type="text/css" href="${contextPath}/static/css/common.min.css">
-    <link rel="stylesheet" type="text/css" href="${contextPath}/static/css/main.min.css">
-    <link rel="stylesheet" type="text/css" href="${contextPath}/static/css/css-library.min.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/static/css/common/common.min.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/static/css/common/main.min.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/static/css/common/css-library.min.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/static/css/s-style_v2.min.css">
     
     <script type="text/javascript" src="${contextPath}/static/js/jquery-library.min.js"></script>

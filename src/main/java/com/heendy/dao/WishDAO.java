@@ -34,7 +34,7 @@ public class WishDAO {
 
 		//DB 연결 및 callable 문장 호출
 		Connection conn = DBManager.getConnection();
-		CallableStatement cstmt = conn.prepareCall("{call sp_list_wish(?,?,?,?)}");
+		CallableStatement cstmt = conn.prepareCall("{call pkg_wish.sp_list_wish(?,?,?,?)}");
 		
 		//?에 인자 넘기기
 		cstmt.setInt(1, beginRow);
@@ -78,7 +78,7 @@ public class WishDAO {
 		
 		//DB 연결 및 callable 문장 수행
 		Connection conn = DBManager.getConnection();
-		CallableStatement cstmt = conn.prepareCall("{call sp_totalcount_wish(?,?)}");
+		CallableStatement cstmt = conn.prepareCall("{call pkg_wish.sp_totalcount_wish(?,?)}");
 		
 		//?에 인자 넘기기
 		cstmt.setInt(1, member_id);
@@ -108,7 +108,7 @@ public class WishDAO {
     // 좋아요 추가
 	public int insertWish(int memberId, int productId, int companyId) throws SQLException{
 	    int result = 0;	
-	    String sql = "{CALL sp_insert_wish(?, ?, ?)}";
+	    String sql = "{CALL pkg_wish.sp_insert_wish(?, ?, ?)}";
 	    
     	conn = DBManager.getConnection();
     	cs = conn.prepareCall(sql);
@@ -125,7 +125,7 @@ public class WishDAO {
 	// 좋아요 삭제
 	public int deleteWish(int memberId, int productId, int companyId) throws SQLException{
 	    int result = 0;	
-	    String sql = "{CALL sp_delete_wish(?,?,?)}";
+	    String sql = "{CALL pkg_wish.sp_delete_wish(?,?,?)}";
 	    
     	conn = DBManager.getConnection();
     	cs = conn.prepareCall(sql);
@@ -142,7 +142,7 @@ public class WishDAO {
 	// 좋아요 여부 check
 	public int wishCheck(int memberId, int productId, int companyId) throws SQLException{
 		int result = 0;	
-	    String sql = "{CALL sp_check_wish(?,?,?,?)}";
+	    String sql = "{CALL pkg_wish.sp_check_wish(?,?,?,?)}";
 	    
     	conn = DBManager.getConnection();
     	cs = conn.prepareCall(sql);

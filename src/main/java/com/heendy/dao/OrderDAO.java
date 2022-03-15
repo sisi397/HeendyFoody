@@ -37,7 +37,7 @@ public class OrderDAO {
 		
 		//DB 연결 및 callable 문장 호출
 		Connection conn = DBManager.getConnection();
-		CallableStatement cstmt = conn.prepareCall("{call sp_list_order(?,?,?,?)}");
+		CallableStatement cstmt = conn.prepareCall("{call pkg_order.sp_list_order(?,?,?,?)}");
 		
 		//?에 인자 넘기기
 		cstmt.setInt(1, beginRow);
@@ -83,7 +83,7 @@ public class OrderDAO {
 		
 		//DB 연결 및 callable 문장 수행
 		Connection conn = DBManager.getConnection();
-		CallableStatement cstmt = conn.prepareCall("{call sp_totalcount_order(?,?)}");
+		CallableStatement cstmt = conn.prepareCall("{call pkg_order.sp_totalcount_order(?,?)}");
 		
 		//?에 인자 넘기기
 		cstmt.setInt(1, member_id);
@@ -116,7 +116,7 @@ public class OrderDAO {
 	public void createOrder(CreateOrderDTO data) throws SQLException {
 		Connection conn = DBManager.getConnection();
 		
-		CallableStatement cstmt = conn.prepareCall("{call sp_create_order(?,?,?,?)}");
+		CallableStatement cstmt = conn.prepareCall("{call pkg_order.sp_create_order(?,?,?,?)}");
 		
 		cstmt.setInt(1, data.getProductId());
 		cstmt.setInt(2, data.getCompanyId());
@@ -133,7 +133,7 @@ public class OrderDAO {
 		Connection conn = DBManager.getConnection();
 		
 		
-		CallableStatement cstmt = conn.prepareCall("{ call sp_create_order_from_cart(?,?) }");
+		CallableStatement cstmt = conn.prepareCall("{ call pkg_order.sp_create_order_from_cart(?,?) }");
 		
 		
 		Array cartIds = ((oracle.jdbc.OracleConnection)conn).createOracleArray("USER01.CARTIDSARRAY", data.getCartIds());
