@@ -63,9 +63,11 @@ public class LoginCheckFilter implements Filter {
 			
 		} catch(MemberNotExistSession e) {
 			HttpServletResponse res = (HttpServletResponse)response;
+			String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ req.getContextPath();
 			res.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = res.getWriter();
-			out.println("<script>alert('로그인이 필요한 서비스입니다');location.href='http://localhost:8090/HeendyFoody/member/memberLogin.do'</script>");
+			out.println("<script>alert('로그인이 필요한 서비스입니다');location.href='"+url+"/member/memberLogin.do'</script>");
 		}
 		
 	}
