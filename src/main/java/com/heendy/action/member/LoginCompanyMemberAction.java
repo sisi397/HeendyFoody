@@ -51,6 +51,7 @@ public class LoginCompanyMemberAction implements Action {
             
 			url = request.getContextPath() + "/company/company.do";	//로그인 성공 시 이동할 페이지 지정
 			response.sendRedirect(url);
+			
 
 		}else {
 			System.out.println("업체 로그인 실패");

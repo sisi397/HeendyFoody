@@ -64,6 +64,10 @@ public class RoleFilter implements Filter {
 		System.out.println("requestPath: " + requestPath);
 
 		
+
+		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+		+ req.getContextPath();
+
 		if (member.getRoleId() == 1 && (
 				requestPath.equals("/cart/create.do") || 
 				requestPath.equals("/cart/addCount.do") ||
@@ -91,15 +95,17 @@ public class RoleFilter implements Filter {
 			
 		} else if (member.getRoleId() == 2 && toPath.equals("/company")) {
 
+
 			res.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = res.getWriter();
-			out.println("<script>alert('접근할 수 없는 페이지입니다');location.href='http://localhost:8090/HeendyFoody'</script>");
-		
+
+			out.println("<script>alert('접근할 수 없는 페이지입니다');location.href='"+url+"'</script>");
+
 		} else if (member.getRoleId() == 1 && !toPath.equals("/company")) {
 
 			res.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = res.getWriter();
-			out.println("<script>alert('접근할 수 없는 페이지입니다');location.href='http://localhost:8090/HeendyFoody/company/company.do'</script>");
+			out.println("<script>alert('접근할 수 없는 페이지입니다');location.href='"+url+"/company/company.do'</script>");
 						
 		} else {
 			chain.doFilter(request, response);

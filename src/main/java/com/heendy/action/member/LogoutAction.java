@@ -15,7 +15,7 @@ public class LogoutAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url="/member/index.do";
+		String url;
 		Cookie ck = new Cookie("RECENT_VIEW_ITEMS", null);
 		ck.setMaxAge(0);
 		ck.setPath("/");
@@ -25,6 +25,8 @@ public class LogoutAction implements Action {
 		if(session!=null){
 			session.invalidate();
 		}    
-		request.getRequestDispatcher(url).forward(request, response);  
+		
+		url = request.getContextPath() + "/main";	//로그인 성공 시 이동할 페이지 지정
+		response.sendRedirect(url);
 	}
 }

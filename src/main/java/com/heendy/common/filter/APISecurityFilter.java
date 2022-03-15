@@ -28,7 +28,9 @@ import com.heendy.utils.UserService;
  * API 검증필터로, 인증되지 않은 사용자를 검증하는 필터이다.
  */
 
+
 @WebFilter(filterName="apiCheckFilter")
+
 public class APISecurityFilter implements Filter {
 
 	private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
@@ -44,7 +46,7 @@ public class APISecurityFilter implements Filter {
 		
 		HttpServletRequest req = (HttpServletRequest) request;
 		
-	
+
 
 		HttpSession session = req.getSession();
 

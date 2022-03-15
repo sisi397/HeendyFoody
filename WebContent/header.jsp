@@ -53,7 +53,7 @@ width: 55%;
 			<!-- toparea// -->
 			<div class="toparea">
 				<h1 style="margin-top:0px">
-					<a href="${contextPath}/member/index.do"><img
+					<a href="${contextPath}/main"><img
 						src="${contextPath}/static/images/common/logo_header.png"
 						alt="흰디푸디" class="heendy-logo-header"></a>
 				</h1>

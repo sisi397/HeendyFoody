@@ -130,7 +130,7 @@
 						style='color:; font-weight: bold'>신상품</strong><small
 						style='color:; font-weight: normal'>HeendyFoody의 신상품을
 						만나보세요</small><a
-						href='${contextPath}/product/detail.do?'
+						href='${contextPath}/product/list.do?menu=newprod'
 						class='btn all'>전체보기</a>
 				</h2>
 				<ul class='product-list newprodlist'>
