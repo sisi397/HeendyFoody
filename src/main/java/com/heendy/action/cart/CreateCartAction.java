@@ -17,14 +17,17 @@ import com.heendy.common.ErrorResponse;
 import com.heendy.common.SQLErrorCode;
 import com.heendy.common.ValidableAction;
 import com.heendy.dao.CartDAO;
+import com.heendy.dto.MemberDTO;
 import com.heendy.dto.cart.CreateCartDTO;
 import com.heendy.utils.Validation;
 
 
 /**
- * @author 이승준 장바구니 신규 생성을 위한 Action 클래스
+ * @author 이승준 
+ * 
+ * 장바구니 신규 생성을 위한 Action 클래스
  */
-public class CreateCartAction implements Action, ValidableAction {
+public class CreateCartAction implements Action {
 
 	private final CartDAO cartDAO = CartDAO.getInstance();
 	
@@ -33,32 +36,15 @@ public class CreateCartAction implements Action, ValidableAction {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			response.setContentType("application/json");
-			response.setCharacterEncoding("utf-8");
-
 			
-			List<ErrorResponse.ErrorField> errors = valid(request);
-			System.out.println(errors.size());
-			if(errors.size() != 0) {
-				ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_FIELDS);
-				
-				errorResponse.setErrors(errors);
-				
-				String json = new Gson().toJson(errorResponse);
-				response.setStatus(errorResponse.getStatus());
-				response.getWriter().write(json);
-				return;
-			}
-			
-			
-			int memberId = (int) request.getAttribute("memberId");
+			MemberDTO member = (MemberDTO) request.getAttribute("member");
 
 
 			int productId = Integer.parseInt(request.getParameter("product_id"));
 			int companyId = Integer.parseInt(request.getParameter("company_id"));
 			int count = Integer.parseInt(request.getParameter("count"));
 
-			CreateCartDTO data = new CreateCartDTO(productId, companyId, memberId, count);
+			CreateCartDTO data = new CreateCartDTO(productId, companyId, member.getMemberId(), count);
 			this.cartDAO.createCart(data);
 
 			response.setStatus(201);
@@ -90,30 +76,5 @@ public class CreateCartAction implements Action, ValidableAction {
 
 	}
 	
-	@Override
-	public List<ErrorResponse.ErrorField> valid(HttpServletRequest request) {
-		List<ErrorResponse.ErrorField> errors = new ArrayList<>();
-		
-		String productId = request.getParameter("product_id");
-		String compayId = request.getParameter("company_id");
-		String count = request.getParameter("count");
-		 
-		
-		Validation validation = Validation.getInstance();
-		
-		if(!validation.validNotEmpty(productId)) {
-			errors.add(new ErrorResponse.ErrorField("product_id",productId,"값이 비어있습니다."));
-		}
-		
-		if(!validation.validNotEmpty(compayId)) {
-			errors.add(new ErrorResponse.ErrorField("company_id",compayId,"값이 비어있습니다."));
-		}
-		
-		if(!validation.validNotEmpty(count)) {
-			errors.add(new ErrorResponse.ErrorField("count",count,"값이 비어있습니다."));
-		}
-		
-		return errors;
-	}
 
 }

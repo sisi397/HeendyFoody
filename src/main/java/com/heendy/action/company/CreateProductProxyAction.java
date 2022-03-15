@@ -11,6 +11,11 @@ import com.heendy.action.Action;
 import com.heendy.common.ErrorResponse;
 import com.heendy.common.ValidRequireAction;
 
+/**
+ * @author 이승준
+ * 
+ * 상품 생성 Action 실행 전에 request 파라미터를 검증하는 Proxy 클래스
+ * */
 public class CreateProductProxyAction extends ValidRequireAction {
 
 	public CreateProductProxyAction(Action action) {
