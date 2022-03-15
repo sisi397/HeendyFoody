@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
@@ -63,7 +64,26 @@
 								style='color:; font-weight: bold'>알뜰 장보기</strong> <small
 								style='color:; font-weight: normal'>지금 이 순간 만날 수 있는 특가</small>
 						</h2>
-						<div class='saleprod'></div>
+						<div class='saleprod'>
+					      	<div class='swiper-container timesaleswiper'>
+					      		<c:forEach items="${saleProduct}" var="product">
+					      		<div class='swiper-wrapper'>
+						      		<div class='swiper-slide' data-time-start='' data-time-end=''>
+						      		<a href='${contextPath}/product/detail.do?pid=${product.productId}&cid=${product.companyId}'>
+							      		<span class='thumb'>
+								      		<img src="${product.imageUrl}"alt='' onerror=''>
+								      		<span class='badge'><strong>${product.discountRate }%</strong></span>
+							      		</span>
+							      		<strong class='txt-ti ellipsis'>${product.productName }</strong>
+							      		<strong><em>${product.discountPrice }</em>원</strong><del>${product.productPrice}원</del>
+							      		<span class='txt-price'></span> 
+						      		</a>
+						      		<button type='button' class='btn-cart' onclick=''>장바구니 담기</button>
+						      		</div>
+					      		</div>
+						      	</c:forEach>
+					      	</div>
+						</div>
 					</div>
 				</section>
 			</div>
@@ -78,7 +98,27 @@
 						style='color:; font-weight: bold'>Heendy's Pick</strong><small
 						style='color:; font-weight: normal'></small>
 				</h2>
-				<ul class='product-list small bestprodlist'></ul>
+				<ul class='product-list small bestprodlist'>
+					<c:forEach items="${bestProduct}" var="product">
+			       	<li>
+			       		<a href='${contextPath}/product/detail.do?pid=${product.productId }&cid=${product.companyId}'>
+			       		<span class='thumb'>
+			       		<img src='https://tohomeimage.thehyundai.com/PD/PDImages//S/7/0/3/8809539023489_01.jpg?RS=350x420' alt='' onerror=''>
+			       		<div class='badgewrap'>
+			       		<c:if test="${product.discountRate > 0}">
+			       			<span class='badge'><strong>${product.discountRate }%</strong></span>
+			       		</c:if>
+			       		</div>
+			       		</span>
+			       		<strong class='txt-ti'>${product.productName }</strong> </a>
+			       		<span class='info'><span class='txt-price'><strong><em>${product.discountPrice }</em>원</strong>
+			       		<c:if test="${product.discountRate > 0}">
+			       			<del>${product.productPrice}</del>
+			       		</c:if>
+			       		</span><button type='button' class='btn-cart' onclick=''>장바구니 담기</button></span>
+			       	</li>
+			       	</c:forEach>
+				</ul>
 			</section>
 			<!-- 좋아요 많은 상품 끝 // -->
 			<!-- // 신상품 리스트 -->
@@ -93,9 +133,35 @@
 						href='${contextPath}/product/detail.do?'
 						class='btn all'>전체보기</a>
 				</h2>
-				<ul class='product-list newprodlist'></ul>
+				<ul class='product-list newprodlist'>
+					<c:forEach items="${saleProduct}" var="product">
+			       	<li>
+				       	<a href='${contextPath}/product/detail.do?pid=${product.productId }&cid=${product.companyId}'>
+					       	<span class='thumb'>
+					       	<img src='https://tohomeimage.thehyundai.com/PD/PDImages//S/7/0/3/8809539023489_01.jpg?RS=350x420' alt='' onerror=''>
+						       	<div class='badgewrap'>
+						       	<c:if test="${product.discountRate > 0}">
+						       		<span class='badge'><strong>${product.discountRate}%</strong></span>
+						       	</c:if>
+					       		</div>
+				       		</span>
+				       		<strong class='txt-ti ellipsis'>${product.productName }</strong> 
+				       	</a>
+				       	<span class='info'>
+				       		<span class='txt-price'><strong><em>${product.discountPrice}</em>원</strong>
+					       	<c:if test="${product.discountRate > 0}">
+					       		<del>${product.productPrice }</del>
+						   	</c:if>
+				       		</span>
+				       		<button type='button' class='btn-cart' onclick=''>장바구니 담기</button>
+				       	</span>
+				       	<span class='tag'><span>신상품</span></span>
+				   	</li>
+				   	</c:forEach>
+				</ul>
 			</section>
 			<!-- 신상품 리스트 끝 // -->
+			
 			<!-- // 카테고리별 상품 -->
 			<section class="categoryprod"></section>
 			<!-- 카테고리별 상품 끝 //-->
@@ -116,120 +182,6 @@
           
 		$(document).ready(function(){
 			
-			
-	    /* @author 김시은, 문석호
-	    세일 가장 많이 하는 상품 가져오기
-	    */
-	    var html = "";
-      	$.ajax({
-      		url:'${contextPath}/product/select.do',
-      		type: 'post',
-      		dataType:'json',
-      		async:false,
-      		data:{
-      			beginRow:1,
-      			endRow:1,
-      			sort:'E',
-      			menu:'sale'
-      		},
-      		success : function(data){
-      			console.log("세일 : " + JSON.stringify(data));
-      			for(var i in data){
-      				html += "<div class='swiper-container timesaleswiper'>";
-      				html += "<div class='swiper-wrapper'><div class='swiper-slide' data-time-start='' data-time-end=''>";
-      				html += "<a href='${contextPath}/product/detail.do?pid="+data[i].productId +"&cid="+ data[i].companyId +"'><span class='thumb'>";
-      				html += "<img src="+data[i].imageUrl +"alt='' onerror=''>";
-      				html += "<span class='badge'><strong>"+data[i].discountRate+"%</strong></span></span>";
-      				html += "<strong class='txt-ti ellipsis'>"+data[i].productName+"</strong>";
-      				html += "<span class='txt-price'>";
-      				html += "<strong><em>"+data[i].discountPrice+"</em>원</strong><del>"+data[i].productPrice+"원</del>";
-      				html += "</span> </a>";
-      				html += "<button type='button' class='btn-cart' onclick=''>장바구니 담기</button></div></div></div>	"
-      			}
-      			$(".saleprod").html(html);
-      		}
-      	});
-      	/* @autor 김시은, 문석호 
-      	   Heendys's pick 정보 3개 가져오기
-      	*/
-       	var html = "";
-       	$.ajax({
-       		url:'${contextPath}/product/select.do',
-       		type: 'post',
-       		dataType:'json',
-       		async:false,
-       		data:{
-       			beginRow:1,
-       			endRow:3,
-       			sort:'B',
-       			menu:'best'
-       		},
-       		success : function(data){
-       			for(var i in data){
-       				html += "<li>";
-       				html += "<a href='${contextPath}/product/detail.do?pid="+data[i].productId +"&cid="+ data[i].companyId +"'>";
-       				html += "<span class='thumb'>";
-       				html += "<img src='https://tohomeimage.thehyundai.com/PD/PDImages//S/7/0/3/8809539023489_01.jpg?RS=350x420' alt='' onerror=''>";
-       				html += "<div class='badgewrap'>";
-       				if(data[i].discountRate > 0){
-           				html += "<span class='badge'><strong>" + data[i].discountRate + "%</strong></span>";
-       				}
-       				html += "</div></span>";
-       				html += "<strong class='txt-ti'>"+ data[i].productName + "</strong> </a>";
-       				html += "<span class='info'><span class='txt-price'><strong><em>"+data[i].discountPrice + "</em>원</strong>";
-       				if(data[i].discountRate > 0) {
-       					html += "<del>"+data[i].productPrice+"</del>";
-       				}
-       				html += "</span><button type='button' class='btn-cart' onclick=''>장바구니 담기</button></span>";
-       			}
-       			$(".bestprodlist").html(html);
-       		},
-       		error: function(err){
-       			console.log(err);
-       		}
-       	});
-          	
-      	/* @autor 김시은, 문석호 
-   	   		신상품 4개 가져오기
-   		*/
-       	var html = "";
-       	$.ajax({
-       		url:'${contextPath}/product/select.do',
-       		type: 'post',
-       		dataType:'json',
-       		async:false,
-       		data:{
-       			beginRow:1,
-       			endRow:4,
-       			sort:'A',
-       			menu:'newprod'
-       		},
-       		success : function(data){
-       			for(var i in data){
-       				html += "<li>";
-       				html += "<a href='${contextPath}/product/detail.do?pid="+data[i].productId +"&cid="+ data[i].companyId +"'>";
-       				html += "<span class='thumb'>";
-       				html += "<img src='https://tohomeimage.thehyundai.com/PD/PDImages//S/7/0/3/8809539023489_01.jpg?RS=350x420' alt='' onerror=''>";
-       				html += "<div class='badgewrap'>";
-       				if(data[i].discountRate > 0){
-           				html += "<span class='badge'><strong>" + data[i].discountRate + "%</strong></span>";
-       				}
-       				html += "</div></span>";
-       				html += "<strong class='txt-ti ellipsis'>"+ data[i].productName + "</strong> </a>";
-       				html += "<span class='info'><span class='txt-price'><strong><em>"+data[i].discountPrice + "</em>원</strong>";
-       				if(data[i].discountRate > 0) {
-       					html += "<del>"+data[i].productPrice+"</del>";
-       				}
-       				html += "</span><button type='button' class='btn-cart' onclick=''>장바구니 담기</button></span>";
-       				html += "<span class='tag'><span>신상품</span></span></li>";
-       			}
-       			$(".newprodlist").html(html);
-       		},
-       		error: function(err){
-       			console.log(err);
-       		}
-       	});
-
        	/*
        		@Author 김시은
        		카테고리 목록 불러오기 => 카테고리 목록 뿌려주기
@@ -272,6 +224,7 @@
       	}
       	
       	//카테고리 전체 물러오기
+      	
       	$.ajax({
       		url:'${contextPath}/product/category.do',
       		type: 'post',
@@ -310,7 +263,6 @@
       			$(".categoryprod").append(html);
       		}
       	});
-      	
       });
 	</script>
 </body>

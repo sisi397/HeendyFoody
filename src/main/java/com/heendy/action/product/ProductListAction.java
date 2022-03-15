@@ -87,8 +87,6 @@ public class ProductListAction implements Action {
 				sort = "discount_price"; // 낮은 가격 순
 			else if(sort.equals("D"))
 				sort = "discount_price desc"; // 높은 가격 순
-			else if(sort.equals("E"))
-				sort = "discount_rate desc"; // 할인율 큰 순
 			
 			// 상품 LIST 가져오기
 			ArrayList<ProductDTO> productList = productDAO.listProduct(beginRow, endRow, sort, menu, cate, pcate);
