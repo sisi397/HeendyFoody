@@ -36,14 +36,22 @@ public class LoginCompanyMemberAction implements Action {
 		boolean result = cmemberDAO.isExisted(cmemberVO);
 		if(result) {
 			System.out.println("업체 로그인 성공");
+
+			
+			cmemberVO = cmemberDAO.getCompanyMember(company_name); //성공했으면 멤버를 조회해서 속성들을 가져온다
+			HttpSession session = request.getSession();
+			
 			MemberDTO member = new MemberDTO();
-            member.setMemberId(cmemberVO.getCompanyId());
-            member.setMemberName(cmemberVO.getCompanyName());
-            member.setRoleId(cmemberVO.getRole_id());
-            userService.saveUser(member, request.getSession());
+			member.setMemberId(cmemberVO.getCompanyId());
+			member.setMemberName(cmemberVO.getCompanyName());
+			member.setRoleId(cmemberVO.getRole_id());
+			userService.saveUser(member, session);
+		
+		
             
 			url = request.getContextPath() + "/company/company.do";	//로그인 성공 시 이동할 페이지 지정
 			response.sendRedirect(url);
+
 		}else {
 			System.out.println("업체 로그인 실패");
 			url="/pages/login/loginFail.jsp";

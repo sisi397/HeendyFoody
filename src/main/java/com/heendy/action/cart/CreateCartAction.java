@@ -37,7 +37,7 @@ public class CreateCartAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			
-			MemberDTO member = (MemberDTO) request.getAttribute("member");
+			MemberDTO member = (MemberDTO) request.getAttribute("loginUser");
 
 
 			int productId = Integer.parseInt(request.getParameter("product_id"));

@@ -30,15 +30,14 @@ import com.heendy.utils.UserService;
 public class ProductListAction implements Action {
 
 	private final ChartDataDAO chartDataDAO = ChartDataDAO.getInstance();
-	private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("utf-8");
 			try{
-				//MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
-				int cid = 1;
+				MemberDTO member = (MemberDTO) request.getAttribute("loginUser");
+				int cid = member.getMemberId();
 				
 				// chartDataDAO에서 업체별 상품정보를 가져옴
 				List<ProductDTO> data = chartDataDAO.productList(cid);

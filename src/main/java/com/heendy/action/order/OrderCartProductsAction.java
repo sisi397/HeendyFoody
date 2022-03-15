@@ -32,8 +32,7 @@ public class OrderCartProductsAction implements Action {
 
 		try {
 		
-			MemberDTO member = (MemberDTO) request.getAttribute("member");
-
+			MemberDTO member = (MemberDTO) request.getAttribute("loginUser");
 
 			Integer[] cartIds = Arrays.stream(request.getParameterValues("itemSelect")).mapToInt(Integer::parseInt)
 					.boxed().toArray(Integer[]::new);

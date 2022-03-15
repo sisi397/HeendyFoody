@@ -29,13 +29,15 @@ public class OrderListAction implements Action {
 		try {
 			
 			//세션에서 로그인 정보 받아와 request에 담기
-			HttpSession session = request.getSession();
-			MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
+//			HttpSession session = request.getSession();
+//			MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
+//			
+//			request.setAttribute("loginUser", loginUser);
 			
-			request.setAttribute("loginUser", loginUser);	    	
+			MemberDTO member = (MemberDTO) request.getAttribute("loginUser");	
 			
 			//사용자 아이디 가져오기
-			int memberId = loginUser.getMemberId();
+			int memberId = member.getMemberId();
 						
 			//인스턴스 생성 및 총 주문내역 수 구하기
 			OrderDAO orderDAO = OrderDAO.getInstance();
