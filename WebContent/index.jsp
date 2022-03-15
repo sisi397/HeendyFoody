@@ -257,11 +257,11 @@ body {
        			pcate : pcid,
        		},
        		success : function(data){
-       			console.log("함수 : " + data);
        			list += "<div class='swiper-slide '>";
        			list += "<ul class='product-list big'>";
        			for(var i in data){
-       				list += "<li><a href=''><span class='thumb'>";
+       				console.log("함수 : " + JSON.stringify(data[i]));
+       				list += "<li><a href='${contextPath}/product/detail.do?pid="+data[i].productId +"&cid="+ data[i].companyId +"''><span class='thumb'>";
        				list += "<img src='https://tohomeimage.thehyundai.com/PD/PDImages/S/2/9/7/8806079686792_00.jpg?RS=350x420' alt='' onerror=''>";
        				list += "<div class='badgewrap'></div>";
        				list += "</span><strong class='txt-ti ellipsis'>"+data[i].productName+"</strong></a>";
@@ -276,6 +276,7 @@ body {
        	});
       	}
       	
+      	//카테고리 전체 물러오기
       	$.ajax({
       		url:'${contextPath}/product/category.do',
       		type: 'post',
@@ -289,6 +290,7 @@ body {
       			console.log("카테고리 : " + JSON.stringify(data));
       			var i = 0;
       			while(i < data.length){
+      				list = "";
       				if(data[i].categoryId == data[i].parentCategoryId){	//부모 카테고리인 경우
       					html += "<section class='innercon category' data-aos='fade-up'>"
       					html += "<h2><strong style='color:;font-weight:'>" + data[i].categoryName + "</strong>";
@@ -298,7 +300,7 @@ body {
       	                html += "<div class='swiper-container categorytitleswiper'>";
       	                html += "<div class='swiper-wrapper'>";
       	                i++;
-      	                while(i != data.length && data[i].categoryId != data[i].parentCategoryId){
+      	                while(i != data.length && data[i].categoryId != data[i].parentCategoryId){ //자식 카테고리라면
       	                	html += "<div class='swiper-slide'>" + data[i].categoryName + "</div>";
       	                	prodlist(data[i].categoryId, data[i].parentCategoryId);
       	                	i++;
