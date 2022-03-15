@@ -58,7 +58,7 @@
 		        <li>
 		          <a href="#">
 		            <div class="inner">
-		              <strong><span id="upointCurAmt">${loginUser.point}</span>P</span></strong> H.Point
+		              <strong><span id="upointCurAmt">${memberPoint}</span>P</span></strong> H.Point
 		            </div>
 		          </a>
 		        </li> 

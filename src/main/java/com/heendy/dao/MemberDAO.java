@@ -1,5 +1,6 @@
 package com.heendy.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -15,6 +16,8 @@ import javax.sql.DataSource;
 
 import com.heendy.dto.MemberDTO;
 import com.heendy.utils.DBManager;
+
+import oracle.jdbc.OracleTypes;
 
 public class MemberDAO {
 	private MemberDAO() { }//싱글턴 패턴
@@ -180,6 +183,32 @@ public class MemberDAO {
 			DBManager.close(connn, pstmt, rs);
 		}
 		return memberVO;
+	}
+	
+	//사용자 포인트 조회 메서드
+	public int getMemberPoint(int member_id) throws SQLException {
+		
+		//변수 초기화
+		int result = 0;
+		
+		//DB 연결 및 callable 문장 수행
+		Connection conn = DBManager.getConnection();
+		CallableStatement cstmt = conn.prepareCall("{call sp_select_member_point(?,?)}");
+		
+		//?에 인자 넘기기
+		cstmt.setInt(1, member_id);
+		cstmt.registerOutParameter(2, OracleTypes.INTEGER); //return 받을 위치와 타입 설정
+		
+		//수행
+		cstmt.executeQuery();
+
+		//return 값 받기
+		result = cstmt.getInt(2);
+				
+		cstmt.close();
+		conn.close();
+		
+		return result;	
 	}
 
 }

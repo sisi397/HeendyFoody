@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.heendy.action.Action;
+import com.heendy.dao.MemberDAO;
 import com.heendy.dao.OrderDAO;
 import com.heendy.dao.RecentViewDAO;
 import com.heendy.dto.MemberDTO;
@@ -43,6 +44,11 @@ public class MyPageAction implements Action {
 			//사용자 아이디 가져오기
 			int memberId = loginUser.getMemberId();
 			
+			
+			//사용자 포인트 가져오기
+			MemberDAO memberDAO = MemberDAO.getInstance();
+			int memberPoint = memberDAO.getMemberPoint(memberId);
+			request.setAttribute("memberPoint", memberPoint);	
 			
 			//인스턴스 생성 및 총 좋아요 수 구하기
 			WishDAO wishDAO = WishDAO.getInstance();
