@@ -53,7 +53,7 @@ public class LoginCheckFilter implements Filter {
 		try {
 			
 			MemberDTO member = userService.loadUser(session).orElseThrow(MemberNotExistSession::new);
-			System.out.println(member.getMemberName() + "$$$$$$$$$$$$$$$$$$$$$$$");
+			System.out.println(member.getMemberName() + "$$$$$$$$$$$logincheckfilter$$$$$");
 			req.setAttribute("loginUser", member);
 			chain.doFilter(request, response);
 			

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.heendy.action.Action;
+import com.heendy.dto.MemberDTO;
 
 /**
  * @author 김시은
@@ -19,6 +20,9 @@ public class CompanyPageViewAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		MemberDTO member = (MemberDTO) request.getAttribute("loginUser");
+		System.out.println(member.getMemberName() + "************companyviewaction************");
 		
 		String url = "/pages/company/company.jsp";
 	    RequestDispatcher dispatcher = request.getRequestDispatcher(url);

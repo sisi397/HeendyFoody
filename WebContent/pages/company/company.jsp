@@ -132,7 +132,9 @@
 			for(var i in data){
 				html += "<option value="+data[i].productId +">" + data[i].productName + "</option>";
 				list += "<li style='float:left; margin:10px;'>";
-				list += "<a><img src='https://tohomeimage.thehyundai.com/PD/PDImages/S/9/8/2/8809607171289_00.jpg?RS=350x420' style='width:200px;height:250px;'></a>";
+				//list += "<a><img src='https://tohomeimage.thehyundai.com/PD/PDImages/S/9/8/2/8809607171289_00.jpg?RS=350x420' style='width:200px;height:250px;'></a>";
+				
+				list += "<a><img src="+ data[i].imageUrl + " style='width:200px;height:250px;'></a>";
 				list += "</span><strong class='txt-ti ellipsis'>"+data[i].productName+"</strong></a><span class='info'>";
 				list += "<span class='txt-price'><strong><em>"+data[i].discountPrice+"</em>원</strong></span></span></li>";
 			}	

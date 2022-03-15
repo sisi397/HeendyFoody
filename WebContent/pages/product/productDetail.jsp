@@ -68,7 +68,7 @@
                     	<c:if test="${product.productCount == 0 }">
 	        			<span class="soldout">일시품절</span>
 	        			</c:if>
-                        <img data-zoom-image="${contextPath}/static/images/product/${productDTO.imageUrl }" src="${contextPath}/static/images/product/${productDTO.imageUrl }">
+                        <img data-zoom-image="${product.imageUrl}" src="${product.imageUrl}">
                     </div>
                     <div class="propicsmall">
                         <div class="swiper-pagination-propic"><span class="current">1</span> / <span class="total">1</span></div>
@@ -78,8 +78,8 @@
                         <div class="swiper-container propicsmallswiper" style="opacity: 1">
                             <div id="P_picSmall" class="swiper-wrapper" style="display:inline-block">
                                 <div class="swiper-slide">
-                                    <a class="active" href="#" data-image="${contextPath}/static/images/product/${productDTO.imageUrl }" data-zoom-image="${contextPath}/static/images/product/${productDTO.imageUrl }">
-                                    <img src="${contextPath}/static/images/product/${productDTO.imageUrl }">
+                                    <a class="active" href="#" data-image="${product.imageUrl}" data-zoom-image="${product.imageUrl}">
+                                    <img src="${product.imageUrl}">
                                     </a>
                                 </div>           
                             </div>
