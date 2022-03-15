@@ -18,6 +18,12 @@ import com.heendy.common.ErrorResponse;
 import com.heendy.common.exception.NotSupportExtension;
 import com.heendy.common.exception.NotSupportOS;
 
+
+/**
+ * @author 이승준
+ * 
+ * 이미지 다운로드 Action 클래스
+ * */
 public class DownloadImageAction implements Action {
 
 	@Override

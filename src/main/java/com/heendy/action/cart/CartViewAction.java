@@ -28,15 +28,13 @@ public class CartViewAction implements Action {
 	private final String VIEW_URL = "/pages/cart/shoppingCartList.jsp";
 	
 
-	private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
-
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		try {
 
-			/* 테스트 멤버ID */
-			MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
+		
+			MemberDTO member = (MemberDTO) request.getAttribute("member");
 
 			List<CartItemDTO> cartList = cartDAO.getCartList(member.getMemberId());
 			

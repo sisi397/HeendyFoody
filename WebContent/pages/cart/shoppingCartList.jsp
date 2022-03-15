@@ -411,7 +411,7 @@
 			<div class="logo">
 				<a href="${contextPath}/">
 				<img
-					src="${contextPath}/static/images/assets/header_logo_freex34.png" />
+					src="${contextPath}/static/images/common/logo_header.png" />
 					</a>
 			</div>
 			<div class="util">

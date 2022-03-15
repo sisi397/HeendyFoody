@@ -17,39 +17,28 @@ import com.heendy.common.ErrorResponse.ErrorField;
 import com.heendy.common.SQLErrorCode;
 import com.heendy.common.ValidableAction;
 import com.heendy.dao.CartDAO;
+import com.heendy.dto.MemberDTO;
 import com.heendy.utils.Validation;
 
 /**
- * @author 이승준 자신의 장바구니 목록 중에서 장바구니 아이템을 삭제하는 Action 클래스
+ * @author 이승준 
+ * 
+ * 자신의 장바구니 목록 중에서 장바구니 아이템을 삭제하는 Action 클래스
  */
-public class DeleteCartAction implements Action, ValidableAction {
+public class DeleteCartAction implements Action {
 
 	private final CartDAO cartDAO = CartDAO.getInstance();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("application/json");
-		response.setCharacterEncoding("utf-8");
-
-		int memberId = (int) request.getAttribute("memberId");
-
-		List<ErrorResponse.ErrorField> errors = valid(request);
-		System.out.println(errors.size());
-		if (errors.size() != 0) {
-			ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_FIELDS);
-
-			errorResponse.setErrors(errors);
-
-			String json = new Gson().toJson(errorResponse);
-			response.setStatus(errorResponse.getStatus());
-			response.getWriter().write(json);
-			return;
-		}
 
 		try {
+			
+			MemberDTO member = (MemberDTO) request.getAttribute("member");
+			
 			int cartId = Integer.parseInt(request.getParameter("cart_id"));
 
-			cartDAO.deleteCartByCartIdAndMemberId(cartId, memberId);
+			cartDAO.deleteCartByCartIdAndMemberId(cartId, member.getMemberId());
 
 			response.setStatus(201);
 			response.getWriter().write(
@@ -74,19 +63,6 @@ public class DeleteCartAction implements Action, ValidableAction {
 
 	}
 
-	@Override
-	public List<ErrorField> valid(HttpServletRequest request) {
-		List<ErrorResponse.ErrorField> errors = new ArrayList<>();
-
-		String cartId = request.getParameter("cart_id");
-
-		Validation validation = Validation.getInstance();
-
-		if (!validation.validNotEmpty(cartId)) {
-			errors.add(new ErrorResponse.ErrorField("cart_id", cartId, "값이 비어있습니다."));
-		}
-
-		return errors;
-	}
+	
 
 }

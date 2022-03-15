@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR" isELIgnored="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>Ï¢ãÏïÑÏöî Ìù∞Îîî</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="${contextPath}/static/js/function.min.js"></script>
 <script type="text/javascript" src="${contextPath}/static/js/jquery-library.min.js"></script>
@@ -15,7 +15,6 @@
 <link href="${contextPath}/static/css/css-library.min.css" rel="stylesheet" type="text/css">
 <link href="${contextPath}/static/css/mypage.min.css" rel="stylesheet" type="text/css">
 <link href="${contextPath}/static/css/wish.css" rel="stylesheet" type="text/css">
-<link rel="shortcut icon" type="image/x-icon" href="${contextPath}/static/images/favicon.ico">
 </head>
 
 <body>
@@ -23,127 +22,116 @@
   <jsp:include page="../../header.jsp" flush="false" />
     <div id="contents">
       <div class="innercon">
-      
-        <section class="lnbarea">
-		  <h2>∏∂¿Ã∆‰¿Ã¡ˆ</h2>
-		  <ul>
-		    <li class="lnb-depth1">
-			  <a href="${contextPath}/mypage/info.do">»∞µø ∞¸∏Æ</a>
-			  <ul class="lnb-depth2">
-			    <li><a href="${contextPath}/mypage/order_list.do">¡÷πÆ ≥ªø™</a></li>
-	            <li><a href="${contextPath}/mypage/wish.do">¡¡æ∆ø‰</a></li>
-			    <li><a href="${contextPath}/mypage/recent_view.do">√÷±Ÿ ∫ª ªÛ«∞</a></li>
-			  </ul>
-		    </li>
-		  </ul>
-		</section> 
-		
-		<section class="conarea">
-		  <h3 class="tit">¡¡æ∆ø‰</h3>
+      <%@ include file="/pages/mypage/sidebar.jsp" %>
+      		
+	    <section class="conarea">
+		  <h3 class="tit">Ï¢ãÏïÑÏöî</h3>
 		  
 		  <div class="list-filter">
-	        <label><input type="checkbox" id="checkAll" onclick="fn_checkboxAll();"><span class="select-all">¿¸√ºº±≈√</span></label>
-	        <button type="button" onclick="fn_deleteCheckList();" class="btn small lightgray">º±≈√ªË¡¶</button>
-	        <button type="button" onclick="fn_deleteSoldoutList();" class="btn small lightgray">«∞¿˝ªË¡¶</button>
+	        <label><input type="checkbox" id="checkAll" onclick="selectAll(this);"><span class="select-all">Ï†ÑÏ≤¥ÏÑ†ÌÉù</span></label>
+	        <button type="button" onclick="deleteCheckList();" class="btn small lightgray">ÏÑ†ÌÉùÏÇ≠Ï†ú</button>
+	        <button type="button" onclick="deleteSoldoutList();" class="btn small lightgray">ÌíàÏ†àÏÇ≠Ï†ú</button>
 	      </div>
 	       
 	      <fieldset class="list-field">
+	        <!-- Ï¢ãÏïÑÏöî Î™©Î°ùÏù¥ ÏûàÎã§Î©¥ -->
 	        <c:if test="${!empty wishList}">
               <ul id="contUl" class="product-list vertical">
              
                 <c:forEach items="${wishList}" var="wishDTO">
-             
-                
 	              <li>
-		            <button type="button" class="btn-del" onclick="wishDelete(${wishDTO.productId}, ${wishDTO.companyId});">ªË¡¶</button>
+		            <button type="button" class="btn-del" onclick="wishDelete(${wishDTO.productId}, ${wishDTO.companyId});">ÏÇ≠Ï†ú</button>
 		              <label class="thumb">
-		                <input type="checkbox" name="checkboxAll" value="${wishDTO.productId}">
+		                <input type="checkbox" name="checkboxAll" onclick="checkSelectAll();" value="${wishDTO.productId}, ${wishDTO.companyId}, ${wishDTO.productCount}">
+		                <!-- ÏÉÅÌíàÏù¥ ÏÇ≠Ï†úÎêú Í≤ΩÏö∞ -->
 		                <c:if test="${wishDTO.deleted == 1}">
-		                <span class="soldout">∆«∏≈¡ﬂ¥‹</span>
+		                  <span class="soldout">ÌåêÎß§Ï§ëÎã®</span>
 		                </c:if>
-		               <c:if test="${wishDTO.productCount == 0 && wishDTO.deleted != 1}">
-		                <span class="soldout">¿œΩ√«∞¿˝</span>
+		                <!-- ÏÉÅÌíà ÏàòÎüâÏù¥ 0Ïù∏ Í≤ΩÏö∞ -->
+		                <c:if test="${wishDTO.productCount == 0 && wishDTO.deleted != 1}">
+		                  <span class="soldout">ÏùºÏãúÌíàÏ†à</span>
 		                </c:if>
+		                <!-- Ï†ïÏÉÅ -->
 		                <span class="normal"></span>
 		                <img src="${wishDTO.imageUrl}" alt="${wishDTO.productName}">
 	                  </label>
 		
 		              <div class="contr">
-		              <c:if test="${wishDTO.deleted != 1}">
-		                <a href="${contextPath}/product/detail.do?pid=${wishDTO.productId}&cid=${wishDTO.companyId}">
-		                  <strong class="txt-ti ellipsis">${wishDTO.productName}</strong>
-		                </a>
-		               </c:if>
-		               <c:if test="${wishDTO.deleted == 1}">
-		                <a href="#">
-		                  <strong class="txt-ti ellipsis">${wishDTO.productName}</strong>
-		                </a>
-		               </c:if>
+		                <!-- ÏÉÅÌíàÏù¥ ÏÇ≠Ï†úÎêòÏßÄ ÏïäÏùÄ Í≤ΩÏö∞ -->
+		                <c:if test="${wishDTO.deleted != 1}">
+		                  <a href="${contextPath}/product/detail.do?pid=${wishDTO.productId}&cid=${wishDTO.companyId}">
+		                    <strong class="txt-ti ellipsis">${wishDTO.productName}</strong>
+		                  </a>
+		                </c:if>
+		                <!-- ÏÉÅÌíàÏù¥ ÏÇ≠Ï†úÎêú Í≤ΩÏö∞ -->
+		                <c:if test="${wishDTO.deleted == 1}">
+		                  <a href="#">
+		                    <strong class="txt-ti ellipsis">${wishDTO.productName}</strong>
+		                  </a>
+		                </c:if>
 		                     
 	                    <input id="dawnSoldoutYn" name="dawnSoldoutYn" type="hidden" value="N"/>
 	                    <span class="info">
 	                      <span class="txt-price">
-	                        <!-- ø¯∞°øÕ ¡÷πÆ∞°(«“¿Œ∞°) ¥Ÿ∏£¥Ÿ∏È -->                            
+	                        <!-- ÏõêÍ∞ÄÏôÄ Ï£ºÎ¨∏Í∞Ä(Ìï†Ïù∏Í∞Ä) Îã§Î•¥Îã§Î©¥ -->                            
 	                        <c:if test="${wishDTO.discountPrice != wishDTO.productPrice}">
-		                      <strong><em>${wishDTO.discountPrice}</em>ø¯</strong>
-	                          <del>${wishDTO.productPrice}</del>
+		                      <strong><em><fmt:formatNumber value="${wishDTO.discountPrice}"/></em>Ïõê</strong>
+	                          <del><fmt:formatNumber value="${wishDTO.productPrice}"/></del>
 	                        </c:if> 
-	                        <!-- ø¯∞°øÕ ¡÷πÆ∞°(«“¿Œ∞°) ∞∞¥Ÿ∏È -->
+	                        <!-- ÏõêÍ∞ÄÏôÄ Ï£ºÎ¨∏Í∞Ä(Ìï†Ïù∏Í∞Ä) Í∞ôÎã§Î©¥ -->
 	                        <c:if test="${wishDTO.discountPrice == wishDTO.productPrice}">
-		                      <strong><em>${wishDTO.discountPrice}</em>ø¯</strong>
+		                      <strong><em><fmt:formatNumber value="${wishDTO.discountPrice}"/></em>Ïõê</strong>
 		                    </c:if>      
 	                      </span>
 	                      <div class="probtn">
-	                       <!-- ∆«∏≈¿⁄∞° ªÛ«∞¿ª ªË¡¶«— ∞ÊøÏ  --> 
+	                        <!-- ÌåêÎß§ÏûêÍ∞Ä ÏÉÅÌíàÏùÑ ÏÇ≠Ï†úÌïú Í≤ΩÏö∞  --> 
 		       				<c:if test="${wishDTO.deleted == 1}">      
-		                      <button type="button" class="btn fill small lightgray" onclick="soldoutAlarm()">∆«∏≈¡ﬂ¥‹ ªÛ«∞</button>
+		                      <button type="button" class="btn fill small lightgray" onclick="soldoutAlarm()">ÌåêÎß§Ï§ëÎã® ÏÉÅÌíà</button>
 		                    </c:if> 
-		                    <!-- ¡§ªÛ  --> 
+		                    <!-- Ï†ïÏÉÅ  --> 
 		                    <c:if test="${wishDTO.productCount > 0 && wishDTO.deleted != 1}">      
-		                      <button type="button" class="btn small orange" onclick="addToCart(${wishDTO.productId}, ${wishDTO.companyId})">¿ÂπŸ±∏¥œ ¥„±‚</button>
+		                      <button type="button" class="btn small orange" onclick="addToCart(${wishDTO.productId}, ${wishDTO.companyId})">Ïû•Î∞îÍµ¨Îãà Îã¥Í∏∞</button>
 		                    </c:if> 
-		                    <!-- ºˆ∑Æ¿Ã æ¯¥¬ ∞ÊøÏ  --> 
+		                    <!-- ÏàòÎüâÏù¥ ÏóÜÎäî Í≤ΩÏö∞  --> 
 		                    <c:if test="${wishDTO.productCount <= 0 && wishDTO.deleted != 1}">
-		                      <button type="button" class="btn fill small lightgray" onclick="restockAlarm()">¿Á¿‘∞Ì æÀ∏≤</button>
+		                      <button type="button" class="btn fill small lightgray" onclick="restockAlarm()">Ïû¨ÏûÖÍ≥† ÏïåÎ¶º</button>
 		                    </c:if>    
 		                  </div>
 		                </span>
-	                   </div>
-		             </li>
-	             
-	            </c:forEach>      
-               </ul>
+	                  </div>
+		            </li>
+	              </c:forEach>      
+                </ul>
                
-              <!-- ∆‰¿Ã¡ˆ≥◊¿Ãº« -->
-		      <div class="pagination">
-		   		<c:if test="${beginPage > pagePerList}">
-				  <a class="prev" href="${contextPath}/mypage/wish.do?pno=${beginPage-1}">¿Ã¿¸</a>
-				</c:if>
-				<c:forEach var="pno" begin="${beginPage}" end="${endPage}">
-				  <span class="num"><a href="${contextPath}/mypage/wish.do?pno=${pno}">${pno}</a></span>
-				</c:forEach>
-				<c:if test="${endPage < totalPageCount}">
-				  <a class="next" href="${contextPath}/mypage/wish.do?pno=${endPage + 1}">¥Ÿ¿Ω</a>
-				</c:if>
-			  </div>
-			  
+                <!-- ÌéòÏù¥ÏßÄÎÑ§Ïù¥ÏÖò -->
+		        <div class="pagination">
+		   		  <c:if test="${beginPage > pagePerList}">
+				    <a class="prev" href="${contextPath}/mypage/wish.do?pno=${beginPage-1}">Ïù¥Ï†Ñ</a>
+				  </c:if>
+				  <c:forEach var="pno" begin="${beginPage}" end="${endPage}">
+				    <span class="num"><a href="${contextPath}/mypage/wish.do?pno=${pno}">${pno}</a></span>
+				  </c:forEach>
+				  <c:if test="${endPage < totalPageCount}">
+				    <a class="next" href="${contextPath}/mypage/wish.do?pno=${endPage + 1}">Îã§Ïùå</a>
+				  </c:if>
+			    </div>
               </c:if>
                
-               
+              <!-- Ï¢ãÏïÑÏöî Î™©Î°ùÏù¥ ÏûàÎã§Î©¥ --> 
               <c:if test="${empty wishList}">
-		   	    <div class="nodata">¡¡æ∆ø‰ ªÛ«∞¿Ã æ∆¡˜ æ¯Ω¿¥œ¥Ÿ.</div>
+		   	    <div class="nodata">Ï¢ãÏïÑÏöî ÏÉÅÌíàÏù¥ ÏïÑÏßÅ ÏóÜÏäµÎãàÎã§.</div>
 		      </c:if>
                
                
-          </fieldset>                   
-        </section>
+            </fieldset>                   
+          </section>
+        </div>
       </div>
+      <%@ include file="/footer.jsp" %>
     </div>
-    <jsp:include page="../../footer.jsp" flush="false" />
-  </div>
- <script type="text/javascript">
+  <script type="text/javascript">
 
-	  
+	//Ï¢ãÏïÑÏöî ÏÇ≠Ï†ú  
 	function wishDelete(pId, cId){
 				
 		$.ajax({
@@ -157,17 +145,15 @@
 			},
 			success : function(data){
 				console.log(data);
-				alert("¡¡æ∆ø‰ ªË¡¶");
 				location.reload();
-				//window.location.reload(true);
 			},
 			error : function(err) {
 				console.log(err);
 			}
-		});
-			
-		}
+		});		
+	}
 	
+	//Ïû•Î∞îÍµ¨Îãà Îã¥Í∏∞
 	function addToCart(pId, cId) {
 			
 		$.ajax({
@@ -181,7 +167,7 @@
 			},
 			success : function(data){
 				console.log(data);
-				alert("¿ÂπŸ±∏¥œø° ¥„æ“Ω¿¥œ¥Ÿ");
+				alert("Ïû•Î∞îÍµ¨ÎãàÏóê Îã¥ÏïòÏäµÎãàÎã§");
 			},
 			error : function(err) {
 				console.log(err);
@@ -193,12 +179,83 @@
 				
 	}
   
+	//ÏÉÅÌíàÏù¥ ÏÇ≠Ï†úÎêú Í≤ΩÏö∞
 	function soldoutAlarm() {
-		alert("ªÛ«∞ ∆«∏≈∞° ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ");
+		alert("ÏÉÅÌíà ÌåêÎß§Í∞Ä Ï§ëÎã®ÎêòÏóàÏäµÎãàÎã§");
 	}
 	
+	//ÏÉÅÌíà ÏàòÎüâÏù¥ ÏóÜÎäî Í≤ΩÏö∞
 	function restockAlarm() {
-		alert("¡ÿ∫Ò ¡ﬂ¿‘¥œ¥Ÿ");	
+		alert("Ï§ÄÎπÑ Ï§ëÏûÖÎãàÎã§");	
+	}
+	
+	//Ï≤¥ÌÅ¨Î∞ïÏä§ Ï†ÑÏ≤¥ ÏÑ†ÌÉù Î∞è Ìï¥Ï†ú
+	function selectAll(selectAll) {
+
+		var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+	
+		checkboxes.forEach((checkbox) => {
+			checkbox.checked = selectAll.checked
+		})		
+	}
+	
+	//ÏÑ†ÌÉùÎêú Ï≤¥ÌÅ¨Î∞ïÏä§ ÏÇ≠Ï†ú
+	function deleteCheckList() {
+		var checkBoxArr = [];
+		var checked = document.querySelectorAll('input[name="checkboxAll"]:checked');
+		
+		checked.forEach((check) => {
+			checkBoxArr.push(check.value);
+		})
+		console.log(checkBoxArr);
+		
+		if (checkBoxArr != null) {
+			checkBoxArr.forEach((check) => {
+				var info = check.split(",");
+				console.log(info);
+				var pId = parseInt(info[0]);
+				var cId = parseInt(info[1]);
+				wishDelete(pId, cId);
+			})
+		}		
+	}
+	
+	//Ï≤¥ÌÅ¨Î∞ïÏä§ Ï§ë ÌïòÎÇòÎùºÎèÑ ÏÑ†ÌÉù Ìï¥Ï†úÎêòÎ©¥ Ï†ÑÏ≤¥ ÏÑ†ÌÉù Ìï¥Ï†ú
+	function checkSelectAll() {
+		var allBoxes = document.querySelectorAll('input[name="checkboxAll"]'); //Ï†ÑÏ≤¥ Ï≤¥ÌÅ¨Î∞ïÏä§ 
+		var checked = document.querySelectorAll('input[name="checkboxAll"]:checked'); //ÏÑ†ÌÉùÎêú Ï≤¥ÌÅ¨Î∞ïÏä§
+		var selectAll = document.querySelector('input[id="checkAll"]'); //Ï†ÑÏ≤¥ Ï≤¥ÌÅ¨ÌïòÎäî Ï≤¥ÌÅ¨Î∞ïÏä§ ÌïòÎÇò
+		
+		if (allBoxes.length === checked.length) {
+			selectAll.checked = true;
+		} else {
+			selectAll.checked = false;
+		}
+	}
+	
+	//ÏàòÎüâÏù¥ 0Ïù∏ ÏùºÏãúÌíàÏ†à ÏÉÅÌíà ÏùºÍ¥Ñ ÏÇ≠Ï†ú
+	function deleteSoldoutList() {
+		var checkBoxArr = [];
+		var allBoxes = document.querySelectorAll('input[name="checkboxAll"]'); //Ï†ÑÏ≤¥ Ï≤¥ÌÅ¨Î∞ïÏä§
+		
+		allBoxes.forEach((check) => {
+			checkBoxArr.push(check.value);
+		})
+		console.log(checkBoxArr);
+		
+		if (checkBoxArr != null) {
+			checkBoxArr.forEach((check) => {
+				var info = check.split(",");
+				console.log(info);
+				var pId = parseInt(info[0]);
+				var cId = parseInt(info[1]);
+				var pCnt = parseInt(info[2]);
+				if (pCnt === 0) {
+					console.log('success');
+					wishDelete(pId, cId);				
+				}
+			})
+		}	
 	}
   </script>
 </body>

@@ -11,32 +11,39 @@ import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
 import com.heendy.action.mypage.MyPageActionFactory;
 
+/**
+ * @author 이지민
+ * 마이페이지 관련 Controller
+ * */
 
 @WebServlet("/mypage/*")
 public class MyPageController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	
+	private final ActionFactory actionFactory = MyPageActionFactory.getInstance();
        
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doHandle(request, response);
 	}
 
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
 		doHandle(request, response);
 	}
 	
+	
 	private void doHandle(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
-		//�ѱ��� ó��
-		request.setCharacterEncoding("utf-8");
+
 		response.setContentType("text/html;charset=utf-8");
 		
 	    String command = request.getPathInfo();
 	    System.out.println("MyPageController : " + command);
 	    
-	    ActionFactory af = MyPageActionFactory.getInstance();
-	    Action action = af.getAction(command);
+	    
+	    Action action = this.actionFactory.getAction(command);
 
 	    if (action != null) {
 	      action.execute(request, response);
 	    }
-	}//end do handle
+	}
 }

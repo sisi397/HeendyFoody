@@ -37,12 +37,13 @@ request.setCharacterEncoding("UTF-8");
 <!-- 회원가입시 input 제약조건 JS -->
 <script type="text/javascript" src="${contextPath}/static/js/memberJoin.js"></script>
 </head>
+
 <style>
 .heendy-logo-header {
 width: 55%;
 }
-
 </style>
+
 <body>
 
 	<!-- header// -->

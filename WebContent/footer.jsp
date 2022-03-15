@@ -2,12 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
 <style>
 #footer .info .logo:after {
 	width: 120% !important;
 	height: 80% !important;
 	background-size: contain !important;
-	background: url(../static/images/common/logo_footer1.png) no-repeat 0 0;
+	background: url(${contextPath}/static/images/common/logo_footer1.png) no-repeat 0 0;
 }
 </style>
 
@@ -65,19 +67,20 @@
 		</div>
 	</div>
 
-	<div class="info">
-		<div class="inner">
-			<div class="logo">현대식품관</div>
-			<div id="fnDawnBizpCrstList">
-				<strong>(주)흰디푸디</strong><br> <span> 대표 : 현대IT&E 개발자 양성교육
-					1차 PJT 4조</span><br> <span> 주소 : 서울 송파구 중대로 135 </span><br> 이메일
-				: heendyfoody@hyundai.com (제휴 문의, 02-1212-0761) <br>
-				<p class='essential-info'>
-					<em>흰디푸디 투홈의 개별 판매자가 등록한 상품(브랜드직송) 상품에 대한 광고, 상품주문, 배송, 환불의
-						의무와 책임은 각 판매자가 부담하고,<br> 흰디푸디 투홈은 통신판매 중개자로서의 의무와 책임을 다합니다.
-					</em><br> 고객님의 안전거래를 위해 현금결제 시 KG이니시스 구매안전 서비스를 이용하실 수 있습니다.<br>
-					<small class='copyright'>Copyright &copy; Hyundai Foody
-						Store. All rights reserved.</small>
+		<div class="info">
+			<div class="inner">
+				<div class="logo">흰디푸디</div>
+				<div id="fnDawnBizpCrstList">
+					<strong>(주)흰디푸디</strong><br> <span> 대표 : 현대IT&E 개발자
+						양성교육 1차 PJT 4조</span><br> <span> 주소 : 서울 송파구 중대로 135 </span><br>
+					이메일 : heendyfoody@hyundai.com (제휴 문의, 02-1212-0761) <br>
+					<p class='essential-info'>
+						<em>흰디푸디 투홈의 개별 판매자가 등록한 상품(브랜드직송) 상품에 대한 광고, 상품주문, 배송, 환불의
+							의무와 책임은 각 판매자가 부담하고,<br> 흰디푸디 투홈은 통신판매 중개자로서의 의무와 책임을 다합니다.
+						</em><br> 고객님의 안전거래를 위해 현금결제 시 KG이니시스 구매안전 서비스를 이용하실 수 있습니다.<br>
+						<small class='copyright'>Copyright &copy; Heendy Foody
+							Store. All rights reserved.</small>
+				</div>
 			</div>
 		</div>
 	</div>

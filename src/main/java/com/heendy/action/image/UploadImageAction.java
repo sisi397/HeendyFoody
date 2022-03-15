@@ -23,6 +23,12 @@ import com.heendy.common.ErrorResponse;
 import com.heendy.common.exception.NotSupportExtension;
 import com.heendy.common.exception.NotSupportOS;
 
+
+/**
+ * @author 이승준
+ * 
+ * 이미지 업로드 Action 클래스
+ * */
 public class UploadImageAction implements Action {
 
 	private final String[] supportExts = {"jpg","jpeg","png"};
@@ -131,10 +137,26 @@ public class UploadImageAction implements Action {
 
 	}
 	
+	/**
+	 * @author 이승준
+	 * 
+	 * @param ext 확장자 문자열
+	 * 
+	 * @return boolean
+	 * 
+	 * 요청한 파일 확장자가 허용되는 확장자인지 검증하는 메소드
+	 * */
 	private boolean validExt(String ext) {
 		return Arrays.asList(this.supportExts).contains(ext);
 	}
 	
+	/**
+	 * @author 이승준
+	 * 
+	 * @return String
+	 * 
+	 * uuid 문자열을 생성하는 메소드
+	 * */
 	private String getUUID() {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();

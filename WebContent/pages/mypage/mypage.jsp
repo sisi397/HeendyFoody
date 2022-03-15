@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR" isELIgnored="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>∏∂¿Ã∆‰¿Ã¡ˆ | HeendyFoody </title>
+<title>ÎßàÏù¥ÌéòÏù¥ÏßÄ | HeendyFoody </title>
 <link href="${contextPath}/static/css/common.min.css" rel="stylesheet" type="text/css">
 <link href="${contextPath}/static/css/css-library.min.css" rel="stylesheet" type="text/css">
 <link href="${contextPath}/static/css/member.min.css" rel="stylesheet" type="text/css">
@@ -30,189 +30,191 @@
 }
 </style>
 <body>
-
 	
   <div id="wrap" class="mypage mypage main">
+  <!-- header include -->
   <jsp:include page="../../header.jsp" flush="false" />
+  
     <div id="contents">
 	  <div class="innercon">
-	    <section class="lnbarea">
-		  <h2>∏∂¿Ã∆‰¿Ã¡ˆ</h2>
-		  <ul>
-		    <li class="lnb-depth1">
-			  <a href="${contextPath}/mypage/info.do">»∞µø ∞¸∏Æ</a>
-			  <ul class="lnb-depth2">
-			    <li><a href="${contextPath}/mypage/order_list.do">¡÷πÆ ≥ªø™</a></li>
-			    <li><a href="${contextPath}/mypage/wish.do">¡¡æ∆ø‰</a></li>
-			    <li><a href="${contextPath}/mypage/recent_view.do">√÷±Ÿ ∫ª ªÛ«∞</a></li>
-			  </ul>
-		    </li>
-		  </ul>
-		</section> 
+	  <!-- Ï†ïÏ†Å ÌååÏùº sidebar include -->
+	  <%@ include file="/pages/mypage/sidebar.jsp" %>
 		
 		<section class="conarea">
+		  <!-- ÏÇ¨Ïö©Ïûê Í¥ÄÎ†® Ï†ïÎ≥¥ ÏÉÅÎã® ÌëúÏãú  -->
 		  <section class="mystate-section">
 		    <div class="myinfo">
 		      <div class="memclass normal"> 
 		        <div class="cont">
-			      <strong class="name">${loginUser.memberName}¥‘</strong>                   
+			      <strong class="name">${loginUser.memberName}Îãò</strong>                   
 		          <ul>
-	           	    <li><a href="#" style="color: gray;">ø¿¥√µµ ¡Ò∞≈øÓ «œ∑Á µ«ººø‰</a></li>
+	           	    <li><a href="#" style="color: gray;">Ïò§ÎäòÎèÑ Ï¶êÍ±∞Ïö¥ ÌïòÎ£® ÎêòÏÑ∏Ïöî</a></li>
 	              </ul>
 		        </div>
 		      </div>
-		     </div>
-		     <div class="point">
-		       <ul>          
-		         <li>
-		           <a href="#">
-		             <div class="inner">
-		               <strong><span id="upointCurAmt">${loginUser.point}</span>P</span></strong> H.Point
-		             </div>
-		           </a>
-		         </li> 
-		         <li>
-		           <a href="#">
-		             <div class="inner">
-		               <strong><span id="upointCurAmt">${totalOrderCount}</span>∞≥</span></strong> ORDER
-		             </div>
-		           </a>
-		         </li>  
-		         <li>
-		           <a href="#">
-		             <div class="inner">
-		               <strong><span id="upointCurAmt">${totalWishCount}</span>∞≥</span></strong> LIKE
-		             </div>
-		           </a>
-		         </li>  
-		         <li>
-		           <a href="#">
-		             <div class="inner">
-		               <strong><span id="upointCurAmt">${totalRvCount}</span>∞≥</span></strong> VIEW
-		             </div>
-		           </a>
-		         </li> 
-		         <li>
-		           <a href="#">
-		             <div class="inner">
-		               <strong><span id="upointCurAmt"><img src="${contextPath}/static/images/common/cursor_heendy.png" alt="heendy"></span></strong> Heendy
-		             </div>
-		           </a>
-		         </li>                                                                                                
-		       </ul>
-		     </div>
-		   </section>
+		    </div>
+		    <div class="point">
+		      <ul>          
+		        <li>
+		          <a href="#">
+		            <div class="inner">
+		              <strong><span id="upointCurAmt">${memberPoint}</span>P</span></strong> H.Point
+		            </div>
+		          </a>
+		        </li> 
+		        <li>
+		          <a href="#">
+		            <div class="inner">
+		              <strong><span id="upointCurAmt">${totalOrderCount}</span>Í∞ú</span></strong> ORDER
+		            </div>
+		          </a>
+		        </li>  
+		        <li>
+		          <a href="#">
+		            <div class="inner">
+		              <strong><span id="upointCurAmt">${totalWishCount}</span>Í∞ú</span></strong> LIKE
+		            </div>
+		          </a>
+		        </li>  
+		        <li>
+		          <a href="#">
+		            <div class="inner">
+		              <strong><span id="upointCurAmt">${totalRvCount}</span>Í∞ú</span></strong> VIEW
+		            </div>
+		          </a>
+		        </li> 
+		        <li>
+		          <a href="#">
+		            <div class="inner">
+		              <strong><span id="upointCurAmt"><img src="${contextPath}/static/images/common/cursor_heendy.png" alt="heendy"></span></strong> Heendy
+		            </div>
+		          </a>
+		        </li>                                                                                                
+		      </ul>
+		    </div>
+		  </section>
 		  
-		   <section class="like-section">
-		     <header class="header">
-		       <h4><span>¡¡æ∆ø‰ </span><strong>${totalWishCount}</strong></h4>
-		       <a href="${contextPath}/mypage/wish.do?pno=1" class="btn-line">¥ı∫∏±‚</a>
-		     </header>
-		  
-		  	 <c:if test="${!empty wishList}">
-		       <ul class="product-list small">
-		         <c:forEach items="${wishList}" var="wishDTO">
-		           <li> <!-- ¡§ªÛ -->
+		  <!-- Ï¢ãÏïÑÏöî Î™©Î°ù 5Í∞ú ÌëúÏãú -->
+		  <section class="like-section">
+		    <header class="header">
+		      <h4><span>Ï¢ãÏïÑÏöî </span><strong>${totalWishCount}</strong></h4>
+		      <a href="${contextPath}/mypage/wish.do?pno=1" class="btn-line">ÎçîÎ≥¥Í∏∞</a>
+		    </header>
+		     
+		    <!-- Ï¢ãÏïÑÏöî Î™©Î°ùÏù¥ ÏûàÎã§Î©¥ -->
+		  	<c:if test="${!empty wishList}">
+		      <ul class="product-list small">
+		        <c:forEach items="${wishList}" var="wishDTO">
+		          <li> <!-- ÏÉÅÌíàÏù¥ ÏÇ≠Ï†úÎêú Í≤ΩÏö∞ -->
 		           	<c:if test="${wishDTO.deleted == 1}">
 		              <a href="#">
-			           <span class="thumb">
-		              	<span class="soldout">∆«∏≈¡ﬂ¥‹</span>
-			             <img src="${wishDTO.imageUrl}" alt="${wishDTO.productName}">
-			           </span>
-	                   <strong class="txt-ti ellipsis">${wishDTO.productName}</strong>
-	                 </a>
+			            <span class="thumb">
+		              	  <span class="soldout">ÌåêÎß§Ï§ëÎã®</span>
+			              <img src="${wishDTO.imageUrl}" alt="${wishDTO.productName}">
+			            </span>
+	                    <strong class="txt-ti ellipsis">${wishDTO.productName}</strong>
+	                  </a>
 		            </c:if>
 		              
-		            
-		             <c:if test="${wishDTO.deleted != 1 }">
-			         <a href="${contextPath}/product/detail.do?pid=${wishDTO.productId}&cid=${wishDTO.companyId}">
-			           <span class="thumb">
-			           <c:if test="${wishDTO.productCount == 0}">
-			           <span class="soldout">¿œΩ√«∞¿˝</span>
-			           </c:if>
-			             <img src="${wishDTO.imageUrl}" alt="${wishDTO.productName}">
-			           </span>
-	                   <strong class="txt-ti ellipsis">${wishDTO.productName}</strong>
-	                 </a>
-	                 </c:if>
-		             <span class="info">
-		               <span class="txt-price">
-		                 <c:if test="${wishDTO.discountPrice != wishDTO.productPrice}">
-			               <strong><em>${wishDTO.discountPrice}</em>ø¯</strong>
-			               <del>${wishDTO.productPrice}</del>       
-			             </c:if>
-			             <c:if test="${wishDTO.discountPrice == wishDTO.productPrice}">
-			               <strong><em>${wishDTO.discountPrice}</em>ø¯</strong>     
-			             </c:if>
-		               </span>
-		             </span>
-		             
-		           </li>    
-		         </c:forEach>  
-		       </ul>
-		     </c:if>
+		            <!-- ÏÉÅÌíàÏù¥ ÏÇ≠Ï†úÎêòÏßÄ ÏïäÏùÄ Í≤ΩÏö∞ -->
+		            <c:if test="${wishDTO.deleted != 1 }">
+			          <a href="${contextPath}/product/detail.do?pid=${wishDTO.productId}&cid=${wishDTO.companyId}">
+			            <span class="thumb">
+			              <!-- ÏÉÅÌíà ÏàòÎüâÏù¥ 0Ïù∏ Í≤ΩÏö∞ -->
+			              <c:if test="${wishDTO.productCount == 0}">
+			                <span class="soldout">ÏùºÏãúÌíàÏ†à</span>
+			              </c:if>
+			              <img src="${wishDTO.imageUrl}" alt="${wishDTO.productName}">
+			            </span>
+	                    <strong class="txt-ti ellipsis">${wishDTO.productName}</strong>
+	                  </a>
+	                </c:if>
+		            <span class="info">
+		              <span class="txt-price">
+		                <!-- Ìï†Ïù∏ÌïòÎäî Í≤ΩÏö∞ -->
+		                <c:if test="${wishDTO.discountPrice != wishDTO.productPrice}">
+			              <strong><em><fmt:formatNumber value="${wishDTO.discountPrice}"/></em>Ïõê</strong>
+			              <del><fmt:formatNumber value="${wishDTO.productPrice}"/></del>       
+			            </c:if>
+			            <!-- Ìï†Ïù∏ÌïòÏßÄ ÏïäÎäî Í≤ΩÏö∞ -->
+			            <c:if test="${wishDTO.discountPrice == wishDTO.productPrice}">
+			              <strong><em><fmt:formatNumber value="${wishDTO.discountPrice}"/></em>Ïõê</strong>     
+			            </c:if>
+		              </span>
+		            </span>   
+		          </li>    
+		        </c:forEach>  
+		      </ul>
+		    </c:if>
 		     
-		     <c:if test="${empty wishList}">
-		   	   <div class="nodata">¡¡æ∆ø‰ ªÛ«∞¿Ã æ∆¡˜ æ¯Ω¿¥œ¥Ÿ.</div>
-		     </c:if>
-		   </section>
+		    <!-- Ï¢ãÏïÑÏöî Î™©Î°ùÏù¥ ÏóÜÎäî Í≤ΩÏö∞ --> 
+		    <c:if test="${empty wishList}">
+		   	  <div class="nodata">Ï¢ãÏïÑÏöî ÏÉÅÌíàÏù¥ ÏïÑÏßÅ ÏóÜÏäµÎãàÎã§.</div>
+		    </c:if>
+		  </section>
 		   
-		   <section class="view-section">
-		     <header class="header">
-		       <h4><span>√÷±Ÿ ∫ª ªÛ«∞ </span><strong>${totalRvCount}</strong></h4>
-		       <a href="${contextPath}/mypage/recent_view.do" class="btn-line">¥ı∫∏±‚</a>
-		     </header>
+		  <!-- ÏµúÍ∑º Î≥∏ Î™©Î°ù 5Í∞ú ÌëúÏãú -->
+		  <section class="view-section">
+		    <header class="header">
+		      <h4><span>ÏµúÍ∑º Î≥∏ ÏÉÅÌíà </span><strong>${totalRvCount}</strong></h4>
+		      <a href="${contextPath}/mypage/recent_view.do" class="btn-line">ÎçîÎ≥¥Í∏∞</a>
+		    </header>
 		     
-		     <c:if test="${!empty rvList}">
-		       <ul class="product-list small">
-			     <c:forEach items="${rvList}" var="rvDTO">
-			       <li>
-			       <c:if test="${rvDTO.deleted == 1}">
-			       <a href="#">
-			           <span class="thumb">
-			           <span class="soldout">∆«∏≈¡ﬂ¥‹</span>
-			             <img src="${rvDTO.imageUrl}" alt=${rvDTO.productName}>
-			           </span>
-			           <strong class="txt-ti ellipsis">${rvDTO.productName}</strong>
-			         </a>
-			       </c:if>
-			       
-			       <c:if test="${rvDTO.deleted != 1 }">
-			         <a href="${contextPath}/product/detail.do?pid=${rvDTO.productId}&cid=${rvDTO.companyId}">
-			           <span class="thumb">
-			           <c:if test="${rvDTO.productCount == 0}">
-			           <span class="soldout">¿œΩ√«∞¿˝</span>
-			           </c:if>
-			             <img src="${rvDTO.imageUrl}" alt=${rvDTO.productName}>
-			           </span>
-			           <strong class="txt-ti ellipsis">${rvDTO.productName}</strong>
-			         </a>
-			         </c:if>
-			         <span class="info">
-			           <span class="txt-price">
-			             <c:if test="${rvDTO.discountPrice != rvDTO.productPrice}">
-			               <strong><em>${rvDTO.discountPrice}</em>ø¯</strong>
-			               <del>${rvDTO.productPrice}</del>        
-			             </c:if>
-			             <c:if test="${rvDTO.discountPrice == rvDTO.productPrice}">
-			               <strong><em>${rvDTO.discountPrice}</em>ø¯</strong>   
-			             </c:if>
-				       </span>
-			         </span>
-			         
-			       </li>
-			     </c:forEach>                           
-		       </ul>
-		     </c:if>
-		     
-		      <c:if test="${empty rvList}">
-		   	    <div class="nodata">√÷±Ÿ ∫ª ªÛ«∞¿Ã æ∆¡˜ æ¯Ω¿¥œ¥Ÿ.</div>
-		      </c:if>
-		   </section>
-		 </section>
-	   </div>
+		    <!-- ÏµúÍ∑º Î≥∏ ÏÉÅÌíàÏù¥ ÏûàÎã§Î©¥ -->
+		    <c:if test="${!empty rvList}">
+		      <ul class="product-list small">
+			    <c:forEach items="${rvList}" var="rvDTO">
+			      <li>
+			        <!-- ÏÉÅÌíàÏù¥ ÏÇ≠Ï†úÎêú Í≤ΩÏö∞ -->
+			        <c:if test="${rvDTO.deleted == 1}">
+			          <a href="#">
+			            <span class="thumb">
+			            <span class="soldout">ÌåêÎß§Ï§ëÎã®</span>
+			              <img src="${rvDTO.imageUrl}" alt=${rvDTO.productName}>
+			            </span>
+			            <strong class="txt-ti ellipsis">${rvDTO.productName}</strong>
+			          </a>
+			        </c:if>
+			        <!-- ÏÉÅÌíàÏù¥ ÏÇ≠Ï†úÎêòÏßÄ ÏïäÏùÄ Í≤ΩÏö∞ -->
+			        <c:if test="${rvDTO.deleted != 1 }">
+			          <a href="${contextPath}/product/detail.do?pid=${rvDTO.productId}&cid=${rvDTO.companyId}">
+			            <span class="thumb">
+			            <!-- ÏÉÅÌíà ÏàòÎüâÏù¥ 0Ïù∏ Í≤ΩÏö∞ -->
+			            <c:if test="${rvDTO.productCount == 0}">
+			              <span class="soldout">ÏùºÏãúÌíàÏ†à</span>
+			            </c:if>
+			            <img src="${rvDTO.imageUrl}" alt=${rvDTO.productName}>
+			            </span>
+			            <strong class="txt-ti ellipsis">${rvDTO.productName}</strong>
+			          </a>
+			        </c:if>
+			        <span class="info">
+			          <span class="txt-price">
+			            <!-- Ìï†Ïù∏ÌïòÎäî Í≤ΩÏö∞ -->
+			            <c:if test="${rvDTO.discountPrice != rvDTO.productPrice}">
+			              <strong><em><fmt:formatNumber value="${rvDTO.discountPrice}"/></em>Ïõê</strong>
+			              <del><fmt:formatNumber value="${rvDTO.productPrice}"/></del>        
+			            </c:if>
+			            <!-- Ìï†Ïù∏ÌïòÏßÄ ÏïäÎäî Í≤ΩÏö∞ -->
+			            <c:if test="${rvDTO.discountPrice == rvDTO.productPrice}">
+			              <strong><em><fmt:formatNumber value="${rvDTO.discountPrice}"/></em>Ïõê</strong>   
+			            </c:if>
+				      </span>
+			        </span>   
+			      </li>
+			    </c:forEach>                           
+		      </ul>
+		    </c:if>
+		    <!-- ÏµúÍ∑º Î≥∏ ÏÉÅÌíàÏù¥ ÏóÜÎã§Î©¥ -->
+		    <c:if test="${empty rvList}">
+		   	  <div class="nodata">ÏµúÍ∑º Î≥∏ ÏÉÅÌíàÏù¥ ÏïÑÏßÅ ÏóÜÏäµÎãàÎã§.</div>
+		    </c:if>
+		  </section>
+        </section>
+	  </div>
     </div>
-    <jsp:include page="../../footer.jsp" flush="false" />
+    <!-- Ï†ïÏ†Å ÌååÏùº footer include -->
+    <%@ include file="/footer.jsp" %>
   </div>
 </body>
 </html>

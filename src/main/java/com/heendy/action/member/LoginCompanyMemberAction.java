@@ -12,6 +12,10 @@ import com.heendy.dao.CompanyMemberDAO;
 import com.heendy.dao.MemberDAO;
 import com.heendy.dto.CompanyMemberDTO;
 
+/**
+ * @author 문석호
+ * 업체 로그인 기능 구현
+ */
 public class LoginCompanyMemberAction implements Action {
 	private final CompanyMemberDAO cmemberDAO = CompanyMemberDAO.getInstance();
 	

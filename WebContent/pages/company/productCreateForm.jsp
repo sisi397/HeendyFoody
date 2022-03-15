@@ -1,3 +1,8 @@
+<!-- 
+	author : 이승준
+	상품 등록 화면
+ -->
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -11,7 +16,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
+<link href="${contextPath}/static/css/mypage.min.css" rel="stylesheet" type="text/css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -20,16 +25,12 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>상품 등록</title>
-<style>
-</style>
 
 </head>
 <body>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			var errorMessage =
-	<%=request.getAttribute("errorMsg")%>
-		;
+			var errorMessage = <%=request.getAttribute("errorMsg")%>;
 			if (errorMessage != null) {
 				alert(errorMessage);
 			}
@@ -69,17 +70,9 @@
 				});
 			});
 
-			/* $("#productNameInput").on("change keyup paste input", function() {
-				console.log($(this))
-				var value = $(this).val();
-				console.log(value)
-				if (value.length == 0) {
-					alert("error");
-				}
-			}); */
-
 		});
 
+		/*상품 등록 함수*/
 		function onSubmit() {
 			var selectCategoryValue = $("#categorySelect").val();
 			var productNameObj = $("#productNameInput");
@@ -119,13 +112,16 @@
 						alert(message);
 					}
 				})
+			} else {
+				alert("필수 값들을 입력해주세요.");
 			}
 			
 			
 		}
 		
+		/*상품 등록전 input field 값 검증*/
 		function checkSubmit(productNameObj, priceObj,discoutRateObj,countObj,imgUrlInput) {
-			var result = true;
+			var valid = true;
 			if (!checkProdutNameInput(productNameObj)) {
 				productNameObj.addClass("is-invalid");
 				valid = false;
@@ -161,7 +157,7 @@
 				imgUrlInput.removeClass("is-invalid");
 			}
 			
-			return result;
+			return valid;
 		}
 		
 
@@ -192,11 +188,11 @@
 			var value = $(obj).val();
 			console.log(value)
 			var result = true;
-
-			if (value.lenght > 3 || value.length == 0 || value.trim().length == 0 || isNaN(value) || value < 0) {
+			
+			if (value.length == 0 || value.trim().length == 0 || isNaN(value) || value < 0 || value > 100) {
 				result = false;
 			}
-
+			
 			return result;
 		}
 		/*상품 재고 input 검증*/
@@ -224,82 +220,103 @@
 		}
 	</script>
 
-	<div class="container mt-5">
-		<form id="frmCreateProd" method="post"
-			action="${contextPath}/company/createProduct.do">
-			<div class="input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">상품명</span>
-				</div>
-				<input type="text" id="productNameInput" name="productName"
-					class="form-control" placeholder="상품명을 입력해주세요.">
-				<div id="productNameFeedBack" class="invalid-feedback">
-					상품 이름은 필수입니다.
-				</div>
 
+	<jsp:include page="/header.jsp" flush="false" />
+
+	<div id="wrap">
+		<div id="contents">
+			<div class="innercon">
+				<section class="lnbarea">
+					<h2>업체회원</h2>
+					<ul>
+						<li class="lnb-depth2"><a href="${contextPath}/company/company.do">홈</a></li>
+						<li class="lnb-depth2"><a href="${contextPath}/company/createProductForm.do">상품 관리</a></li>
+					</ul>
+				</section>
+				<section class="conarea">
+
+					<div class="container mt-5">
+						<form id="frmCreateProd" method="post"
+							action="${contextPath}/company/createProduct.do">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">상품명</span>
+								</div>
+								<input type="text" id="productNameInput" name="productName"
+									class="form-control" placeholder="상품명을 입력해주세요.">
+								<div id="productNameFeedBack" class="invalid-feedback">상품
+									이름은 필수입니다.</div>
+
+							</div>
+
+							<div class="input-group mt-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text">가격</span>
+								</div>
+								<input type="number" class="form-control" id="productPriceInput"
+									name="price" placeholder="상품의 가격을 입력해주세요.">
+								<div id="productPriceFeedBack" class="invalid-feedback">상품
+									가격은 필수입니다. (숫자만 가능)</div>
+							</div>
+
+							<div class="input-group mt-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text">할인율</span>
+								</div>
+								<input type="number" class="form-control" id="discountRateInput"
+									name="discountRate" value=0
+									placeholder="단위는 '%'입니다.(0 ~ 100만 가능합니다.)">
+								<div id="discountRateFeedBack" class="invalid-feedback">
+									할인율은 필수 입니다. (숫자만 가능. 최소 0 부터 최대 100까지만 가능합니다.)</div>
+							</div>
+
+							<div class="input-group mt-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text">재고</span>
+								</div>
+								<input type="number" class="form-control" id="countInput"
+									name="count" placeholder="상품의 재고를 입력해주세요. (최소 1개)">
+								<div id="countFeedBack" class="invalid-feedback">상품 수량은 필수
+									입니다. (숫자만 가능. 최소 1 부터 가능합니다.)</div>
+							</div>
+							<div class="input-group mt-2">
+								<select class="form-select" id="categorySelect"
+									aria-label="Example select with button addon">
+									<c:forEach var="category" items="${categoryList}">
+
+										<optgroup label="${category.value[0].categoryName}">
+											<c:forEach var="childCategory" items="${category.value}"
+												varStatus="status">
+												<c:if test="${not status.first}">
+													<option value="${childCategory.categoryId}">${childCategory.categoryName}</option>
+												</c:if>
+											</c:forEach>
+										</optgroup>
+									</c:forEach>
+								</select>
+							</div>
+
+							<div class="input-group mt-2">
+								<input type="file" class="form-control" id="imageUploadInput"
+									accept=".jpg, .jpeg, .png"> <input type="hidden"
+									id="imgUrlInput" name="imgUrl" value=""> <label
+									class="input-group-text" for="imageUpload">Upload</label>
+								<div id="imgUrlFeedBack" class="invalid-feedback">상품 사진은
+									필수 입니다.</div>
+							</div>
+
+							<button type="button" class="btn mt-2" style="background: #0a58ca;"
+								onclick="onSubmit()">등록하기</button>
+						</form>
+					</div>
+				</section>
 			</div>
-
-			<div class="input-group mt-2">
-				<div class="input-group-prepend">
-					<span class="input-group-text">가격</span>
-				</div>
-				<input type="number" class="form-control" id="productPriceInput"
-					name="price" placeholder="상품의 가격을 입력해주세요.">
-				<div id="productPriceFeedBack" class="invalid-feedback">상품 가격은
-					필수입니다. (숫자만 가능)</div>
-			</div>
-
-			<div class="input-group mt-2">
-				<div class="input-group-prepend">
-					<span class="input-group-text">할인율</span>
-				</div>
-				<input type="number" class="form-control" id="discountRateInput" name="discountRate" value=0
-					placeholder="단위는 '%'입니다.(0 ~ 100만 가능합니다.)">
-				<div id="discountRateFeedBack" class="invalid-feedback">
-					할인율은 필수 입니다. (숫자만 가능. 최소 0 부터 최대 100까지만 가능합니다.)
-				</div>
-			</div>
-
-			<div class="input-group mt-2">
-				<div class="input-group-prepend">
-					<span class="input-group-text">재고</span>
-				</div>
-				<input type="number" class="form-control" id="countInput" name="count"
-					placeholder="상품의 재고를 입력해주세요. (최소 1개)">
-				<div id="countFeedBack" class="invalid-feedback">
-					상품 수량은 필수 입니다. (숫자만 가능. 최소 1 부터 가능합니다.)
-				</div>
-			</div>
-			<div class="input-group mt-2">
-				<select class="form-select" id="categorySelect"
-					aria-label="Example select with button addon">
-					<c:forEach var="category" items="${categoryList}">
-
-						<optgroup label="${category.value[0].categoryName}">
-							<c:forEach var="childCategory" items="${category.value}"
-								varStatus="status">
-								<c:if test="${not status.first}">
-									<option value="${childCategory.categoryId}">${childCategory.categoryName}</option>
-								</c:if>
-							</c:forEach>
-						</optgroup>
-					</c:forEach>
-				</select>
-			</div>
-
-			<div class="input-group mt-2">
-				<input type="file" class="form-control" id="imageUploadInput" accept=".jpg, .jpeg, .png"> 
-				<input type="hidden" id="imgUrlInput" name="imgUrl" value=""> 
-				<label class="input-group-text" for="imageUpload">Upload</label>
-				<div id="imgUrlFeedBack" class="invalid-feedback">
-				   상품 사진은 필수 입니다.
-				</div>
-			</div>
-
-			<button type="button" class="btn btn-primary mt-2"
-				onclick="onSubmit()">등록하기</button>
-		</form>
+		</div>
+		<jsp:include page="/footer.jsp" flush="false" />
 	</div>
+
+
+
 
 
 </body>

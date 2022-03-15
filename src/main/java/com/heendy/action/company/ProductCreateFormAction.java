@@ -15,6 +15,11 @@ import com.heendy.action.Action;
 import com.heendy.dao.CategoryDAO;
 import com.heendy.dto.CategoryDTO;
 
+/**
+ * @author 이승준
+ * 
+ * productCreateForm.jsp view resolver Action 클래스
+ * */
 public class ProductCreateFormAction implements Action {
 
 	private final CategoryDAO categoryDAO = CategoryDAO.getInstance();

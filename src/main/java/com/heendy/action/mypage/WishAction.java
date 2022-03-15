@@ -1,124 +1,107 @@
 package com.heendy.action.mypage;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.heendy.action.Action;
 import com.heendy.dao.WishDAO;
 import com.heendy.dto.MemberDTO;
 import com.heendy.dto.WishDTO;
 
+/**
+ * @author : 이지민
+ * 좋아요 조회 및 페이지네이션 처리 Action 클래스
+ * */
+
 public class WishAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//dispatch할 페이지 주소
 		String url = "/pages/mypage/wish.jsp";
 		
-		HttpSession session = request.getSession();
-		MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
-		
-		request.setAttribute("loginUser", loginUser);
-		
-		int memberId = loginUser.getMemberId();
-		    
-		
-		//�α��� ���� �б�ó�� �ʿ�
-		
-		String pno = request.getParameter("pno");
-		WishDAO wishDAO = WishDAO.getInstance();
-		
-		int totalCount = wishDAO.totalWishCount(memberId); //��ü ���ƿ� ��ǰ ��
-		System.out.println("totalCount: " + totalCount);
-		
-		if (totalCount == 0) {
-			 ArrayList<WishDTO> wishList = new ArrayList<>();
-			 request.setAttribute("wishList", wishList);
-			 request.getRequestDispatcher(url).forward(request, response);
-		
-		} else {
+		try {
 			
-			int pageNumber = 1; // ���� ������ ��ȣ
-			int pagePerList = 5; // ������ ������ ��
-			int listPerPage = 10; // �� ������ �� ������ ���ƿ� ��ǰ ��
+			//세션에서 로그인 정보 받아와 request에 담기
+			HttpSession session = request.getSession();
+			MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
 			
+			request.setAttribute("loginUser", loginUser);
 			
-			// ������ ��ȣ ���
-			if (pno == null || pno.length() == 0) {
-				pageNumber = 1;
+			//사용자 아이디 가져오기
+			int memberId = loginUser.getMemberId();
+			
+			//인스턴스 생성 및 총 좋아요 수 구하기
+			WishDAO wishDAO = WishDAO.getInstance();
+			int totalCount = wishDAO.totalWishCount(memberId); 
+			System.out.println("totalCount: " + totalCount);
+							
+			//총 좋아요 수에 따라 분기처리
+			if (totalCount == 0) {
+				ArrayList<WishDTO> wishList = new ArrayList<>();
+				request.setAttribute("wishList", wishList);
+				
+			} else {
+				
+				//현재 페이지 번호 받아오기
+				String pno = request.getParameter("pno");
+				
+				
+				int pageNumber = 1; // 현재 페이지 번호
+				int pagePerList = 5; // 한 화면에 보여줄 페이지 수
+				int listPerPage = 10; // 한 페이지에 보여줄 주문내역 수
+				
+				
+				// pageNumber 세팅
+				if (pno == null || pno.length() == 0) {
+					pageNumber = 1;
+				}
+				try {
+					pageNumber = Integer.parseInt(pno);
+				} 
+				catch(NumberFormatException e) {
+					pageNumber = 1;
+				}
+				
+				// DB에서 좋아요 가져올 범위 지정(최신순으로)
+				int endRow = totalCount - (listPerPage * (pageNumber-1));
+				int beginRow = endRow - listPerPage + 1;
+				if (beginRow < 1) {
+					beginRow = 1;
+				}
+				
+				//좋아요 목록 조회
+				ArrayList<WishDTO> wishList = wishDAO.listWish(beginRow, endRow, memberId);
+				
+				//request에 담아 넘겨 줄 값 세팅
+				int beginPageNumber = (pageNumber - 1) / pagePerList * pagePerList + 1; //시작페이지 번호
+				int endPageNumber = beginPageNumber + pagePerList - 1; //끝페이지 번호
+				int totalPage = (totalCount - 1) / listPerPage + 1; //총 페이지 수
+				
+				if (totalPage < endPageNumber) {
+					endPageNumber = totalPage;
+				}	    
+				System.out.println("totalpage : " + totalPage);
+				
+				request.setAttribute("beginPage", beginPageNumber);
+				request.setAttribute("endPage", endPageNumber);
+				request.setAttribute("pagePerList", pagePerList);
+				request.setAttribute("totalPageCount", totalPage);
+				
+				request.setAttribute("wishList", wishList);
 			}
-			try {
-				pageNumber = Integer.parseInt(pno);
-			} 
-			catch(NumberFormatException e) {
-				pageNumber = 1;
-			}
 			
-    		int endRow = totalCount - (listPerPage * (pageNumber-1));
-    		int beginRow = endRow - listPerPage + 1;
-    		if (beginRow < 1) {
-    			beginRow = 1;
-    		}
-			
-			
-			ArrayList<WishDTO> wishList = wishDAO.listWish(beginRow, endRow, memberId);
-			
-			int beginPageNumber = (pageNumber - 1) / pagePerList * pagePerList + 1;
-			int endPageNumber = beginPageNumber + pagePerList - 1;
-			int totalPage = (totalCount - 1) / listPerPage + 1; // �� ������ ��
-			System.out.println("totalpage : " + totalPage);
-			if (totalPage < endPageNumber) {
-				endPageNumber = totalPage;
-			}	    
-			
-//			JsonObject jsonObj = new JsonObject();
-//			JsonArray data = new JsonArray();
-//			
-//			for (int i = 0; i < wishList.size(); i++) {
-//				JsonObject obj = new JsonObject();
-//				obj.addProperty("memberId", wishList.get(i).getMemberId());
-//				obj.addProperty("companyId", wishList.get(i).getCompanyId());
-//				obj.addProperty("productId", wishList.get(i).getProductId());
-//				obj.addProperty("productName", wishList.get(i).getProductName());
-//				obj.addProperty("imageUrl", wishList.get(i).getImageUrl());
-//				obj.addProperty("productPrice", wishList.get(i).getProductPrice());
-//				obj.addProperty("discountPrice", wishList.get(i).getDiscountPrice());
-//				obj.addProperty("productCount", wishList.get(i).getProductCount());
-//				data.add(obj);
-//			}
-//			jsonObj.add("data", data);
-//	
-//			jsonObj.addProperty("beginPage", beginPageNumber);
-//			jsonObj.addProperty("endPage", endPageNumber);
-//			jsonObj.addProperty("pagePerList", pagePerList);
-//			jsonObj.addProperty("totalPageCount", totalPage);
-			
-//			jsonObj.add("wishList", wishList);
-//			String json = new Gson().toJson(jsonObj);
-//			System.out.println(json);
-//			PrintWriter out = response.getWriter();
-//			out.print(json.toString());
-//			response.getWriter().write(json);
-			request.setAttribute("beginPage", beginPageNumber);
-			request.setAttribute("endPage", endPageNumber);
-			request.setAttribute("pagePerList", pagePerList);
-			request.setAttribute("totalPageCount", totalPage);
-			
-			request.setAttribute("wishList", wishList);
+		} catch (SQLException e) {
+			request.setAttribute("errorMsg", e.getMessage());
 		}
 		
-		
-	    request.getRequestDispatcher(url).forward(request, response);	
-
+	    request.getRequestDispatcher(url).forward(request, response);
 	}
 
 }
