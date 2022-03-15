@@ -9,8 +9,8 @@
 <head>
 <meta charset="EUC-KR">
 <title>주문 내역</title>
-<link href="${contextPath}/static/css/common.min.css" rel="stylesheet" type="text/css">
-<link href="${contextPath}/static/css/css-library.min.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/static/css/common/common.min.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/static/css/common/css-library.min.css" rel="stylesheet" type="text/css">
 <link href="${contextPath}/static/css/mypage.min.css" rel="stylesheet" type="text/css">
 <link href="${contextPath}/static/css/order-history.css" rel="stylesheet" type="text/css">
 </head>

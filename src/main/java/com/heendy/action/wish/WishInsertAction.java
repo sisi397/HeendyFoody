@@ -42,7 +42,7 @@ public class WishInsertAction implements Action{
 		try{
 			int pid = Integer.parseInt(request.getParameter("productId"));
 			int cid = Integer.parseInt(request.getParameter("companyId"));
-			MemberDTO member = this.userService.loadUser(request.getSession()).orElseThrow(MemberNotExistSession::new);
+		    MemberDTO member = (MemberDTO) request.getAttribute("loginUser");
 			// 좋아요 추가
 			int wishInsert = wishDAO.insertWish(member.getMemberId(), pid, cid);
 			

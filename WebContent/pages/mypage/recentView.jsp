@@ -8,8 +8,8 @@
 <head>
 <meta charset="EUC-KR">
 <title>최근 본 상품</title>
-<link href="${contextPath}/static/css/common.min.css" rel="stylesheet" type="text/css">
-<link href="${contextPath}/static/css/css-library.min.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/static/css/common/common.min.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/static/css/common/css-library.min.css" rel="stylesheet" type="text/css">
 <link href="${contextPath}/static/css/mypage.min.css" rel="stylesheet" type="text/css">
 <link href="${contextPath}/static/css/recent-view.css" rel="stylesheet" type="text/css">
 <!-- masonry 레이아웃을 위한 라이브러리 -->

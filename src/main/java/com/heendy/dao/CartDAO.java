@@ -36,7 +36,7 @@ public class CartDAO {
 
 		Connection conn = DBManager.getConnection();
 
-		CallableStatement cstmt = conn.prepareCall("{call sp_select_cart_list(?,?)}");
+		CallableStatement cstmt = conn.prepareCall("{call pkg_cart.sp_select_cart_list(?,?)}");
 
 		cstmt.setInt(1, memberId);
 		cstmt.registerOutParameter(2, OracleTypes.CURSOR);
@@ -81,7 +81,7 @@ public class CartDAO {
 
 		Connection conn = DBManager.getConnection();
 
-		CallableStatement cstmt = conn.prepareCall("{call sp_create_cart(?,?,?,?)}");
+		CallableStatement cstmt = conn.prepareCall("{call pkg_cart.sp_create_cart(?,?,?,?)}");
 
 		cstmt.setInt(1, data.getProductId());
 		cstmt.setInt(2, data.getCompanyId());
@@ -105,7 +105,7 @@ public class CartDAO {
 	public void addCartCount(CartCountUpdateDTO data) throws SQLException {
 		Connection conn = DBManager.getConnection();
 
-		CallableStatement cstmt = conn.prepareCall("{call sp_add_cart(?,?,?)}");
+		CallableStatement cstmt = conn.prepareCall("{call pkg_cart.sp_add_cart(?,?,?)}");
 
 		cstmt.setInt(1, data.getCartId());
 		cstmt.setInt(2, data.getCount());
@@ -127,7 +127,7 @@ public class CartDAO {
 	public void minusCartCount(CartCountUpdateDTO data) throws SQLException {
 		Connection conn = DBManager.getConnection();
 
-		CallableStatement cstmt = conn.prepareCall("{call sp_minus_cart(?,?,?)}");
+		CallableStatement cstmt = conn.prepareCall("{call pkg_cart.sp_minus_cart(?,?,?)}");
 
 		cstmt.setInt(1, data.getCartId());
 		cstmt.setInt(2, data.getCount());
@@ -149,7 +149,7 @@ public class CartDAO {
 	public void deleteCartByCartIdAndMemberId(int cartId, int memberId) throws SQLException {
 		Connection conn = DBManager.getConnection();
 
-		CallableStatement cstmt = conn.prepareCall("{call sp_delete_cart(?,?)}");
+		CallableStatement cstmt = conn.prepareCall("{call pkg_cart.sp_delete_cart(?,?)}");
 
 		cstmt.setInt(1, cartId);
 		cstmt.setInt(2, memberId);

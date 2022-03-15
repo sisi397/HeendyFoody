@@ -38,7 +38,7 @@ public class ChartDataDAO {
 	public List<JSONObject> ageInfo(int cid) throws SQLException{
 		List<JSONObject> memberList = new LinkedList<JSONObject>();
 		
-		String sql = "{CALL SP_MEMBER_AGEINFO(?,?)}";
+		String sql = "{CALL pkg_company.SP_MEMBER_AGEINFO(?,?)}";
 	    
     	conn = DBManager.getConnection();
     	cs = conn.prepareCall(sql);
@@ -69,7 +69,7 @@ public class ChartDataDAO {
 	public List<JSONObject> orderInfo(int cid, String sort, int pid) throws SQLException {
 		List<JSONObject> orderList = new LinkedList<JSONObject>();
 		
-		String sql = "{CALL SP_PRODUCT_ORDERINFO(?,?,?,?)}";
+		String sql = "{CALL pkg_company.SP_PRODUCT_ORDERINFO(?,?,?,?)}";
 	    
     	conn = DBManager.getConnection();
     	cs = conn.prepareCall(sql);
@@ -102,7 +102,7 @@ public class ChartDataDAO {
 	public List<ProductDTO> productList(int cid) throws SQLException{
 		ArrayList<ProductDTO> productList = new ArrayList<ProductDTO>();
 		    
-		String sql = "{CALL SP_COMPANY_PRODUCT(?,?)}";
+		String sql = "{CALL pkg_product.SP_COMPANY_PRODUCT(?,?)}";
 		
     	conn = DBManager.getConnection();
     	cs = conn.prepareCall(sql);

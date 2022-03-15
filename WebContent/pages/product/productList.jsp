@@ -11,9 +11,9 @@
 	<title>상품보기</title>
 	
 	<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/common.min.css">
-	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/main.min.css">
-	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/css-library.min.css">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/common/common.min.css">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/common/main.min.css">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/common/css-library.min.css">
 	<link rel="stylesheet" type="text/css" href="${contextPath}/static/css/product.min.css">
 	
 	<style>
