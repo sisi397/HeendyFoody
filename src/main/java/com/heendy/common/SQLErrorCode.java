@@ -14,6 +14,11 @@ public enum SQLErrorCode {
 	
 	OUT_BOUND_RANGE(20002),
 	
+	/*좋아요 관련 예외 코드*/
+	ALREADY_LIKE_EXIST(20100),
+	
+	/*상품 관련 예외 코드*/
+	ALREADY_DELETED_PRODUCT(20200),
 	
 	/*공통 예외 코드*/
 	NO_DATA_FOUND(1403),

@@ -18,13 +18,13 @@ public class MyPageActionFactory implements ActionFactory {
 		Action action = null;
 	    System.out.println("MyPageActionFactory  :" + command);
 	    
-	    if (command.equals("/info")) {
+	    if (command.equals("/info.do")) {
 	         action = new MyPageAction();
-	      } else if (command.equals("/order_list")) {
+	      } else if (command.equals("/order_list.do")) {
 	          action = new OrderListAction();
-	      } else if (command.equals("/wish")) {
+	      } else if (command.equals("/wish.do")) {
 	    	  action = new WishAction();
-	      } else if (command.equals("/recent_view")) {
+	      } else if (command.equals("/recent_view.do")) {
 	    	  action = new RecentViewAction();
 	      }
 	    

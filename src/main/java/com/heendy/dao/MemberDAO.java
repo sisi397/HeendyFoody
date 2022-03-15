@@ -1,5 +1,6 @@
 package com.heendy.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -16,6 +17,8 @@ import javax.sql.DataSource;
 import com.heendy.dto.MemberDTO;
 import com.heendy.utils.DBManager;
 
+import oracle.jdbc.OracleTypes;
+
 public class MemberDAO {
 	private MemberDAO() { }//싱글턴 패턴
 	private static MemberDAO instance = new MemberDAO();
@@ -25,8 +28,8 @@ public class MemberDAO {
 
 	//회원 추가하기
 	public void addMember(MemberDTO memberVO) {
-		String sql = "insert into member(member_name, member_password, member_email, address, role_id) "
-				+ "values(?, pack_crypto.func_encrypt(?), ?, ?, ?) ";
+		String sql = "insert into member(member_name, member_password, member_email, address, role_id, birth_date) "
+				+ "values(?, pack_crypto.func_encrypt(?), ?, ?, ?, ?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;	    
 		try {
@@ -37,6 +40,7 @@ public class MemberDAO {
 			pstmt.setString(3, memberVO.getMemberEmail());
 			pstmt.setString(4, memberVO.getAddress());
 			pstmt.setInt(5, memberVO.getRoleId());
+			pstmt.setString(6, memberVO.getBirthDate());
 			pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -155,12 +159,12 @@ public class MemberDAO {
 
 		MemberDTO memberVO= null;
 		String sql = "select * from member where member_name=?";	     
-		Connection connn = null;
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			connn = DBManager.getConnection();
-			pstmt = connn.prepareStatement(sql);
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);
 			rs = pstmt.executeQuery();
 			if(rs.next()){
@@ -177,9 +181,35 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBManager.close(connn, pstmt, rs);
+			DBManager.close(conn, pstmt, rs);
 		}
 		return memberVO;
+	}
+	
+	//사용자 포인트 조회 메서드
+	public int getMemberPoint(int member_id) throws SQLException {
+		
+		//변수 초기화
+		int result = 0;
+		
+		//DB 연결 및 callable 문장 수행
+		Connection conn = DBManager.getConnection();
+		CallableStatement cstmt = conn.prepareCall("{call sp_select_member_point(?,?)}");
+		
+		//?에 인자 넘기기
+		cstmt.setInt(1, member_id);
+		cstmt.registerOutParameter(2, OracleTypes.INTEGER); //return 받을 위치와 타입 설정
+		
+		//수행
+		cstmt.executeQuery();
+
+		//return 값 받기
+		result = cstmt.getInt(2);
+				
+		cstmt.close();
+		conn.close();
+		
+		return result;	
 	}
 
 }

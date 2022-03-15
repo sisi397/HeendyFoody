@@ -2,6 +2,7 @@ package com.heendy.action.product;
 
 import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
+import com.heendy.action.company.CreateProductAction;
 
 public class ProductActionFactory implements ActionFactory {
 	
@@ -20,9 +21,15 @@ public class ProductActionFactory implements ActionFactory {
 	    System.out.println("ActionFactory  :" + command);
 
 	    if (command.equals("/list.do")) {
-	    	action = new ProductListAction();
+	    	action = new ProductListViewAction();
 	    } else if(command.equals("/detail.do")) {
 	    	action = new ProductDetailAction();
+	    } else if(command.equals("/select.do")) {
+	    	action = new ProductListAction();
+	    } else if(command.equals("/category.do")) {
+	    	action = new CategoryAction();
+	    } else if(command.equals("/pagination.do")) {
+	    	action = new PaginationAction();
 	    }
 	    
 		return action;

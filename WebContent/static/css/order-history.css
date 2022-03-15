@@ -10,13 +10,13 @@ hr {
 }
 
 .product-order-item {
-  border-radius: var(--border-radius-primary);
-  box-shadow: none;
-  box-sizing: border-box;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: row;
+	border-radius: var(--border-radius-primary);
+  	box-shadow: none;
+  	box-sizing: border-box;
+  	margin-top: 20px;
+  	margin-bottom: 20px;
+  	display: flex;
+  	flex-direction: row;
 }
 
 .thumb {
@@ -24,10 +24,10 @@ hr {
 }
 
 .product-img {
-  width: 100%;
-  max-height: 170px;
-  border-radius: var(--border-radius-primary);
-  object-fit: cover;
+	width: 100%;
+  	max-height: 170px;
+  	border-radius: var(--border-radius-primary);
+  	object-fit: cover;
 }
 
 .product-name {

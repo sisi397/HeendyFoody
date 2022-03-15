@@ -23,9 +23,9 @@ private final static ActionFactory factory = new OrderActionFactory();
 		
 		
 		if(command.equals("/orderProduct.do")) {
-			action = new OrderProductAction();
+			action = new OrderProductProxyAction(new OrderProductAction());
 		} else if (command.equals("/orderCartProducts.do")) {
-			action = new OrderCartProductsAction();
+			action = new OrderCartProductsProxyAction(new OrderCartProductsAction());
 		}
 		
 		return action;

@@ -1,13 +1,19 @@
 package com.heendy.dto;
 
+/**
+ * @author 이지민
+ * 최근 본 상품 목록 DTO 클래스
+ * */
 public class RecentViewDTO {
 	
 	private int productId;
+	private int companyId;
 	private String productName;
 	private String imageUrl;
 	private int productCount;
 	private int productPrice;
 	private int discountPrice;
+	private int deleted;
 	
 	public int getProductId() {
 		return productId;
@@ -15,6 +21,14 @@ public class RecentViewDTO {
 	
 	public void setProductId(int productId) {
 		this.productId = productId;
+	}
+	
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
 	}
 
 	public String getProductName() {
@@ -55,6 +69,14 @@ public class RecentViewDTO {
 
 	public void setDiscountPrice(int discountPrice) {
 		this.discountPrice = discountPrice;
+	}
+
+	public int getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(int deleted) {
+		this.deleted = deleted;
 	}
 	
 }

@@ -25,7 +25,13 @@ import com.heendy.utils.SessionUserService;
 import com.heendy.utils.UserService;
 import com.heendy.utils.Validation;
 
-public class OrderProductAction implements Action, ValidableAction {
+
+/**
+ * @author 이승준
+ * 
+ * 상품 결제 Action 클래스
+ * */
+public class OrderProductAction implements Action {
 
 	private final OrderDAO orderDAO = OrderDAO.getInstance();
 
@@ -33,29 +39,14 @@ public class OrderProductAction implements Action, ValidableAction {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		try {
-			response.setContentType("application/json");
-			response.setCharacterEncoding("utf-8");
-
-			int memberId = (int) request.getAttribute("memberId");
-
-			List<ErrorResponse.ErrorField> errors = valid(request);
-
-			if (errors.size() != 0) {
-				ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_FIELDS);
-
-				errorResponse.setErrors(errors);
-
-				String json = new Gson().toJson(errorResponse);
-				response.setStatus(errorResponse.getStatus());
-				response.getWriter().write(json);
-				return;
-			}
+			
+		    MemberDTO member = (MemberDTO) request.getAttribute("member");
 
 			int proudctId = Integer.parseInt(request.getParameter("product_id"));
 			int companyId = Integer.parseInt(request.getParameter("company_id"));
 			int count = Integer.parseInt(request.getParameter("product_count"));
 
-			CreateOrderDTO createOrderDTO = new CreateOrderDTO(proudctId, companyId, memberId, count);
+			CreateOrderDTO createOrderDTO = new CreateOrderDTO(proudctId, companyId, member.getMemberId(), count);
 
 			orderDAO.createOrder(createOrderDTO);
 
@@ -79,31 +70,6 @@ public class OrderProductAction implements Action, ValidableAction {
 			response.getWriter().write(json);
 		}
 
-	}
-
-	@Override
-	public List<ErrorField> valid(HttpServletRequest request) {
-		List<ErrorResponse.ErrorField> errors = new ArrayList<>();
-
-		String productId = request.getParameter("product_id");
-		String compayId = request.getParameter("company_id");
-		String count = request.getParameter("product_count");
-
-		Validation validation = Validation.getInstance();
-
-		if (!validation.validNotEmpty(productId)) {
-			errors.add(new ErrorResponse.ErrorField("product_id", productId, "값이 비어있습니다."));
-		}
-
-		if (!validation.validNotEmpty(compayId)) {
-			errors.add(new ErrorResponse.ErrorField("company_id", compayId, "값이 비어있습니다."));
-		}
-
-		if (!validation.validNotEmpty(count)) {
-			errors.add(new ErrorResponse.ErrorField("product_count", count, "값이 비어있습니다."));
-		}
-
-		return errors;
 	}
 
 }
