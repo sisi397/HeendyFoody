@@ -120,6 +120,7 @@
 	$.ajax({
 		url:'${contextPath}/company/productList.do',
 		dataType:'json',
+		async:false,
 		success : function(data){
 			console.log(data);
 

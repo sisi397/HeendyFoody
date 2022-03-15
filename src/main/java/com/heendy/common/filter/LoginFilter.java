@@ -26,7 +26,7 @@ import com.heendy.utils.UserService;
  *
  */
 
-@WebFilter(urlPatterns = {
+@WebFilter(filterName="loginFilter", urlPatterns = {
 		"/member/memberJoin.do", 	//로그인 페이지로 이동 
 		"/member/addMember.do",		//회원가입 기능
 		"/member/loginMember.do", 	//로그인 기능
@@ -36,7 +36,6 @@ import com.heendy.utils.UserService;
 		"/member/addCompanyMember.do",	//업체 회원가입 기능
 		"/member/memberLogin.do",	//회원가입 페이지로 이동
 		"/member/loginCompanyMember.do",	//업체 로그인 기능
-        "/mypage/*"
         })
 
 public class LoginFilter implements Filter {
@@ -54,64 +53,25 @@ public class LoginFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		try {
+		
 			
 			//로그인된 세션(클라이언트)인지 확인(HttpSession객체를 얻으려면 HttpServletRequest가 필요.)
 			HttpServletRequest req = (HttpServletRequest)request;
 			HttpSession session = req.getSession();
-			MemberDTO loginUser= (MemberDTO)session.getAttribute("loginUser");	//loginUser DTO객체 받아오기
-			//CompanyMemberDTO loginCompanyUser = (CompanyMemberDTO)session.getAttribute("loginCompanyUser");
+
 			
 			/*UserService를 이용해 세션에서 유저 객체 가져오기*/
-			MemberDTO member = userService.loadUser(session).orElseThrow(MemberNotExistSession::new);
+			userService.loadUser(session).orElseThrow(MemberNotExistSession::new);
 			
-			req.setAttribute("member", member);
-			String toPath = req.getServletPath();
-			
-			System.out.println(System.getProperty("os.name"));
-		
-			
-			//로그인 X + 로그인 회원가입 > 흐름 이어가기
-			//if((loginUser == null || loginCompanyUser == null) && toPath.equals("/member")) {
-			if(loginUser == null && toPath.equals("/member")) {
-				chain.doFilter(request, response);
-			
-			//로그인 O + 로그인 회원가입 > 홈으로 리다이렉트
-			//}else if ((loginUser != null || loginCompanyUser != null)&& toPath.equals("/member")) {	
-			}else if (loginUser != null && toPath.equals("/member")) {	
-				HttpServletResponse res = (HttpServletResponse)response;
-				String contextPath = req.getContextPath();
-				res.sendRedirect(contextPath + "/index.jsp");
 				
-			//로그인 X + 마이페이지 > 로그인 리다이렉트
-			} else if (loginUser == null && toPath.equals("/mypage")) {
-				HttpServletResponse res = (HttpServletResponse)response;
-				res.setContentType("text/html; charset=UTF-8");
-				PrintWriter out = res.getWriter();
-				out.println("<script>alert('로그인이 필요한 서비스입니다');location.href='http://localhost:8090/HeendyFoody/member/memberLogin.do'</script>");
-//				String contextPath = req.getContextPath();
-//				res.sendRedirect(contextPath + "/member/memberLogin.do");
+			HttpServletResponse res = (HttpServletResponse)response;
+			String contextPath = req.getContextPath();
+			res.sendRedirect(contextPath + "/index.jsp");
 				
-			//로그인 O + 마이페이지 > 흐름 이어가기
-			} else if (loginUser != null && toPath.equals("/mypage")) {
-				chain.doFilter(request, response);
-			} //<--- 밑 주석 해제하면 삭제할 }
-			
-			//업체 로그인 O + 업체 페이지 > 흐름 이어가기
-//			} else if (loginCompanyUser != null && toPath.equals("/company")) {
-//				chain.doFilter(request, response);
-			
-//			} else if (loginCompanyUser != null && !toPath.equals("/company")) {
-//				HttpServletResponse res = (HttpServletResponse)response;
-//				res.setContentType("text/html; charset=UTF-8");
-//				PrintWriter out = res.getWriter();
-//				out.println("<script>alert('접근할 수 없는 페이지입니다');location.href='http://localhost:8090/HeendyFoody/company/'</script>");
-//			}
 			
 		} catch(MemberNotExistSession e) {
-			HttpServletResponse res = (HttpServletResponse)response;
-			res.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = res.getWriter();
-			out.println("<script>alert('로그인이 필요한 서비스입니다');location.href='http://localhost:8090/HeendyFoody/member/memberLogin.do'</script>");
+
+			chain.doFilter(request, response);
 		}
 		
 
