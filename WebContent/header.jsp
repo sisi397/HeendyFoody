@@ -53,7 +53,7 @@ width: 55%;
 			<!-- toparea// -->
 			<div class="toparea">
 				<h1 style="margin-top:0px">
-					<a href="${contextPath}/member/index.do"><img
+					<a href="${contextPath}/main"><img
 						src="${contextPath}/static/images/common/logo_header.png"
 						alt="흰디푸디" class="heendy-logo-header"></a>
 				</h1>
@@ -71,7 +71,9 @@ width: 55%;
 							<a href="${contextPath}/member/logout.do">로그아웃</a>
 						</c:otherwise>
 					</c:choose>
+					<c:if test="${sessionScope.loginUser.roleId == 2}">
 					<a href="${contextPath}/mypage/info.do">마이페이지</a>
+					</c:if>
 				</div>
 
 			</div>

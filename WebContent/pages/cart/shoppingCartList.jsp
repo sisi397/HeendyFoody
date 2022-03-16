@@ -406,7 +406,7 @@
 		}
 		 
 	</script>
-	<header id="header">
+	<!-- <header id="header">
 		<div class="inner-header">
 			<div class="logo">
 				<a href="${contextPath}/">
@@ -415,10 +415,11 @@
 					</a>
 			</div>
 			<div class="util">
-				<a href="${contextPath}/member/logout.do">로그아웃</a> <a href="${contextPath}/mypage/info">마이페이지</a>
+				<a href="${contextPath}/member/logout.do">로그아웃</a> <a href="${contextPath}/mypage/info.do">마이페이지</a>
 			</div>
 		</div>
-	</header>
+	</header> -->
+	<%@ include file="/navbar.jsp" %>
 	<section id="shopping-cart-list" class="contents">
 		<div class="inner-content">
 			<h2>장바구니</h2>

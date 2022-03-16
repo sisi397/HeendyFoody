@@ -6,8 +6,8 @@
 	<display-name>HeendyFoody</display-name>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.html</welcome-file>
+		<!-- <welcome-file>index.jsp</welcome-file> -->
 		<welcome-file>default.html</welcome-file>
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
@@ -29,13 +29,30 @@
 		<filter-name>loginCheckFilter</filter-name>
 		<url-pattern>/mypage/*</url-pattern>
 		<url-pattern>/cart/shoppingCartList.do</url-pattern>
-		<url-pattern>/company/*</url-pattern>
+		<url-pattern>/company/company.do</url-pattern>
+		<url-pattern>/company/createProductForm.do</url-pattern>	
 	</filter-mapping>
 	
 	<filter-mapping>
+		<filter-name>apiCheckFilter</filter-name>
+		<url-pattern>/cart/create.do</url-pattern>
+		<url-pattern>/cart/addCount.do</url-pattern>
+		<url-pattern>/cart/minusCount.do</url-pattern>
+		<url-pattern>/cart/delete.do</url-pattern>
+		<url-pattern>/wish/*</url-pattern>
+		<url-pattern>/order/*</url-pattern>
+		<url-pattern>/company/createProduct.do</url-pattern>
+		<url-pattern>/company/productList.do</url-pattern>
+		<url-pattern>/company/orderinfoChart.do</url-pattern>
+		<url-pattern>/company/ageinfoChart.do</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
 		<filter-name>roleFilter</filter-name>
 		<url-pattern>/mypage/*</url-pattern>
-		<url-pattern>/cart/shoppingCartList.do</url-pattern>
+		<url-pattern>/cart/*</url-pattern>
+		<url-pattern>/order/*</url-pattern>
+		<url-pattern>/wish/*</url-pattern>
 		<url-pattern>/company/*</url-pattern>
 	</filter-mapping>
 
@@ -47,7 +64,7 @@
 
 	<context-param>
 		<param-name>WindowsUploadImagePath</param-name>
-		<param-value></param-value>
+		<param-value>C:/Users/jiminlee/Desktop/upload</param-value>
 	</context-param>
 	
   <error-page>

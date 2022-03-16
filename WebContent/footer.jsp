@@ -83,7 +83,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 
 		<!-- topbtn// -->
 		<button type="button" class="btn-top" onclick="GA_Event('PC_공통', 'TOP', 'TOP');">TOP</button>

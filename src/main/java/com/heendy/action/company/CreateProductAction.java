@@ -49,8 +49,10 @@ public class CreateProductAction implements Action {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("error message: " + e.getMessage());
+			
 			ErrorResponse errorResponse;
-			errorResponse = ErrorResponse.of(ErrorCode.UNCAUGHT_SERVER_ERROR);
+			errorResponse = ErrorResponse.of(ErrorCode.SERVER_CHECK_TIME);
 
 			String json = new Gson().toJson(errorResponse);
 			response.setStatus(errorResponse.getStatus());

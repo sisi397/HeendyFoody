@@ -23,7 +23,9 @@ public enum SQLErrorCode {
 	/*공통 예외 코드*/
 	NO_DATA_FOUND(1403),
 	
-	NOT_RESOURCE_OWNER(20090);
+	NOT_RESOURCE_OWNER(20090),
+	
+	SERVER_CHECK_TIME(20013);
 	
 	private final int code;
 	

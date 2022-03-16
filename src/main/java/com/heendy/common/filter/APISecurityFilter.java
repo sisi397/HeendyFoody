@@ -28,18 +28,9 @@ import com.heendy.utils.UserService;
  * API 검증필터로, 인증되지 않은 사용자를 검증하는 필터이다.
  */
 
-@WebFilter(urlPatterns = 
-	{ 
-			"/cart/create.do", 
-			"/cart/addCount.do", 
-			"/cart/minusCount.do", 
-			"/cart/delete.do",
-			"/wish/*",
-			"/order/*",
-			"/product/list.do",
-			"/product/select.do",
-			"/company/createProduct.do"
-	})
+
+@WebFilter(filterName="apiCheckFilter")
+
 public class APISecurityFilter implements Filter {
 
 	private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
@@ -55,9 +46,7 @@ public class APISecurityFilter implements Filter {
 		
 		HttpServletRequest req = (HttpServletRequest) request;
 		
-		System.out.println(req.getRequestURI());
-		
-		String requestPath = req.getRequestURL().substring(req.getContextPath().length()+1);
+
 
 		HttpSession session = req.getSession();
 
@@ -65,7 +54,7 @@ public class APISecurityFilter implements Filter {
 
 			MemberDTO member = userService.loadUser(session).orElseThrow(MemberNotExistSession::new);
 
-			request.setAttribute("memberId", member.getMemberId());
+			request.setAttribute("loginUser", member);
 			chain.doFilter(request, response);
 			
 		} catch (MemberNotExistSession e) {

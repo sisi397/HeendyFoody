@@ -26,17 +26,7 @@ import com.heendy.utils.UserService;
  *
  */
 
-@WebFilter(filterName="loginFilter", urlPatterns = {
-		"/member/memberJoin.do", 	//로그인 페이지로 이동 
-		"/member/addMember.do",		//회원가입 기능
-		"/member/loginMember.do", 	//로그인 기능
-		"/member/idCheck.do",		//아이디 중복 확인 기능
-		"/member/findMemberId.do",	//아이디 찾기 기능
-		"/member/findMemberPw.do",	//비밀번호 찾기 기능
-		"/member/addCompanyMember.do",	//업체 회원가입 기능
-		"/member/memberLogin.do",	//회원가입 페이지로 이동
-		"/member/loginCompanyMember.do",	//업체 로그인 기능
-        })
+@WebFilter(filterName="loginFilter")
 
 public class LoginFilter implements Filter {
 
@@ -66,7 +56,7 @@ public class LoginFilter implements Filter {
 				
 			HttpServletResponse res = (HttpServletResponse)response;
 			String contextPath = req.getContextPath();
-			res.sendRedirect(contextPath + "/index.jsp");
+			res.sendRedirect(contextPath + "/main");
 				
 			
 		} catch(MemberNotExistSession e) {
