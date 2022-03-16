@@ -205,20 +205,20 @@
     			pcate: pcate
     		},
     		success : function(data){
+    			console.log(data);
     			if(data.beginPageNumber > data.pagePerList){
-    				html += "<button onclick='movePage("+(data.beginPageNumber - 1)+")'>";
-    				html += "<a class='prev'>이전</a></button>";
+    				html += "<a onclick='movePage("+(data.beginPageNumber - 1)+")' class='prev'>이전</a>";
     			}
     			for(var i = data.beginPageNumber; i <= data.endPageNumber; i++){
     				if(i == pno){
-        				html += "<button onclick='movePage("+i+")'><span class='num'><a style='border:3px solid #e7e7e7'>"+i+"</a></span></button>";
+        				html += "<button onclick='movePage("+i+")'><span class='num'><a style='border:3px solid #ff6913'>"+i+"</a></span></button>";
     				}else{
         				html += "<button onclick='movePage("+i+")'><span class='num'><a>"+i+"</a></span></button>";
     				}
     			}
     			if(data.endPageNumber < data.totalPage){
-    				html += "<button onclick='movePage("+(data.endPageNumber + 1)+")'>";
-    				html += "<a class='next'>다음</a></button>";
+    				console.log("다음버튼 생성")
+    				html += "<a onclick='movePage("+(data.endPageNumber + 1)+")' class='next'>다음</a>";
     			}
 	    			
 				$(".pagination").html(html);

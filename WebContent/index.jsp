@@ -31,16 +31,38 @@
 			<section class='mainbanner'>
 				<div class='swiper-container mainbannerswiper'>
 					<div class='swiper-wrapper'>
-						<c:forEach begin="0" end="5" varStatus="status">
 							<div class='swiper-slide'>
 								<a
-									href='https://tohome.thehyundai.com/front/dp/dpd/mgzDetail.do?mgzNo=210407100576002&ga_param=dwMain${status.count }'>
+									href='https://tohome.thehyundai.com/front/dp/dpd/mgzDetail.do?mgzNo=210407100576002&ga_param=dwMain1'>
 									<img
 									src='https://tohomeimage.thehyundai.com/DP/DP034/2022/03/04/093653/drmky.jpg?RS=1204x540'
 									alt=''>
 								</a>
 							</div>
-						</c:forEach>
+							<div class='swiper-slide'>
+								<a
+									href='https://tohome.thehyundai.com/front/dp/dpd/mgzDetail.do?mgzNo=210407100576002&ga_param=dwMain2'>
+									<img
+									src='https://tohomeimage.thehyundai.com/DP/DP034/2022/03/11/143200/wsrja.png?RS=1204x540'
+									alt=''>
+								</a>
+							</div>
+							<div class='swiper-slide'>
+								<a
+									href='https://tohome.thehyundai.com/front/dp/dpd/mgzDetail.do?mgzNo=210407100576002&ga_param=dwMain3'>
+									<img
+									src='https://tohomeimage.thehyundai.com/DP/DP034/2022/03/08/093858/pqdoj.png?RS=1204x540'
+									alt=''>
+								</a>
+							</div>
+							<div class='swiper-slide'>
+								<a
+									href='https://tohome.thehyundai.com/front/dp/dpd/mgzDetail.do?mgzNo=210407100576002&ga_param=dwMain4'>
+									<img
+									src='https://tohomeimage.thehyundai.com/DP/DP034/2022/03/15/092149/fninx.png?RS=1204x540'
+									alt=''>
+								</a>
+							</div>
 					</div>
 				</div>
 				<div class='innercon'>
@@ -131,7 +153,7 @@
 						class='btn all'>전체보기</a>
 				</h2>
 				<ul class='product-list newprodlist'>
-					<c:forEach items="${saleProduct}" var="product">
+					<c:forEach items="${newProduct}" var="product">
 			       	<li>
 				       	<a href='${contextPath}/product/detail.do?pid=${product.productId }&cid=${product.companyId}'>
 					       	<span class='thumb'>
