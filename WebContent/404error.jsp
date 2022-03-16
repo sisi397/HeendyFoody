@@ -24,7 +24,7 @@
       <p>
         <strong>404 Page Not Found</strong><br>해당 페이지가 존재하지 않습니다.<br>메인 페이지로 돌아가 주세요!
       </p>
-      <a href="${contextPath}/"><button>Back to Heendy</button></a>
+      <a href="${contextPath}/main"><button>Back to Heendy</button></a>
     </main>
   </div>
 	

@@ -2,6 +2,7 @@ package com.heendy.action.cart;
 
 import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
+import com.heendy.action.error.NotFoundViewAction;
 
 /**
  * @author 이승준
@@ -33,6 +34,8 @@ public class CartActionFactory implements ActionFactory{
 			action = new MinusCartProxyAction(new MinusCartAction());
 		} else if (command.equals("/delete.do")) {
 			action = new DeleteCartProxyAction(new DeleteCartAction());
+		} else {
+			action = new NotFoundViewAction();
 		}
 	
 		return action;

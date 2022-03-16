@@ -270,7 +270,8 @@
 <script>
 // 시작할 때 좋아요 여부 확인 
 	$(document).ready(function(){
-		if("${sessionScope.loginUser}" != "" && ${sessionScope.loginUser.roleId} != 1){
+
+		if("${sessionScope.loginUser}" != "" && "${sessionScope.loginUser.roleId}" != 1){
 			
 			wishCheck();
 		}
