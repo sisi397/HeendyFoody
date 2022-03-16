@@ -19,7 +19,7 @@
 
 <body>
   <div id="wrap" class="mypage recentprd">
-  <jsp:include page="../../header.jsp" flush="false" />
+	<%@ include file="/navbar.jsp"%>
     <div id="contents">
       <div class="innercon">
       <%@ include file="/pages/mypage/sidebar.jsp" %>

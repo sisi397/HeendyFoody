@@ -75,7 +75,7 @@
 							      		<strong><em>${product.discountPrice }</em>원</strong><del>${product.productPrice}원</del>
 							      		<span class='txt-price'></span> 
 						      		</a>
-						      		<button type='button' class='btn-cart' onclick=''>장바구니 담기</button>
+						      		<button type='button' class='btn-cart' onclick='addCartProduct(${product.productId},${product.companyId })'>장바구니 담기</button>
 						      		</div>
 					      		</div>
 						      	</c:forEach>
@@ -100,7 +100,7 @@
 			       	<li>
 			       		<a href='${contextPath}/product/detail.do?pid=${product.productId }&cid=${product.companyId}'>
 			       		<span class='thumb'>
-			       		<img src='https://tohomeimage.thehyundai.com/PD/PDImages//S/7/0/3/8809539023489_01.jpg?RS=350x420' alt='' onerror=''>
+			       		<img src='${product.imageUrl }' alt='' onerror=''>
 			       		<div class='badgewrap'>
 			       		<c:if test="${product.discountRate > 0}">
 			       			<span class='badge'><strong>${product.discountRate }%</strong></span>
@@ -112,7 +112,7 @@
 			       		<c:if test="${product.discountRate > 0}">
 			       			<del>${product.productPrice}</del>
 			       		</c:if>
-			       		</span><button type='button' class='btn-cart' onclick=''>장바구니 담기</button></span>
+			       		</span><button type='button' class='btn-cart' onclick='addCartProduct(${product.productId},${product.companyId })'>장바구니 담기</button></span>
 			       	</li>
 			       	</c:forEach>
 				</ul>
@@ -135,7 +135,7 @@
 			       	<li>
 				       	<a href='${contextPath}/product/detail.do?pid=${product.productId }&cid=${product.companyId}'>
 					       	<span class='thumb'>
-					       	<img src='https://tohomeimage.thehyundai.com/PD/PDImages//S/7/0/3/8809539023489_01.jpg?RS=350x420' alt='' onerror=''>
+					       	<img src='${product.imageUrl }' alt='' onerror=''>
 						       	<div class='badgewrap'>
 						       	<c:if test="${product.discountRate > 0}">
 						       		<span class='badge'><strong>${product.discountRate}%</strong></span>
@@ -150,7 +150,7 @@
 					       		<del>${product.productPrice }</del>
 						   	</c:if>
 				       		</span>
-				       		<button type='button' class='btn-cart' onclick=''>장바구니 담기</button>
+				       		<button type='button' class='btn-cart' onclick='addCartProduct(${product.productId},${product.companyId })'>장바구니 담기</button>
 				       	</span>
 				       	<span class='tag'><span>신상품</span></span>
 				   	</li>
@@ -206,7 +206,7 @@
        			for(var i in data){
        				console.log("함수 : " + JSON.stringify(data[i]));
        				list += "<li><a href='${contextPath}/product/detail.do?pid="+data[i].productId +"&cid="+ data[i].companyId +"''><span class='thumb'>";
-       				list += "<img src='https://tohomeimage.thehyundai.com/PD/PDImages/S/2/9/7/8806079686792_00.jpg?RS=350x420' alt='' onerror=''>";
+       				list += "<img src='"+data[i].imageUrl+"' alt='' onerror=''>";
        				list += "<div class='badgewrap'></div>";
        				list += "</span><strong class='txt-ti ellipsis'>"+data[i].productName+"</strong></a>";
        				list += "<span class='info'><span class='txt-price'><strong><em>"+data[i].discountPrice+"</em>원</strong></span></span>"
@@ -261,6 +261,36 @@
       		}
       	});
       });
+		
+		// 장바구니 추가
+		function addCartProduct(pid,cid){
+			
+			console.log("cart");
+			$.ajax({
+				url:'${contextPath}/cart/create.do',
+				type: 'post',
+				dataType:'json',
+				data: {
+					product_id: pid,
+					company_id: cid,
+					count : 1
+				},
+				success : function(data){
+					alert("장바구니에 담았습니다.");
+				},
+				error: function(xhr, status, error) {
+		    		var errorResponse = JSON.parse(xhr.responseText);
+		        	var errorCode = errorResponse.code;
+		        	var message = errorResponse.message;
+		
+		        	if(errorCode == "ERROR-041"){
+		            	alert("로그인 후 이용해 주세요.");
+		        	}else{
+		        		alert(message);
+		        	}
+		    	}
+			});
+		}
 	</script>
 </body>
 </html>
