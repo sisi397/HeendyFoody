@@ -41,7 +41,7 @@ public class MemberActionFactory implements ActionFactory {
 		} else if (command.equals("/loginCompanyMember.do")) { // 업체 로그인
 			action = new LoginCompanyMemberAction();
 		} else {
-			action = new NotFoundViewAction();
+			action = new NotFoundViewAction();		// 그 밖의 액션들은 404Error 페이지로 이동한다.
 		}
 		return action;
 	}

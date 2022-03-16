@@ -11,6 +11,11 @@ import com.heendy.action.Action;
 import com.heendy.dao.CompanyMemberDAO;
 import com.heendy.dao.MemberDAO;
 
+/**
+ * 
+ * @author 문석호
+ * 회원 가입시 ID 중복 체크를 위한 Action클래스
+ */
 public class IdCheckAction implements Action{
 	private final MemberDAO memberDAO = MemberDAO.getInstance();
 	private final CompanyMemberDAO cmemberDAO = CompanyMemberDAO.getInstance();
@@ -21,9 +26,9 @@ public class IdCheckAction implements Action{
 		String name = request.getParameter("name").trim(); //이름 끝에 공백이 있다면 제거
 		int result = -1;
 		if(role == 1) {	//업체 회원인 경우
-			result = cmemberDAO.duplicateCompanyId(name); //업체이름 중복 검사(1이면 가능 0이면 불가능)
+			result = cmemberDAO.duplicateCompanyId(name); //업체이름 중복 검사(0이면 가능 1이면 불가능)
 		}else {	//일반 회원인 경우
-			result = memberDAO.duplicateId(name);	//멤버이름 중복 검사(1이면 가능 0이면 불가능)
+			result = memberDAO.duplicateId(name);	//멤버이름 중복 검사(0이면 가능 1이면 불가능)
 		}
 		request.setAttribute("result", result);	//결과 attribute에 담기
 		request.setAttribute("id", name);	// attribute에 담기
