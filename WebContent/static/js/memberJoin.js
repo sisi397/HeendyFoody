@@ -2,6 +2,8 @@
 * --------------------------------
 * MEMBER JS
 * --------------------------------
+* @author 문석호
+	로그인 화면에서 필수 입력 값 유도
 */
 $(document).ready(function(){
 	$("input[name='checkRadio']:radio").change(function(){	//checkRadio에 변경이 발생한경우

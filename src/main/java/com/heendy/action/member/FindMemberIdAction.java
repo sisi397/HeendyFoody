@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.heendy.action.Action;
 import com.heendy.dao.MemberDAO;
 
+/**
+ * 
+ * @author 문석호
+ * 회원 아이디 찾기 기능 Action 클래스
+ */
 public class FindMemberIdAction implements Action{
 	private final MemberDAO memberDAO = MemberDAO.getInstance();
 	@Override

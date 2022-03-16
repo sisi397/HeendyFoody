@@ -33,8 +33,8 @@ public class LoginCompanyMemberAction implements Action {
 		CompanyMemberDTO cmemberVO = new CompanyMemberDTO();
 		cmemberVO.setCompanyName(company_name);
 		cmemberVO.setCompanyPassword(company_password);
-		boolean result = cmemberDAO.isExisted(cmemberVO);
-		if(result) {
+		int result = cmemberDAO.isExisted(cmemberVO);
+		if(result == 1) {
 			System.out.println("업체 로그인 성공");
 
 			
