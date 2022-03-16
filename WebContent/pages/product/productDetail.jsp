@@ -198,11 +198,13 @@
                     <!-- //상품상세 -->
                     <section id="p_proDetail" class="tab-contents prodetail active">
                         <h3 class="hide">상품상세</h3>
-                        <img width="0" height="0" style="border:0px;" src="${contextPath }/static/images/product/${productDTO.imageUrl }">
+                        <img width="0" height="0" style="border:0px;" src="${product.imageUrl }">
                             <div class="detailcont">
                                 <div style="width: 100%;margin: auto; max-width: 840;">
                                 <h1 style="text-align:center">${product.productName }</h1>
-                                <img class="s-lazy s-loaded" src = "${contextPath }/static/images/product/${productDTO.imageUrl }">
+                                <div style="width:100%; text-align:center;">
+                                <img class="s-lazy s-loaded" src = "${product.imageUrl }">
+                                </div>
                                 <h1 style="text-align:center">상품 상세 입니다.</h1>
                                 </div>
                             </div>                        
@@ -268,7 +270,7 @@
 <script>
 // 시작할 때 좋아요 여부 확인 
 	$(document).ready(function(){
-		if("${sessionScope.loginUser}" != "" && ${sessionScope.loginUser.roleId} != 1){
+		if("${sessionScope.loginUser}" != "" && "${sessionScope.loginUser.roleId}" != 1){
 			
 			wishCheck();
 		}
@@ -299,57 +301,61 @@
 	
 	// 좋아요 버튼 클릭할 경우
 	function wishUpdate(){
-		if(document.getElementById('wish').className === "btn-wish"){ // 좋아요가 안눌려있을 경우
-			
-			//좋아요 insert
-			$.ajax({
-				url:'${contextPath}/wish/insert.do',
-				type: 'post',
-				dataType:'json',
-				data: {
-					productId: ${product.productId },
-					companyId: ${product.companyId },
-				},
-				success : function(data){
-					document.getElementById('wish').className = "btn-wish active";
-				},
-				error: function(xhr, status, error) {
-	        		var errorResponse = JSON.parse(xhr.responseText);
-	            	var errorCode = errorResponse.code;
-	            	var message = errorResponse.message;
-	            	
-	            	if(errorCode == "ERROR-041"){
-	                	alert("로그인 후 이용해 주세요.");
-	            	}else{
-	            		alert(message);
-	            	}
-	        	}
-			});
+		if("${sessionScope.loginUser}" == "" || "${sessionScope.loginUser.roleId}" == 1){
+			alert("로그인 후 이용해주세요.")
 		}else{
-			//좋아요 delete
-			$.ajax({
-				url:'${contextPath}/wish/delete.do',
-				type: 'post',
-				dataType:'json',
-				data: {
-					productId: ${product.productId },
-					companyId: ${product.companyId },
-				},
-				success : function(data){
-					document.getElementById('wish').className = "btn-wish";
-				},
-				error: function(xhr, status, error) {
-	        		var errorResponse = JSON.parse(xhr.responseText);
-	            	var errorCode = errorResponse.code;
-	            	var message = errorResponse.message;
-	
-	            	if(errorCode == "ERROR-041"){
-	                	alert("로그인 후 이용해 주세요.");
-	            	}else{
-	            		alert(message);
-	            	}
-	        	}
-			});
+			if(document.getElementById('wish').className === "btn-wish"){ // 좋아요가 안눌려있을 경우
+				
+				//좋아요 insert
+				$.ajax({
+					url:'${contextPath}/wish/insert.do',
+					type: 'post',
+					dataType:'json',
+					data: {
+						productId: ${product.productId },
+						companyId: ${product.companyId },
+					},
+					success : function(data){
+						document.getElementById('wish').className = "btn-wish active";
+					},
+					error: function(xhr, status, error) {
+		        		var errorResponse = JSON.parse(xhr.responseText);
+		            	var errorCode = errorResponse.code;
+		            	var message = errorResponse.message;
+		            	
+		            	if(errorCode == "ERROR-041"){
+		                	alert("로그인 후 이용해 주세요.");
+		            	}else{
+		            		alert(message);
+		            	}
+		        	}
+				});
+			}else{
+				//좋아요 delete
+				$.ajax({
+					url:'${contextPath}/wish/delete.do',
+					type: 'post',
+					dataType:'json',
+					data: {
+						productId: ${product.productId },
+						companyId: ${product.companyId },
+					},
+					success : function(data){
+						document.getElementById('wish').className = "btn-wish";
+					},
+					error: function(xhr, status, error) {
+		        		var errorResponse = JSON.parse(xhr.responseText);
+		            	var errorCode = errorResponse.code;
+		            	var message = errorResponse.message;
+		
+		            	if(errorCode == "ERROR-041"){
+		                	alert("로그인 후 이용해 주세요.");
+		            	}else{
+		            		alert(message);
+		            	}
+		        	}
+				});
+			}
 		}
 	}
 

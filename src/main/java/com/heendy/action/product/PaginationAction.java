@@ -63,7 +63,7 @@ public class PaginationAction implements Action {
 			int pageNumber = 1;
 			int pagePerList = 5;
 			int listPerPage = 20;
-			int totalPage = totalCount % listPerPage == 1 ? totalCount/listPerPage : totalCount/listPerPage + 1;
+			int totalPage = totalCount%listPerPage==0 ? totalCount/listPerPage : totalCount/listPerPage+1;
 
 			// 페이지 번호 가져오기. pno가 없을 경우 = 1
 			if(pno != null && pno.length() > 0)
