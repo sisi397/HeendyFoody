@@ -6,22 +6,17 @@
 request.setCharacterEncoding("UTF-8");
 %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<!-- author 문석호
+	로그인 페이지 -->
 
-<!DOCTYPE html>
-<html>
-
-<head>
-<meta charset="UTF-8">
-<title>흰디푸디 투홈</title>
-</head>
 <jsp:include page="../../header.jsp" flush="false" />
 
 <!-- 서버에서 저장한 attribute를 가져온다. -->
 <%
 String msg = (String) request.getAttribute("msg");
-Cookie[] c = request.getCookies();
+Cookie[] c = request.getCookies();	//쿠키 요청
 String cookieVal = "";
-if (c != null) {
+if (c != null) {	//쿠키가 들어있다면 쿠키 리스트를 탐색
 	for (Cookie i : c) {
 		if (i.getName().equals("saveId")) {
 	cookieVal = i.getValue(); // 쿠키에 들어있는 값 불러오기
@@ -29,6 +24,7 @@ if (c != null) {
 	}
 }
 %>
+<!-- 라디오 박스가 클릭되는 경우 보여지는 폼 show/hide -->
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("input[name='checkLoginRadio']:radio").on('click', function() { //checkLoginRadio에 변경이 발생한경우
@@ -149,4 +145,3 @@ if (c != null) {
 </div>
 
 <jsp:include page="../../footer.jsp" flush="false" />
-</html>

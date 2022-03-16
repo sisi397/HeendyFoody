@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 request.setCharacterEncoding("UTF-8");
 %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<!-- @author 문석호 
+ID가 사용가능한지 체크하는 페이지-->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,25 +31,30 @@ request.setCharacterEncoding("UTF-8");
 </head>
 <body>
 	<div>
-		<!-- 사용 가능한 아이디 -->
+		<!-- 0 이라면 사용 가능한 아이디 -->
 		<c:if test="${result == 0}">
 			<h3>${id}는사용 가능한 아이디 입니다.</h3>
 			<script type="text/javascript">
-				if("${role}" == 2){	//일반 회원인 경우
+				//일반 회원인 경우
+				if("${role}" == 2){	
 					opener.document.joinMemberForm.name.value = "";
-				}else{	//업체 회원인 경우
+				//업체 회원인 경우
+				}else{	
 					opener.document.joinCompanyForm.company_name.value = "";
 				}
 			</script>
 			<input type="button" class="btn fill black" value="사용하기"
 				onclick="is_ok()">
 		</c:if>
+		<!-- 1 이라면 사용 불가능한 아이디 -->
 		<c:if test="${result == 1}">
 			<h2>${id}는이미 사용중인 아이디입니다.</h2>
 			<script type="text/javascript">
-				if("${role}" == 2){	//일반 회원인 경우
+				//일반 회원인 경우
+				if("${role}" == 2){	
 					opener.document.joinMemberForm.name.value = "";
-				}else{	//업체 회원인 경우
+				//업체 회원인 경우
+				}else{	
 					opener.document.joinCompanyForm.company_name.value = "";
 				}
 			</script>

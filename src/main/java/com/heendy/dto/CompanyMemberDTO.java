@@ -1,5 +1,9 @@
 package com.heendy.dto;
-
+/**
+ * @author 문석호
+ *
+ *	업체 회원 정보 DTO
+ */
 public class CompanyMemberDTO {
 	private int companyId;
 	private String companyName;
@@ -9,7 +13,7 @@ public class CompanyMemberDTO {
 	private int role_id;
 
 
-
+	//클라이언트에서 보낸 입력 인자를 받는 생성자
 	public CompanyMemberDTO(String companyName, String companyPassword, String companyTel, String companyEmail,
 			int role_id) {
 		super();

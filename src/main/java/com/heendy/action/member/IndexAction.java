@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.heendy.action.Action;
 import com.heendy.dao.ProductDAO;
 import com.heendy.dto.ProductDTO;
-
+/**
+ * @author 문석호
+ * 메인 페이지로 돌아가는 Action 클래스
+ */
 public class IndexAction implements Action {
 
 	private final ProductDAO productDAO = ProductDAO.getInstance();

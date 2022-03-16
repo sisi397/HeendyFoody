@@ -14,6 +14,10 @@ import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
 import com.heendy.action.member.MemberActionFactory;
 
+/**
+ * @author 문석호
+ * 멤버 관련 Controller
+ */
 @WebServlet("/member/*")
 public class MemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -23,7 +27,7 @@ public class MemberController extends HttpServlet {
     }
 
 	public void init() throws ServletException {
-		System.out.println("멤버 컨트롤러 실행");
+		System.out.println("member 컨트롤러 실행");
 	}
 
 	public void destroy() {
@@ -38,11 +42,12 @@ public class MemberController extends HttpServlet {
 	}
 	
 	private void doHandle(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		//메서드팩토리 패턴 (액션세팅)
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
-		String command = request.getPathInfo();	//URL에서 요청명 가져오기
+		//URL에서 요청명 가져오기
+		String command = request.getPathInfo();	
 		
+		//메서드팩토리 패턴 (액션세팅)
 		ActionFactory af = MemberActionFactory.getInstance();
 		Action action = af.getAction(command);
 		

@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.heendy.action.Action;
-
+/**
+ * @author 문석호
+ * 회원 가입 창으로 이동하는 Action 클래스
+ */
 public class MemberJoinAction implements Action {
 
 	@Override

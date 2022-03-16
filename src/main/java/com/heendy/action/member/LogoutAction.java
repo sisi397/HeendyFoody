@@ -34,7 +34,7 @@ public class LogoutAction implements Action {
 			//세션 값을 초기화한다.
 			session.invalidate();
 		}    
-		//로그인 성공 시 이동할 페이지 지정
+		//로그아웃 성공 시 이동할 페이지 지정
 		url = request.getContextPath() + "/main";	
 		response.sendRedirect(url);
 	}
