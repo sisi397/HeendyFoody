@@ -67,9 +67,11 @@ public class ProductListViewAction implements Action{
 			
 			errorResponse = ErrorResponse.of(ErrorCode.UNCAUGHT_SERVER_ERROR);
 			
-			String json = new Gson().toJson(errorResponse);
-			response.setStatus(errorResponse.getStatus());
-			response.getWriter().write(json);
+			request.setAttribute("errorMsg", errorResponse.getMessage());
+			String url = "/main";
+			
+		    RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+		    dispatcher.forward(request, response);
 		}
 	}
 

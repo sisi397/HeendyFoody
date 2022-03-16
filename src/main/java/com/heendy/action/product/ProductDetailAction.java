@@ -55,9 +55,11 @@ public class ProductDetailAction implements Action {
 				errorResponse = ErrorResponse.of(ErrorCode.UNCAUGHT_SERVER_ERROR);
 			}
 
-			String json = new Gson().toJson(errorResponse);
-			response.setStatus(errorResponse.getStatus());
-			response.getWriter().write(json);
+			request.setAttribute("errorMsg", errorResponse.getMessage());
+			String url = "/product/list.do?menu=newprod";
+			
+		    RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+		    dispatcher.forward(request, response);
 		}
 		
 	}
