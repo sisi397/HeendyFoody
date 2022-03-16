@@ -202,7 +202,8 @@
                             <div class="detailcont">
                                 <div style="width: 100%;margin: auto; max-width: 840;">
                                 <h1 style="text-align:center">${product.productName }</h1>
-                                <div style="width:100%; text-align:center;">
+
+                                <div style="width:100%;text-align:center;">
                                 <img class="s-lazy s-loaded" src = "${product.imageUrl }">
                                 </div>
                                 <h1 style="text-align:center">상품 상세 입니다.</h1>

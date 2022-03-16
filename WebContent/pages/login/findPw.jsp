@@ -5,6 +5,7 @@
 request.setCharacterEncoding("UTF-8");
 %>   
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<!-- 비밀번호 찾기 페이지 -->
 <!DOCTYPE html>
 <html>
 <head>

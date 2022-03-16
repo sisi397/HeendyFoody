@@ -2,6 +2,7 @@ package com.heendy.action.company;
 
 import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
+import com.heendy.action.error.NotFoundViewAction;
 
 public class CompanyActionFactory implements ActionFactory {
 	
@@ -31,6 +32,8 @@ public class CompanyActionFactory implements ActionFactory {
 			action = new CreateProductProxyAction(new CreateProductAction());
 		} else if(command.equals("/createProductForm.do")) {
 			action = new ProductCreateFormAction();
+		} else {
+			action = new NotFoundViewAction();
 		}
 	    
 		return action;

@@ -6,6 +6,8 @@ request.setCharacterEncoding("UTF-8");
 %>   
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
+<!-- @author 문석호
+	아이디 찾기 페이지 -->
 <html>
 <head>
 <meta charset="UTF-8">
