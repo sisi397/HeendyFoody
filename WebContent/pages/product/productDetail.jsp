@@ -198,11 +198,13 @@
                     <!-- //상품상세 -->
                     <section id="p_proDetail" class="tab-contents prodetail active">
                         <h3 class="hide">상품상세</h3>
-                        <img width="0" height="0" style="border:0px;" src="${contextPath }/static/images/product/${productDTO.imageUrl }">
+                        <img width="0" height="0" style="border:0px;" src="${product.imageUrl }">
                             <div class="detailcont">
                                 <div style="width: 100%;margin: auto; max-width: 840;">
                                 <h1 style="text-align:center">${product.productName }</h1>
-                                <img class="s-lazy s-loaded" src = "${contextPath }/static/images/product/${productDTO.imageUrl }">
+                                <div style="width:100%;text-align:center;">
+                                <img class="s-lazy s-loaded" src = "${product.imageUrl }">
+                                </div>
                                 <h1 style="text-align:center">상품 상세 입니다.</h1>
                                 </div>
                             </div>                        
