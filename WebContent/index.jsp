@@ -9,8 +9,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
-
 <!-- 로딩바스타일 -->
 <style type="text/css">
 #Progress_Loading {
@@ -26,7 +24,6 @@
 	<div id="Progress_Loading">
 		<img src="${contextPath }/static/images/common/loding.gif" />
 	</div>
-
 	<%@ include file="/navbar.jsp"%>
 	<div id="wrap" class="main">
 		<div id="contents">
@@ -165,10 +162,10 @@
 			<!-- // 카테고리별 상품 -->
 			<section class="categoryprod"></section>
 			<!-- 카테고리별 상품 끝 //-->
-
-		</div>
+			</div>
 		<jsp:include page="footer.jsp" flush="false" />
 	</div>
+
 	<script>
 		$(document).ready(function(){
 			$('#Progress_Loading').hide(); //첫 시작시 로딩바를 숨겨준다.
