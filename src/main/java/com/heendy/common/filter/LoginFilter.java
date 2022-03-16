@@ -29,18 +29,16 @@ import com.heendy.utils.UserService;
 @WebFilter(filterName="loginFilter")
 
 public class LoginFilter implements Filter {
-
+	// MeberDTO 타입의 객체를 불러오기 위한 인스턴스 변수
 	private UserService<MemberDTO, HttpSession> userService = SessionUserService.getInstance();
-    /**
-     * Default constructor. 
-     */
+    
     public LoginFilter() {
     }
 
 
 	public void destroy() {
 	}
-
+	
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		try {
 		
@@ -50,10 +48,11 @@ public class LoginFilter implements Filter {
 			HttpSession session = req.getSession();
 
 			
-			/*UserService를 이용해 세션에서 유저 객체 가져오기*/
+			/*UserService를 이용해 세션에서 유저 객체 가져오기
+			 * 없다면 로그인하지 않은 것으로 간주(정상적으로 doFilter를 수행)*/
 			userService.loadUser(session).orElseThrow(MemberNotExistSession::new);
 			
-				
+			
 			HttpServletResponse res = (HttpServletResponse)response;
 			String contextPath = req.getContextPath();
 			res.sendRedirect(contextPath + "/main");

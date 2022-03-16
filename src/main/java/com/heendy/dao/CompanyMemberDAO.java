@@ -10,7 +10,10 @@ import com.heendy.dto.MemberDTO;
 import com.heendy.utils.DBManager;
 
 import oracle.jdbc.OracleTypes;
-
+/**
+ * @author 문석호
+ * 업체 멤버 관련 DAO 클래스
+ */
 public class CompanyMemberDAO {
 	private CompanyMemberDAO() { }//싱글턴 패턴
 	private static CompanyMemberDAO instance = new CompanyMemberDAO();

@@ -2,7 +2,7 @@
 * --------------------------------
 * MEMBER JS
 * --------------------------------
-* @author 문석호
+* author 문석호
 	로그인 화면에서 필수 입력 값 유도
 */
 $(document).ready(function(){
@@ -67,16 +67,18 @@ function company_join_save() {
   }
 }
 
+// 일반 회원가입시 id 중복확인 버튼 클릭시 실행되는 함수
 function id_check(){
   if (document.joinMemberForm.name.value == "") {
     alert('사용자 아이디(이름)를 입력하여 주십시오.');
     document.joinMemberForm.name.focus();
     return;
   }
-  var url = "idCheck.do?role_id=2&name=" + document.joinMemberForm.name.value;		//입력한 아이디(이름) 받아서 액션에 전달
+//입력한 아이디(이름) 받아서 액션에 전달
+  var url = "idCheck.do?role_id=2&name=" + document.joinMemberForm.name.value;		
   window.open( url, "_blank", "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=300, height=50");
 }
-
+// 업체 회원가입시 id 중복확인 버튼 클릭시 실행되는 함수
 function company_id_check(){
   if (document.joinCompanyForm.company_name.value == "") {
     alert('업체 아이디(이름)를 입력하여 주십시오.');

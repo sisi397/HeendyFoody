@@ -32,7 +32,6 @@ public class CartViewAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		try {
-
 		
 			MemberDTO member = (MemberDTO) request.getAttribute("loginUser");
 
