@@ -2,6 +2,7 @@ package com.heendy.action.wish;
 
 import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
+import com.heendy.action.error.NotFoundViewAction;
 
 public class WishActionFactory implements ActionFactory {
 
@@ -24,7 +25,9 @@ public class WishActionFactory implements ActionFactory {
 	    	action = new WishDeleteAction();
 	    } else if(command.equals("/check.do")) {
 	    	action = new WishCheckAction();
-	    }
+	    } else {
+			action = new NotFoundViewAction();
+		}
 	    
 		return action;
 	}

@@ -2,6 +2,7 @@ package com.heendy.action.order;
 
 import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
+import com.heendy.action.error.NotFoundViewAction;
 
 
 public class OrderActionFactory implements ActionFactory{
@@ -26,6 +27,8 @@ private final static ActionFactory factory = new OrderActionFactory();
 			action = new OrderProductProxyAction(new OrderProductAction());
 		} else if (command.equals("/orderCartProducts.do")) {
 			action = new OrderCartProductsProxyAction(new OrderCartProductsAction());
+		} else {
+			action = new NotFoundViewAction();
 		}
 		
 		return action;
