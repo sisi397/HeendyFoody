@@ -64,7 +64,7 @@
 
 	<context-param>
 		<param-name>WindowsUploadImagePath</param-name>
-		<param-value>C:/Users/jiminlee/Desktop/upload</param-value>
+		<param-value>C:/dev/workspace/HeendyFoody/WebContent/upload</param-value>
 	</context-param>
 	
   <error-page>
