@@ -100,6 +100,10 @@
     <jsp:include page="/footer.jsp" />
     </div>
     <script>
+	/*
+		@Author 김시은
+		비동기로 상품목록 불러오기
+	*/
     $(document).ready(function(){
     	var menu = 'category';
     	

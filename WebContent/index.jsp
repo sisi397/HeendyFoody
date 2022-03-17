@@ -93,9 +93,12 @@
 								      		<img src="${product.imageUrl}"alt='' onerror=''>
 								      		<span class='badge'><strong>${product.discountRate }%</strong></span>
 							      		</span>
-							      		<strong class='txt-ti ellipsis'>${product.productName }</strong>
+							      		<span class="info">
+							      			<strong class='txt-ti ellipsis'>${product.productName }</strong>
+							      		</span>
+							      		<span class='txt-price'>
 							      		<strong><em>${product.discountPrice }</em>원</strong><del>${product.productPrice}원</del>
-							      		<span class='txt-price'></span> 
+							      		</span> 
 						      		</a>
 						      		<button type='button' class='btn-cart' onclick='addCartProduct(${product.productId},${product.companyId })'>장바구니 담기</button>
 						      		</div>
@@ -312,6 +315,42 @@
 		        	}
 		    	}
 			});
+		}
+	</script>
+	<script type="text/javascript">
+		function gfn_appendComma(nNumber,nDetail) {
+	    	if (nNumber == null)    return "";
+	    	if (nDetail == null)    nDetail = 0;
+
+	    	nNumber             = parseFloat(nNumber);
+	    	nNumber             = Math.round(nNumber, nDetail);
+	    
+	    	var minusFlag = false;
+	    	if(nNumber < 0) {
+	    		nNumber = nNumber *-1;
+	    		minusFlag = true;
+	    	}
+	    
+	    	var strNumber       = new String(nNumber);
+	    	var arrNumber       = strNumber.split(".");
+	    	var strFormatNum    = "";
+	    	var j = 0;
+	
+	    	for (var i = arrNumber[0].length - 1; i >= 0; i--) {
+	        	if (i != strNumber.length && j == 3) {
+	            	strFormatNum = arrNumber[0].charAt(i) + "," + strFormatNum;
+	            	j = 0;
+	        	} else {
+	            	strFormatNum = arrNumber[0].charAt(i) + strFormatNum;
+	        	}
+	        	j++;
+	    	}
+
+	    	if (arrNumber.length > 1)   strFormatNum = strFormatNum + "." + arrNumber[1];
+	    
+	    	if (minusFlag) strFormatNum = '-'+strFormatNum ;
+
+	    		return strFormatNum;
 		}
 	</script>
 </body>

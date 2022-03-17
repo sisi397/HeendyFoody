@@ -202,6 +202,7 @@
                             <div class="detailcont">
                                 <div style="width: 100%;margin: auto; max-width: 840;">
                                 <h1 style="text-align:center">${product.productName }</h1>
+
                                 <div style="width:100%;text-align:center;">
                                 <img class="s-lazy s-loaded" src = "${product.imageUrl }">
                                 </div>
@@ -268,9 +269,12 @@
     <jsp:include page="/footer.jsp" />
 </div>
 <script>
+/*
+	@Author 김시은
+	좋아요 기능 
+*/
 // 시작할 때 좋아요 여부 확인 
 	$(document).ready(function(){
-
 		if("${sessionScope.loginUser}" != "" && "${sessionScope.loginUser.roleId}" != 1){
 			
 			wishCheck();
@@ -302,57 +306,61 @@
 	
 	// 좋아요 버튼 클릭할 경우
 	function wishUpdate(){
-		if(document.getElementById('wish').className === "btn-wish"){ // 좋아요가 안눌려있을 경우
-			
-			//좋아요 insert
-			$.ajax({
-				url:'${contextPath}/wish/insert.do',
-				type: 'post',
-				dataType:'json',
-				data: {
-					productId: ${product.productId },
-					companyId: ${product.companyId },
-				},
-				success : function(data){
-					document.getElementById('wish').className = "btn-wish active";
-				},
-				error: function(xhr, status, error) {
-	        		var errorResponse = JSON.parse(xhr.responseText);
-	            	var errorCode = errorResponse.code;
-	            	var message = errorResponse.message;
-	            	
-	            	if(errorCode == "ERROR-041"){
-	                	alert("로그인 후 이용해 주세요.");
-	            	}else{
-	            		alert(message);
-	            	}
-	        	}
-			});
+		if("${sessionScope.loginUser}" == "" || "${sessionScope.loginUser.roleId}" == 1){
+			alert("로그인 후 이용해주세요.")
 		}else{
-			//좋아요 delete
-			$.ajax({
-				url:'${contextPath}/wish/delete.do',
-				type: 'post',
-				dataType:'json',
-				data: {
-					productId: ${product.productId },
-					companyId: ${product.companyId },
-				},
-				success : function(data){
-					document.getElementById('wish').className = "btn-wish";
-				},
-				error: function(xhr, status, error) {
-	        		var errorResponse = JSON.parse(xhr.responseText);
-	            	var errorCode = errorResponse.code;
-	            	var message = errorResponse.message;
-	
-	            	if(errorCode == "ERROR-041"){
-	                	alert("로그인 후 이용해 주세요.");
-	            	}else{
-	            		alert(message);
-	            	}
-	        	}
-			});
+			if(document.getElementById('wish').className === "btn-wish"){ // 좋아요가 안눌려있을 경우
+				
+				//좋아요 insert
+				$.ajax({
+					url:'${contextPath}/wish/insert.do',
+					type: 'post',
+					dataType:'json',
+					data: {
+						productId: ${product.productId },
+						companyId: ${product.companyId },
+					},
+					success : function(data){
+						document.getElementById('wish').className = "btn-wish active";
+					},
+					error: function(xhr, status, error) {
+		        		var errorResponse = JSON.parse(xhr.responseText);
+		            	var errorCode = errorResponse.code;
+		            	var message = errorResponse.message;
+		            	
+		            	if(errorCode == "ERROR-041"){
+		                	alert("로그인 후 이용해 주세요.");
+		            	}else{
+		            		alert(message);
+		            	}
+		        	}
+				});
+			}else{
+				//좋아요 delete
+				$.ajax({
+					url:'${contextPath}/wish/delete.do',
+					type: 'post',
+					dataType:'json',
+					data: {
+						productId: ${product.productId },
+						companyId: ${product.companyId },
+					},
+					success : function(data){
+						document.getElementById('wish').className = "btn-wish";
+					},
+					error: function(xhr, status, error) {
+		        		var errorResponse = JSON.parse(xhr.responseText);
+		            	var errorCode = errorResponse.code;
+		            	var message = errorResponse.message;
+		
+		            	if(errorCode == "ERROR-041"){
+		                	alert("로그인 후 이용해 주세요.");
+		            	}else{
+		            		alert(message);
+		            	}
+		        	}
+				});
+			}
 		}
 	}
 
@@ -415,7 +423,10 @@
 	    	}
 		});
 	}
-
+	/*
+		@Author 김시은
+		상품 수량 변경 및 가격 변경
+	*/
 	// 수량 증가
 	function upCount(obj){
 		const pqty = document.querySelectorAll('.pcount');
