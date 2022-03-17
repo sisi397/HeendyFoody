@@ -27,6 +27,7 @@
 	    <section class="conarea">
 		  <h3 class="tit">좋아요</h3>
 		  
+		  <!-- 좋아요 표시된 상품 선택 및 좋아요 삭제 버튼 -->
 		  <div class="list-filter">
 	        <label><input type="checkbox" id="checkAll" onclick="selectAll(this);"><span class="select-all">전체선택</span></label>
 	        <button type="button" onclick="deleteCheckList();" class="btn small lightgray">선택삭제</button>
@@ -42,28 +43,29 @@
 	              <li>
 		            <button type="button" class="btn-del" onclick="wishDelete(${wishDTO.productId}, ${wishDTO.companyId});">삭제</button>
 		              <label class="thumb">
+		              	<!-- 상품id, 업체id, 상품수량으로 체크박스 value 설정-->
 		                <input type="checkbox" name="checkboxAll" onclick="checkSelectAll();" value="${wishDTO.productId}, ${wishDTO.companyId}, ${wishDTO.productCount}">
-		                <!-- 상품이 삭제된 경우 -->
+		                <!-- 상품이 삭제된 경우 표시글-->
 		                <c:if test="${wishDTO.deleted == 1}">
 		                  <span class="soldout">판매중단</span>
 		                </c:if>
-		                <!-- 상품 수량이 0인 경우 -->
+		                <!-- 상품 수량이 0인 경우 표시글-->
 		                <c:if test="${wishDTO.productCount == 0 && wishDTO.deleted != 1}">
 		                  <span class="soldout">일시품절</span>
 		                </c:if>
-		                <!-- 정상 -->
+		                <!-- 정상 표시글-->
 		                <span class="normal"></span>
 		                <img src="${wishDTO.imageUrl}" alt="${wishDTO.productName}">
 	                  </label>
 		
 		              <div class="contr">
-		                <!-- 상품이 삭제되지 않은 경우 -->
+		                <!-- 상품이 삭제되지 않은 경우 연결 링크 -->
 		                <c:if test="${wishDTO.deleted != 1}">
 		                  <a href="${contextPath}/product/detail.do?pid=${wishDTO.productId}&cid=${wishDTO.companyId}">
 		                    <strong class="txt-ti ellipsis">${wishDTO.productName}</strong>
 		                  </a>
 		                </c:if>
-		                <!-- 상품이 삭제된 경우 -->
+		                <!-- 상품이 삭제된 경우 연결 링크 -->
 		                <c:if test="${wishDTO.deleted == 1}">
 		                  <a href="#">
 		                    <strong class="txt-ti ellipsis">${wishDTO.productName}</strong>
@@ -84,15 +86,15 @@
 		                    </c:if>      
 	                      </span>
 	                      <div class="probtn">
-	                        <!-- 판매자가 상품을 삭제한 경우  --> 
+	                        <!-- 판매자가 상품을 삭제한 경우 버튼 표시 문구 --> 
 		       				<c:if test="${wishDTO.deleted == 1}">      
 		                      <button type="button" class="btn fill small lightgray" onclick="soldoutAlarm()">판매중단 상품</button>
 		                    </c:if> 
-		                    <!-- 정상  --> 
+		                    <!-- 정상 버튼 표시 문구 --> 
 		                    <c:if test="${wishDTO.productCount > 0 && wishDTO.deleted != 1}">      
 		                      <button type="button" class="btn small orange" onclick="addToCart(${wishDTO.productId}, ${wishDTO.companyId})">장바구니 담기</button>
 		                    </c:if> 
-		                    <!-- 수량이 없는 경우  --> 
+		                    <!-- 수량이 없는 경우 버튼 표시 문구 --> 
 		                    <c:if test="${wishDTO.productCount <= 0 && wishDTO.deleted != 1}">
 		                      <button type="button" class="btn fill small lightgray" onclick="restockAlarm()">재입고 알림</button>
 		                    </c:if>    
@@ -117,7 +119,7 @@
 			    </div>
               </c:if>
                
-              <!-- 좋아요 목록이 있다면 --> 
+              <!-- 좋아요 목록이 없다면 --> 
               <c:if test="${empty wishList}">
 		   	    <div class="nodata">좋아요 상품이 아직 없습니다.</div>
 		      </c:if>
@@ -130,14 +132,18 @@
       <%@ include file="/footer.jsp" %>
     </div>
   <script type="text/javascript">
-
+/*
+	@Author 이지민
+	좋아요 삭제 및 체크박스 선택 관련 js
+*/
+	
 	//좋아요 삭제  
 	function wishDelete(pId, cId){
 				
 		$.ajax({
 			type: 'POST',
 			url:'${contextPath}/wish/delete.do',
-			dataType:'text',
+			dataType:'text', //json이 아니라 int가 반환된다 주의!
 			data: {
 				productId: pId,
 				memberId: ${loginUser.memberId},
@@ -211,7 +217,7 @@
 		
 		if (checkBoxArr != null) {
 			checkBoxArr.forEach((check) => {
-				var info = check.split(",");
+				var info = check.split(","); //상품id, 업체id 나누기
 				console.log(info);
 				var pId = parseInt(info[0]);
 				var cId = parseInt(info[1]);
@@ -224,7 +230,7 @@
 	function checkSelectAll() {
 		var allBoxes = document.querySelectorAll('input[name="checkboxAll"]'); //전체 체크박스 
 		var checked = document.querySelectorAll('input[name="checkboxAll"]:checked'); //선택된 체크박스
-		var selectAll = document.querySelector('input[id="checkAll"]'); //전체 체크하는 체크박스 하나
+		var selectAll = document.querySelector('input[id="checkAll"]'); //전체를 체크하는 체크박스 하나
 		
 		if (allBoxes.length === checked.length) {
 			selectAll.checked = true;
@@ -245,7 +251,7 @@
 		
 		if (checkBoxArr != null) {
 			checkBoxArr.forEach((check) => {
-				var info = check.split(",");
+				var info = check.split(","); //상품id, 업체id, 상품수량 나누기
 				console.log(info);
 				var pId = parseInt(info[0]);
 				var cId = parseInt(info[1]);

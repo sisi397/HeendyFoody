@@ -6,7 +6,7 @@
 <%@ page import="com.heendy.utils.CookieUtils" %>
 
 <% 
-	
+	//상품id를 담아 쿠키에 저장하기
 	String pid = request.getParameter("pid");
 	CookieUtils ck = new CookieUtils();
 	ck.setCookie("RECENT_VIEW_ITEMS", pid, request, response);

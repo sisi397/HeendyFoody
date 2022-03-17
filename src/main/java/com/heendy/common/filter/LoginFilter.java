@@ -19,7 +19,7 @@ import com.heendy.utils.SessionUserService;
 import com.heendy.utils.UserService;
 
 /**
- * @author 문석호
+ * @author 문석호, 이지민
  * 로그인 검증 필터 세션이 로그인 한 기록을 가지고 있다면 
  * 접근을 막아야할 action을 담는다.
  * 막은 접근은 메인페이지로 redirect 한다.
