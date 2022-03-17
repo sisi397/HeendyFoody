@@ -35,7 +35,7 @@ public class RecentViewDAO {
 		
 		//DB 연결 및 callable 문장 호출
 		Connection conn = DBManager.getConnection();
-		CallableStatement cstmt = conn.prepareCall("{call sp_list_recent_view_product(?, ?)}");
+		CallableStatement cstmt = conn.prepareCall("{call pkg_product.sp_list_recent_view_product(?, ?)}");
 					
 		//Integer[] 타입의 인자를 DB에서 커스텀해서 만든 array 타입으로 변환 필요   
 		Array rvItems = ((oracle.jdbc.OracleConnection)conn).createOracleArray("USER01.RECENTVIEWPRODUCTIDSARRAY", rvProducts);

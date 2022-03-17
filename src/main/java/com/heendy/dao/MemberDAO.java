@@ -202,7 +202,7 @@ public class MemberDAO {
 		
 		//DB 연결 및 callable 문장 수행
 		Connection conn = DBManager.getConnection();
-		CallableStatement cstmt = conn.prepareCall("{call sp_select_member_point(?,?)}");
+		CallableStatement cstmt = conn.prepareCall("{call pkg_member.sp_select_member_point(?,?)}");
 		
 		//?에 인자 넘기기
 		cstmt.setInt(1, member_id);
