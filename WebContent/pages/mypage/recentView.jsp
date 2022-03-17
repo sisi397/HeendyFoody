@@ -75,7 +75,7 @@
 	@Author 이지민
 	masonry 레이아웃 호출
 */
-*
+
   //masonry 레이아웃 세팅
   var msnry = new Masonry( ".recent-list ul", {
 	  itemSelector: ".figure",
