@@ -269,6 +269,10 @@
     <jsp:include page="/footer.jsp" />
 </div>
 <script>
+/*
+	@Author 김시은
+	좋아요 기능 
+*/
 // 시작할 때 좋아요 여부 확인 
 	$(document).ready(function(){
 		if("${sessionScope.loginUser}" != "" && "${sessionScope.loginUser.roleId}" != 1){
@@ -419,7 +423,10 @@
 	    	}
 		});
 	}
-
+	/*
+		@Author 김시은
+		상품 수량 변경 및 가격 변경
+	*/
 	// 수량 증가
 	function upCount(obj){
 		const pqty = document.querySelectorAll('.pcount');

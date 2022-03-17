@@ -6,11 +6,10 @@
 <%
 request.setCharacterEncoding("UTF-8");
 %>
-<!-- author 문석호
-	일반/업체 회원 가입시 보여지는 페이지 -->
+
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-<!-- 현재 날짜 가져오기 -->
+<!-- 현재 날짜 -->
 <c:set var="now" value="<%=new java.util.Date()%>" />
 <c:set var="date">
 	<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" />
@@ -33,7 +32,6 @@ request.setCharacterEncoding("UTF-8");
 		<p class="txt" style="margin: 10px 0px 20px;">가입정보를 입력해 주세요. (* 필수
 			입력사항)</p>
 			
-		<!-- 라디오 버튼으로 일반회원/업체회원 회원가입 구분 -->
 		<div style="margin-bottom: 30px;">
 			<input type="radio" name="checkRadio" value="normal"
 				checked="checked" style="position: inherit;">일반회원 <input
@@ -41,8 +39,7 @@ request.setCharacterEncoding("UTF-8");
 				style="position: inherit; margin-left: 100px">업체 회원
 		</div>
 		
-		<!-- 선택한 라디오 박스에 따라 폼 변경 
-			일반 로그인 폼-->
+		<!-- 선택한 라디오 박스에 따라 폼 변경 -->
 		<form name="joinMemberForm" id="normalForm"
 			action="${contextPath}/member/addMember.do" method="post">
 			<input type="hidden" name="role" id="company_role" value="2">
@@ -81,7 +78,7 @@ request.setCharacterEncoding("UTF-8");
 				</tr>
 				<tr>
 					<td width="400">
-						<!--  생년월일 입력: 오늘날짜 이후로는 기입할 수 없음 --> <input type="date" id="bd"
+						<!--  생년월일 입력 오늘 이후로는 기입할 수 없음 --> <input type="date" id="bd"
 						max="${date}" name="birthdate">
 					</td>
 				</tr>
@@ -105,7 +102,6 @@ request.setCharacterEncoding("UTF-8");
 				</tr>
 			</table>
 		</form>
-		
 		<!-- 업체 로그인 폼 -->
 		<form name="joinCompanyForm" id="companyForm" style="display: none"
 			action="${contextPath}/member/addCompanyMember.do" method="post">
