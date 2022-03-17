@@ -31,6 +31,7 @@ public class AddCompanyMemberAction implements Action{
 		
 		//company 멤버 DTO에 불러온 값 넣기
 		CompanyMemberDTO cmemberVO = new CompanyMemberDTO(company_name, company_pwd, company_tel, company_email, role_id);
+		//업체 회원 추가함수 호출
 		companyMemberDAO.addCompanyMember(cmemberVO);
 		System.out.println("업체회원이 추가 되었습니다.");
 		

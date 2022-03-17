@@ -1,7 +1,10 @@
 package com.heendy.dto;
 
 import java.sql.Date;
-
+/**
+ * @author 문석호
+ * 일반 회원 정보 DTO
+ */
 public class MemberDTO {
 	private int memberId;
 	private String memberName;
@@ -16,7 +19,7 @@ public class MemberDTO {
 	public MemberDTO() {
 	}
 	
-	
+	//클라이언트에서 보낸 입력 인자를 받는 생성자
 	public MemberDTO(String memberName, String memberPassword, String memberEmail, String address, int roleId, String birthDate) {
 		super();
 		this.memberName = memberName;

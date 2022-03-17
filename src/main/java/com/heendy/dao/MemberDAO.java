@@ -124,7 +124,7 @@ public class MemberDAO {
 			
 			//실행
 			cstmt.executeQuery();
-	
+			//결과 받아오기
 			result = cstmt.getString(2);
 
 		}catch(SQLException e) {

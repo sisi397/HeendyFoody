@@ -109,6 +109,9 @@ width: 55%;
        </nav>
 	</div>
 </header>
+<!-- @author 문석호
+	ajax로 category.do를 호출해서 동기처리
+	카테고리 메뉴바를 보여주는 기능-->
 <script>
 $(document).ready(function () {
 	console.log("부모 카테고리")
@@ -118,7 +121,7 @@ $(document).ready(function () {
 		type: 'post',
 		dataType:'json',
 		async:false,
-		data:{
+		data:{	//0 ,0 은 카테고리 전체 탐색하는 인자
 			cate : 0,
 			pcate : 0
 		},

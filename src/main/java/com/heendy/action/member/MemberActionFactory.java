@@ -4,6 +4,10 @@ import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
 import com.heendy.action.error.NotFoundViewAction;
 
+/**
+ * @author 문석호
+ * member 관련 Action객체 생성을 위한 팩토리 클래스
+ */
 public class MemberActionFactory implements ActionFactory {
 
 	private final static ActionFactory factory = new MemberActionFactory();

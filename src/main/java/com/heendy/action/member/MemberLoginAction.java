@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.heendy.action.Action;
 
+/**
+ * @author 문석호
+ * 로그인 창으로 이동하는 Action 클래스
+ */
 public class MemberLoginAction implements Action {
 
 	@Override
