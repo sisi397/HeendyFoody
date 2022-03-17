@@ -13,16 +13,17 @@ import com.heendy.dao.MemberDAO;
 
 /**
  * 
- * @author 문석호
- *	로그아웃시 세션 초기화.
+ * @author 문석호, 이지민
+ *	로그아웃시 세션 초기화 + 최근 본 상품 쿠키 삭제
  */
 public class LogoutAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url;
+		//쿠키를 처음 생성할 때 설정해줬던 값들 재설정 필요
 		Cookie ck = new Cookie("RECENT_VIEW_ITEMS", null);
-		ck.setMaxAge(0);
+		ck.setMaxAge(0); //해당 쿠키를 없앤다.
 		ck.setPath("/");
 		response.addCookie(ck);
 

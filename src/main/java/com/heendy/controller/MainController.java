@@ -12,7 +12,10 @@ import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
 import com.heendy.action.main.MainActionFactory;
 
-
+/**
+ * @author 이지민
+ * 메인 관련 Controller
+ */
 @WebServlet("/main/*")
 public class MainController extends HttpServlet {
 	private final ActionFactory actionFactory = MainActionFactory.getInstance();

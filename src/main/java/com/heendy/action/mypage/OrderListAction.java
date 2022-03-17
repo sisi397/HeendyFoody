@@ -27,13 +27,7 @@ public class OrderListAction implements Action {
 		String url = "/pages/mypage/orderHistory.jsp";
 		
 		try {
-			
-			//세션에서 로그인 정보 받아와 request에 담기
-//			HttpSession session = request.getSession();
-//			MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
-//			
-//			request.setAttribute("loginUser", loginUser);
-			
+						
 			MemberDTO member = (MemberDTO) request.getAttribute("loginUser");	
 			
 			//사용자 아이디 가져오기

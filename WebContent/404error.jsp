@@ -1,7 +1,7 @@
+<!-- @Author 이지민 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isErrorPage="true"%>
-
 <%
-	//에러가났을때 이페이지가 정상적으로 동작하도록
+	//에러가 났을때 이 페이지가 정상적으로 동작하도록
 	response.setStatus(200); 
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>

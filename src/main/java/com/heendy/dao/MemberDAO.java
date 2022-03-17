@@ -194,6 +194,12 @@ public class MemberDAO {
 		return memberVO;
 	}
 	
+	
+	/**
+	 * @author 이지민
+	 * 마이페이지에서 사용자 포인트 조회 시 필요
+	 * */
+	
 	//사용자 포인트 조회 메서드
 	public int getMemberPoint(int member_id) throws SQLException {
 		

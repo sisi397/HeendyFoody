@@ -27,13 +27,7 @@ public class WishAction implements Action {
 		String url = "/pages/mypage/wish.jsp";
 		
 		try {
-			
-			//세션에서 로그인 정보 받아와 request에 담기
-//			HttpSession session = request.getSession();
-//			MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
-//			
-//			request.setAttribute("loginUser", loginUser);
-			
+						
 			MemberDTO member = (MemberDTO) request.getAttribute("loginUser");	
 			//사용자 아이디 가져오기
 			int memberId = member.getMemberId();
@@ -70,7 +64,8 @@ public class WishAction implements Action {
 					pageNumber = 1;
 				}
 				
-				// DB에서 좋아요 가져올 범위 지정(최신순으로)
+				// DB에서 좋아요 가져올 범위 지정(최신순으로 시도했으나 실패--> DB에 좋아요한 순서대로 들어가 쌓이는 줄 알았는데 그게 아니었다..)
+				//created at 컬럼을 기존 테이블에 추가로 만들어야 가능할 것 같다  
 				int endRow = totalCount - (listPerPage * (pageNumber-1));
 				int beginRow = endRow - listPerPage + 1;
 				if (beginRow < 1) {
