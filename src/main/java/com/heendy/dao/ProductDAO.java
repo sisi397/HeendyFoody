@@ -14,7 +14,7 @@ import com.heendy.utils.*;
 import oracle.jdbc.OracleTypes;
 
 /**
- * @author 김시은
+ * @author 김시은, 이승준
  * 
  * 상품 관련 DAO 
  * 
@@ -145,10 +145,8 @@ public class ProductDAO {
 	
 	/**
 	 * @author 이승준
-	 * 
-	 * @param CreateProductDTO
-	 * 
-	 * 상품 생성하기 
+	 *  
+	 * 상품 생성하는 메서드 
 	 * */
 	public void createProduct(CreateProductDTO data) throws SQLException {
 		

@@ -13,7 +13,11 @@ import com.heendy.dto.OrderDTO;
 import com.heendy.dto.order.CreateCartOrderDTO;
 import com.heendy.dto.order.CreateOrderDTO;
 
-
+/**
+ * @author 이승준, 이지민
+ * 
+ * 주문 내역 관련 DAO 클래스
+ * */
 public class OrderDAO {
 	private OrderDAO() {} //싱글턴 패턴 처리
 	private static OrderDAO instance = new OrderDAO();
@@ -24,10 +28,9 @@ public class OrderDAO {
 	
 	/**
 	 * @author : 이지민
-	 * 주문내역 DAO 클래스
+	 * 
+	 * 주문내역 조회 메서드
 	 * */
-	
-	//주문내역 조회 메서드
 	public ArrayList<OrderDTO> listOrder(int beginRow, int endRow, int member_id) throws SQLException {	
 		System.out.println("member_id: " + member_id);
 		System.out.println("from " + beginRow + " to " + endRow);
@@ -75,7 +78,11 @@ public class OrderDAO {
 	}
 	
 	
-	//총 주문내역 개수 조회 메서드
+	/**
+	 * @author : 이지민
+	 * 
+	 * 총 주문내역 개수 조회 메서드
+	 * */
 	public int totalCountOrder(int member_id) throws SQLException {
 		
 		//변수 초기화
@@ -101,18 +108,12 @@ public class OrderDAO {
 		return result;	
 	}
 	
-
-
-
-
-/**
- * @author : 이승준
- * @version : 1
- * 결제 DAO 클래스
- * */
-
 	
-	
+	/**
+	 * @author : 이승준
+	 * 
+	 * 주문 내역을 생성하는 메서드
+	 * */
 	public void createOrder(CreateOrderDTO data) throws SQLException {
 		Connection conn = DBManager.getConnection();
 		
@@ -129,6 +130,11 @@ public class OrderDAO {
 		conn.close();
 	}
 	
+	/**
+	 * @author : 이승준
+	 * 
+	 * 선택한 장바구니 목록들을 주문 내역으로 생성하는 메서드
+	 * */
 	public void createCartOrder(CreateCartOrderDTO data) throws SQLException {
 		Connection conn = DBManager.getConnection();
 		

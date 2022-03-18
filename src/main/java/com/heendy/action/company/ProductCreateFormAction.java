@@ -58,6 +58,7 @@ public class ProductCreateFormAction implements Action {
 				}
 			}
 			
+			//테스트 코드
 			for(Entry<Integer, List<CategoryDTO>> entry: categoryMap.entrySet()) {
 				System.out.println("대분류 id : " + entry.getKey());
 				for(CategoryDTO c: entry.getValue()) {

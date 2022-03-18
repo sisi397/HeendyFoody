@@ -23,6 +23,9 @@ public class OrderCartProductsProxyAction extends ValidRequireAction {
 		super(action);
 	}
 
+	/**
+	 * 요청 받은 itemSelect 파라미터들을 검증
+	 * */
 	@Override
 	protected List<ErrorField> valid(HttpServletRequest request) {
 		List<ErrorResponse.ErrorField> errors = new ArrayList<>();

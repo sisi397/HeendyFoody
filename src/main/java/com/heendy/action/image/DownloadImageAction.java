@@ -71,7 +71,7 @@ public class DownloadImageAction implements Action {
 			
 		} catch(Exception e) {
 			e.printStackTrace();
-			e.printStackTrace();
+		
 			ErrorResponse errorResponse;
 			if(e instanceof NotSupportExtension) {
 				errorResponse = ErrorResponse.of(ErrorCode.NOT_SUPPORT_IMAGE_FILE);
