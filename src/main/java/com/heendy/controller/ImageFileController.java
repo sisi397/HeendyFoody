@@ -12,6 +12,10 @@ import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
 import com.heendy.action.image.ImageFileActionFactory;
 
+/**
+* @author 이승준
+* image 관련 요청 Controller
+*/
 @WebServlet("/image/*")
 public class ImageFileController extends HttpServlet {
 
