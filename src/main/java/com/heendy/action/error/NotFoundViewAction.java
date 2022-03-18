@@ -9,6 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.heendy.action.Action;
 
+
+/**
+ * @author 이승준
+ * 
+ * 404 에러 페이지 view 반환 Action 클래스
+ * */
 public class NotFoundViewAction implements Action{
 
 	private final String VIEW_URL = "/404error.jsp";

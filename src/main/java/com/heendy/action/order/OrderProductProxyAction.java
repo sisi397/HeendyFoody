@@ -23,6 +23,9 @@ public class OrderProductProxyAction extends ValidRequireAction {
 		super(action);
 	}
 
+	/**
+	 * 상품 id, 업체 id, 구매하려는 상품 수량 검증
+	 * */
 	@Override
 	protected List<ErrorField> valid(HttpServletRequest request) {
 		List<ErrorResponse.ErrorField> errors = new ArrayList<>();

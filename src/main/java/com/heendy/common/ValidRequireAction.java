@@ -24,13 +24,20 @@ public abstract class ValidRequireAction implements Action {
 		this.action = action;
 	}
 
+	
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
 		
+		//요청 파라미터 검증
 		List<ErrorResponse.ErrorField> errors = valid(request);
+		
 		System.out.println(errors.size());
+		
+		//요청된 파라미터 중 하나라도 검증에 실패 할 경우 에러 반환
 		if(errors.size() != 0) {
 			ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_FIELDS);
 			
@@ -41,10 +48,14 @@ public abstract class ValidRequireAction implements Action {
 			response.getWriter().write(json);
 			return;
 		}
+		
+		//검증을 통과하면, 원본 Action을 실행.
 		this.action.execute(request, response);
 		
 	}
 	
+	//요청 파라미터 검증 추상 메서드
+	//하위 클래스가 구체적으로 구현
 	protected abstract List<ErrorResponse.ErrorField> valid(HttpServletRequest request);
 
 }

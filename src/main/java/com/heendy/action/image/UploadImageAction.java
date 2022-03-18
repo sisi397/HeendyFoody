@@ -31,8 +31,10 @@ import com.heendy.common.exception.NotSupportOS;
  * */
 public class UploadImageAction implements Action {
 
+	//허용하는 확장자 명 배열
 	private final String[] supportExts = {"jpg","jpeg","png"};
 	
+	//업로드 성공시 반환 할 메시지 클래스
 	private class SuccessRes {
 		private final String upload = "true";
 		private final String result = "업로드가 완료되었습니다.";
@@ -67,6 +69,7 @@ public class UploadImageAction implements Action {
 		
 		System.out.println(imageRepoPath);
 		
+		//이미지 저장 경로 및 업로드 용량 설정
 		File uploadPath = new File(imageRepoPath);
 		if(!uploadPath.exists()) uploadPath.mkdir();
 		DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -97,12 +100,16 @@ public class UploadImageAction implements Action {
 							idx = item.getName().lastIndexOf("/");
 						}
 						
+						//파일 확장자 명 추출
 						String ext = FilenameUtils.getExtension(item.getName());
 						
+						//파일 확장자 검증
+						//검증이 실패시, 예외 발생
 						if(!this.validExt(ext)) {
 							throw new NotSupportExtension(ext);
 						}
 						
+						//파일 명을 uuid로 변경
 						String uuidFileName = this.getUUID() + "." + ext;
 						
 						File uploadFile = new File(uploadPath + "/" + uuidFileName);
@@ -115,6 +122,7 @@ public class UploadImageAction implements Action {
 			String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ request.getContextPath() + "/image/product?name=";
 			
+			//저장한 이미지 파일 중 첫 번째 이미지 url만 사용자에게 반환
 			String imgUrl = url + savedImageNames.get(0);
 			
 			response.setStatus(201);

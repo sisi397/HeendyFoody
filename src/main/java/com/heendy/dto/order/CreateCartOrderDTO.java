@@ -1,7 +1,5 @@
 package com.heendy.dto.order;
 
-import java.util.List;
-
 /**
  * @author 이승준
  * 장바구니에 담긴 상품 전체 결제 DTO 클래스

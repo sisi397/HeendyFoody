@@ -21,6 +21,11 @@ import com.heendy.dto.cart.CartItemDTO;
 import com.heendy.utils.SessionUserService;
 import com.heendy.utils.UserService;
 
+/**
+ * @author 이승준
+ * 
+ * 장바구니 리스트 데이터와 함께 장바구니 화면 반환하는 Action 클래스
+ */
 public class CartViewAction implements Action {
 
 	private final CartDAO cartDAO = CartDAO.getInstance();

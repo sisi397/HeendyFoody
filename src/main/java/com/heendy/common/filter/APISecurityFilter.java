@@ -52,6 +52,7 @@ public class APISecurityFilter implements Filter {
 
 		try {
 
+			/*세션에 저장된 유저 정보를 가져옵니다.*/
 			MemberDTO member = userService.loadUser(session).orElseThrow(MemberNotExistSession::new);
 
 			request.setAttribute("loginUser", member);

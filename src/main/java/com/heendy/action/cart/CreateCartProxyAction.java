@@ -23,6 +23,9 @@ public class CreateCartProxyAction extends ValidRequireAction {
 		super(aciton);
 	}
 
+	/**
+	 * 상품 id, 업체 id, 상품 구매 수량 요청 파라미터 검증
+	 * */
 	@Override
 	protected List<ErrorField> valid(HttpServletRequest request) {
 		List<ErrorResponse.ErrorField> errors = new ArrayList<>();

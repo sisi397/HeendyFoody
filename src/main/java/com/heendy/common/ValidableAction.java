@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author 이승준
+ * @deprecated ValidRequireAction class로 request 파라미터를 검증합니다.
  * 
  * request 의 파라미터를 검증 기능을 하는 인터페이스	
  * */

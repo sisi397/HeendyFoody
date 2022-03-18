@@ -23,6 +23,9 @@ public class DeleteCartProxyAction extends ValidRequireAction {
 		super(action);
 	}
 	
+	/**
+	 * 장바구니 id 요청 파라미터 검증
+	 * */
 	@Override
 	protected List<ErrorField> valid(HttpServletRequest request) {
 		List<ErrorResponse.ErrorField> errors = new ArrayList<>();

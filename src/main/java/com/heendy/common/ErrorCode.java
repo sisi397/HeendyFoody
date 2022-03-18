@@ -21,11 +21,6 @@ public enum ErrorCode {
 	
 	NOT_RESOURCE_OWNER("ERROR-021","해당 리소스의 소유자가 아닙니다.", 403),
 
-	/*
-	 * 
-	 * author : 이승준
-	 * 공통 Error code
-	 * */
 	UNCAUGHT_SERVER_ERROR("ERROR-040","서버에서 예상치 못한 에러가 발생",500),
 	
 	UNATHORIZED_USER("ERROR-041","인증되지 않은 사용자입니다.",401),

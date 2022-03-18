@@ -22,6 +22,9 @@ public class CreateProductProxyAction extends ValidRequireAction {
 		super(action);
 	}
 
+	/**
+	 * 상품 이름, 상품 가격, 할인율, 상품 재고 수량, 이미지 url, 카테고리 id 요청 파라미터 검증
+	 * */
 	@Override
 	protected List<ErrorField> valid(HttpServletRequest request) {
 		List<ErrorResponse.ErrorField> errors = new ArrayList<>();
