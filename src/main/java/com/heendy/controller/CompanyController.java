@@ -13,6 +13,10 @@ import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
 import com.heendy.action.company.CompanyActionFactory;
 
+/**
+* @author 이승준
+* company 관련 요청 Controller
+*/
 @WebServlet("/company/*")
 public class CompanyController extends HttpServlet {
 	
