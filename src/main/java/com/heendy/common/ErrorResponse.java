@@ -6,7 +6,7 @@ import java.util.List;
 
 /*
  * @author: 이승준
- * @version: 1
+ * 
  * 에러 반환을 위한 클래스
  * */
 public class ErrorResponse {
@@ -28,6 +28,14 @@ public class ErrorResponse {
 		private String value;
 		
 		private String reason;
+		
+		public ErrorField() {}
+		
+		public ErrorField(String field, String value, String reason) {
+			this.field = field;
+			this.value = value;
+			this.reason = reason;
+		}
 
 		public String getField() {
 			return field;

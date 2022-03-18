@@ -5,7 +5,6 @@
 <%
 request.setCharacterEncoding("UTF-8");
 %>
-
 <!-- /HeendyFoody 까지 표시 -->
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
@@ -38,6 +37,13 @@ request.setCharacterEncoding("UTF-8");
 <!-- 회원가입시 input 제약조건 JS -->
 <script type="text/javascript" src="${contextPath}/static/js/memberJoin.js"></script>
 </head>
+
+<style>
+.heendy-logo-header {
+width: 55%;
+}
+</style>
+
 <body>
 
 	<!-- header// -->
@@ -46,10 +52,10 @@ request.setCharacterEncoding("UTF-8");
 		<div class="inner">
 			<!-- toparea// -->
 			<div class="toparea">
-				<h1>
-					<a href="${contextPath}/member/index.do"><img
-						src="${contextPath}/static/images/common/header_logo.png"
-						alt="현대식품관"></a>
+				<h1 style="margin-top:0px">
+					<a href="${contextPath}/main"><img
+						src="${contextPath}/static/images/common/logo_header.png"
+						alt="흰디푸디" class="heendy-logo-header"></a>
 				</h1>
 
 				<div class="util">
@@ -65,7 +71,9 @@ request.setCharacterEncoding("UTF-8");
 							<a href="${contextPath}/member/logout.do">로그아웃</a>
 						</c:otherwise>
 					</c:choose>
-					<a href="#">마이페이지</a>
+					<c:if test="${sessionScope.loginUser.roleId == 2}">
+					<a href="${contextPath}/mypage/info.do">마이페이지</a>
+					</c:if>
 				</div>
 
 			</div>

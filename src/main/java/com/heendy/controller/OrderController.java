@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
 import com.heendy.action.order.OrderActionFactory;
-
+/**
+* @author 이승준
+* 결제 관련 요청 Controller
+*/
 @WebServlet("/order/*")
 public class OrderController extends HttpServlet {
 

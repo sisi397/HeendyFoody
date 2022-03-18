@@ -6,6 +6,8 @@ request.setCharacterEncoding("UTF-8");
 %>   
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
+<!-- @author 문석호
+	아이디 찾기 페이지 -->
 <html>
 <head>
 <meta charset="UTF-8">
@@ -14,6 +16,8 @@ request.setCharacterEncoding("UTF-8");
 	href="${contextPath}/static/css/common/common.min.css">
 <link rel="stylesheet" type="text/css"
 	href="${contextPath}/static/css/common/css-library.min.css">
+	
+<!-- submit 하기전 빈 입력이 있는지 체크 -->
 <script>
 function check_input(){
 	if(document.findIdForm.email.value == ""){

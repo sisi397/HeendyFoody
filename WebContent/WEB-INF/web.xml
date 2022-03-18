@@ -1,12 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
-  <display-name>HeendyFoody</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0">
+	<display-name>HeendyFoody</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.html</welcome-file>
+		<!-- <welcome-file>index.jsp</welcome-file> -->
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<url-pattern>/member/memberJoin.do</url-pattern>
+		<url-pattern>/member/addMember.do</url-pattern>
+		<url-pattern>/member/loginMember.do</url-pattern>
+		<url-pattern>/member/idCheck.do</url-pattern>
+		<url-pattern>/member/findMemberId.do</url-pattern>
+		<url-pattern>/member/addCompanyMember.do</url-pattern>
+		<url-pattern>/member/memberLogin.do</url-pattern>
+		<url-pattern>/member/loginCompanyMember.do</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>loginCheckFilter</filter-name>
+		<url-pattern>/mypage/info.do</url-pattern>
+		<url-pattern>/mypage/order_list.do</url-pattern>
+		<url-pattern>/mypage/recent_view.do</url-pattern>
+		<url-pattern>/mypage/wish.do</url-pattern>
+		<url-pattern>/cart/shoppingCartList.do</url-pattern>
+		<url-pattern>/company/company.do</url-pattern>
+		<url-pattern>/company/createProductForm.do</url-pattern>	
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>apiCheckFilter</filter-name>
+		<url-pattern>/cart/create.do</url-pattern>
+		<url-pattern>/cart/addCount.do</url-pattern>
+		<url-pattern>/cart/minusCount.do</url-pattern>
+		<url-pattern>/cart/delete.do</url-pattern>
+		<url-pattern>/wish/insert.do</url-pattern>
+		<url-pattern>/wish/delete.do</url-pattern>
+		<url-pattern>/wish/check.do</url-pattern>
+		<url-pattern>/order/orderProduct.do</url-pattern>
+		<url-pattern>/order/orderCartProducts.do</url-pattern>
+		<url-pattern>/company/createProduct.do</url-pattern>
+		<url-pattern>/company/productList.do</url-pattern>
+		<url-pattern>/company/orderinfoChart.do</url-pattern>
+		<url-pattern>/company/ageinfoChart.do</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>roleFilter</filter-name>
+		<url-pattern>/mypage/info.do</url-pattern>
+		<url-pattern>/mypage/order_list.do</url-pattern>
+		<url-pattern>/mypage/recent_view.do</url-pattern>
+		<url-pattern>/mypage/wish.do</url-pattern>
+		<url-pattern>/cart/shoppingCartList.do</url-pattern>
+		<url-pattern>/cart/create.do</url-pattern>
+		<url-pattern>/cart/addCount.do</url-pattern>
+		<url-pattern>/cart/minusCount.do</url-pattern>
+		<url-pattern>/cart/delete.do</url-pattern>
+		<url-pattern>/order/orderProduct.do</url-pattern>
+		<url-pattern>/order/orderCartProducts.do</url-pattern>
+		<url-pattern>/wish/insert.do</url-pattern>
+		<url-pattern>/wish/delete.do</url-pattern>
+		<url-pattern>/wish/check.do</url-pattern>
+		<url-pattern>/company/company.do</url-pattern>
+		<url-pattern>/company/createProductForm.do</url-pattern>	
+		<url-pattern>/company/createProduct.do</url-pattern>
+		<url-pattern>/company/productList.do</url-pattern>
+		<url-pattern>/company/orderinfoChart.do</url-pattern>
+		<url-pattern>/company/ageinfoChart.do</url-pattern>
+	</filter-mapping>
+
+
+	<context-param>
+		<param-name>MacUploadImagePath</param-name>
+		<param-value>/Users/tmdwns/dev/eclipse-workspace/HeendyFoody/WebContent/upload</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>WindowsUploadImagePath</param-name>
+		<param-value>C:/dev/workspace/HeendyFoody/WebContent/upload</param-value>
+	</context-param>
+	
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/404error.jsp</location>
+  </error-page>
+  
 </web-app>

@@ -27,8 +27,6 @@ public class CartCountUpdateDTO {
 	public void setCartId(int cartId) {
 		this.cartId = cartId;
 	}
-
-	
 	public int getMemberId() {
 		return memberId;
 	}

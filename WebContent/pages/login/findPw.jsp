@@ -5,6 +5,8 @@
 request.setCharacterEncoding("UTF-8");
 %>   
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<!-- @author 문석호
+ 비밀번호 찾기 페이지 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +18,7 @@ request.setCharacterEncoding("UTF-8");
 	href="${contextPath}/static/css/common/css-library.min.css">
 <link rel="stylesheet" type="text/css"
 href="${contextPath}/static/css/common/member.min.css">
+<!-- submit 하기 전 빈 입력값 체크  -->
 <script>
 function check_input(){
 	if(document.findPwForm.name.value == ""){

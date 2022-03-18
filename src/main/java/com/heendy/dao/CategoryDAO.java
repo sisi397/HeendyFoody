@@ -3,6 +3,7 @@ package com.heendy.dao;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.heendy.dto.CategoryDTO;
@@ -34,42 +35,42 @@ public class CategoryDAO {
     private ResultSet rs;
     
     // 카테고리 정보 가져오기
-	public ArrayList<CategoryDTO> listCategory(int cate, int pcate) {
+	public ArrayList<CategoryDTO> listCategory(int cate, int pcate) throws SQLException{
 		ArrayList<CategoryDTO> categoryList = new ArrayList<CategoryDTO>();
 		
 		String sql = "{CALL sp_list_category(?,?,?,?)}";
-	    System.out.println("p : " + pcate);
-	    
-	    try {
-	    	conn = DBManager.getConnection();
-	    	cs = conn.prepareCall(sql);
+		
+    	conn = DBManager.getConnection();
+    	cs = conn.prepareCall(sql);
 
-		    cs.setInt(1, cate);
-		    cs.setInt(2, pcate);
-		    cs.registerOutParameter(3, OracleTypes.VARCHAR);
-		    cs.registerOutParameter(4, OracleTypes.CURSOR);
-		    
-		    cs.executeUpdate();
-		    String categoryName = cs.getString(3);
-		    CategoryDTO category = new CategoryDTO();
-		    category.setCategoryName(categoryName);
-		    categoryList.add(category);
-		    
-		    rs = (ResultSet)cs.getObject(4);
-		    
-	        while (rs.next()) {
-	    	   category = new CategoryDTO();
-	    	   category.setCategoryId(rs.getInt("category_id"));
-	    	   category.setCategoryName(rs.getString("category_name"));
-	    	   category.setParentCategoryId(rs.getInt("parent_category_id"));
-	    	   categoryList.add(category);
-	        }
-		    
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	    } finally {
-	    	DBManager.close(conn, cs);
+	    cs.setInt(1, cate);
+	    cs.setInt(2, pcate);
+	    cs.registerOutParameter(3, OracleTypes.VARCHAR);
+	    cs.registerOutParameter(4, OracleTypes.CURSOR);
+	    
+	    cs.executeUpdate();
+	    String categoryName = cs.getString(3);
+	    
+	    // 특정 카테고리 정보를 불러온다면 categoryList에 현재 카테고리명 추가 
+	    if(cate != 0 && pcate != 0) {
+		    CategoryDTO categoryname = new CategoryDTO();
+		    categoryname.setCategoryName(categoryName);
+		    categoryList.add(categoryname);
 	    }
+	    
+	    rs = (ResultSet)cs.getObject(4);
+	    
+	    // 불러온 카테고리 정보를 categoryList에 추가
+        while (rs.next()) {
+           CategoryDTO category = new CategoryDTO();
+    	   category.setCategoryId(rs.getInt("category_id"));
+    	   category.setCategoryName(rs.getString("category_name"));
+    	   category.setParentCategoryId(rs.getInt("parent_category_id"));
+    	   categoryList.add(category);
+        }
+		    
+	    DBManager.close(conn, cs);
+	    
 	    return categoryList;
 	}
 }

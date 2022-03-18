@@ -13,64 +13,45 @@ import javax.servlet.http.HttpServletResponse;
 import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
 import com.heendy.action.member.MemberActionFactory;
-import com.heendy.dao.MemberDAO;
-import com.heendy.dto.MemberDTO;
 
 /**
- * Servlet implementation class MemberController
+ * @author 문석호
+ * 멤버 관련 Controller
  */
 @WebServlet("/member/*")
 public class MemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	MemberDAO memberDAO;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public MemberController() {
         super();
     }
 
-	/**
-	 * @see Servlet#init(ServletConfig)
-	 */
 	public void init() throws ServletException {
-		memberDAO = MemberDAO.getInstance();
-		System.out.println("멤버 컨트롤러 실행");
+		System.out.println("member 컨트롤러 실행");
 	}
 
-	/**
-	 * @see Servlet#destroy()
-	 */
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doHandle(request, response);
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doHandle(request, response);
 	}
 	
 	private void doHandle(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		//메서드팩토리 패턴 (액션세팅)
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
-		String command = request.getPathInfo();	//URL에서 요청명 가져오기
+		//URL에서 요청명 가져오기
+		String command = request.getPathInfo();	
 		
+		//메서드팩토리 패턴 (액션세팅)
 		ActionFactory af = MemberActionFactory.getInstance();
 		Action action = af.getAction(command);
 		
-		if(command != null && action != null) {
+		if(action != null) {
 		System.out.println(action + "을 실행합니다.");
 		action.execute(request, response);
 		}

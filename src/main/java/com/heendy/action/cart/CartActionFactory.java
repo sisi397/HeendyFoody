@@ -2,6 +2,7 @@ package com.heendy.action.cart;
 
 import com.heendy.action.Action;
 import com.heendy.action.ActionFactory;
+import com.heendy.action.error.NotFoundViewAction;
 
 /**
  * @author 이승준
@@ -24,15 +25,17 @@ public class CartActionFactory implements ActionFactory{
 		System.out.println(command);
 		
 		if(command.equals("/create.do")) {
-			action = new CreateCartAction();
+			action = new CreateCartProxyAction(new CreateCartAction());
 		} else if (command.equals("/shoppingCartList.do")) {
 			action = new CartViewAction();
 		} else if (command.equals("/addCount.do")) {
-			action = new AddCartAction();
+			action = new AddCartProxyAction(new AddCartAction());
 		} else if (command.equals("/minusCount.do")) {
-			action = new MinusCartAction();
+			action = new MinusCartProxyAction(new MinusCartAction());
 		} else if (command.equals("/delete.do")) {
-			action = new DeleteCartAction();
+			action = new DeleteCartProxyAction(new DeleteCartAction());
+		} else {
+			action = new NotFoundViewAction();
 		}
 	
 		return action;

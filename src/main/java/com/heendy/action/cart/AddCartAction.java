@@ -2,6 +2,8 @@ package com.heendy.action.cart;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,11 +14,16 @@ import com.heendy.action.Action;
 import com.heendy.common.ErrorCode;
 import com.heendy.common.ErrorResponse;
 import com.heendy.common.SQLErrorCode;
+import com.heendy.common.ValidableAction;
 import com.heendy.dao.CartDAO;
+import com.heendy.dto.MemberDTO;
 import com.heendy.dto.cart.CartCountUpdateDTO;
+import com.heendy.utils.Validation;
 
 /**
- * @author 이승준 장바구니 수량 증가 Action 클래스
+ * @author 이승준 
+ * 
+ * 장바구니 수량 증가 Action 클래스
  */
 public class AddCartAction implements Action {
 
@@ -25,19 +32,14 @@ public class AddCartAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		response.setContentType("application/json");
-		response.setCharacterEncoding("utf-8");
-
-		/* 테스트용 */
-		int memberId = 6;
-
 		try {
-			System.out.println(request.getParameter("cart_id"));
-			System.out.println(request.getParameter("count"));
+
+			MemberDTO member = (MemberDTO) request.getAttribute("loginUser");
+
 			int cartId = Integer.parseInt(request.getParameter("cart_id"));
 			int count = Integer.parseInt(request.getParameter("count"));
 
-			CartCountUpdateDTO addCartDto = new CartCountUpdateDTO(cartId, memberId, count);
+			CartCountUpdateDTO addCartDto = new CartCountUpdateDTO(cartId, member.getMemberId(), count);
 
 			cartDAO.addCartCount(addCartDto);
 

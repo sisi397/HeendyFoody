@@ -1,82 +1,106 @@
 package com.heendy.action.mypage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 
 import com.heendy.action.Action;
+import com.heendy.dto.MemberDTO;
 import com.heendy.dto.OrderDTO;
 import com.heendy.dao.OrderDAO;
+
+/**
+ * @author : ì´ì§€ë¯¼
+ * ì£¼ë¬¸ë‚´ì—­ ì¡°íšŒ ë° í˜ì´ì§€ë„¤ì´ì…˜ ì²˜ë¦¬ Action í´ë˜ìŠ¤
+ * */
 
 public class OrderListAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//dispatchí•  í˜ì´ì§€ ì£¼ì†Œ
 		String url = "/pages/mypage/orderHistory.jsp";
 		
-//		·Î±×ÀÎ ¿©ºÎ
-//	    HttpSession session = request.getSession();
-//	    MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
-
-//	    if (loginUser == null) {
-//	        url = "/pages/login_form.jsp";
-//	      } 
-//	    else {
-//			
-//	    }
-		
-		
-		String pno = request.getParameter("pno");
-		OrderDAO orderDAO = OrderDAO.getInstance();
-		
-		int totalCount = orderDAO.totalCountOrder(); //ÀüÃ¼ ÁÖ¹®³»¿ª ¼ö	
-		int pageNumber = 1; // ÇöÀç ÆäÀÌÁö ¹øÈ£
-		int pagePerList = 5; // º¸¿©ÁÙ ÆäÀÌÁö ¼ö
-		int listPerPage = 2; // ÇÑ ÆäÀÌÁö ´ç º¸¿©ÁÙ ÁÖ¹®³»¿ª ¼ö
-
-
-		// ÆäÀÌÁö ¹øÈ£ °è»ê
-		if (pno == null || pno.length() == 0) {
-			pageNumber = 1;
-		}
 		try {
-			pageNumber = Integer.parseInt(pno);
-		} 
-		catch(NumberFormatException e) {
-			pageNumber = 1;
-		}
+						
+			MemberDTO member = (MemberDTO) request.getAttribute("loginUser");	
+			
+			//ì‚¬ìš©ì ì•„ì´ë”” ê°€ì ¸ì˜¤ê¸°
+			int memberId = member.getMemberId();
+						
+			//ì¸ìŠ¤í„´ìŠ¤ ìƒì„± ë° ì´ ì£¼ë¬¸ë‚´ì—­ ìˆ˜ êµ¬í•˜ê¸°
+			OrderDAO orderDAO = OrderDAO.getInstance();
+			int totalCount = orderDAO.totalCountOrder(memberId);	
+			
+			//ì´ ì£¼ë¬¸ë‚´ì—­ ìˆ˜ì— ë”°ë¼ ë¶„ê¸°ì²˜ë¦¬
+			if (totalCount == 0) {
+				ArrayList<OrderDTO> orderList = new ArrayList<>();
+				request.setAttribute("orderList", orderList);
 				
-		int beginRow = (pageNumber - 1) * listPerPage + 1;
-		int endRow = beginRow + listPerPage - 1;
-		if(endRow > totalCount) {
-			endRow = totalCount;
+			} else {
+				
+				//í˜„ì¬ í˜ì´ì§€ ë²ˆí˜¸ ë°›ì•„ì˜¤ê¸°
+				String pno = request.getParameter("pno");
+				
+				
+				int pageNumber = 1; // í˜„ì¬ í˜ì´ì§€ ë²ˆí˜¸
+				int pagePerList = 5; // í•œ í™”ë©´ì— ë³´ì—¬ì¤„ í˜ì´ì§€ ìˆ˜
+				int listPerPage = 10; // í•œ í˜ì´ì§€ì— ë³´ì—¬ì¤„ ì£¼ë¬¸ë‚´ì—­ ìˆ˜
+				
+				
+				// pageNumber ì„¸íŒ…
+				if (pno == null || pno.length() == 0) {
+					pageNumber = 1;
+				}
+				try {
+					pageNumber = Integer.parseInt(pno);
+				} 
+				catch (NumberFormatException e) {
+					pageNumber = 1;
+				}
+				
+				// DBì—ì„œ ì£¼ë¬¸ë‚´ì—­ ê°€ì ¸ì˜¬ ë²”ìœ„ ì§€ì •
+				int beginRow = (pageNumber - 1) * listPerPage + 1;
+				int endRow = beginRow + listPerPage - 1;
+				if (endRow > totalCount) {
+					endRow = totalCount;
+				}
+				
+				//ì£¼ë¬¸ë‚´ì—­ ëª©ë¡ ì¡°íšŒ
+				ArrayList<OrderDTO> orderList = orderDAO.listOrder(beginRow, endRow, memberId);
+				System.out.println("-----------------");
+				System.out.println("totalOrderCnt: " + totalCount);
+				System.out.println("slice size: " + orderList.size());
+				
+				//requestì— ë‹´ì•„ ë„˜ê²¨ ì¤„ ê°’ ì„¸íŒ…
+				int beginPageNumber = (pageNumber - 1) / pagePerList * pagePerList + 1; //ì‹œì‘í˜ì´ì§€ ë²ˆí˜¸
+				int endPageNumber = beginPageNumber + pagePerList - 1; //ëí˜ì´ì§€ ë²ˆí˜¸
+				int totalPage = (totalCount - 1) / listPerPage + 1; //ì´ í˜ì´ì§€ ìˆ˜
+				
+				if (totalPage < endPageNumber) {
+					endPageNumber = totalPage;
+				}	    
+				System.out.println("totalpage : " + totalPage);
+				
+				
+				request.setAttribute("beginPage", beginPageNumber);
+				request.setAttribute("endPage", endPageNumber);
+				request.setAttribute("pagePerList", pagePerList);
+				request.setAttribute("totalPageCount", totalPage);
+				
+				request.setAttribute("orderList", orderList);
+				
+			}
+			
+		} catch (SQLException e) {
+			request.setAttribute("errorMsg", e.getMessage());
 		}
 		
-		
-	    ArrayList<OrderDTO> orderList = orderDAO.listOrder(beginRow, endRow, 6);
-	    System.out.println("-----------------");
-	    System.out.println("totalOrderCnt: " + totalCount);
-	    System.out.println("slice size: " + orderList.size());
-	    
-		int beginPageNumber = (pageNumber - 1) / pagePerList * pagePerList + 1;
-		int endPageNumber = beginPageNumber + pagePerList - 1;
-	    int totalPage = (totalCount - 1) / listPerPage + 1; // ÃÑ ÆäÀÌÁö ¼ö
-	    System.out.println("totalpage : " + totalPage);
-	    if (totalPage < endPageNumber) {
-	    	endPageNumber = totalPage;
-	    }	    
-
-	    
-	    request.setAttribute("beginPage", beginPageNumber);
-	    request.setAttribute("endPage", endPageNumber);
-	    request.setAttribute("pagePerList", pagePerList);
-	    request.setAttribute("totalPageCount", totalPage);
-	    
-	    request.setAttribute("orderList", orderList);
-	    request.getRequestDispatcher(url).forward(request, response);
+    	request.getRequestDispatcher(url).forward(request, response);  
 	}
 }

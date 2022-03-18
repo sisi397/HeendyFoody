@@ -13,7 +13,10 @@ import com.heendy.action.ActionFactory;
 import com.heendy.action.cart.CartActionFactory;
 
 
-
+/**
+* @author 이승준
+* 장바구니 Controller
+*/
 @WebServlet("/cart/*")
 public class CartController extends HttpServlet {
 	
