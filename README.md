@@ -99,6 +99,8 @@ We decided on the concept of a food hall introduced by cute Heendy.
 
 [Presentation_silde](https://docs.google.com/presentation/d/1FHYirrJmvGLEl9P-haPfKdkEQ2sGMjEn/edit?usp=sharing&ouid=103446692371790737362&rtpof=true&sd=true)
 
+<br>
+
 ## 🔨STACKS & IDE
 
 <div>
@@ -119,6 +121,9 @@ We decided on the concept of a food hall introduced by cute Heendy.
 <img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=Discord&logoColor=white">
 <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white">
 </div>
+
+<br>
+
 ## 🤝 Contributors - PJT1_TEAM 4
 
 <a href = "https://github.com/sisi397">
